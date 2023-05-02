@@ -79,8 +79,8 @@ class Chapter {
       'image_thumnail_id': image_thumnail_id,
       'chapter_des': chapter_des,
       'numerical': numerical,
-      'content_update_time': content_update_time.toString(),
-      'update_time': update_time.toString(),
+      'content_update_time': content_update_time?.toString(),
+      'update_time': update_time?.toString(),
     };
   }
 }

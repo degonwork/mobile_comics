@@ -24,7 +24,7 @@ class ChapterRepo {
       // await updateChapterToDB(chapter);
       // await updateChapterContent(chapter);
       // Chapter? chapterRe = await readChapterByIdFromDB(id: "chapter5");
-      // print(chapterRe!.numerical);
+      // print(chapterRe!.update_time);
       // List<Image>? imageChapterContents =
       //     await _imageRepo.readImageChapterContent(
       //   chapterId: "chapter1",
@@ -78,13 +78,14 @@ class ChapterRepo {
       type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
     ));
     Chapter updateChapter = Chapter(
-        id: chapter.id,
-        comic_id: chapter.comic_id,
-        image_thumnail_id: chapterDB.image_thumnail_id,
-        chapter_des: chapter.chapter_des,
-        numerical: chapterDB.numerical,
-        content_update_time: chapter.content_update_time,
-        update_time: chapter.update_time);
+      id: chapter.id,
+      comic_id: chapter.comic_id,
+      image_thumnail_id: chapterDB.image_thumnail_id,
+      chapter_des: chapter.chapter_des,
+      numerical: chapterDB.numerical,
+      content_update_time: chapter.content_update_time,
+      update_time: chapter.update_time,
+    );
     await HandleDatabase.updateChapterToDB(updateChapter);
   }
 

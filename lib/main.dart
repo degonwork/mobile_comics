@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import 'package:full_comics_frontend/data/repository/categories_comics_repository.dart';
 import 'package:full_comics_frontend/data/repository/category_repository.dart';
 import '../data/repository/chapter_repository.dart';
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<BottomNavbarBloc>(
             create: (context) => BottomNavbarBloc(),
+          ),
+          BlocProvider<HomeBloc>(
+            create: (context) => HomeBloc(
+              comicRepo: context.read<ComicRepo>(),
+            )..add(LoadHomeComic()),
           ),
         ],
         child: MaterialApp(

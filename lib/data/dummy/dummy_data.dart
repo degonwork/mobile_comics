@@ -1,6 +1,7 @@
 const listHotComicJson = [
   {
     "id": "hotcomic1",
+    "title": "Roll love",
     "image_detail":
         "https://i.pinimg.com/564x/47/9a/90/479a903a36d2805eef7e71d8e7a0b774.jpg",
     "image_thumnail_square":
@@ -12,6 +13,7 @@ const listHotComicJson = [
   },
   {
     "id": "hotcomic2",
+    "title": "Roll love",
     "image_detail":
         "https://i.pinimg.com/564x/47/9a/90/479a903a36d2805eef7e71d8e7a0b774.jpg",
     "image_thumnail_square":
@@ -23,6 +25,7 @@ const listHotComicJson = [
   },
   {
     "id": "hotcomic3",
+    "title": "Roll love",
     "image_detail":
         "https://i.pinimg.com/564x/47/9a/90/479a903a36d2805eef7e71d8e7a0b774.jpg",
     "image_thumnail_square":
@@ -45,6 +48,7 @@ const listHotComicJson = [
   },
   {
     "id": "hotcomic5",
+    "title": "Roll love",
     "image_detail":
         "https://i.pinimg.com/564x/47/9a/90/479a903a36d2805eef7e71d8e7a0b774.jpg",
     "image_thumnail_square":

@@ -1,3 +1,6 @@
+import 'package:full_comics_frontend/config/app_constant.dart';
+import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
+
 import '.././models/chapter_model.dart';
 
 const String tableComics = 'Comics';
@@ -83,7 +86,6 @@ class Comic {
       author: json['author'],
       description: json['description'],
       year: json['year'],
-      // chapters: json['chapters'].map((json) => Chapter.fromJson(json)),
       chapters: json['chapters'] != null
           ? List.from(json['chapters'].map((json) => Chapter.fromJson(json)))
           : null,
@@ -109,6 +111,34 @@ class Comic {
     );
   }
 
+  static Future<Comic> copyWith(Comic comic) async {
+    String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: comic.id))!
+        .path;
+    String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[1], parentID: comic.id))!
+        .path;
+    String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[2], parentID: comic.id))!
+        .path;
+    return Comic(
+      id: comic.id,
+      image_detail: "${AppConstant.IMAGEHOMEURL}$imageDetailUrl",
+      image_thumnail_square:
+          "${AppConstant.IMAGEHOMEURL}$imageThumnailSquareUrl",
+      image_thumnail_rectangle:
+          "${AppConstant.IMAGEHOMEURL}$imageThumnailRectangleUrl",
+      title: comic.title,
+      author: comic.author,
+      description: comic.description,
+      year: comic.year,
+      reads: comic.reads,
+      chapter_update_time: comic.chapter_update_time,
+      update_time: comic.update_time,
+      add_chapter_time: comic.add_chapter_time,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -120,9 +150,9 @@ class Comic {
       'description': description,
       'year': year,
       'reads': reads,
-      'chapter_update_time': chapter_update_time.toString(),
-      'update_time': update_time.toString(),
-      'add_chapter_time': add_chapter_time.toString(),
+      'chapter_update_time': chapter_update_time?.toString(),
+      'update_time': update_time?.toString(),
+      'add_chapter_time': add_chapter_time?.toString(),
     };
   }
 }
@@ -130,10 +160,10 @@ class Comic {
 class HomeComic {
   final String id;
   final String? title;
-  final String image_detail;
-  final String image_thumnail_square;
-  final String image_thumnail_rectangle;
-  final DateTime add_chapter_time;
+  final String? image_detail;
+  final String? image_thumnail_square;
+  final String? image_thumnail_rectangle;
+  final DateTime? add_chapter_time;
   final int? reads;
 
   HomeComic({
@@ -153,8 +183,35 @@ class HomeComic {
       image_detail: json['image_detail'],
       image_thumnail_square: json['image_thumnail_square'],
       image_thumnail_rectangle: json['image_thumnail_rectangle'],
-      add_chapter_time: DateTime.parse(json['add_chapter_time']),
+      add_chapter_time: json['add_chapter_time'] != null
+          ? json['add_chapter_time'] is int
+              ? DateTime.fromMillisecondsSinceEpoch(json['add_chapter_time'])
+              : DateTime.parse(json['add_chapter_time'])
+          : null,
       reads: json['reads'],
+    );
+  }
+
+  static Future<HomeComic> copyWith(Comic comic) async {
+    String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: comic.id))!
+        .path;
+    String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[1], parentID: comic.id))!
+        .path;
+    String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
+            type: AppConstant.TYPEIMAGEHOMECOMICS[2], parentID: comic.id))!
+        .path;
+    return HomeComic(
+      id: comic.id,
+      image_detail: "${AppConstant.IMAGEHOMEURL}$imageDetailUrl",
+      image_thumnail_square:
+          "${AppConstant.IMAGEHOMEURL}$imageThumnailSquareUrl",
+      image_thumnail_rectangle:
+          "${AppConstant.IMAGEHOMEURL}$imageThumnailRectangleUrl",
+      title: comic.title,
+      add_chapter_time: comic.add_chapter_time,
+      reads: comic.reads,
     );
   }
 }

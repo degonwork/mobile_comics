@@ -14,7 +14,7 @@ class ImageRepo {
         [
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail
+            path: homeComic.image_detail!
                 .split("${AppConstant.IMAGEHOMEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[0],
@@ -22,7 +22,7 @@ class ImageRepo {
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail
+            path: homeComic.image_detail!
                 .split("${AppConstant.IMAGEHOMEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[1],
@@ -30,7 +30,7 @@ class ImageRepo {
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_thumnail_square
+            path: homeComic.image_thumnail_square!
                 .split("${AppConstant.IMAGEHOMEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[2],
