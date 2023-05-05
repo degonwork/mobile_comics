@@ -1,6 +1,5 @@
 import '../../config/app_constant.dart';
 import '.././repository/image_repository.dart';
-import '../dummy/dummy_data.dart';
 import '../models/chapter_model.dart';
 import '../models/image_model.dart';
 import '../providers/database/handle_database.dart';
@@ -19,8 +18,7 @@ class ChapterRepo {
     // if (response.statusCode == 200) {
     // dynamic jsonResponse = jsonDecode(response.body);
     try {
-      dynamic jsonResponse = detailChapterJson;
-      final chapter = Chapter.fromJson(jsonResponse);
+      // final chapter = Chapter.fromJson(jsonResponse);
       // await updateChapterToDB(chapter);
       // await updateChapterContent(chapter);
       // Chapter? chapterRe = await readChapterByIdFromDB(id: "chapter5");
@@ -72,7 +70,7 @@ class ChapterRepo {
     await _imageRepo.updateImageToDB(Image(
       id: chapterDB!.image_thumnail_id!,
       path: chapter.image_thumnail!
-          .split("${AppConstant.IMAGETHUMNAILCHAPTERURL}")
+          .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: chapterDB.id,
       type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,

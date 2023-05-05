@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
+import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/size_config.dart';
+import '../../detail/comic_detail_screen.dart';
 
 class NewComic extends StatelessWidget {
   const NewComic({super.key});
@@ -32,20 +34,27 @@ class NewComic extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        child: Container(
-                          margin: EdgeInsets.zero,
-                          height: SizeConfig.screenHeight / 4.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                listNewComics[index].image_thumnail_square!,
+                      CachedNetworkImage(
+                        imageUrl:
+                            listNewComics[index].image_thumnail_square_path!,
+                        imageBuilder: (context, imageProvider) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, ComicDetailScreen.routeName);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.zero,
+                              height: SizeConfig.screenHeight / 4.5,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                              fit: BoxFit.fill,
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                       Text(
                         ' ${listNewComics[index].title} ',

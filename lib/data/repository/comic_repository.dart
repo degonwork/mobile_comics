@@ -1,13 +1,9 @@
+import 'dart:convert';
 import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
-import 'package:full_comics_frontend/data/models/category_model.dart';
 import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
 import 'package:full_comics_frontend/data/repository/categories_comics_repository.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
 import 'package:full_comics_frontend/data/repository/chapter_repository.dart';
 import 'package:full_comics_frontend/data/repository/image_repository.dart';
-import '../dummy/dummy_data.dart';
-import '../models/chapter_model.dart';
 import '../models/comic_model.dart';
 import '../models/image_model.dart';
 import '../providers/api/api_client.dart';
@@ -33,95 +29,89 @@ class ComicRepo {
   // Fetch Api
   Future<List<HomeComic>?> fetchAPIAndCreateDBHotComics(
       {required int limit}) async {
-    // final response =
-    // await _apiClient
-    //     .getData('$_comicUrl${AppConstant.HOTCOMICURL}?limit=$limit');
-    // if (response.statusCode == 200) {
-    // List<dynamic> jsonResponse = jsonDecode(response.body);
     try {
-      List<dynamic> jsonResponse = listHotComicJson;
-      final listHotComicApi =
-          jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
-      await createComicToDB(listHotComicApi);
-      List<HomeComic>? listHotComics =
-          await readHotComicsFromDB(limit: AppConstant.LIMIT);
-      // Image? image = await HandleDatabase.readImageFromDB(
-      // type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: "hotcomic1");
-      // print(image!.path);
-      return listHotComics;
+      final response = await _apiClient
+          .getData('$_comicUrl${AppConstant.HOTCOMICURL}?limit=$limit');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = jsonDecode(response.body);
+        final listHotComicApi =
+            jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
+        // print(listHotComicApi);
+        await createComicToDB(listHotComicApi);
+        List<HomeComic>? listHotComics =
+            await readHotComicsFromDB(limit: AppConstant.LIMIT);
+        // Image? image = await HandleDatabase.readImageFromDB(
+        // type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: "hotcomic1");
+        // print(image!.path);
+        return listHotComics;
+      } else {
+        throw Exception('Load failed');
+      }
     } catch (e) {
       print(e.toString());
     }
     return null;
-
-    // }
-
-    // else {
-    //   throw Exception('Load failed');
-    // }
   }
 
   Future<List<HomeComic>?> fetchAPIAndCreateDBNewComics(
       {required int limit}) async {
-    // final response =
-    // await _apiClient
-    //     .getData('$_comicUrl${AppConstant.NEWCOMICURL}?limit=$limit');
-    // if (response.statusCode == 200) {
-    // List<dynamic> jsonResponse = jsonDecode(response.body);
     try {
-      List<dynamic> jsonResponse = listNewComicJson;
-      final listNewComicsApi =
-          jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
-      await createComicToDB(listNewComicsApi);
-      List<HomeComic>? listNewComics =
-          await readNewComicsFromDB(limit: AppConstant.LIMIT);
-      // Image? image = await HandleDatabase.readImageFromDB(
-      //     type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: "newcomic1");
-      // print(image!.path);
-      return listNewComics;
+      final response = await _apiClient
+          .getData('$_comicUrl${AppConstant.NEWCOMICURL}?limit=$limit');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = jsonDecode(response.body);
+        final listNewComicsApi =
+            jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
+        // print(listNewComicsApi);
+        await createComicToDB(listNewComicsApi);
+        List<HomeComic>? listNewComics =
+            await readNewComicsFromDB(limit: AppConstant.LIMIT);
+        // listNewComics?.forEach((element) {
+        //   print(element.id);
+        // });
+        // Image? image = await HandleDatabase.readImageFromDB(
+        //     type: AppConstant.TYPEIMAGEHOMECOMICS[2],
+        //     parentID: "645526fe251b67ae02777004");
+        // print(image!.path);
+        return listNewComics;
+      } else {
+        throw Exception('Load failed');
+      }
     } catch (e) {
       print(e.toString());
     }
     return null;
-    // }
-    // else {
-    //   throw Exception('Load failed');
-    // }
   }
 
   Future fetchDetailComics({required String id}) async {
-    // final response =
-    // await _apiClient.getData('$_comicUrl/$id');
-    // if (response.statusCode == 200) {
-    // dynamic jsonResponse = jsonDecode(response.body);
     try {
-      dynamic jsonResponse = detailComicJson;
-      final comic = Comic.fromJson(jsonResponse);
-      // await updateComicToDB(comic);
-      // List<CategoriesComics>? listCategoriesComics =
-      //     await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
-      // for (var element in listCategoriesComics!) {
-      //   print(element.category_id);
-      // }
-      // List<Category>? listCategories =
-      //     await HandleDatabase.readAllCategoryFromDB();
-      // for (var element in listCategories!) {
-      //   print(element.name);
-      // }
-      // var chapter = await HandleDatabase.readChapterByIDFromDB(id: "chapter1");
-      // print(chapter!.content_update_time);
+      final response = await _apiClient.getData('$_comicUrl$id');
+      if (response.statusCode == 200) {
+        dynamic jsonResponse = jsonDecode(response.body);
+        final comic = Comic.fromJson(jsonResponse);
+        // await updateComicToDB(comic);
+        // List<CategoriesComics>? listCategoriesComics =
+        //     await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
+        // for (var element in listCategoriesComics!) {
+        //   print(element.category_id);
+        // }
+        // List<Category>? listCategories =
+        //     await HandleDatabase.readAllCategoryFromDB();
+        // for (var element in listCategories!) {
+        //   print(element.name);
+        // }
+        // var chapter = await HandleDatabase.readChapterByIDFromDB(id: "chapter1");
+        // print(chapter!.content_update_time);
 
-      // Image? image = await HandleDatabase.readImageFromDB(
-      //     type: AppConstant.TYPEIMAGETHUMNAILCHAPTER, parentID: "chapter1");
-      // print(image!.path);
+        // Image? image = await HandleDatabase.readImageFromDB(
+        //     type: AppConstant.TYPEIMAGETHUMNAILCHAPTER, parentID: "chapter1");
+        // print(image!.path);
+      } else {
+        throw Exception('Load failed');
+      }
     } catch (e) {
       print(e.toString());
     }
-
-    // }
-    // else {
-    // throw Exception('Load failed');
-    // }
   }
 
   // Process Database
@@ -152,15 +142,16 @@ class ComicRepo {
     Comic? comicDB = await HandleDatabase.readComicByIDFromDB(id: comic.id);
     await _imageRepo.updateImageToDB(Image(
       id: comicDB!.image_detail_id!,
-      path:
-          comic.image_detail!.split("${AppConstant.IMAGEHOMEURL}").removeLast(),
+      path: comic.image_detail_path!
+          .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+          .removeLast(),
       parent_id: comicDB.id,
       type: AppConstant.TYPEIMAGEHOMECOMICS[0],
     ));
     await _imageRepo.updateImageToDB(Image(
       id: comicDB.image_thumnail_square_id!,
-      path: comic.image_thumnail_square!
-          .split("${AppConstant.IMAGEHOMEURL}")
+      path: comic.image_thumnail_square_path!
+          .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: comicDB.id,
       type: AppConstant.TYPEIMAGEHOMECOMICS[1],
@@ -168,8 +159,8 @@ class ComicRepo {
     await _imageRepo.updateImageToDB(
       Image(
         id: comicDB.image_thumnail_rectangle_id!,
-        path: comic.image_thumnail_rectangle!
-            .split("${AppConstant.IMAGEHOMEURL}")
+        path: comic.image_thumnail_rectangle_path!
+            .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
             .removeLast(),
         parent_id: comicDB.id,
         type: AppConstant.TYPEIMAGEHOMECOMICS[2],

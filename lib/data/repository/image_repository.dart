@@ -14,24 +14,24 @@ class ImageRepo {
         [
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_detail_path!
+                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[0],
             parent_id: homeComic.id,
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_thumnail_square_path!
+                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[1],
             parent_id: homeComic.id,
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_thumnail_square!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_thumnail_rectangle_path!
+                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGEHOMECOMICS[2],
             parent_id: homeComic.id,
@@ -39,6 +39,7 @@ class ImageRepo {
         ],
       );
     }
+
     await HandleDatabase.createImageToDB(images: listImageObject);
   }
 
@@ -64,7 +65,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.image_thumnail!
-                .split("${AppConstant.IMAGETHUMNAILCHAPTERURL}")
+                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
             parent_id: chapter.id,
@@ -83,7 +84,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.content![i]
-                .split("${AppConstant.IMAGECHAPTERCONTENTURL}")
+                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
             parent_id: chapter.id,

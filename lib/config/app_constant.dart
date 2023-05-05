@@ -1,17 +1,14 @@
 class AppConstant {
   static const BASEURL = "http://10.0.2.2:3000";
+  static const LOCALURL = "http://localhost:3000";
   // Comics
   static const COMICURL = "/comics/";
-  static const HOTCOMICURL = "home/hot-comic";
-  static const NEWCOMICURL = "home/new-comic";
+  static const HOTCOMICURL = "home/hot-comics";
+  static const NEWCOMICURL = "home/new-comics";
   // Chapter
   static const CHAPTERURL = "/chapters/";
   // Image
-  // static const IMAGEURL = "/image/";
-  static const IMAGEHOMEURL = "https://i.pinimg.com/564x/47/9a/90/";
-  static const IMAGETHUMNAILCHAPTERURL =
-      "https://upload.wikimedia.org/wikipedia/vi/b/b7/";
-  static const IMAGECHAPTERCONTENTURL = "https://i.ytimg.com/vi/oz_w3RjnTk8/";
+  static const IMAGEURL = "/image/";
 
   // Type Image Comic
   static const TYPEIMAGEHOMECOMICS = [

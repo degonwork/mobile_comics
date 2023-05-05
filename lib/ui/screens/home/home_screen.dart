@@ -110,21 +110,15 @@ class HomeScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.screenWidth * 0.041),
-                            child: SelectTitle(
-                              title: "Truyện hot",
-                              press: () {},
-                            ),
-                          ),
                           const BannerListview(),
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: SizeConfig.screenWidth * 0.041),
                             child: SelectTitle(
                               title: "Truyện mới",
-                              press: () {},
+                              press: () {
+                                print("Tapped");
+                              },
                             ),
                           ),
                           const NewComic(),

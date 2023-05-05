@@ -1,6 +1,5 @@
 import 'package:full_comics_frontend/config/app_constant.dart';
 import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
-
 import '.././models/chapter_model.dart';
 
 const String tableComics = 'Comics';
@@ -38,7 +37,7 @@ class ComicField {
 
 class Comic {
   final String id;
-  final String? image_detail;
+  final String? image_detail_path;
   final String? image_detail_id;
   final String? title;
   final String? author;
@@ -49,19 +48,19 @@ class Comic {
   final DateTime? update_time;
   final DateTime? add_chapter_time;
   final String? description;
-  final String? image_thumnail_square;
+  final String? image_thumnail_square_path;
   final String? image_thumnail_square_id;
-  final String? image_thumnail_rectangle;
+  final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
   final List<String>? categories;
 
   const Comic({
     required this.id,
-    this.image_detail,
+    this.image_detail_path,
     this.image_detail_id,
-    this.image_thumnail_rectangle,
+    this.image_thumnail_rectangle_path,
     this.image_thumnail_square_id,
-    this.image_thumnail_square,
+    this.image_thumnail_square_path,
     this.image_thumnail_rectangle_id,
     this.title,
     this.author,
@@ -78,9 +77,9 @@ class Comic {
   factory Comic.fromJson(Map<String, dynamic> json) {
     return Comic(
       id: json['_id'] ?? json['id'],
-      image_detail: json['image_detail'],
-      image_thumnail_square: json['image_thumnail_square'],
-      image_thumnail_rectangle: json['image_thumnail_rectangle'],
+      image_detail_path: json['image_detail_path'],
+      image_thumnail_square_path: json['image_thumnail_square_path'],
+      image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
       title: json['title'],
       categories: json['categories'],
       author: json['author'],
@@ -123,11 +122,12 @@ class Comic {
         .path;
     return Comic(
       id: comic.id,
-      image_detail: "${AppConstant.IMAGEHOMEURL}$imageDetailUrl",
-      image_thumnail_square:
-          "${AppConstant.IMAGEHOMEURL}$imageThumnailSquareUrl",
-      image_thumnail_rectangle:
-          "${AppConstant.IMAGEHOMEURL}$imageThumnailRectangleUrl",
+      image_detail_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageDetailUrl",
+      image_thumnail_square_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
+      image_thumnail_rectangle_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
       title: comic.title,
       author: comic.author,
       description: comic.description,
@@ -160,18 +160,18 @@ class Comic {
 class HomeComic {
   final String id;
   final String? title;
-  final String? image_detail;
-  final String? image_thumnail_square;
-  final String? image_thumnail_rectangle;
+  final String? image_detail_path;
+  final String? image_thumnail_square_path;
+  final String? image_thumnail_rectangle_path;
   final DateTime? add_chapter_time;
   final int? reads;
 
   HomeComic({
     required this.id,
     this.title,
-    required this.image_detail,
-    required this.image_thumnail_square,
-    required this.image_thumnail_rectangle,
+    required this.image_detail_path,
+    required this.image_thumnail_square_path,
+    required this.image_thumnail_rectangle_path,
     required this.add_chapter_time,
     required this.reads,
   });
@@ -180,9 +180,9 @@ class HomeComic {
     return HomeComic(
       id: json['id'],
       title: json['title'],
-      image_detail: json['image_detail'],
-      image_thumnail_square: json['image_thumnail_square'],
-      image_thumnail_rectangle: json['image_thumnail_rectangle'],
+      image_detail_path: json['image_detail_path'],
+      image_thumnail_square_path: json['image_thumnail_square_path'],
+      image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
       add_chapter_time: json['add_chapter_time'] != null
           ? json['add_chapter_time'] is int
               ? DateTime.fromMillisecondsSinceEpoch(json['add_chapter_time'])
@@ -204,11 +204,12 @@ class HomeComic {
         .path;
     return HomeComic(
       id: comic.id,
-      image_detail: "${AppConstant.IMAGEHOMEURL}$imageDetailUrl",
-      image_thumnail_square:
-          "${AppConstant.IMAGEHOMEURL}$imageThumnailSquareUrl",
-      image_thumnail_rectangle:
-          "${AppConstant.IMAGEHOMEURL}$imageThumnailRectangleUrl",
+      image_detail_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}}$imageDetailUrl",
+      image_thumnail_square_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
+      image_thumnail_rectangle_path:
+          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
       title: comic.title,
       add_chapter_time: comic.add_chapter_time,
       reads: comic.reads,
