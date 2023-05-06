@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
 import '../../../config/size_config.dart';
 import '../router/router_screen.dart';

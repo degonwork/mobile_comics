@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
-import 'package:full_comics_frontend/data/repository/categories_comics_repository.dart';
-import 'package:full_comics_frontend/data/repository/chapter_repository.dart';
-import 'package:full_comics_frontend/data/repository/image_repository.dart';
+import '../../config/app_constant.dart';
+import '../../data/providers/database/handle_database.dart';
+import '../../data/repository/categories_comics_repository.dart';
+import '../../data/repository/chapter_repository.dart';
+import '../../data/repository/image_repository.dart';
 import '../models/comic_model.dart';
 import '../models/image_model.dart';
 import '../providers/api/api_client.dart';

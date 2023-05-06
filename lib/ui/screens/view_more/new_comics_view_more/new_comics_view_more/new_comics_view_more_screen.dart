@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/view_more/view_more_bloc.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import '../../../../../blocs/view_more/view_more_bloc.dart';
+import '../../../../widgets/back_ground_app.dart';
 import '../../../../../config/size_config.dart';
 
 class NewComicViewMoreScreen extends StatelessWidget {

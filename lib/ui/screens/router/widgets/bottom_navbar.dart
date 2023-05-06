@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../../../config/size_config.dart';
 
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
 class BottomNavbar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;

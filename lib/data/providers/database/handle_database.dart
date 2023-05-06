@@ -1,5 +1,5 @@
-import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
-import 'package:full_comics_frontend/data/models/category_model.dart';
+import '../../models/categoriescomics_model.dart';
+import '../../models/category_model.dart';
 import '../../models/chapter_model.dart';
 import '../../providers/database/storage_database.dart';
 import '../../models/comic_model.dart';

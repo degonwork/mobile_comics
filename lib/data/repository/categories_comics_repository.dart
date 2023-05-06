@@ -1,7 +1,7 @@
-import 'package:full_comics_frontend/data/models/comic_model.dart';
-import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
 import 'package:uuid/uuid.dart';
+import '../../data/models/comic_model.dart';
+import '../../data/providers/database/handle_database.dart';
+import '../../data/repository/category_repository.dart';
 import '../models/categoriescomics_model.dart';
 
 class CategoriesComicsRepo {
