@@ -185,7 +185,7 @@ class ComicRepo {
   }
 
   // Read Home comic
-  Future<List<Comic>?> readHotComicsFromDB({required int limit}) async {
+  Future<List<Comic>?> readHotComicsFromDB({required int? limit}) async {
     List<Comic>? listHotComics = [];
     List<Comic>? listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics != null) {
@@ -193,14 +193,18 @@ class ComicRepo {
       for (Comic comic in listComics) {
         listHotComics.addAll([await Comic.copyWith(comic)]);
       }
-      limit = limit > listComics.length ? listComics.length : limit;
+      limit = limit != null
+          ? limit > listComics.length
+              ? listComics.length
+              : limit
+          : null;
       return listHotComics.sublist(0, limit);
     } else {
       return null;
     }
   }
 
-  Future<List<Comic>?> readNewComicsFromDB({required int limit}) async {
+  Future<List<Comic>?> readNewComicsFromDB({required int? limit}) async {
     List<Comic> listNewComics = [];
     List<Comic>? listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics != null) {
@@ -210,7 +214,11 @@ class ComicRepo {
       for (Comic comic in listComics) {
         listNewComics.addAll([await Comic.copyWith(comic)]);
       }
-      limit = limit > listComics.length ? listComics.length : limit;
+      limit = limit != null
+          ? limit > listComics.length
+              ? listComics.length
+              : limit
+          : null;
       return listNewComics.sublist(0, limit);
     } else {
       return null;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
-import 'package:full_comics_frontend/data/repository/categories_comics_repository.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
+import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
 import '../ui/screens/splash/splash_screen.dart';
@@ -11,6 +9,9 @@ import '../config/app_constant.dart';
 import '../data/repository/comic_repository.dart';
 import '../blocs/bottom_navbar_bloc/bottom_navbar_bloc.dart';
 import '../config/app_router.dart';
+import '../blocs/view_more/view_more_bloc.dart';
+import '../data/repository/categories_comics_repository.dart';
+import '../data/repository/category_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,6 +64,11 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             )..add(LoadHomeComic()),
           ),
+          BlocProvider<ViewMoreBloc>(
+            create: (context) => ViewMoreBloc(
+              comicRepo: context.read<ComicRepo>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -71,7 +77,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           initialRoute: SplashScreen.routeName,
-          routes: AppRouter.route,
+          routes: AppRouter.routes,
         ),
       ),
     );

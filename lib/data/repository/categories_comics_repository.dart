@@ -46,5 +46,6 @@ class CategoriesComicsRepo {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComic);
     }
+    print("--------------------------------");
   }
 }

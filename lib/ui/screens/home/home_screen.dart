@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/screens/view_more/new_comics_view_more/new_comics_view_more_screen.dart';
+import '../../../blocs/view_more/view_more_bloc.dart';
 import '../../../config/app_router.dart';
 import '../../screens/auth/login/login_screen.dart';
 import '../../../config/size_config.dart';
@@ -111,15 +114,23 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           const BannerListview(),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.screenWidth * 0.041),
-                            child: SelectTitle(
-                              title: "Truyện mới",
-                              press: () {
-                                print("Tapped");
-                              },
-                            ),
+                          BlocBuilder<ViewMoreBloc, ViewMoreState>(
+                            builder: (context, state) {
+                              context
+                                  .read<ViewMoreBloc>()
+                                  .add(LoadNewComicsViewMore());
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: SizeConfig.screenWidth * 0.041),
+                                child: SelectTitle(
+                                  title: "Truyện mới",
+                                  press: () {
+                                    Navigator.pushNamed(context,
+                                        NewComicViewMoreScreen.routeName);
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           const NewComic(),
                           SizedBox(height: SizeConfig.screenHeight / 75.6),

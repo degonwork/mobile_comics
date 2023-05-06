@@ -19,6 +19,7 @@ class HandleDatabase {
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<List<Comic>?> readManyComicsFromDB() async {
@@ -49,6 +50,7 @@ class HandleDatabase {
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<Chapter?> readChapterByIDFromDB({required String? id}) async {
@@ -76,6 +78,7 @@ class HandleDatabase {
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<Image?> readImageFromDB(
@@ -141,6 +144,7 @@ class HandleDatabase {
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<CategoriesComics?> readCategoriesComicsByIDFromDB(
