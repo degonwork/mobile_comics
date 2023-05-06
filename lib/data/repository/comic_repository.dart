@@ -143,7 +143,7 @@ class ComicRepo {
     await _imageRepo.updateImageToDB(Image(
       id: comicDB!.image_detail_id!,
       path: comic.image_detail_path!
-          .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+          .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: comicDB.id,
       type: AppConstant.TYPEIMAGECOMICS[0],
@@ -151,7 +151,7 @@ class ComicRepo {
     await _imageRepo.updateImageToDB(Image(
       id: comicDB.image_thumnail_square_id!,
       path: comic.image_thumnail_square_path!
-          .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+          .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: comicDB.id,
       type: AppConstant.TYPEIMAGECOMICS[1],
@@ -160,7 +160,7 @@ class ComicRepo {
       Image(
         id: comicDB.image_thumnail_rectangle_id!,
         path: comic.image_thumnail_rectangle_path!
-            .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+            .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
             .removeLast(),
         parent_id: comicDB.id,
         type: AppConstant.TYPEIMAGECOMICS[2],

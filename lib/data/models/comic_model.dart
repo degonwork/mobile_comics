@@ -123,11 +123,11 @@ class Comic {
     return Comic(
       id: comic.id,
       image_detail_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageDetailUrl",
+          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageDetailUrl",
       image_thumnail_square_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
+          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
       image_thumnail_rectangle_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
+          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
       title: comic.title,
       author: comic.author,
       description: comic.description,

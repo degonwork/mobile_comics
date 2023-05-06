@@ -15,7 +15,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: homeComic.image_detail_path!
-                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECOMICS[0],
             parent_id: homeComic.id,
@@ -23,7 +23,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: homeComic.image_thumnail_square_path!
-                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECOMICS[1],
             parent_id: homeComic.id,
@@ -31,7 +31,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: homeComic.image_thumnail_rectangle_path!
-                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECOMICS[2],
             parent_id: homeComic.id,
@@ -65,7 +65,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.image_thumnail!
-                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
             parent_id: chapter.id,
@@ -84,7 +84,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.content![i]
-                .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
             parent_id: chapter.id,

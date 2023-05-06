@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
-          create: (context) => const ApiClient(baseUrl: AppConstant.BASEURL),
+          create: (context) =>
+              const ApiClient(baseServerUrl: AppConstant.BASESERVERURL),
         ),
         RepositoryProvider<ImageRepo>(
           create: (context) => ImageRepo(),
