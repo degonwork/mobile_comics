@@ -15,8 +15,8 @@ class HomeLoaded extends HomeState {
     required this.listHotComics,
     required this.listNewComics,
   });
-  final List<HomeComic> listHotComics;
-  final List<HomeComic> listNewComics;
+  final List<Comic> listHotComics;
+  final List<Comic> listNewComics;
 
   @override
   List<Object> get props => [listHotComics, listNewComics];

@@ -21,7 +21,7 @@ class CategoriesComicsRepo {
     for (String category in comic.categories!) {
       int? i = await _categoryRepo.createCategoryToDB(category);
       if (i != null) {
-        print("${i}: Category created");
+        print("${i + 1}: Category created");
         String categoryId =
             (await _categoryRepo.readCategoryByNameFromDB(name: category))!.id;
         CategoriesComics categoriesComics = CategoriesComics(
@@ -31,7 +31,7 @@ class CategoriesComicsRepo {
         );
         listCategoriesComic.add(categoriesComics);
       } else {
-        print("${i}: Category don't create");
+        print("${i! + 1}: Category don't create");
         String categoryId =
             (await _categoryRepo.readCategoryByNameFromDB(name: category))!.id;
         CategoriesComics categoriesComics = CategoriesComics(

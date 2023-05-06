@@ -7,7 +7,7 @@ import '../models/image_model.dart';
 
 class ImageRepo {
   // Create
-  Future<void> createImageHomeComicToDB(List<HomeComic> listHomeComic) async {
+  Future<void> createImageComicToDB(List<Comic> listHomeComic) async {
     final List<Image> listImageObject = [];
     for (var homeComic in listHomeComic) {
       listImageObject.addAll(
@@ -17,7 +17,7 @@ class ImageRepo {
             path: homeComic.image_detail_path!
                 .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[0],
+            type: AppConstant.TYPEIMAGECOMICS[0],
             parent_id: homeComic.id,
           ),
           Image(
@@ -25,7 +25,7 @@ class ImageRepo {
             path: homeComic.image_thumnail_square_path!
                 .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[1],
+            type: AppConstant.TYPEIMAGECOMICS[1],
             parent_id: homeComic.id,
           ),
           Image(
@@ -33,7 +33,7 @@ class ImageRepo {
             path: homeComic.image_thumnail_rectangle_path!
                 .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[2],
+            type: AppConstant.TYPEIMAGECOMICS[2],
             parent_id: homeComic.id,
           ),
         ],
@@ -46,7 +46,7 @@ class ImageRepo {
   Future<List<String>> readAllIDImageComicFromDB(
       {required String comicId}) async {
     final List<String> iDImage = [];
-    for (String typeHomeComic in AppConstant.TYPEIMAGEHOMECOMICS) {
+    for (String typeHomeComic in AppConstant.TYPEIMAGECOMICS) {
       Image? image = await HandleDatabase.readImageFromDB(
         type: typeHomeComic,
         parentID: comicId,

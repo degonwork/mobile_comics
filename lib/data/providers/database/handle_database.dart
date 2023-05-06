@@ -13,9 +13,9 @@ class HandleDatabase {
         Comic? comic = await readComicByIDFromDB(id: comics[i].id);
         if (comic == null) {
           await StorageDatabase.instance.createComicToDB(comics[i]);
-          print("${i}: Comic created");
+          print("${i + 1}: Comic created");
         } else {
-          print("${i}: Comic don't create");
+          print("${i + 1}: Comic don't create");
         }
       }
     }
@@ -43,9 +43,9 @@ class HandleDatabase {
         Chapter? chapter = await readChapterByIDFromDB(id: chapters[i].id);
         if (chapter == null) {
           await StorageDatabase.instance.createChapterToDB(chapters[i]);
-          print("${i}: Chapter created");
+          print("${i + 1}: Chapter created");
         } else {
-          print("${i}: Chapter dont't create");
+          print("${i + 1}: Chapter dont't create");
         }
       }
     }
@@ -70,9 +70,9 @@ class HandleDatabase {
             numerical: images[i].numerical);
         if (imagesFromDB == null) {
           await StorageDatabase.instance.createImageToDB(images[i]);
-          print("${i}: Image created");
+          print("${i + 1}: Image created");
         } else {
-          print("${i}: Image don't create");
+          print("${i + 1}: Image don't create");
         }
       }
     }
@@ -135,9 +135,9 @@ class HandleDatabase {
         if (categoryComic == null) {
           await StorageDatabase.instance
               .createCategoriesComicsToDB(categoriesComics[i]);
-          print("${i}: CategoriesComics created");
+          print("${i + 1}: CategoriesComics created");
         } else {
-          print("${i}: CategoriesComics don't create");
+          print("${i + 1}: CategoriesComics don't create");
         }
       }
     }

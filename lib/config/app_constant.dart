@@ -11,18 +11,19 @@ class AppConstant {
   static const IMAGEURL = "/image/";
 
   // Type Image Comic
-  static const TYPEIMAGEHOMECOMICS = [
+  static const TYPEIMAGECOMICS = [
     "image_comic_detail",
     "image_thumnail_square_comic",
     "image_thumnail_rectangle_comic",
   ];
 
-  // Type Image chapter
+  // Type Image chapter thumnail
   static const TYPEIMAGETHUMNAILCHAPTER = "image_thumnail_chapter";
 
   // Type Image chapter content
   static const TYPEIMAGECHAPTERCONTENTS = "image_chapter_content";
 
 // limit
-  static const LIMIT = 5;
+  static const LIMITHOMECOMIC = 6;
+  static const LIMITSEEMORECOMIC = 20;
 }

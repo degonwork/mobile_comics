@@ -27,7 +27,7 @@ class ComicRepo {
         _apiClient = apiClient;
 
   // Fetch Api
-  Future<List<HomeComic>?> fetchAPIAndCreateDBHotComics(
+  Future<List<Comic>?> fetchAPIAndCreateDBHotComics(
       {required int limit}) async {
     try {
       final response = await _apiClient
@@ -35,11 +35,11 @@ class ComicRepo {
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         final listHotComicApi =
-            jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
+            jsonResponse.map((e) => Comic.fromJson(e)).toList();
         // print(listHotComicApi);
         await createComicToDB(listHotComicApi);
-        List<HomeComic>? listHotComics =
-            await readHotComicsFromDB(limit: AppConstant.LIMIT);
+        List<Comic>? listHotComics =
+            await readHotComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
         // Image? image = await HandleDatabase.readImageFromDB(
         // type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: "hotcomic1");
         // print(image!.path);
@@ -53,7 +53,7 @@ class ComicRepo {
     return null;
   }
 
-  Future<List<HomeComic>?> fetchAPIAndCreateDBNewComics(
+  Future<List<Comic>?> fetchAPIAndCreateDBNewComics(
       {required int limit}) async {
     try {
       final response = await _apiClient
@@ -61,11 +61,11 @@ class ComicRepo {
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         final listNewComicsApi =
-            jsonResponse.map((e) => HomeComic.fromJson(e)).toList();
+            jsonResponse.map((e) => Comic.fromJson(e)).toList();
         // print(listNewComicsApi);
         await createComicToDB(listNewComicsApi);
-        List<HomeComic>? listNewComics =
-            await readNewComicsFromDB(limit: AppConstant.LIMIT);
+        List<Comic>? listNewComics =
+            await readNewComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
         // listNewComics?.forEach((element) {
         //   print(element.id);
         // });
@@ -116,8 +116,8 @@ class ComicRepo {
 
   // Process Database
   // Create
-  Future<void> createComicToDB(List<HomeComic> listHomeComic) async {
-    await _imageRepo.createImageHomeComicToDB(listHomeComic);
+  Future<void> createComicToDB(List<Comic> listHomeComic) async {
+    await _imageRepo.createImageComicToDB(listHomeComic);
     List<Comic>? listComics = [];
     for (var homeComic in listHomeComic) {
       List<String> listIDImage =
@@ -146,7 +146,7 @@ class ComicRepo {
           .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: comicDB.id,
-      type: AppConstant.TYPEIMAGEHOMECOMICS[0],
+      type: AppConstant.TYPEIMAGECOMICS[0],
     ));
     await _imageRepo.updateImageToDB(Image(
       id: comicDB.image_thumnail_square_id!,
@@ -154,7 +154,7 @@ class ComicRepo {
           .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: comicDB.id,
-      type: AppConstant.TYPEIMAGEHOMECOMICS[1],
+      type: AppConstant.TYPEIMAGECOMICS[1],
     ));
     await _imageRepo.updateImageToDB(
       Image(
@@ -163,7 +163,7 @@ class ComicRepo {
             .split("${AppConstant.LOCALURL}${AppConstant.IMAGEURL}")
             .removeLast(),
         parent_id: comicDB.id,
-        type: AppConstant.TYPEIMAGEHOMECOMICS[2],
+        type: AppConstant.TYPEIMAGECOMICS[2],
       ),
     );
     Comic updateComic = Comic(
@@ -185,14 +185,13 @@ class ComicRepo {
   }
 
   // Read Home comic
-  Future<List<HomeComic>?> readHotComicsFromDB({required int limit}) async {
-    List<HomeComic>? listHotComics = [];
+  Future<List<Comic>?> readHotComicsFromDB({required int limit}) async {
+    List<Comic>? listHotComics = [];
     List<Comic>? listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics != null) {
       listComics.sort((comic1, comic2) => comic2.reads! - comic1.reads!);
       for (Comic comic in listComics) {
-        listHotComics
-            .addAll([await HomeComic.copyWith(await Comic.copyWith(comic))]);
+        listHotComics.addAll([await Comic.copyWith(comic)]);
       }
       limit = limit > listComics.length ? listComics.length : limit;
       return listHotComics.sublist(0, limit);
@@ -201,16 +200,15 @@ class ComicRepo {
     }
   }
 
-  Future<List<HomeComic>?> readNewComicsFromDB({required int limit}) async {
-    List<HomeComic> listNewComics = [];
+  Future<List<Comic>?> readNewComicsFromDB({required int limit}) async {
+    List<Comic> listNewComics = [];
     List<Comic>? listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics != null) {
       listComics.sort((comic1, comic2) =>
           (comic2.add_chapter_time!.millisecondsSinceEpoch -
               comic1.add_chapter_time!.millisecondsSinceEpoch));
       for (Comic comic in listComics) {
-        listNewComics
-            .addAll([await HomeComic.copyWith(await Comic.copyWith(comic))]);
+        listNewComics.addAll([await Comic.copyWith(comic)]);
       }
       limit = limit > listComics.length ? listComics.length : limit;
       return listNewComics.sublist(0, limit);

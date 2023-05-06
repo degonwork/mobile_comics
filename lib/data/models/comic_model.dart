@@ -112,13 +112,13 @@ class Comic {
 
   static Future<Comic> copyWith(Comic comic) async {
     String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: comic.id))!
+            type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id))!
         .path;
     String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[1], parentID: comic.id))!
+            type: AppConstant.TYPEIMAGECOMICS[1], parentID: comic.id))!
         .path;
     String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[2], parentID: comic.id))!
+            type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id))!
         .path;
     return Comic(
       id: comic.id,
@@ -154,65 +154,5 @@ class Comic {
       'update_time': update_time?.toString(),
       'add_chapter_time': add_chapter_time?.toString(),
     };
-  }
-}
-
-class HomeComic {
-  final String id;
-  final String? title;
-  final String? image_detail_path;
-  final String? image_thumnail_square_path;
-  final String? image_thumnail_rectangle_path;
-  final DateTime? add_chapter_time;
-  final int? reads;
-
-  HomeComic({
-    required this.id,
-    this.title,
-    required this.image_detail_path,
-    required this.image_thumnail_square_path,
-    required this.image_thumnail_rectangle_path,
-    required this.add_chapter_time,
-    required this.reads,
-  });
-
-  factory HomeComic.fromJson(Map<String, dynamic> json) {
-    return HomeComic(
-      id: json['id'],
-      title: json['title'],
-      image_detail_path: json['image_detail_path'],
-      image_thumnail_square_path: json['image_thumnail_square_path'],
-      image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
-      add_chapter_time: json['add_chapter_time'] != null
-          ? json['add_chapter_time'] is int
-              ? DateTime.fromMillisecondsSinceEpoch(json['add_chapter_time'])
-              : DateTime.parse(json['add_chapter_time'])
-          : null,
-      reads: json['reads'],
-    );
-  }
-
-  static Future<HomeComic> copyWith(Comic comic) async {
-    String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[0], parentID: comic.id))!
-        .path;
-    String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[1], parentID: comic.id))!
-        .path;
-    String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGEHOMECOMICS[2], parentID: comic.id))!
-        .path;
-    return HomeComic(
-      id: comic.id,
-      image_detail_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}}$imageDetailUrl",
-      image_thumnail_square_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
-      image_thumnail_rectangle_path:
-          "${AppConstant.BASEURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
-      title: comic.title,
-      add_chapter_time: comic.add_chapter_time,
-      reads: comic.reads,
-    );
   }
 }
