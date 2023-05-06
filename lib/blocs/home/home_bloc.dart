@@ -24,7 +24,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     print("New Comics");
     List<Comic>? listNewComics = await _comicRepo.fetchAPIAndCreateDBNewComics(
         limit: AppConstant.LIMITSEEMORECOMIC);
-    emit(HomeLoaded(
-        listHotComics: listHotComics!, listNewComics: listNewComics!));
+    if (listHotComics != null && listNewComics != null) {
+      emit(HomeLoaded(
+          listHotComics: listHotComics, listNewComics: listNewComics));
+    }
   }
 }

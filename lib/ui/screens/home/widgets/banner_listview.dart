@@ -59,8 +59,11 @@ class BannerListview extends StatelessWidget {
             ),
           );
         }
-        return const Center(
-          child: Icon(Icons.error),
+        return Center(
+          child: Image.asset(
+            "assets/images/banner_splash.png",
+            height: SizeConfig.screenHeight * 0.2,
+          ),
         );
       },
     );

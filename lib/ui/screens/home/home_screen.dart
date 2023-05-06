@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/ui/screens/view_more/new_comics_view_more/new_comics_view_more_screen.dart';
+import 'package:full_comics_frontend/ui/screens/view_more/new_comics_view_more/new_comics_view_more/new_comics_view_more_screen.dart';
+import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
 import '../../../blocs/view_more/view_more_bloc.dart';
 import '../../../config/app_router.dart';
 import '../../screens/auth/login/login_screen.dart';
@@ -19,19 +20,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.yellow,
-                    Colors.cyan,
-                    Colors.indigo,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
+            const BackGroundApp(),
             Padding(
               padding: EdgeInsets.only(
                 top: SizeConfig.screenHeight * 0.02,
