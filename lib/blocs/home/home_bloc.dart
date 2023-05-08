@@ -1,9 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/models/comic_model.dart';
-import 'package:full_comics_frontend/data/repository/chapter_repository.dart';
-import 'package:full_comics_frontend/data/repository/comic_repository.dart';
+import '../../config/app_constant.dart';
+import '../../data/models/comic_model.dart';
+import '../../data/repository/comic_repository.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -19,11 +18,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     LoadHomeComic evemt,
     Emitter<HomeState> emit,
   ) async {
-    List<HomeComic>? listHotComics =
-        await _comicRepo.fetchAPIAndCreateDBHotComics(limit: 5);
-    List<HomeComic>? listNewComics =
-        await _comicRepo.fetchAPIAndCreateDBNewComics(limit: 5);
-    emit(HomeLoaded(
-        listHotComics: listHotComics!, listNewComics: listNewComics!));
+    print("Hot Comics");
+    List<Comic>? listHotComics = await _comicRepo.fetchAPIAndCreateDBHotComics(
+        limit: AppConstant.LIMITHOMECOMIC);
+    print("New Comics");
+    List<Comic>? listNewComics = await _comicRepo.fetchAPIAndCreateDBNewComics(
+        limit: AppConstant.LIMITSEEMORECOMIC);
+    if (listHotComics != null && listNewComics != null) {
+      emit(HomeLoaded(
+          listHotComics: listHotComics, listNewComics: listNewComics));
+    }
   }
 }

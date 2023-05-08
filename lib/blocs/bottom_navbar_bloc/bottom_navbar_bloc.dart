@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../ui/screens/home/home_screen.dart';
 part 'bottom_navbar_event.dart';
 part 'bottom_navbar_state.dart';

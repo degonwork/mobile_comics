@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
-import 'package:full_comics_frontend/data/repository/categories_comics_repository.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
+import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
 import '../ui/screens/splash/splash_screen.dart';
@@ -11,6 +9,9 @@ import '../config/app_constant.dart';
 import '../data/repository/comic_repository.dart';
 import '../blocs/bottom_navbar_bloc/bottom_navbar_bloc.dart';
 import '../config/app_router.dart';
+import '../blocs/view_more/view_more_bloc.dart';
+import '../data/repository/categories_comics_repository.dart';
+import '../data/repository/category_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
-          create: (context) => const ApiClient(baseUrl: AppConstant.BASEURL),
+          create: (context) =>
+              const ApiClient(baseServerUrl: AppConstant.BASESERVERURL),
         ),
         RepositoryProvider<ImageRepo>(
           create: (context) => ImageRepo(),
@@ -62,15 +64,24 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             )..add(LoadHomeComic()),
           ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
+          BlocProvider<ViewMoreBloc>(
+            create: (context) => ViewMoreBloc(
+              comicRepo: context.read<ComicRepo>(),
+            ),
           ),
-          initialRoute: SplashScreen.routeName,
-          routes: AppRouter.route,
+        ],
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              initialRoute: SplashScreen.routeName,
+              routes: AppRouter.routes,
+            );
+          },
         ),
       ),
     );

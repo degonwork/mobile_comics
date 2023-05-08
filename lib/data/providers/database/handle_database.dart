@@ -1,5 +1,5 @@
-import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
-import 'package:full_comics_frontend/data/models/category_model.dart';
+import '../../models/categoriescomics_model.dart';
+import '../../models/category_model.dart';
 import '../../models/chapter_model.dart';
 import '../../providers/database/storage_database.dart';
 import '../../models/comic_model.dart';
@@ -13,9 +13,13 @@ class HandleDatabase {
         Comic? comic = await readComicByIDFromDB(id: comics[i].id);
         if (comic == null) {
           await StorageDatabase.instance.createComicToDB(comics[i]);
+          print("${i + 1}: Comic created");
+        } else {
+          print("${i + 1}: Comic don't create");
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<List<Comic>?> readManyComicsFromDB() async {
@@ -40,9 +44,13 @@ class HandleDatabase {
         Chapter? chapter = await readChapterByIDFromDB(id: chapters[i].id);
         if (chapter == null) {
           await StorageDatabase.instance.createChapterToDB(chapters[i]);
+          print("${i + 1}: Chapter created");
+        } else {
+          print("${i + 1}: Chapter dont't create");
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<Chapter?> readChapterByIDFromDB({required String? id}) async {
@@ -64,9 +72,13 @@ class HandleDatabase {
             numerical: images[i].numerical);
         if (imagesFromDB == null) {
           await StorageDatabase.instance.createImageToDB(images[i]);
+          print("${i + 1}: Image created");
+        } else {
+          print("${i + 1}: Image don't create");
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<Image?> readImageFromDB(
@@ -126,9 +138,13 @@ class HandleDatabase {
         if (categoryComic == null) {
           await StorageDatabase.instance
               .createCategoriesComicsToDB(categoriesComics[i]);
+          print("${i + 1}: CategoriesComics created");
+        } else {
+          print("${i + 1}: CategoriesComics don't create");
         }
       }
     }
+    print("--------------------------------");
   }
 
   static Future<CategoriesComics?> readCategoriesComicsByIDFromDB(

@@ -22,7 +22,7 @@ class BannerListview extends StatelessWidget {
               itemCount: listHotComics.length,
               itemBuilder: (context, index, index1) {
                 return CachedNetworkImage(
-                  imageUrl: listHotComics[index].image_thumnail_rectangle!,
+                  imageUrl: listHotComics[index].image_thumnail_rectangle_path!,
                   imageBuilder: (context, imageProvider) {
                     return GestureDetector(
                       onTap: () {
@@ -59,8 +59,11 @@ class BannerListview extends StatelessWidget {
             ),
           );
         }
-        return const Center(
-          child: Icon(Icons.error),
+        return Center(
+          child: Image.asset(
+            "assets/images/banner_splash.png",
+            height: SizeConfig.screenHeight * 0.2,
+          ),
         );
       },
     );

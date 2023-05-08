@@ -1,7 +1,7 @@
-import 'package:full_comics_frontend/data/models/comic_model.dart';
-import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
 import 'package:uuid/uuid.dart';
+import '../../data/models/comic_model.dart';
+import '../../data/providers/database/handle_database.dart';
+import '../../data/repository/category_repository.dart';
 import '../models/categoriescomics_model.dart';
 
 class CategoriesComicsRepo {
@@ -21,6 +21,7 @@ class CategoriesComicsRepo {
     for (String category in comic.categories!) {
       int? i = await _categoryRepo.createCategoryToDB(category);
       if (i != null) {
+        print("${i + 1}: Category created");
         String categoryId =
             (await _categoryRepo.readCategoryByNameFromDB(name: category))!.id;
         CategoriesComics categoriesComics = CategoriesComics(
@@ -30,6 +31,7 @@ class CategoriesComicsRepo {
         );
         listCategoriesComic.add(categoriesComics);
       } else {
+        print("${i! + 1}: Category don't create");
         String categoryId =
             (await _categoryRepo.readCategoryByNameFromDB(name: category))!.id;
         CategoriesComics categoriesComics = CategoriesComics(
@@ -44,5 +46,6 @@ class CategoriesComicsRepo {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComic);
     }
+    print("--------------------------------");
   }
 }

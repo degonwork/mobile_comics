@@ -7,45 +7,46 @@ import '../models/image_model.dart';
 
 class ImageRepo {
   // Create
-  Future<void> createImageHomeComicToDB(List<HomeComic> listHomeComic) async {
+  Future<void> createImageComicToDB(List<Comic> listHomeComic) async {
     final List<Image> listImageObject = [];
     for (var homeComic in listHomeComic) {
       listImageObject.addAll(
         [
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_detail_path!
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[0],
+            type: AppConstant.TYPEIMAGECOMICS[0],
             parent_id: homeComic.id,
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_detail!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_thumnail_square_path!
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[1],
+            type: AppConstant.TYPEIMAGECOMICS[1],
             parent_id: homeComic.id,
           ),
           Image(
             id: const Uuid().v4(),
-            path: homeComic.image_thumnail_square!
-                .split("${AppConstant.IMAGEHOMEURL}")
+            path: homeComic.image_thumnail_rectangle_path!
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGEHOMECOMICS[2],
+            type: AppConstant.TYPEIMAGECOMICS[2],
             parent_id: homeComic.id,
           ),
         ],
       );
     }
+
     await HandleDatabase.createImageToDB(images: listImageObject);
   }
 
   Future<List<String>> readAllIDImageComicFromDB(
       {required String comicId}) async {
     final List<String> iDImage = [];
-    for (String typeHomeComic in AppConstant.TYPEIMAGEHOMECOMICS) {
+    for (String typeHomeComic in AppConstant.TYPEIMAGECOMICS) {
       Image? image = await HandleDatabase.readImageFromDB(
         type: typeHomeComic,
         parentID: comicId,
@@ -64,7 +65,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.image_thumnail!
-                .split("${AppConstant.IMAGETHUMNAILCHAPTERURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
             parent_id: chapter.id,
@@ -83,7 +84,7 @@ class ImageRepo {
           Image(
             id: const Uuid().v4(),
             path: chapter.content![i]
-                .split("${AppConstant.IMAGECHAPTERCONTENTURL}")
+                .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
                 .removeLast(),
             type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
             parent_id: chapter.id,
