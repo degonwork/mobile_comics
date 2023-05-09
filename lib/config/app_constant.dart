@@ -1,6 +1,6 @@
 class AppConstant {
-  static const BASESERVERURL = "http://10.0.2.2:3000";
-  static const BASELOCALURL = "http://localhost:3000";
+  static const baseServerUrl = "http://10.0.2.2:3000";
+  static const baseLocalUrl = "http://localhost:3000";
   // Comics
   static const COMICURL = "/comics/";
   static const HOTCOMICURL = "home/hot-comics";

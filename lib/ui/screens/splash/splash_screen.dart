@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
 import '../../../config/size_config.dart';
@@ -28,32 +30,36 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-        body: Stack(
-      children: [
-        const BackGroundApp(),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return Scaffold(
+            body: Stack(
           children: [
-            const Text(
-              'Chào mừng bạn đến với App Truyện',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            const BackGroundApp(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Chào mừng bạn đến với App Truyện',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Image.asset(
+                  'assets/images/banner_splash.png',
+                  height: SizeConfig.screenHeight / 2.52,
+                  width: SizeConfig.screenWidth / 1.2,
+                ),
+                Container(),
+              ],
             ),
-            Image.asset(
-              'assets/images/banner_splash.png',
-              height: SizeConfig.screenHeight / 2.52,
-              width: SizeConfig.screenWidth / 1.2,
-            ),
-            Container(),
           ],
-        ),
-      ],
-    ));
+        ));
+      },
+    );
   }
 }

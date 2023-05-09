@@ -37,7 +37,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
           final comic = state.comic;
-print(comic.image_thumnail_square_path);
+print(comic.image_detail_path);
           return Scaffold(
             body: Container(
               height: SizeConfig.screenHeight,
@@ -60,7 +60,7 @@ print(comic.image_thumnail_square_path);
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(Icons.arrow_back)),
+                        icon: const Icon(Icons.arrow_back,color: Colors.black,)),
                     floating: false,
                     snap: false,
                     pinned: true,
@@ -69,8 +69,9 @@ print(comic.image_thumnail_square_path);
                       title: Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(comic.title!)),
+                        
                       background: CachedNetworkImage(
-                        imageUrl: comic.image_thumnail_square_path!,
+                        imageUrl: comic.image_detail_path!,
                         imageBuilder: (context, imageProvider) {
                           return Container(
                             decoration: BoxDecoration(

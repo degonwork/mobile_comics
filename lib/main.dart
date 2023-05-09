@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider<ApiClient>(
           create: (context) =>
-              const ApiClient(baseServerUrl: AppConstant.BASESERVERURL),
+              const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
         ),
         RepositoryProvider<ImageRepo>(
           create: (context) => ImageRepo(),
@@ -77,18 +77,14 @@ class MyApp extends StatelessWidget {
             )
             ,
         ],
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              initialRoute: SplashScreen.routeName,
-              routes: AppRouter.routes,
-            );
-          },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: SplashScreen.routeName,
+          routes: AppRouter.routes,
         ),
       ),
     );

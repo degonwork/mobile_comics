@@ -11,11 +11,10 @@ class Infor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ComicDetailBloc, ComicDetailState>(
-      
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
           final comic = state.comic;
-        
+        // print(comic.reads);
         return Container(
           padding: EdgeInsets.zero,
           child: SingleChildScrollView(
@@ -127,20 +126,6 @@ class Infor extends StatelessWidget {
                         height: SizeConfig.screenHeight / 80,
                       ),
                       Expanded(
-                        // child: ListView.builder(
-                        //   itemCount: comic.categories!.length,
-                        //   itemBuilder: (context,index) => Container(
-                        //     padding: EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth / 50),
-                        //     decoration: BoxDecoration(
-                        //       color: Colors.redAccent,
-                        //       borderRadius: BorderRadius.circular(10),
-                        //       ),
-                        //       child: Center(
-                        //         child: Text('${comic.categories}',style: const TextStyle(color: Colors.white),),
-                        //       ),
-                        //   ),
-                          
-                        //   ),
                         child: ListView.separated(
                           
                           scrollDirection: Axis.horizontal,

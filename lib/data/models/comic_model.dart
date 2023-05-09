@@ -1,4 +1,6 @@
 import 'package:full_comics_frontend/config/app_constant.dart';
+import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
+import 'package:full_comics_frontend/data/models/category_model.dart';
 import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
 import '.././models/chapter_model.dart';
 
@@ -111,6 +113,20 @@ class Comic {
   }
 
   static Future<Comic> copyWith(Comic comic) async {
+    final listCategories = [];
+    List<CategoriesComics>? categoriesComic = await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
+    if (categoriesComic != null) {
+      for (var i = 0; i < categoriesComic.length; i++) {
+      
+      Category? category = await HandleDatabase.readCategoryByIDFromDB(
+      id: categoriesComic[i].category_id,
+     );
+    
+     listCategories.add(category!.name);
+     
+    }
+    }
+    
     String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
             type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id))!
         .path;
@@ -121,13 +137,14 @@ class Comic {
             type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id))!
         .path;
     return Comic(
+      categories: listCategories,
       id: comic.id,
       image_detail_path:
-          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageDetailUrl",
+          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageDetailUrl",
       image_thumnail_square_path:
-          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
+          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
       image_thumnail_rectangle_path:
-          "${AppConstant.BASESERVERURL}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
+          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
       title: comic.title,
       author: comic.author,
       description: comic.description,

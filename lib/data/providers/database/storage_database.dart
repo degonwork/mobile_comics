@@ -219,6 +219,7 @@ class StorageDatabase {
   }
 
   // Process category
+  
   Future<int> createCategoryToDB(Category category) async {
     final db = await instance.database;
     final map = category.toMap();
@@ -226,7 +227,7 @@ class StorageDatabase {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<Category?> readCategoryByIDFromDB(String? name) async {
+  Future<Category?> readCategoryByNameFromDB(String? name) async {
     final db = await instance.database;
     final maps = await db.query(
       tableCategories,
@@ -240,7 +241,20 @@ class StorageDatabase {
       return null;
     }
   }
-
+Future<Category?> readCategoryByIDFromDB(String? id) async{
+  final db= await instance.database;
+  final maps = await db.query(
+    tableCategories,
+    columns: CategoryField.values,
+    where: '${CategoryField.id} = ?',
+    whereArgs: [id],
+    );
+  if (maps.isNotEmpty) {
+      return Category.fromJson(maps.first);
+    } else {
+      return null;
+    }
+}
   Future<void> updateCategoryToDB(Category category) async {
     final db = await instance.database;
     final map = category.toMap();
