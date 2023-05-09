@@ -6,8 +6,10 @@ part 'comic_detail_event.dart';
 part 'comic_detail_state.dart';
 
 class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
-   final ComicRepo _comicRepo;
-  ComicDetailBloc({required ComicRepo comicRepo}) : _comicRepo = comicRepo, super(ComicDetailInitial()) {
+  final ComicRepo _comicRepo;
+  ComicDetailBloc({required ComicRepo comicRepo})
+      : _comicRepo = comicRepo,
+        super(ComicDetailInitial()) {
     on<LoadDetailComic>(_onLoadComicDetail);
   }
   Future<void> _onLoadComicDetail(
@@ -15,8 +17,7 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     Emitter<ComicDetailState> emit,
   ) async {
     // print(event.id);
-    Comic? comic = await _comicRepo.fetchDetailComics(id: event.id);
-    
-    emit(ComicDetailLoaded(comic!));
+    Comic comic = await _comicRepo.fetchDetailComics(id: event.id);
+    emit(ComicDetailLoaded(comic));
   }
 }

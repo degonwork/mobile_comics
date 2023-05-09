@@ -11,10 +11,10 @@ class HomeInitial extends HomeState {
 }
 
 class HomeLoaded extends HomeState {
-  HomeLoaded({
-    required this.listHotComics,
-    required this.listNewComics,
-  });
+  HomeLoaded(
+    this.listHotComics,
+    this.listNewComics,
+  );
   final List<Comic> listHotComics;
   final List<Comic> listNewComics;
 

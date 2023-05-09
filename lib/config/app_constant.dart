@@ -1,3 +1,5 @@
+import 'package:full_comics_frontend/data/models/comic_model.dart';
+
 class AppConstant {
   static const baseServerUrl = "http://10.0.2.2:3000";
   static const baseLocalUrl = "http://localhost:3000";
@@ -26,4 +28,8 @@ class AppConstant {
 // limit
   static const LIMITHOMECOMIC = 6;
   static const LIMITSEEMORECOMIC = 20;
+
+// Error
+  static const COMICNOTEXIST =
+      Comic(id: "Not-exist", chapters: [], categories: []);
 }

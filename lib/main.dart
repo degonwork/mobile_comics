@@ -73,9 +73,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<ComicDetailBloc>(
             create: (context) => ComicDetailBloc(
               comicRepo: context.read<ComicRepo>(),
-              )
-            )
-            ,
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

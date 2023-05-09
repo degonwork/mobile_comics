@@ -44,7 +44,7 @@ class Comic {
   final String? title;
   final String? author;
   final int? year;
-  final List<Chapter>? chapters;
+  final List<Chapter> chapters;
   final int? reads;
   final DateTime? chapter_update_time;
   final DateTime? update_time;
@@ -54,7 +54,7 @@ class Comic {
   final String? image_thumnail_square_id;
   final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
-  final List<dynamic>? categories;
+  final List<dynamic> categories;
 
   const Comic({
     required this.id,
@@ -67,13 +67,13 @@ class Comic {
     this.title,
     this.author,
     this.year,
-    this.chapters,
+    required this.chapters,
     this.reads,
     this.chapter_update_time,
     this.add_chapter_time,
     this.update_time,
     this.description,
-    this.categories,
+    required this.categories,
   });
 
   factory Comic.fromJson(Map<String, dynamic> json) {
@@ -83,13 +83,17 @@ class Comic {
       image_thumnail_square_path: json['image_thumnail_square_path'],
       image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
       title: json['title'],
-      categories: json['categories'],
+      categories:
+          json['categories'] != null ? List.from(json['categories']) : [],
       author: json['author'],
       description: json['description'],
       year: json['year'],
-      // chapters: json['chapters'] != null
-      //     ? List.from(json['chapters'].map((json) => Chapter.fromJson(json)))
-      //     : null,
+      chapters: json['chapters'] != null
+          ? List.from(json['chapters']).isNotEmpty
+              ? List.from(
+                  json['chapters'].map((json) => Chapter.fromJson(json)))
+              : []
+          : [],
       reads: json['reads'],
       chapter_update_time: json['chapter_update_time'] != null
           ? json['chapter_update_time'] is int
@@ -114,19 +118,16 @@ class Comic {
 
   static Future<Comic> copyWith(Comic comic) async {
     final listCategories = [];
-    List<CategoriesComics>? categoriesComic = await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
+    List<CategoriesComics>? categoriesComic =
+        await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
     if (categoriesComic != null) {
       for (var i = 0; i < categoriesComic.length; i++) {
-      
-      Category? category = await HandleDatabase.readCategoryByIDFromDB(
-      id: categoriesComic[i].category_id,
-     );
-    
-     listCategories.add(category!.name);
-     
+        Category? category = await HandleDatabase.readCategoryByIDFromDB(
+          id: categoriesComic[i].category_id,
+        );
+        listCategories.add(category!.name);
+      }
     }
-    }
-    
     String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
             type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id))!
         .path;
@@ -137,7 +138,6 @@ class Comic {
             type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id))!
         .path;
     return Comic(
-      categories: listCategories,
       id: comic.id,
       image_detail_path:
           "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageDetailUrl",
@@ -148,6 +148,8 @@ class Comic {
       title: comic.title,
       author: comic.author,
       description: comic.description,
+      categories: listCategories,
+      chapters: [],
       year: comic.year,
       reads: comic.reads,
       chapter_update_time: comic.chapter_update_time,

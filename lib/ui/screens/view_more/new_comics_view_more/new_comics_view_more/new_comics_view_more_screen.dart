@@ -44,58 +44,62 @@ class NewComicViewMoreScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is ViewMoreLoaded) {
                     final listNewComicsViewMore = state.listNewComicsViewMore;
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: MediaQuery.removePadding(
-                          context: context,
-                          removeTop: true,
-                          child: GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: listNewComicsViewMore.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisSpacing: 20,
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.7,
-                              ),
-                              itemBuilder: (context, index) {
-                                return SizedBox(
-                                  height: SizeConfig.screenHeight / 3.78,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CachedNetworkImage(
-                                        imageUrl: listNewComicsViewMore[index]
-                                            .image_thumnail_square_path!,
-                                        imageBuilder: (context, imageProvider) {
-                                          return Container(
-                                            height:
-                                                SizeConfig.screenHeight / 4.2,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.fill,
+                    if (listNewComicsViewMore.isNotEmpty) {
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: MediaQuery.removePadding(
+                            context: context,
+                            removeTop: true,
+                            child: GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: listNewComicsViewMore.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 20,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.7,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return SizedBox(
+                                    height: SizeConfig.screenHeight / 3.78,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CachedNetworkImage(
+                                          imageUrl: listNewComicsViewMore[index]
+                                              .image_thumnail_square_path!,
+                                          imageBuilder:
+                                              (context, imageProvider) {
+                                            return Container(
+                                              height:
+                                                  SizeConfig.screenHeight / 4.2,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      Text(
-                                        listNewComicsViewMore[index].title!,
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
+                                            );
+                                          },
+                                        ),
+                                        Text(
+                                          listNewComicsViewMore[index].title!,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   }
                   return Center(
                     child: Image.asset(

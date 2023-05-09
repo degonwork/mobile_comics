@@ -11,16 +11,16 @@ class ImageField {
 
 class Image {
   final String id;
-  final String? path;
-  final String? type;
-  final String? parent_id;
+  final String path;
+  final String type;
+  final String parent_id;
   final int? numerical;
 
   Image({
     required this.id,
     required this.path,
-    this.type,
-    this.parent_id,
+    required this.type,
+    required this.parent_id,
     this.numerical,
   });
 
