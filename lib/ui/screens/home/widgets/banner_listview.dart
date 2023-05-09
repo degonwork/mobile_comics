@@ -16,6 +16,7 @@ class BannerListview extends StatelessWidget {
       builder: (context, state) {
         if (state is HomeLoaded) {
           final listHotComics = state.listHotComics;
+          print(listHotComics[0].image_detail_path);
           return SizedBox(
             height: SizeConfig.screenHeight * 0.266,
             child: CarouselSlider.builder(

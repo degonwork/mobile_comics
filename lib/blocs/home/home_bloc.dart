@@ -18,10 +18,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     LoadHomeComic evemt,
     Emitter<HomeState> emit,
   ) async {
-    print("Hot Comics");
+    // print("Hot Comics");
     List<Comic>? listHotComics = await _comicRepo.fetchAPIAndCreateDBHotComics(
         limit: AppConstant.LIMITHOMECOMIC);
-    print("New Comics");
+    // print("New Comics");
     List<Comic>? listNewComics = await _comicRepo.fetchAPIAndCreateDBNewComics(
         limit: AppConstant.LIMITSEEMORECOMIC);
     if (listHotComics != null && listNewComics != null) {

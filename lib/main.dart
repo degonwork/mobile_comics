@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider<ApiClient>(
           create: (context) =>
-              const ApiClient(baseServerUrl: AppConstant.BASESERVERURL),
+              const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
         ),
         RepositoryProvider<ImageRepo>(
           create: (context) => ImageRepo(),
@@ -69,19 +70,21 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
+          BlocProvider<ComicDetailBloc>(
+            create: (context) => ComicDetailBloc(
+              comicRepo: context.read<ComicRepo>(),
+              )
+            )
+            ,
         ],
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              initialRoute: SplashScreen.routeName,
-              routes: AppRouter.routes,
-            );
-          },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: SplashScreen.routeName,
+          routes: AppRouter.routes,
         ),
       ),
     );

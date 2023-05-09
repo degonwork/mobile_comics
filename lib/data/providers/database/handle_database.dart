@@ -19,7 +19,7 @@ class HandleDatabase {
         }
       }
     }
-    print("--------------------------------");
+    // print("--------------------------------");
   }
 
   static Future<List<Comic>?> readManyComicsFromDB() async {
@@ -115,10 +115,13 @@ class HandleDatabase {
     }
     return null;
   }
-
+static Future<Category?> readCategoryByIDFromDB({String? id}) async{
+  Category? category = await StorageDatabase.instance.readCategoryByIDFromDB(id);
+  return category;
+}
   static Future<Category?> readCategoryByNameFromDB({String? name}) async {
     Category? category =
-        await StorageDatabase.instance.readCategoryByIDFromDB(name);
+        await StorageDatabase.instance.readCategoryByNameFromDB(name);
     return category;
   }
 

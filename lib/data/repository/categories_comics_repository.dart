@@ -12,6 +12,7 @@ class CategoriesComicsRepo {
   Future<void> processCategoriesComicsToDB(Comic comic) async {
     List<CategoriesComics>? allCategoriesComicsByComicIDFromDB =
         await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
+        // print(allCategoriesComicsByComicIDFromDB);
     if (allCategoriesComicsByComicIDFromDB != null) {
       await HandleDatabase.deleteAllCategoriesComicsByComicIDFromDB(
           comicID: comic.id);
@@ -31,7 +32,7 @@ class CategoriesComicsRepo {
         );
         listCategoriesComic.add(categoriesComics);
       } else {
-        print("${i! + 1}: Category don't create");
+        print(" Category don't create");
         String categoryId =
             (await _categoryRepo.readCategoryByNameFromDB(name: category))!.id;
         CategoriesComics categoriesComics = CategoriesComics(

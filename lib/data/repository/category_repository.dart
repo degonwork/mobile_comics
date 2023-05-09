@@ -10,8 +10,10 @@ class CategoryRepo {
     );
     return await HandleDatabase.createCategoryToDB(category: createCategory);
   }
-
+Future<Category?> readCategoryByIDFromDB({required String id})async{
+  return await HandleDatabase.readCategoryByIDFromDB(id: id);
+}
   Future<Category?> readCategoryByNameFromDB({required String name}) async {
-    return HandleDatabase.readCategoryByNameFromDB(name: name);
+    return await HandleDatabase.readCategoryByNameFromDB(name: name);
   }
 }

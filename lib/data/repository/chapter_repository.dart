@@ -29,7 +29,7 @@ class ChapterRepo {
       // );
       // print(imageChapterContents);
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
 
     // return chapter;
@@ -70,7 +70,7 @@ class ChapterRepo {
     await _imageRepo.updateImageToDB(Image(
       id: chapterDB!.image_thumnail_id!,
       path: chapter.image_thumnail!
-          .split("${AppConstant.BASELOCALURL}${AppConstant.IMAGEURL}")
+          .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
           .removeLast(),
       parent_id: chapterDB.id,
       type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,

@@ -6,3 +6,10 @@ abstract class ComicDetailEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+class LoadDetailComic extends ComicDetailEvent{
+  final String id;
+
+  const LoadDetailComic(this.id);
+  @override
+  List<Object> get props => [id];
+}
