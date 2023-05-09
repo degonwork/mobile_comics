@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
+import 'package:full_comics_frontend/data/models/category_model.dart';
+
 import '../../config/app_constant.dart';
 import '../../data/providers/database/handle_database.dart';
 import '../../data/repository/categories_comics_repository.dart';
@@ -48,7 +51,7 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
     return null;
   }
@@ -78,18 +81,22 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
     return null;
   }
 
-  Future fetchDetailComics({required String id}) async {
+  Future<Comic?> fetchDetailComics({required String id}) async {
     try {
       final response = await _apiClient.getData('$_comicUrl$id');
       if (response.statusCode == 200) {
         dynamic jsonResponse = jsonDecode(response.body);
         final comic = Comic.fromJson(jsonResponse);
+        // return comic;
+        
         // await updateComicToDB(comic);
+        // print(comic);
+        return comic;
         // List<CategoriesComics>? listCategoriesComics =
         //     await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
         // for (var element in listCategoriesComics!) {
@@ -110,8 +117,10 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
+    return null;
+    
   }
 
   // Process Database
@@ -138,8 +147,10 @@ class ComicRepo {
 
   // Update
   Future<void> updateComicToDB(Comic comic) async {
-    await _categoriesComicsRepo.processCategoriesComicsToDB(comic);
+    // await _categoriesComicsRepo.processCategoriesComicsToDB(comic);
     Comic? comicDB = await HandleDatabase.readComicByIDFromDB(id: comic.id);
+    // print(comicDB);
+    // print(comic.image_detail_path);
     await _imageRepo.updateImageToDB(Image(
       id: comicDB!.image_detail_id!,
       path: comic.image_detail_path!
@@ -181,7 +192,7 @@ class ComicRepo {
       update_time: comic.update_time,
     );
     await HandleDatabase.updateComicToDB(updateComic);
-    await _chapterRepo.createChapterToDB(comic.chapters!);
+    // await _chapterRepo.createChapterToDB(comic.chapters!);
   }
 
   // Read Home comic

@@ -19,7 +19,7 @@ class HandleDatabase {
         }
       }
     }
-    print("--------------------------------");
+    // print("--------------------------------");
   }
 
   static Future<List<Comic>?> readManyComicsFromDB() async {

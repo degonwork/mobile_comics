@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -69,6 +70,12 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
+          BlocProvider<ComicDetailBloc>(
+            create: (context) => ComicDetailBloc(
+              comicRepo: context.read<ComicRepo>(),
+              )
+            )
+            ,
         ],
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {

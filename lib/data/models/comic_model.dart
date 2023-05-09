@@ -52,7 +52,7 @@ class Comic {
   final String? image_thumnail_square_id;
   final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
-  final List<String>? categories;
+  final List<dynamic>? categories;
 
   const Comic({
     required this.id,
@@ -85,9 +85,9 @@ class Comic {
       author: json['author'],
       description: json['description'],
       year: json['year'],
-      chapters: json['chapters'] != null
-          ? List.from(json['chapters'].map((json) => Chapter.fromJson(json)))
-          : null,
+      // chapters: json['chapters'] != null
+      //     ? List.from(json['chapters'].map((json) => Chapter.fromJson(json)))
+      //     : null,
       reads: json['reads'],
       chapter_update_time: json['chapter_update_time'] != null
           ? json['chapter_update_time'] is int
