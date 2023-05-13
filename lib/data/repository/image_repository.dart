@@ -52,21 +52,6 @@ class ImageRepo {
     }
   }
 
-  Future<List<String>> readAllIDImageComicFromDB(
-      {required String comicId}) async {
-    final List<String> iDImage = [];
-    for (int i = 0; i < AppConstant.TYPEIMAGECOMICS.length; i++) {
-      Image? image = await HandleDatabase.readImageFromDB(
-        type: AppConstant.TYPEIMAGECOMICS[i],
-        parentID: comicId,
-      );
-      if (image != null) {
-        iDImage.add(image.id);
-      }
-    }
-    return iDImage;
-  }
-
   Future<void> createImageThumnailChapterToDB(
       {required List<Chapter> listChapters}) async {
     final List<Image> listImageObject = [];
@@ -92,11 +77,11 @@ class ImageRepo {
 
   Future<void> createImageChapterContentToDB({required Chapter chapter}) async {
     final List<Image> listImageObject = [];
-    if (chapter.content.isNotEmpty) {
-      for (int i = 0; i < chapter.content.length; i++) {
+    if (chapter.content!.isNotEmpty) {
+      for (int i = 0; i < chapter.content!.length; i++) {
         Image imageContent = Image(
           id: const Uuid().v4(),
-          path: chapter.content[i]
+          path: chapter.content![i]
               .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
               .removeLast(),
           type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
@@ -113,12 +98,14 @@ class ImageRepo {
     }
   }
 
-  // Read
-  Future<String?> readIDImageThumnailChapterFromDB(
-      {required String chapterId}) async {
+// Read
+  Future<String?> readIDImageFromDB({
+    required String parentId,
+    required String typeImage,
+  }) async {
     Image? image = await HandleDatabase.readImageFromDB(
-      type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
-      parentID: chapterId,
+      type: typeImage,
+      parentID: parentId,
     );
     if (image != null) {
       return image.id;
@@ -129,20 +116,43 @@ class ImageRepo {
   Future<List<Image>> readImageChapterContent(
       {required String chapterId}) async {
     return await HandleDatabase.readManyImageFromDB(
-        type: AppConstant.TYPEIMAGECHAPTERCONTENTS, parentID: chapterId);
+      type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+      parentID: chapterId,
+    );
   }
 
-  // Update
-  Future<void> updateImageToDB({required Image image}) async {
-    return await HandleDatabase.updateImageToDB(image: image);
-  }
-
+// delete
   Future<void> deleteImageChapterContent({required Chapter chapter}) async {
     await HandleDatabase.deleteImageToDB(
       type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
       parentID: chapter.id,
     );
     print("Delete content");
-    await createImageChapterContentToDB(chapter: chapter);
+  }
+
+  // More
+  Future createOrUpdateImage({
+    required String? imageID,
+    required String? imagePath,
+    required dynamic parentDB,
+    required String typeImage,
+    required dynamic parent,
+  }) async {
+    if (imageID != null && imagePath != null) {
+      await HandleDatabase.updateImageToDB(
+        image: Image(
+          id: imageID,
+          path: imagePath
+              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .removeLast(),
+          parent_id: parentDB.id,
+          type: typeImage,
+        ),
+      );
+      print("$typeImage of comicID ${parentDB.id} is updated");
+    } else if (imageID == null && imagePath != null) {
+      await createImageComicToDB(listHomeComic: [parent]);
+      print("$typeImage of comicID ${parentDB.id} is created");
+    }
   }
 }

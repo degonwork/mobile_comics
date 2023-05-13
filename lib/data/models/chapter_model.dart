@@ -11,13 +11,13 @@ class ChapterField {
     update_time,
   ];
 
-  static final String id = 'id';
-  static final String image_thumnail_id = 'image_thumnail_id';
-  static final String comic_id = 'comic_id';
-  static final String chapter_des = 'chapter_des';
-  static final String numerical = 'numerical';
-  static final String content_update_time = 'content_update_time';
-  static final String update_time = 'update_time';
+  static String id = 'id';
+  static String image_thumnail_id = 'image_thumnail_id';
+  static String comic_id = 'comic_id';
+  static String chapter_des = 'chapter_des';
+  static String numerical = 'numerical';
+  static String content_update_time = 'content_update_time';
+  static String update_time = 'update_time';
 }
 
 class Chapter {
@@ -28,7 +28,7 @@ class Chapter {
   final String? chapter_des;
   final int? numerical;
   final DateTime? publish_date;
-  final List<String> content;
+  final List<String>? content;
   final DateTime? content_update_time;
   final DateTime? update_time;
 
@@ -40,7 +40,7 @@ class Chapter {
     this.chapter_des,
     this.numerical,
     this.publish_date,
-    required this.content,
+    this.content,
     this.content_update_time,
     this.update_time,
   });

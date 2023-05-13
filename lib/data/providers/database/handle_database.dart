@@ -70,9 +70,10 @@ class HandleDatabase {
     for (int i = 0; i < images.length; i++) {
       if (images[i] is Image) {
         Image? imagesFromDB = await readImageFromDB(
-            type: images[i].type,
-            parentID: images[i].parent_id,
-            numerical: images[i].numerical);
+          type: images[i].type,
+          parentID: images[i].parent_id,
+          numerical: images[i].numerical,
+        );
         if (imagesFromDB == null) {
           await StorageDatabase.instance.createImageToDB(image: images[i]);
           print("${i + 1}: Image created");
@@ -86,8 +87,11 @@ class HandleDatabase {
 
   static Future<Image?> readImageFromDB(
       {required String type, required String parentID, int? numerical}) async {
-    Image? image = await StorageDatabase.instance
-        .readImageFromDB(type: type, parentId: parentID, numerical: numerical);
+    Image? image = await StorageDatabase.instance.readImageFromDB(
+      type: type,
+      parentId: parentID,
+      numerical: numerical,
+    );
     return image;
   }
 

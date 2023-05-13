@@ -6,8 +6,8 @@ class CategoryField {
     name,
   ];
 
-  static final String id = 'id';
-  static final String name = 'name';
+  static String id = 'id';
+  static String name = 'name';
 }
 
 class Category {

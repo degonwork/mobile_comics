@@ -64,22 +64,25 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                       flexibleSpace: FlexibleSpaceBar(
                         title: Align(
                             alignment: Alignment.bottomCenter,
-                            child: Text(comic.title!)),
-                        background: CachedNetworkImage(
-                          imageUrl: comic.image_detail_path!,
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.fill),
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
+                            child: Text(
+                                comic.title != null ? '${comic.title}' : "")),
+                        background: comic.image_detail_path != null
+                            ? CachedNetworkImage(
+                                imageUrl: comic.image_detail_path!,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill),
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                        "assets/images/banner_splash.png"),
+                              )
+                            : Image.asset("assets/images/banner_splash.png"),
                       ),
                     ),
                     SliverList(

@@ -22,26 +22,30 @@ class BannerListview extends StatelessWidget {
               child: CarouselSlider.builder(
                 itemCount: listHotComics.length,
                 itemBuilder: (context, index, index1) {
-                  return CachedNetworkImage(
-                    imageUrl:
-                        listHotComics[index].image_thumnail_rectangle_path!,
-                    imageBuilder: (context, imageProvider) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, ComicDetailScreen.routeName);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
+                  return listHotComics[index].image_thumnail_rectangle_path !=
+                          null
+                      ? CachedNetworkImage(
+                          imageUrl: listHotComics[index]
+                              .image_thumnail_rectangle_path!,
+                          imageBuilder: (context, imageProvider) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, ComicDetailScreen.routeName);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          errorWidget: (context, url, error) =>
+                              Image.asset("assets/images/banner_splash.png"))
+                      : Image.asset("assets/images/banner_splash.png");
                 },
                 options: CarouselOptions(
                   height: SizeConfig.screenHeight * 0.265,

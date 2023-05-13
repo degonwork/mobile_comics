@@ -36,8 +36,9 @@ class MyApp extends StatelessWidget {
           create: (context) => CategoryRepo(),
         ),
         RepositoryProvider<CategoriesComicsRepo>(
-          create: (context) =>
-              CategoriesComicsRepo(categoryRepo: context.read<CategoryRepo>()),
+          create: (context) => CategoriesComicsRepo(
+            categoryRepo: context.read<CategoryRepo>(),
+          ),
         ),
         RepositoryProvider<ChapterRepo>(
           create: (context) => ChapterRepo(

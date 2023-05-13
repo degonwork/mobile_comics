@@ -7,9 +7,9 @@ class CategoriesComicsField {
     category_id,
   ];
 
-  static final String id = 'id';
-  static final String comic_id = 'comic_id';
-  static final String category_id = 'category_id';
+  static String id = 'id';
+  static String comic_id = 'comic_id';
+  static String category_id = 'category_id';
 }
 
 class CategoriesComics {

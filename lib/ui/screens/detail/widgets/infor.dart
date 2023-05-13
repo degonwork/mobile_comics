@@ -44,7 +44,11 @@ class Infor extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text('Đã đọc'),
-                                      Text('${comic.reads}'),
+                                      Text(
+                                        comic.reads != null
+                                            ? '${comic.reads}'
+                                            : "",
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -128,27 +132,31 @@ class Infor extends StatelessWidget {
                             height: SizeConfig.screenHeight / 80,
                           ),
                           Expanded(
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: SizeConfig.screenWidth / 50,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${comic.categories[index]}',
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 12),
-                              itemCount: comic.categories.length,
-                            ),
+                            child: comic.categories!.isNotEmpty
+                                ? ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) => Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: SizeConfig.screenWidth / 50,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.redAccent,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          comic.categories![index],
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(width: 12),
+                                    itemCount: comic.categories!.length,
+                                  )
+                                : Container(),
                           ),
                         ],
                       ),
@@ -167,7 +175,9 @@ class Infor extends StatelessWidget {
                           SizedBox(
                             height: SizeConfig.screenHeight / 75.6,
                           ),
-                          Text(comic.description!),
+                          Text(
+                            comic.description != null ? comic.description! : "",
+                          ),
                         ],
                       ),
                     ),

@@ -38,33 +38,41 @@ class NewComic extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CachedNetworkImage(
-                          imageUrl:
-                              listNewComics[index].image_thumnail_square_path!,
-                          imageBuilder: (context, imageProvider) {
-                            return GestureDetector(
-                              onTap: () {
-                                context.read<ComicDetailBloc>().add(
-                                    LoadDetailComic(listNewComics[index].id));
-                                Navigator.pushNamed(
-                                    context, ComicDetailScreen.routeName);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.zero,
-                                height: SizeConfig.screenHeight / 4.2,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        listNewComics[index].image_thumnail_square_path != null
+                            ? CachedNetworkImage(
+                                imageUrl: listNewComics[index]
+                                    .image_thumnail_square_path!,
+                                imageBuilder: (context, imageProvider) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.read<ComicDetailBloc>().add(
+                                          LoadDetailComic(
+                                              listNewComics[index].id));
+                                      Navigator.pushNamed(
+                                          context, ComicDetailScreen.routeName);
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.zero,
+                                      height: SizeConfig.screenHeight / 4.2,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                        "assets/images/banner_splash.png"),
+                              )
+                            : Image.asset("assets/images/banner_splash.png"),
                         Text(
-                          ' ${listNewComics[index].title} ',
+                          listNewComics[index].title != null
+                              ? '${listNewComics[index].title}'
+                              : "",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,

@@ -5,7 +5,6 @@ import '../../data/repository/categories_comics_repository.dart';
 import '../../data/repository/chapter_repository.dart';
 import '../../data/repository/image_repository.dart';
 import '../models/comic_model.dart';
-import '../models/image_model.dart';
 import '../providers/api/api_client.dart';
 
 class ComicRepo {
@@ -41,6 +40,7 @@ class ComicRepo {
               await readHotComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
           return listHotComics;
         } else {
+          print("Hot comic is not available");
           throw Exception("Not Found Data");
         }
       } else {
@@ -66,6 +66,7 @@ class ComicRepo {
               await readNewComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
           return listNewComics;
         } else {
+          print("New comic is not available");
           throw Exception("Not Found Data");
         }
       } else {
@@ -91,6 +92,7 @@ class ComicRepo {
             return Comic.copyWith(comic);
           }
         } else {
+          print("comic is not available");
           throw Exception("Not Found Data");
         }
       } else {
@@ -108,28 +110,30 @@ class ComicRepo {
     await _imageRepo.createImageComicToDB(listHomeComic: listHomeComic);
     List<Comic> listComics = [];
     for (var homeComic in listHomeComic) {
-      List<String> listIDImage =
-          await _imageRepo.readAllIDImageComicFromDB(comicId: homeComic.id);
-      if (listIDImage.isNotEmpty) {
-        Comic comic = Comic(
-          id: homeComic.id,
-          title: homeComic.title,
-          image_detail_id: listIDImage[0],
-          image_thumnail_square_id: listIDImage[1],
-          image_thumnail_rectangle_id: listIDImage[2],
-          add_chapter_time: homeComic.add_chapter_time,
-          reads: homeComic.reads,
-          categories: homeComic.categories,
-          chapters: homeComic.chapters,
-        );
-        listComics.add(comic);
-      }
+      String? imageDetailId = await _imageRepo.readIDImageFromDB(
+        parentId: homeComic.id,
+        typeImage: AppConstant.TYPEIMAGECOMICS[0],
+      );
+      String? imageThumnailSquareId = await _imageRepo.readIDImageFromDB(
+        parentId: homeComic.id,
+        typeImage: AppConstant.TYPEIMAGECOMICS[1],
+      );
+      String? imageThumnailRectangleId = await _imageRepo.readIDImageFromDB(
+        parentId: homeComic.id,
+        typeImage: AppConstant.TYPEIMAGECOMICS[2],
+      );
+      Comic comic = Comic(
+        id: homeComic.id,
+        title: homeComic.title,
+        image_detail_id: imageDetailId,
+        image_thumnail_square_id: imageThumnailSquareId,
+        image_thumnail_rectangle_id: imageThumnailRectangleId,
+        add_chapter_time: homeComic.add_chapter_time,
+        reads: homeComic.reads,
+      );
+      listComics.add(comic);
     }
-    if (listComics.isNotEmpty) {
-      await HandleDatabase.createComicToDB(comics: listComics);
-    } else {
-      print("Home comic is not available");
-    }
+    await HandleDatabase.createComicToDB(comics: listComics);
   }
 
   // Update
@@ -137,42 +141,29 @@ class ComicRepo {
     await _categoriesComicsRepo.processCategoriesComicsToDB(comic: comic);
     Comic? comicDB = await HandleDatabase.readComicByIDFromDB(id: comic.id);
     if (comicDB != null) {
-      if (comicDB.image_detail_id != null && comic.image_detail_path != null) {
-        await _imageRepo.updateImageToDB(
-            image: Image(
-          id: comicDB.image_detail_id!,
-          path: comic.image_detail_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-              .removeLast(),
-          parent_id: comicDB.id,
-          type: AppConstant.TYPEIMAGECOMICS[0],
-        ));
-      }
-      if (comicDB.image_thumnail_square_id != null &&
-          comic.image_thumnail_square_id != null) {
-        await _imageRepo.updateImageToDB(
-            image: Image(
-          id: comicDB.image_thumnail_square_id!,
-          path: comic.image_thumnail_square_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-              .removeLast(),
-          parent_id: comicDB.id,
-          type: AppConstant.TYPEIMAGECOMICS[1],
-        ));
-      }
-      if (comicDB.image_thumnail_square_id != null &&
-          comic.image_thumnail_square_id != null) {
-        await _imageRepo.updateImageToDB(
-          image: Image(
-            id: comicDB.image_thumnail_rectangle_id!,
-            path: comic.image_thumnail_rectangle_path!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-                .removeLast(),
-            parent_id: comicDB.id,
-            type: AppConstant.TYPEIMAGECOMICS[2],
-          ),
-        );
-      }
+      await _imageRepo.createOrUpdateImage(
+        imageID: comicDB.image_detail_id,
+        imagePath: comic.image_detail_path,
+        parentDB: comicDB,
+        typeImage: AppConstant.TYPEIMAGECOMICS[0],
+        parent: comic,
+      );
+
+      await _imageRepo.createOrUpdateImage(
+        imageID: comicDB.image_thumnail_square_id,
+        imagePath: comic.image_thumnail_square_path,
+        parentDB: comicDB,
+        typeImage: AppConstant.TYPEIMAGECOMICS[1],
+        parent: comic,
+      );
+
+      await _imageRepo.createOrUpdateImage(
+        imageID: comicDB.image_thumnail_rectangle_id,
+        imagePath: comic.image_thumnail_rectangle_path,
+        parentDB: comicDB,
+        typeImage: AppConstant.TYPEIMAGECOMICS[2],
+        parent: comic,
+      );
       Comic updateComic = Comic(
         id: comic.id,
         image_detail_id: comicDB.image_detail_id,
@@ -186,10 +177,10 @@ class ComicRepo {
         chapter_update_time: comic.chapter_update_time,
         add_chapter_time: comic.add_chapter_time,
         update_time: comic.update_time,
-        categories: comic.categories,
-        chapters: comic.chapters,
       );
+
       await HandleDatabase.updateComicToDB(comic: updateComic);
+      print("Comic is updated");
     }
     // await _chapterRepo.createChapterToDB(comic.chapters!);
   }
@@ -199,7 +190,8 @@ class ComicRepo {
     List<Comic> listHotComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics.isNotEmpty) {
-      listComics.sort((comic1, comic2) => comic2.reads! - comic1.reads!);
+      listComics.where((comic) => comic.reads != null);
+      listComics.sort((comic1, comic2) => (comic2.reads! - comic1.reads!));
       for (Comic comic in listComics) {
         listHotComics.addAll([await Comic.copyWith(comic)]);
       }
@@ -213,6 +205,7 @@ class ComicRepo {
     List<Comic> listNewComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics.isNotEmpty) {
+      listComics.where((comic) => comic.add_chapter_time != null);
       listComics.sort((comic1, comic2) =>
           (comic2.add_chapter_time!.millisecondsSinceEpoch -
               comic1.add_chapter_time!.millisecondsSinceEpoch));

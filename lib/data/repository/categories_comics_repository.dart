@@ -19,8 +19,8 @@ class CategoriesComicsRepo {
       print("deleted CategoriesComics with comicId: ${comic.id}");
     }
     List<CategoriesComics> listCategoriesComics = [];
-    if (comic.categories.isNotEmpty) {
-      for (String category in comic.categories) {
+    if (comic.categories!.isNotEmpty) {
+      for (String category in comic.categories!) {
         int? i = await _categoryRepo.createCategoryToDB(category);
         if (i != null) {
           print("${i + 1}: Category created");
@@ -39,6 +39,7 @@ class CategoriesComicsRepo {
         }
       }
     }
+    print("Category is empty");
     if (listCategoriesComics.isNotEmpty) {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComics);
@@ -46,10 +47,11 @@ class CategoriesComicsRepo {
     print("--------------------------------");
   }
 
-  Future<void> addListCategoriesComics(
-      {required String category,
-      required List<CategoriesComics> listCategoriesComics,
-      required Comic comic}) async {
+  Future<void> addListCategoriesComics({
+    required String category,
+    required List<CategoriesComics> listCategoriesComics,
+    required Comic comic,
+  }) async {
     Category? categoryDB =
         await _categoryRepo.readCategoryByNameFromDB(name: category);
     if (categoryDB != null) {

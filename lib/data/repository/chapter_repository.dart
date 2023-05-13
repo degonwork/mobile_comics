@@ -46,26 +46,21 @@ class ChapterRepo {
         listChapters: listHomeComicChapter);
     List<Chapter> listChapters = [];
     for (int i = 0; i < listHomeComicChapter.length; i++) {
-      String? imageThumnailID =
-          await _imageRepo.readIDImageThumnailChapterFromDB(
-              chapterId: listHomeComicChapter[i].id);
-      if (imageThumnailID != null) {
-        listChapters.addAll([
-          Chapter(
-            id: listHomeComicChapter[i].id,
-            image_thumnail_id: imageThumnailID,
-            chapter_des: listHomeComicChapter[i].chapter_des,
-            numerical: i + 1,
-            content: listHomeComicChapter[i].content,
-          )
-        ]);
-      }
+      String? imageThumnailID = await _imageRepo.readIDImageFromDB(
+        parentId: listHomeComicChapter[i].id,
+        typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+      );
+      listChapters.addAll([
+        Chapter(
+          id: listHomeComicChapter[i].id,
+          image_thumnail_id: imageThumnailID,
+          chapter_des: listHomeComicChapter[i].chapter_des,
+          numerical: i + 1,
+          content: listHomeComicChapter[i].content,
+        )
+      ]);
     }
-    if (listChapters.isNotEmpty) {
-      await HandleDatabase.createChapterToDB(chapters: listChapters);
-    } else {
-      print("Chapter is not available");
-    }
+    await HandleDatabase.createChapterToDB(chapters: listChapters);
   }
 
   Future<Chapter?> readChapterByIdFromDB({required String id}) async {
@@ -77,15 +72,13 @@ class ChapterRepo {
     Chapter? chapterDB =
         await HandleDatabase.readChapterByIDFromDB(id: chapter.id);
     if (chapterDB != null) {
-      await _imageRepo.updateImageToDB(
-          image: Image(
-        id: chapterDB.image_thumnail_id!,
-        path: chapter.image_thumnail_path!
-            .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-            .removeLast(),
-        parent_id: chapterDB.id,
-        type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
-      ));
+      await _imageRepo.createOrUpdateImage(
+        imageID: chapterDB.image_thumnail_id,
+        imagePath: chapter.image_thumnail_path,
+        parentDB: chapterDB,
+        typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+        parent: chapter,
+      );
       Chapter updateChapter = Chapter(
         id: chapter.id,
         comic_id: chapter.comic_id,

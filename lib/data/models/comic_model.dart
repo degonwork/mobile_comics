@@ -3,6 +3,7 @@ import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
 import 'package:full_comics_frontend/data/models/category_model.dart';
 import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
 import '.././models/chapter_model.dart';
+import 'image_model.dart';
 
 const String tableComics = 'Comics';
 
@@ -22,19 +23,18 @@ class ComicField {
     add_chapter_time,
   ];
 
-  static final String id = 'id';
-  static final String image_detail_id = 'image_detail_id';
-  static final String image_thumnail_square_id = 'image_thumnail_square_id';
-  static final String image_thumnail_rectangle_id =
-      'image_thumnail_rectangle_id';
-  static final String title = 'title';
-  static final String author = 'author';
-  static final String year = 'year';
-  static final String reads = 'reads';
-  static final String chapter_update_time = 'chapter_update_time';
-  static final String update_time = 'update_time';
-  static final String add_chapter_time = 'add_chapter_time';
-  static final String description = 'description';
+  static String id = 'id';
+  static String image_detail_id = 'image_detail_id';
+  static String image_thumnail_square_id = 'image_thumnail_square_id';
+  static String image_thumnail_rectangle_id = 'image_thumnail_rectangle_id';
+  static String title = 'title';
+  static String author = 'author';
+  static String year = 'year';
+  static String reads = 'reads';
+  static String chapter_update_time = 'chapter_update_time';
+  static String update_time = 'update_time';
+  static String add_chapter_time = 'add_chapter_time';
+  static String description = 'description';
 }
 
 class Comic {
@@ -44,7 +44,7 @@ class Comic {
   final String? title;
   final String? author;
   final int? year;
-  final List<Chapter> chapters;
+  final List<Chapter>? chapters;
   final int? reads;
   final DateTime? chapter_update_time;
   final DateTime? update_time;
@@ -54,7 +54,7 @@ class Comic {
   final String? image_thumnail_square_id;
   final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
-  final List<dynamic> categories;
+  final List<String>? categories;
 
   const Comic({
     required this.id,
@@ -67,13 +67,13 @@ class Comic {
     this.title,
     this.author,
     this.year,
-    required this.chapters,
+    this.chapters,
     this.reads,
     this.chapter_update_time,
     this.add_chapter_time,
     this.update_time,
     this.description,
-    required this.categories,
+    this.categories,
   });
 
   factory Comic.fromJson(Map<String, dynamic> json) {
@@ -117,34 +117,36 @@ class Comic {
   }
 
   static Future<Comic> copyWith(Comic comic) async {
-    final listCategories = [];
-    List<CategoriesComics>? categoriesComic =
+    final List<String> listCategories = [];
+    List<CategoriesComics> categoriesComic =
         await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
-    if (categoriesComic != null) {
+    if (categoriesComic.isNotEmpty) {
       for (var i = 0; i < categoriesComic.length; i++) {
         Category? category = await HandleDatabase.readCategoryByIDFromDB(
           id: categoriesComic[i].category_id,
         );
-        listCategories.add(category!.name);
+        if (category != null) {
+          listCategories.add(category.name);
+        }
       }
     }
-    String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id))!
-        .path;
-    String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[1], parentID: comic.id))!
-        .path;
-    String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id))!
-        .path;
+    Image? imageDetail = (await HandleDatabase.readImageFromDB(
+        type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id));
+    Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
+        type: AppConstant.TYPEIMAGECOMICS[1], parentID: comic.id));
+    Image? imageThumnailRectangle = (await HandleDatabase.readImageFromDB(
+        type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id));
     return Comic(
       id: comic.id,
-      image_detail_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageDetailUrl",
-      image_thumnail_square_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
-      image_thumnail_rectangle_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
+      image_detail_path: imageDetail != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageDetail.path}"
+          : null,
+      image_thumnail_square_path: imageThumnailSquare != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageThumnailSquare.path}"
+          : null,
+      image_thumnail_rectangle_path: imageThumnailRectangle != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageThumnailRectangle.path}"
+          : null,
       title: comic.title,
       author: comic.author,
       description: comic.description,

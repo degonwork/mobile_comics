@@ -30,6 +30,5 @@ class AppConstant {
   static const LIMITSEEMORECOMIC = 20;
 
 // Error
-  static const COMICNOTEXIST =
-      Comic(id: "Not-exist", chapters: [], categories: []);
+  static const COMICNOTEXIST = Comic(id: "Not-exist");
 }
