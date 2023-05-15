@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
-import 'package:full_comics_frontend/data/models/chapter_model.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';

@@ -3,7 +3,8 @@ import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_event.dart'
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_state.dart';
 import 'package:full_comics_frontend/data/repository/chapter_repository.dart';
 
-import '../../data/models/chapter_model.dart';
+
+import '../../data/models/image_model.dart';
 
 class ReadChapterBloc extends Bloc<ReadChapterEvent,ReadChapterState>{
   final ChapterRepo _chapterRepo;
@@ -12,8 +13,8 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent,ReadChapterState>{
   }
 Future<void> _onLoadChapter(LoadChapter event,Emitter<ReadChapterState> emit) async{
   
-  Chapter chapter = await _chapterRepo.fetchDetailChapters(id: event.id);
-  print(event.id);
-  emit(LoadedChapter(chapter));
+  List<Image> listImageContent = await _chapterRepo.fetchDetailChapters(id: event.id);
+  // print(event.id);
+  emit(LoadedChapter(listImageContent));
 }
 }

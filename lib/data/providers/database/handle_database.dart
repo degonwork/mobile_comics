@@ -41,7 +41,7 @@ class HandleDatabase {
   static Future<void> createChapterToDB(
       {required List<Chapter> chapters}) async {
     for (int i = 0; i < chapters.length; i++) {
-      if (chapters[i] is Chapter) {
+      // if (chapters[i] is Chapter ) {
         Chapter? chapter = await readChapterByIDFromDB(id: chapters[i].id);
         if (chapter == null) {
           await StorageDatabase.instance
@@ -50,7 +50,7 @@ class HandleDatabase {
         } else {
           print("${i + 1}: Chapter dont't create");
         }
-      }
+      // }
     }
     print("--------------------------------");
   }
@@ -64,7 +64,11 @@ class HandleDatabase {
   static Future<void> updateChapterToDB({required Chapter chapter}) async {
     await StorageDatabase.instance.updateChapterToDB(chapter: chapter);
   }
-
+static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID})async{
+  List<Chapter> listChapter = await StorageDatabase.instance.readChapterByComicIDFromDB(comicID: comicID);
+  
+  return listChapter;
+}
   // process image
   static Future<void> createImageToDB({required List<Image> images}) async {
     for (int i = 0; i < images.length; i++) {
@@ -99,6 +103,7 @@ class HandleDatabase {
       {required String type, required String parentID}) async {
     List<Image> listImages = await StorageDatabase.instance
         .readManyImageFromDB(type: type, parentId: parentID);
+       
     return listImages;
   }
 

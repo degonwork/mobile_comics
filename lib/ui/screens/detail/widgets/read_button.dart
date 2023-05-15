@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_state.dart';
+import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_event.dart';
 import 'package:full_comics_frontend/config/size_config.dart';
+import 'package:full_comics_frontend/ui/screens/detail/widgets/read.dart';
 
 class ReadButton extends StatelessWidget {
-  const ReadButton({super.key});
-
+  const ReadButton({super.key, required this.id});
+  final String id;
   @override
   Widget build(BuildContext context) {
-   return BlocBuilder<ReadChapterBloc,ReadChapterState>
-   (
-    builder: (context,state){
-      if (state is LoadedChapter) {
-        final chapter = state.chapter;
         return Center(
                child: Container(
                         height: SizeConfig.screenHeight / 12.6,
@@ -24,27 +20,27 @@ class ReadButton extends StatelessWidget {
                         ),
                         child: TextButton(
                             onPressed: () {
+                              context.read<ReadChapterBloc>().add(LoadChapter(id));
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  transitionDuration:
+                                      const Duration(milliseconds: 400),
+                                  transitionsBuilder:
+                                      (context, animation, secAnimation, child) {
+                                    return ScaleTransition(
+                                      scale: animation,
+                                      alignment: Alignment.center,
+                                      child: child,
+                                    );
+                                  },
+                                  pageBuilder:
+                                      (context, animation, secAnimation) {
+                                    return const ReadScreen();
+                                  },
+                                ),
+                              );
                               
-                              // Navigator.push(
-                              //   context,
-                              //   PageRouteBuilder(
-                              //     transitionDuration:
-                              //         const Duration(milliseconds: 400),
-                              //     transitionsBuilder:
-                              //         (context, animation, secAnimation, child) {
-                              //       return ScaleTransition(
-                              //         scale: animation,
-                              //         alignment: Alignment.center,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //     pageBuilder:
-                              //         (context, animation, secAnimation) {
-                              //       return const ReadScreen();
-                              //     },
-                              //   ),
-                              // );
-                              // // navigatorKey.currentState!.push(MaterialPageRoute(builder: (_) => const ReadScreen()));
                             },
                             child: const Text(
                               'Đọc truyện',
@@ -53,9 +49,9 @@ class ReadButton extends StatelessWidget {
                             )),
                       ),
         );
-      }
-      return const SizedBox.shrink();
-    }
-   );
+      
+     
+  
+  
   }
 }

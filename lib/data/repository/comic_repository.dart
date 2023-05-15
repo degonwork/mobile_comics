@@ -182,7 +182,7 @@ class ComicRepo {
       await HandleDatabase.updateComicToDB(comic: updateComic);
       print("Comic is updated");
     }
-    // await _chapterRepo.createChapterToDB(comic.chapters!);
+    await _chapterRepo.createChapterToDB(comic: comic);
   }
 
   // Read Home comic

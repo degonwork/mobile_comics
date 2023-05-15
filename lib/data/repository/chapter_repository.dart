@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:full_comics_frontend/data/models/comic_model.dart';
 import 'package:full_comics_frontend/data/providers/api/api_client.dart';
 
 import '../../config/app_constant.dart';
@@ -15,65 +18,64 @@ class ChapterRepo {
         _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
-  Future fetchDetailChapters({required String id}) async {
-    // final response =
-    // await _apiClient.getData('$_chapterUrl/$id');
-    // if (response.statusCode == 200) {
-    // dynamic jsonResponse = jsonDecode(response.body);
+  Future<List<Image>> fetchDetailChapters({required String id}) async {
     try {
       final response = await _apiClient.getData('$_chapterUrl$id');
-      print(response);
-     return response;
-      // final chapter = Chapter.fromJson(jsonResponse);
-      // await updateChapterToDB(chapter);
-      // await updateChapterContent(chapter);
-      // Chapter? chapterRe = await readChapterByIdFromDB(id: "chapter5");
-      // print(chapterRe!.update_time);
-      // List<Image>? imageChapterContents =
-      //     await _imageRepo.readImageChapterContent(
-      //   chapterId: "chapter1",
-      // );
-      // print(imageChapterContents);
+      if (response.statusCode == 200) {
+        dynamic jsonResponse =jsonDecode(response.body);
+        final chapter = Chapter.fromJson(jsonResponse);
+        await updateChapterToDB(chapter: chapter);
+        List<Image> imageChapterContent = await _imageRepo.readImageChapterContent(chapterId: id);
+       List<Image> images = [];
+       for (var i = 0; i < imageChapterContent.length; i++) {
+        Image image = Image(id: imageChapterContent[i].id, path: '${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageChapterContent[i].path}', type: imageChapterContent[i].type, parent_id: imageChapterContent[i].parent_id);
+        images.add(image);
+       }
+        return images;
+      }else{
+        throw Exception('Load failed chapter');
+      }
+     
+      
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
     }
-
-    // return chapter;
-    // }
-    // else {
-    // throw Exception('Load failed');
-    // }
+    return [];
+   
   }
 
   // process database
   Future<void> createChapterToDB(
-      {required List<Chapter> listHomeComicChapter}) async {
+      {required Comic comic}) async {
+        if (comic.chapters!.isNotEmpty) {
     await _imageRepo.createImageThumnailChapterToDB(
-        listChapters: listHomeComicChapter);
+        listChapters: comic.chapters!);
     List<Chapter> listChapters = [];
-    for (int i = 0; i < listHomeComicChapter.length; i++) {
+    for (int i = 0; i < comic.chapters!.length; i++) {
       String? imageThumnailID = await _imageRepo.readIDImageFromDB(
-        parentId: listHomeComicChapter[i].id,
+        parentId: comic.chapters![i].id,
         typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
       );
       listChapters.addAll([
         Chapter(
-          id: listHomeComicChapter[i].id,
+          comic_id: comic.id,
+          id: comic.chapters![i].id,
           image_thumnail_id: imageThumnailID,
-          chapter_des: listHomeComicChapter[i].chapter_des,
+          chapter_des: comic.chapters![i].chapter_des,
           numerical: i + 1,
-          content: listHomeComicChapter[i].content,
+          content: comic.chapters![i].content,
         )
       ]);
     }
     await HandleDatabase.createChapterToDB(chapters: listChapters);
   }
-
+      }
   Future<Chapter?> readChapterByIdFromDB({required String id}) async {
     return HandleDatabase.readChapterByIDFromDB(id: id);
   }
 
   Future<void> updateChapterToDB({required Chapter chapter}) async {
+   
     await _imageRepo.createImageChapterContentToDB(chapter: chapter);
     Chapter? chapterDB =
         await HandleDatabase.readChapterByIDFromDB(id: chapter.id);

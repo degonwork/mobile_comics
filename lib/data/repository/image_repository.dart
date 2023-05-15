@@ -149,10 +149,10 @@ class ImageRepo {
           type: typeImage,
         ),
       );
-      print("$typeImage of comicID ${parentDB.id} is updated");
+      // print("$typeImage of comicID ${parentDB.id} is updated");
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listHomeComic: [parent]);
-      print("$typeImage of comicID ${parentDB.id} is created");
+      // print("$typeImage of comicID ${parentDB.id} is created");
     }
   }
 }
