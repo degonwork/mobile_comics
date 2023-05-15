@@ -44,10 +44,11 @@ class ComicRepo {
           throw Exception("Not Found Data");
         }
       } else {
+        print("load failed");
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      print("------------" + e.toString());
     }
     return [];
   }
@@ -73,7 +74,7 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      print("------------" + e.toString());
     }
     return [];
   }
@@ -99,7 +100,7 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
     return AppConstant.COMICNOTEXIST;
   }

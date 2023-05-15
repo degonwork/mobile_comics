@@ -11,7 +11,7 @@ class ApiClient {
       final response = await get(Uri.parse(_baseServerUrl + uri));
       return response;
     } catch (e) {
-      return Response(e.toString(), 1);
+      return Response(e.toString(), 404);
     }
   }
 }

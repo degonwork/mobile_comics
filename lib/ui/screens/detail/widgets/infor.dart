@@ -36,9 +36,10 @@ class Infor extends StatelessWidget {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   const CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 15,
-                                      child: Icon(Icons.remove_red_eye)),
+                                    backgroundColor: Colors.white,
+                                    radius: 15,
+                                    child: Icon(Icons.remove_red_eye),
+                                  ),
                                   const Spacer(),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
