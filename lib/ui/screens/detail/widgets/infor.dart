@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/config/app_constant.dart';
+import 'package:full_comics_frontend/ui/screens/detail/widgets/read_button.dart';
 import '../../../../config/size_config.dart';
 
 class Infor extends StatelessWidget {
@@ -13,6 +14,7 @@ class Infor extends StatelessWidget {
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
           final comic = state.comic;
+          // print(comic.chapters!.first.comic_id);
           if (comic != AppConstant.COMICNOTEXIST) {
             return Container(
               padding: EdgeInsets.zero,
@@ -182,44 +184,46 @@ class Infor extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: SizeConfig.screenHeight / 25.2),
-                    Center(
-                      child: Container(
-                        height: SizeConfig.screenHeight / 12.6,
-                        width: SizeConfig.screenWidth / 1.8,
-                        decoration: BoxDecoration(
-                          color: Colors.orangeAccent,
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: TextButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   PageRouteBuilder(
-                              //     transitionDuration:
-                              //         const Duration(milliseconds: 400),
-                              //     transitionsBuilder:
-                              //         (context, animation, secAnimation, child) {
-                              //       return ScaleTransition(
-                              //         scale: animation,
-                              //         alignment: Alignment.center,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //     pageBuilder:
-                              //         (context, animation, secAnimation) {
-                              //       return const ReadScreen();
-                              //     },
-                              //   ),
-                              // );
-                              // // navigatorKey.currentState!.push(MaterialPageRoute(builder: (_) => const ReadScreen()));
-                            },
-                            child: const Text(
-                              'Đọc truyện',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
-                            )),
-                      ),
-                    ),
+                    ReadButton(),
+                    // Center(
+                    //   child: Container(
+                    //     height: SizeConfig.screenHeight / 12.6,
+                    //     width: SizeConfig.screenWidth / 1.8,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.orangeAccent,
+                    //       borderRadius: BorderRadius.circular(40),
+                    //     ),
+                    //     child: TextButton(
+                    //         onPressed: () {
+                              
+                    //           // Navigator.push(
+                    //           //   context,
+                    //           //   PageRouteBuilder(
+                    //           //     transitionDuration:
+                    //           //         const Duration(milliseconds: 400),
+                    //           //     transitionsBuilder:
+                    //           //         (context, animation, secAnimation, child) {
+                    //           //       return ScaleTransition(
+                    //           //         scale: animation,
+                    //           //         alignment: Alignment.center,
+                    //           //         child: child,
+                    //           //       );
+                    //           //     },
+                    //           //     pageBuilder:
+                    //           //         (context, animation, secAnimation) {
+                    //           //       return const ReadScreen();
+                    //           //     },
+                    //           //   ),
+                    //           // );
+                    //           // // navigatorKey.currentState!.push(MaterialPageRoute(builder: (_) => const ReadScreen()));
+                    //         },
+                    //         child: const Text(
+                    //           'Đọc truyện',
+                    //           style:
+                    //               TextStyle(fontSize: 20, color: Colors.white),
+                    //         )),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

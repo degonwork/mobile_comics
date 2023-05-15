@@ -1,3 +1,5 @@
+import 'package:full_comics_frontend/data/providers/api/api_client.dart';
+
 import '../../config/app_constant.dart';
 import '.././repository/image_repository.dart';
 import '../models/chapter_model.dart';
@@ -7,9 +9,10 @@ import '../providers/database/handle_database.dart';
 class ChapterRepo {
   final ImageRepo _imageRepo;
   final String _chapterUrl;
-
-  ChapterRepo({required ImageRepo imageRepo, required String chapterUrl})
+  final ApiClient _apiClient;
+  ChapterRepo({required ImageRepo imageRepo, required String chapterUrl,required ApiClient apiClient})
       : _chapterUrl = chapterUrl,
+        _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
   Future fetchDetailChapters({required String id}) async {
@@ -18,6 +21,9 @@ class ChapterRepo {
     // if (response.statusCode == 200) {
     // dynamic jsonResponse = jsonDecode(response.body);
     try {
+      final response = await _apiClient.getData('$_chapterUrl$id');
+      print(response);
+     return response;
       // final chapter = Chapter.fromJson(jsonResponse);
       // await updateChapterToDB(chapter);
       // await updateChapterContent(chapter);
