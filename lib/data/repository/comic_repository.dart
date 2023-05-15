@@ -183,7 +183,7 @@ class ComicRepo {
       await HandleDatabase.updateComicToDB(comic: updateComic);
       print("Comic is updated");
     }
-    // await _chapterRepo.createChapterToDB(comic.chapters!);
+    await _chapterRepo.createChapterToDB(comic: comic);
   }
 
   // Read Home comic
@@ -205,11 +205,13 @@ class ComicRepo {
   Future<List<Comic>> readNewComicsFromDB({required int limit}) async {
     List<Comic> listNewComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
+    // (listComics.forEach((element) {print(element.add_chapter_time);}));
     if (listComics.isNotEmpty) {
-      listComics.where((comic) => comic.add_chapter_time != null);
-      listComics.sort((comic1, comic2) =>
-          (comic2.add_chapter_time!.millisecondsSinceEpoch -
-              comic1.add_chapter_time!.millisecondsSinceEpoch));
+    final result =  listComics.where((comic) => comic.add_chapter_time != null ).toList();
+  //  print(result);
+      // listComics.sort((comic1, comic2) =>
+      //     (comic2.add_chapter_time!.millisecondsSinceEpoch -
+      //         comic1.add_chapter_time!.millisecondsSinceEpoch));
       for (Comic comic in listComics) {
         listNewComics.addAll([await Comic.copyWith(comic)]);
       }

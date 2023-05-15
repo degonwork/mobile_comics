@@ -143,7 +143,22 @@ class StorageDatabase {
       return null;
     }
   }
-
+  Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID}) async{
+    final db = await instance.database;
+    final maps = await db.query(
+      tableChapters,
+      columns: ChapterField.values,
+      where: '${ChapterField.comic_id} =?',
+      whereArgs: [comicID],
+      );
+      // print('$maps dfsf');
+      if (maps.isNotEmpty) {
+        return maps.map((e) => Chapter.fromJson(e)).toList();
+        
+      }else{
+        return [];
+      }
+  }
   Future<void> updateChapterToDB({required Chapter chapter}) async {
     final db = await instance.database;
     final map = chapter.toMap();
@@ -191,6 +206,7 @@ class StorageDatabase {
       where: '${ImageField.type} = ? and ${ImageField.parent_id} = ?',
       whereArgs: [type, parentId],
     );
+   
     if (maps.isNotEmpty) {
       return maps.map((json) => Image.fromJson(json)).toList();
     } else {

@@ -130,6 +130,8 @@ class Comic {
         }
       }
     }
+    List<Chapter> chapters = await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
+    // print(chapters);
     Image? imageDetail = (await HandleDatabase.readImageFromDB(
         type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id));
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
@@ -137,6 +139,7 @@ class Comic {
     Image? imageThumnailRectangle = (await HandleDatabase.readImageFromDB(
         type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id));
     return Comic(
+      
       id: comic.id,
       image_detail_path: imageDetail != null
           ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageDetail.path}"
@@ -151,7 +154,7 @@ class Comic {
       author: comic.author,
       description: comic.description,
       categories: listCategories,
-      chapters: [],
+      chapters: chapters,
       year: comic.year,
       reads: comic.reads,
       chapter_update_time: comic.chapter_update_time,
