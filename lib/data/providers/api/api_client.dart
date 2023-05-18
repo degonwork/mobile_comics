@@ -14,4 +14,13 @@ class ApiClient {
       return Response(e.toString(), 404);
     }
   }
+
+  Future<Response> postData(String uri, dynamic body) async {
+    try {
+      final response = await post(Uri.parse(uri), body: body);
+      return response;
+    } catch (e) {
+      return Response(e.toString(), 404);
+    }
+  }
 }

@@ -207,8 +207,9 @@ class ComicRepo {
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     // (listComics.forEach((element) {print(element.add_chapter_time);}));
     if (listComics.isNotEmpty) {
-    final result =  listComics.where((comic) => comic.add_chapter_time != null ).toList();
-  //  print(result);
+      final result =
+          listComics.where((comic) => comic.add_chapter_time != null).toList();
+      //  print(result);
       // listComics.sort((comic1, comic2) =>
       //     (comic2.add_chapter_time!.millisecondsSinceEpoch -
       //         comic1.add_chapter_time!.millisecondsSinceEpoch));

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "586156866416",
+    "project_id": "comicapp-f7d72",
+    "storage_bucket": "comicapp-f7d72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586156866416:android:804245dd5bb610268cedb5",
+        "android_client_info": {
+          "package_name": "com.totas.full_comics_frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586156866416-3ivh2vc22bkvgo60can24hl5qlevetcd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.totas.full_comics_frontend",
+            "certificate_hash": "7de848b18a27a23a5553f7633112c2c916477577"
+          }
+        },
+        {
+          "client_id": "586156866416-pj9h7jia0516mbn68r2pstik50lb4pu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBle4DfDrry34vnrdgpo6Xe1vD-JWQJ8k4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586156866416-pj9h7jia0516mbn68r2pstik50lb4pu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

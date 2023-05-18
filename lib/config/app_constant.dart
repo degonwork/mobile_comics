@@ -11,6 +11,8 @@ class AppConstant {
   static const CHAPTERURL = "/chapters/";
   // Image
   static const IMAGEURL = "/image/";
+  // Device
+  static const DEVICEURL = "/device/";
 
   // Type Image Comic
   static const TYPEIMAGECOMICS = [
@@ -18,6 +20,10 @@ class AppConstant {
     "image_thumnail_square_comic",
     "image_thumnail_rectangle_comic",
   ];
+
+  // SharePrefrence
+  static const String FIREBASETOKEN = "Firebase-token";
+  static const String DEVICEID = "Device-id";
 
   // Type Image chapter thumnail
   static const TYPEIMAGETHUMNAILCHAPTER = "image_thumnail_chapter";

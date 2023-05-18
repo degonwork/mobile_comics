@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import '../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../config/app_constant.dart';
+import '../../widgets/back_ground_app.dart';
 import '../detail/widgets/chapter.dart';
-// import '../detail/widgets/comment.dart';
 import '../detail/widgets/infor.dart';
 import '../../../config/size_config.dart';
 

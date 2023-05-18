@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/read_button.dart';
+import '../../../screens/detail/widgets/read_button.dart';
+import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../../config/app_constant.dart';
 import '../../../../config/size_config.dart';
 
 class Infor extends StatelessWidget {
@@ -14,7 +14,6 @@ class Infor extends StatelessWidget {
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
           final comic = state.comic;
-          
           if (comic != AppConstant.COMICNOTEXIST) {
             return Container(
               padding: EdgeInsets.zero,
@@ -110,7 +109,9 @@ class Infor extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text('Chương'),
-                                      Text('${comic.chapters!.length}'),
+                                      comic.chapters!.isNotEmpty
+                                          ? Text('${comic.chapters!.length}')
+                                          : const Text(""),
                                     ],
                                   ),
                                 ],

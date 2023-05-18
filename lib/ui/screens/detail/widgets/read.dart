@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_state.dart';
-import 'package:full_comics_frontend/config/size_config.dart';
+
+import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
+import '../../../../blocs/read_chapter/read_chapter_state.dart';
+import '../../../../config/size_config.dart';
 
 class ReadScreen extends StatefulWidget {
   const ReadScreen({super.key});
@@ -34,33 +35,33 @@ class _ReadScreenState extends State<ReadScreen> {
         if (state is LoadedChapter) {
           final listImage = state.listImageContent;
           if (listImage.isNotEmpty) {
-          return SafeArea(
-            child: Scaffold(
+            return SafeArea(
+                child: Scaffold(
               body: Stack(
                 children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         visialbe = !visialbe;
                       });
                     },
                     child: ListView.builder(
-                      controller: controller,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listImage.length,
-                      itemBuilder: (context,index){
-                        return Container(
-                          width: SizeConfig.screenWidth,
-                          height: SizeConfig.screenHeight,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(listImage[index].path),fit: BoxFit.fill,
+                        controller: controller,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listImage.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: SizeConfig.screenWidth,
+                            height: SizeConfig.screenHeight,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(listImage[index].path),
+                                fit: BoxFit.fill,
                               ),
-                          ),
-                        );
-                      }
-                      ),
+                            ),
+                          );
+                        }),
                   ),
                   AnimatedOpacity(
                     opacity: visialbe ? 1.0 : 0.0,
@@ -68,24 +69,25 @@ class _ReadScreenState extends State<ReadScreen> {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_circle_left,size: 50,color: Colors.amber,)
-                        ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_circle_left,
+                            size: 50,
+                            color: Colors.amber,
+                          )),
                     ),
-                    ),
+                  ),
                 ],
               ),
-            )
-            );
-        }
-        
-      return const SizedBox.shrink();
+            ));
+          }
+
+          return const SizedBox.shrink();
         }
         return const SizedBox.shrink();
       },
-      
     );
   }
 }

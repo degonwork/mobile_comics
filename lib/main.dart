@@ -1,8 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_lifecycle_detector/flutter_lifecycle_detector.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:full_comics_frontend/data/repository/device_repository.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -15,8 +16,34 @@ import '../config/app_router.dart';
 import '../blocs/view_more/view_more_bloc.dart';
 import '../data/repository/categories_comics_repository.dart';
 import '../data/repository/category_repository.dart';
+import 'blocs/comic_detail/comic_detail_bloc.dart';
+import 'blocs/read_chapter/read_chapter_bloc.dart';
+import 'data/providers/firebase/notification/firebase_messaging_service.dart';
+import 'data/providers/firebase/notification/local_notification_service.dart';
 
-void main() {
+Future<dynamic> _firebaseMessagingBackgroundHandler(
+    RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message ${message.messageId}");
+}
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'This channel is used for important notifications.',
+  importance: Importance.high,
+);
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   runApp(const MyApp());
 }
 
@@ -30,9 +57,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    FlutterLifecycleDetector().onBackgroundChange.listen((isBackground) {
-      print('Status background $isBackground');
-    });
+    FireBaseMessagingService.subscribeTopicOnFirebase();
+    LocalNotificationService.initialize(
+        context, flutterLocalNotificationsPlugin);
+    FireBaseMessagingService.getMessage(
+        channel, flutterLocalNotificationsPlugin);
     super.initState();
   }
 
@@ -58,7 +87,9 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider<ChapterRepo>(
           create: (context) => ChapterRepo(
             imageRepo: context.read<ImageRepo>(),
-            chapterUrl: AppConstant.CHAPTERURL,apiClient:const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+            chapterUrl: AppConstant.CHAPTERURL,
+            apiClient:
+                const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
           ),
         ),
         RepositoryProvider<ComicRepo>(
@@ -69,6 +100,9 @@ class _MyAppState extends State<MyApp> {
             categoriesComicsRepo: context.read<CategoriesComicsRepo>(),
             comicUrl: AppConstant.COMICURL,
           ),
+        ),
+        RepositoryProvider<DeviceRepo>(
+          create: (context) => DeviceRepo(),
         ),
       ],
       child: MultiBlocProvider(
@@ -92,16 +126,18 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           BlocProvider<ReadChapterBloc>(
-            create: (context) => ReadChapterBloc(chapterRepo: context.read<ChapterRepo>(),
-            ))
+            create: (context) => ReadChapterBloc(
+              chapterRepo: context.read<ChapterRepo>(),
+            ),
+          )
         ],
-
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
+          home: Container(),
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,
         ),

@@ -40,7 +40,13 @@ dependencies:
   cached_network_image: ^3.2.3
   path:
   uuid:
-  flutter_lifecycle_detector:
+  firebase_messaging: 
+  firebase_core: 
+  firebase_analytics:
+  flutter_local_notifications: 
+  device_info_plus:
+  android_id:
+  shared_preferences:
 
 
   # The following adds the Cupertino Icons font to your application.
