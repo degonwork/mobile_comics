@@ -52,11 +52,11 @@ class Chapter {
       image_thumnail_path: json['image_thumnail'],
       image_thumnail_id: json['image_thumnail_id'],
       chapter_des: json['chapter_des'],
-      // publish_date: json['publish_date'] != null
-      //     ? json['publish_date'] is int
-      //         ? DateTime.fromMillisecondsSinceEpoch(json['publish_date'])
-      //         : DateTime.parse(json['publish_date'])
-      //     : null,
+      publish_date: json['publish_date'] != null
+          ? json['publish_date'] is int
+              ? DateTime.fromMillisecondsSinceEpoch(json['publish_date'])
+              : DateTime.parse(json['publish_date'])
+          : null,
       content: json['content'] != null ? List.from(json['content']) : [],
       numerical: json['numerical'],
       content_update_time: json['content_update_time'] != null

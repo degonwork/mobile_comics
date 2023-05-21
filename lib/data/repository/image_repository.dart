@@ -131,7 +131,7 @@ class ImageRepo {
   }
 
   // More
-  Future createOrUpdateImage({
+  Future<String?> createOrUpdateImage({
     required String? imageID,
     required String? imagePath,
     required dynamic parentDB,
@@ -149,10 +149,14 @@ class ImageRepo {
           type: typeImage,
         ),
       );
-      // print("$typeImage of comicID ${parentDB.id} is updated");
+      print("${typeImage} is updated");
+      return imageID;
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listHomeComic: [parent]);
-      // print("$typeImage of comicID ${parentDB.id} is created");
+      print("${typeImage} is created");
+      return await readIDImageFromDB(
+          parentId: parentDB.id, typeImage: typeImage);
     }
+    return null;
   }
 }

@@ -123,8 +123,7 @@ class Comic {
     if (categoriesComic.isNotEmpty) {
       for (var i = 0; i < categoriesComic.length; i++) {
         Category? category = await HandleDatabase.readCategoryByIDFromDB(
-          id: categoriesComic[i].category_id,
-        );
+            id: categoriesComic[i].category_id);
         if (category != null) {
           listCategories.add(category.name);
         }
@@ -132,7 +131,10 @@ class Comic {
     }
     List<Chapter> chapters =
         await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
-    // print(chapters);
+    if (chapters.isNotEmpty) {
+      chapters.sort(
+          (chapter1, chapter2) => chapter1.numerical! - chapter2.numerical!);
+    }
     Image? imageDetail = (await HandleDatabase.readImageFromDB(
         type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id));
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(

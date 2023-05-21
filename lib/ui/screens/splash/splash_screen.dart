@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 2),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
-        RepositoryProvider.of<DeviceRepo>(context).createDeviceToLocal();
+        RepositoryProvider.of<DeviceRepo>(context).registerDevice();
       },
     );
   }

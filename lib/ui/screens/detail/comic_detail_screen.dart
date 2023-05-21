@@ -34,90 +34,96 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        body: Stack(
-      children: [
-        const BackGroundApp(),
-        BlocBuilder<ComicDetailBloc, ComicDetailState>(
-          builder: (context, state) {
-            if (state is ComicDetailLoaded) {
-              final comic = state.comic;
-              if (comic != AppConstant.COMICNOTEXIST) {
-                return CustomScrollView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  slivers: [
-                    SliverAppBar(
-                      backgroundColor: Colors.transparent,
-                      leading: IconButton(
+      body: Stack(
+        children: [
+          const BackGroundApp(),
+          BlocBuilder<ComicDetailBloc, ComicDetailState>(
+            builder: (context, state) {
+              if (state is ComicDetailLoaded) {
+                final comic = state.comic;
+                if (comic != AppConstant.COMICNOTEXIST) {
+                  return CustomScrollView(
+                    scrollDirection: Axis.vertical,
+                    slivers: [
+                      SliverAppBar(
+                        backgroundColor: Colors.transparent,
+                        leading: IconButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.black,
-                          )),
-                      floating: false,
-                      snap: false,
-                      pinned: true,
-                      expandedHeight: SizeConfig.screenHeight / 4,
-                      flexibleSpace: FlexibleSpaceBar(
-                        title: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                                comic.title != null ? '${comic.title}' : "")),
-                        background: comic.image_detail_path != null
-                            ? CachedNetworkImage(
-                                imageUrl: comic.image_detail_path!,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.fill),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
-                              )
-                            : Image.asset("assets/images/banner_splash.png"),
-                      ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-                        TabBar(
-                          controller: _tabController,
-                          tabs: tabs,
-                          unselectedLabelColor: Colors.black,
-                        ),
-                        SizedBox(
-                          height: SizeConfig.screenHeight * 0.8,
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                top: SizeConfig.screenHeight / 42),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.screenWidth / 18),
-                            child: TabBarView(
-                              controller: _tabController,
-                              children: const [
-                                Infor(),
-                                ListChapter(),
-                                // Comment(),
-                              ],
-                            ),
                           ),
-                        )
-                      ]),
-                    ),
-                  ],
-                );
+                        ),
+                        floating: false,
+                        snap: false,
+                        pinned: true,
+                        expandedHeight: SizeConfig.screenHeight / 4,
+                        flexibleSpace: FlexibleSpaceBar(
+                          title: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                  comic.title != null ? '${comic.title}' : "")),
+                          background: comic.image_detail_path != null
+                              ? CachedNetworkImage(
+                                  imageUrl: comic.image_detail_path!,
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.fill),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Image.asset("assets/images/banner_splash.png"),
+                        ),
+                      ),
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            TabBar(
+                              controller: _tabController,
+                              tabs: tabs,
+                              unselectedLabelColor: Colors.black,
+                            ),
+                            SizedBox(
+                              height: SizeConfig.screenHeight * 0.8,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: SizeConfig.screenHeight / 42),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: SizeConfig.screenWidth / 18),
+                                child: TabBarView(
+                                  controller: _tabController,
+                                  children: [
+                                    Infor(comic: comic),
+                                    ListChapter(comic: comic),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }
               }
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-      ],
-    ));
+              return const Text(
+                "This Comic not found",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

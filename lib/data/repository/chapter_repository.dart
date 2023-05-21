@@ -24,21 +24,32 @@ class ChapterRepo {
       final response = await _apiClient.getData('$_chapterUrl$id');
       if (response.statusCode == 200) {
         dynamic jsonResponse = jsonDecode(response.body);
-        final chapter = Chapter.fromJson(jsonResponse);
-        await updateChapterToDB(chapter: chapter);
-        List<Image> imageChapterContent =
-            await _imageRepo.readImageChapterContent(chapterId: id);
-        List<Image> images = [];
-        for (var i = 0; i < imageChapterContent.length; i++) {
-          Image image = Image(
-              id: imageChapterContent[i].id,
-              path:
-                  '${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageChapterContent[i].path}',
-              type: imageChapterContent[i].type,
-              parent_id: imageChapterContent[i].parent_id);
-          images.add(image);
+        if (jsonResponse != null) {
+          final chapter = Chapter.fromJson(jsonResponse);
+          await updateChapterToDB(chapter: chapter);
+          List<Image> imageChapterContent =
+              await _imageRepo.readImageChapterContent(chapterId: id);
+          List<Image> images = [];
+          if (imageChapterContent.isNotEmpty) {
+            imageChapterContent.sort((imageChapterContent1,
+                    imageChapterContent2) =>
+                imageChapterContent1.numerical! -
+                imageChapterContent2.numerical!);
+            for (var i = 0; i < imageChapterContent.length; i++) {
+              Image image = Image(
+                  id: imageChapterContent[i].id,
+                  path:
+                      '${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageChapterContent[i].path}',
+                  type: imageChapterContent[i].type,
+                  parent_id: imageChapterContent[i].parent_id);
+              images.add(image);
+            }
+          }
+          return images;
+        } else {
+          print("chapter is not available");
+          throw Exception("Not Found Data");
         }
-        return images;
       } else {
         throw Exception('Load failed chapter');
       }
@@ -59,18 +70,21 @@ class ChapterRepo {
           parentId: comic.chapters![i].id,
           typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
         );
-        listChapters.addAll([
-          Chapter(
-            comic_id: comic.id,
-            id: comic.chapters![i].id,
-            image_thumnail_id: imageThumnailID,
-            chapter_des: comic.chapters![i].chapter_des,
-            numerical: i + 1,
-            content: comic.chapters![i].content,
-          )
-        ]);
+        listChapters.addAll(
+          [
+            Chapter(
+              id: comic.chapters![i].id,
+              comic_id: comic.id,
+              image_thumnail_id: imageThumnailID,
+              chapter_des: comic.chapters![i].chapter_des,
+              numerical: i + 1,
+            )
+          ],
+        );
       }
       await HandleDatabase.createChapterToDB(chapters: listChapters);
+    } else {
+      print("Comic has not Chapters");
     }
   }
 
@@ -79,11 +93,11 @@ class ChapterRepo {
   }
 
   Future<void> updateChapterToDB({required Chapter chapter}) async {
-    await _imageRepo.createImageChapterContentToDB(chapter: chapter);
     Chapter? chapterDB =
         await HandleDatabase.readChapterByIDFromDB(id: chapter.id);
     if (chapterDB != null) {
-      await _imageRepo.createOrUpdateImage(
+      await _imageRepo.createImageChapterContentToDB(chapter: chapter);
+      String? imageThumnailId = await _imageRepo.createOrUpdateImage(
         imageID: chapterDB.image_thumnail_id,
         imagePath: chapter.image_thumnail_path,
         parentDB: chapterDB,
@@ -93,7 +107,7 @@ class ChapterRepo {
       Chapter updateChapter = Chapter(
         id: chapter.id,
         comic_id: chapter.comic_id,
-        image_thumnail_id: chapterDB.image_thumnail_id,
+        image_thumnail_id: imageThumnailId,
         chapter_des: chapter.chapter_des,
         numerical: chapterDB.numerical,
         content_update_time: chapter.content_update_time,
@@ -101,6 +115,8 @@ class ChapterRepo {
         content: chapter.content,
       );
       await HandleDatabase.updateChapterToDB(chapter: updateChapter);
+    } else {
+      print("Chapter is not updated");
     }
   }
 

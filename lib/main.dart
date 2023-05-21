@@ -102,7 +102,10 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         RepositoryProvider<DeviceRepo>(
-          create: (context) => DeviceRepo(),
+          create: (context) => DeviceRepo(
+            apiClient: context.read<ApiClient>(),
+            deviceUrl: AppConstant.DEVICEURL,
+          ),
         ),
       ],
       child: MultiBlocProvider(

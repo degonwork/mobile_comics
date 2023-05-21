@@ -11,7 +11,6 @@ class NewComic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final ComicDetailBloc comicDetailBloc;
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeLoaded) {
@@ -64,9 +63,6 @@ class NewComic extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
                               )
                             : Image.asset("assets/images/banner_splash.png"),
                         Text(
@@ -86,10 +82,12 @@ class NewComic extends StatelessWidget {
             );
           }
         }
-        return Center(
-          child: Image.asset(
-            "assets/images/banner_splash.png",
-            height: SizeConfig.screenHeight * 0.2,
+        return const Text(
+          "Comics not found",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
           ),
         );
       },

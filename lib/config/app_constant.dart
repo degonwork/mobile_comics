@@ -13,6 +13,7 @@ class AppConstant {
   static const IMAGEURL = "/image/";
   // Device
   static const DEVICEURL = "/device/";
+  static const REGISTERDEVICEURL = "create";
 
   // Type Image Comic
   static const TYPEIMAGECOMICS = [
@@ -33,7 +34,7 @@ class AppConstant {
 
 // limit
   static const LIMITHOMECOMIC = 6;
-  static const LIMITSEEMORECOMIC = 20;
+  static const LIMITVIEWMORECOMIC = 20;
 
 // Error
   static const COMICNOTEXIST = Comic(id: "Not-exist");
