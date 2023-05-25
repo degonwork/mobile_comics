@@ -47,30 +47,31 @@ class _ReadScreenState extends State<ReadScreen> {
                         });
                       },
                       child: ListView.builder(
-                          controller: controller,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listImage.length,
-                          itemBuilder: (context, index) {
-                            return CachedNetworkImage(
-                              imageUrl: listImage[index].path,
-                              imageBuilder: (context, imageProvider) {
-                                return Container(
-                                  width: SizeConfig.screenWidth,
-                                  height: SizeConfig.screenHeight,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.fill,
-                                    ),
+                        controller: controller,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listImage.length,
+                        itemBuilder: (context, index) {
+                          return CachedNetworkImage(
+                            imageUrl: listImage[index].path,
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                width: SizeConfig.screenWidth,
+                                height: SizeConfig.screenHeight,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fill,
                                   ),
-                                );
-                              },
-                              errorWidget: (context, url, error) => Image.asset(
-                                  "assets/images/banner_splash.png"),
-                            );
-                          }),
+                                ),
+                              );
+                            },
+                            errorWidget: (context, url, error) =>
+                                Image.asset("assets/images/banner_splash.png"),
+                          );
+                        },
+                      ),
                     ),
                     AnimatedOpacity(
                       opacity: visialbe ? 1.0 : 0.0,

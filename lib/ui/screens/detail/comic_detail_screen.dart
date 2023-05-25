@@ -77,6 +77,9 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                                       ),
                                     );
                                   },
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          "assets/images/banner_splash.png"),
                                 )
                               : Image.asset("assets/images/banner_splash.png"),
                         ),
