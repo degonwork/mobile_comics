@@ -1,8 +1,8 @@
 import 'package:full_comics_frontend/data/providers/api/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import '../../config/app_constant.dart';
 import '../models/device_model.dart';
-import '../providers/device/device_service.dart';
 import '../providers/firebase/notification/firebase_messaging_service.dart';
 
 class DeviceRepo {
@@ -35,8 +35,12 @@ class DeviceRepo {
           AppConstant.FIREBASETOKEN, firebaseToken);
       print("Create firebaseToken");
     }
-    final deviceService = DeviceService();
-    await deviceService.setDeviceId(sharedPreferences);
+    if (!sharedPreferences.containsKey(AppConstant.UUIDDEVICE)) {
+      print("uuid device is not available");
+      String uuidDevice = const Uuid().v4();
+      await sharedPreferences.setString(AppConstant.UUIDDEVICE, uuidDevice);
+      print("Create uuid device");
+    }
     print("Created Device to local");
   }
 
@@ -47,8 +51,8 @@ class DeviceRepo {
     if (sharedPreferences.containsKey(AppConstant.FIREBASETOKEN)) {
       fireBaseToken = sharedPreferences.getString(AppConstant.FIREBASETOKEN);
     }
-    if (sharedPreferences.containsKey(AppConstant.DEVICEID)) {
-      deviceId = sharedPreferences.getString(AppConstant.DEVICEID);
+    if (sharedPreferences.containsKey(AppConstant.UUIDDEVICE)) {
+      deviceId = sharedPreferences.getString(AppConstant.UUIDDEVICE);
     }
     return Device(device_id: deviceId, firebase_token: fireBaseToken);
   }

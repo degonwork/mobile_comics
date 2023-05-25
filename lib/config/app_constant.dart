@@ -24,7 +24,7 @@ class AppConstant {
 
   // SharePrefrence
   static const String FIREBASETOKEN = "Firebase-token";
-  static const String DEVICEID = "Device-id";
+  static const String UUIDDEVICE = "Uuid-device";
 
   // Type Image chapter thumnail
   static const TYPEIMAGETHUMNAILCHAPTER = "image_thumnail_chapter";

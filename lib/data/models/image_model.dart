@@ -1,5 +1,3 @@
-import '../../config/app_constant.dart';
-
 const String tableImages = 'Images';
 
 class ImageField {

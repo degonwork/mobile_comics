@@ -36,7 +36,6 @@ class ComicRepo {
           final listHotComicApi =
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
           await createComicToDB(listHomeComic: listHotComicApi);
-
           List<Comic> listHotComics =
               await readHotComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
           return listHotComics;
@@ -88,9 +87,9 @@ class ComicRepo {
         if (jsonResponse != null) {
           final comicApi = Comic.fromJson(jsonResponse);
           await updateComicToDB(comic: comicApi);
-          Comic? comic =
-              await HandleDatabase.readComicByIDFromDB(id: comicApi.id);
+          Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
           if (comic != null) {
+            print(comic);
             return Comic.copyWith(comic);
           }
         } else {
@@ -101,7 +100,7 @@ class ComicRepo {
         throw Exception('Load failed');
       }
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
     }
     return AppConstant.COMICNOTEXIST;
   }

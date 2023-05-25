@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,15 +52,23 @@ class _ReadScreenState extends State<ReadScreen> {
                           scrollDirection: Axis.vertical,
                           itemCount: listImage.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: SizeConfig.screenWidth,
-                              height: SizeConfig.screenHeight,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(listImage[index].path),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                            return CachedNetworkImage(
+                              imageUrl: listImage[index].path,
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  width: SizeConfig.screenWidth,
+                                  height: SizeConfig.screenHeight,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                );
+                              },
+                              errorWidget: (context, url, error) => Image.asset(
+                                  "assets/images/banner_splash.png"),
                             );
                           }),
                     ),

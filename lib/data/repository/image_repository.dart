@@ -11,9 +11,10 @@ class ImageRepo {
       {required List<Comic> listHomeComic}) async {
     final List<Image> listImageObject = [];
     for (var homeComic in listHomeComic) {
-      if (homeComic.image_detail_path != null) {
-        Image? imageDetail = Image(
-          id: const Uuid().v4(),
+      if (homeComic.image_detail_id != null &&
+          homeComic.image_detail_path != null) {
+        Image imageDetail = Image(
+          id: homeComic.image_detail_id!,
           path: homeComic.image_detail_path!
               .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
               .removeLast(),
@@ -22,9 +23,10 @@ class ImageRepo {
         );
         listImageObject.add(imageDetail);
       }
-      if (homeComic.image_thumnail_square_path != null) {
-        Image? imageThumnailSquare = Image(
-          id: const Uuid().v4(),
+      if (homeComic.image_thumnail_square_id != null &&
+          homeComic.image_thumnail_square_path != null) {
+        Image imageThumnailSquare = Image(
+          id: homeComic.image_thumnail_square_id!,
           path: homeComic.image_thumnail_square_path!
               .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
               .removeLast(),
@@ -33,9 +35,10 @@ class ImageRepo {
         );
         listImageObject.add(imageThumnailSquare);
       }
-      if (homeComic.image_thumnail_rectangle_path != null) {
-        Image? imageThumnailSquare = Image(
-          id: const Uuid().v4(),
+      if (homeComic.image_thumnail_rectangle_id != null &&
+          homeComic.image_thumnail_rectangle_path != null) {
+        Image imageThumnailSquare = Image(
+          id: homeComic.image_thumnail_rectangle_id!,
           path: homeComic.image_thumnail_rectangle_path!
               .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
               .removeLast(),
@@ -56,9 +59,10 @@ class ImageRepo {
       {required List<Chapter> listChapters}) async {
     final List<Image> listImageObject = [];
     for (var chapter in listChapters) {
-      if (chapter.image_thumnail_path != null) {
+      if (chapter.image_thumnail_id != null &&
+          chapter.image_thumnail_path != null) {
         Image imageThumnail = Image(
-          id: const Uuid().v4(),
+          id: chapter.image_thumnail_id!,
           path: chapter.image_thumnail_path!
               .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
               .removeLast(),
@@ -79,16 +83,19 @@ class ImageRepo {
     final List<Image> listImageObject = [];
     if (chapter.content!.isNotEmpty) {
       for (int i = 0; i < chapter.content!.length; i++) {
-        Image imageContent = Image(
-          id: const Uuid().v4(),
-          path: chapter.content![i]
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-              .removeLast(),
-          type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
-          parent_id: chapter.id,
-          numerical: i + 1,
-        );
-        listImageObject.add(imageContent);
+        if (chapter.content![i]["id"] != null &&
+            chapter.content![i]["path"] != null) {
+          Image imageContent = Image(
+            id: chapter.content![i]["id"]!,
+            path: chapter.content![i]["path"]!
+                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+                .removeLast(),
+            type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+            parent_id: chapter.id,
+            numerical: i + 1,
+          );
+          listImageObject.add(imageContent);
+        }
       }
     }
     if (listImageObject.isNotEmpty) {

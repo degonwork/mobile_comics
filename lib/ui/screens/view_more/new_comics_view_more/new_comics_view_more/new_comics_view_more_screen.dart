@@ -110,6 +110,10 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                       ),
                                                     );
                                                   },
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Image.asset(
+                                                          "assets/images/banner_splash.png"),
                                                 )
                                               : Image.asset(
                                                   "assets/images/banner_splash.png"),
