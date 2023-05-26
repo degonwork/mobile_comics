@@ -20,6 +20,7 @@ class ChapterRepo {
         _imageRepo = imageRepo;
   //  Fetch Api
   Future<List<Image>> fetchDetailChapters({required String id}) async {
+    List<Image> images = [];
     try {
       final response = await _apiClient.getData('$_chapterUrl$id');
       if (response.statusCode == 200) {
@@ -29,7 +30,6 @@ class ChapterRepo {
           await updateChapterToDB(chapter: chapter);
           List<Image> imageChapterContent =
               await _imageRepo.readImageChapterContent(chapterId: id);
-          List<Image> images = [];
           if (imageChapterContent.isNotEmpty) {
             imageChapterContent.sort((imageChapterContent1,
                     imageChapterContent2) =>
@@ -45,7 +45,6 @@ class ChapterRepo {
               images.add(image);
             }
           }
-          return images;
         } else {
           print("chapter is not available");
           throw Exception("Not Found Data");
@@ -56,7 +55,8 @@ class ChapterRepo {
     } catch (e) {
       print(e.toString());
     }
-    return [];
+
+    return images;
   }
 
   // process database

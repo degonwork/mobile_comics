@@ -79,19 +79,22 @@ class Comic {
   factory Comic.fromJson(Map<String, dynamic> json) {
     return Comic(
       id: json['_id'] ?? json['id'],
-      image_detail_id:
-          json['image_detail'] != null ? json["image_detail"]["id"] : null,
-      image_thumnail_rectangle_id:
-          json['image_detail'] != null ? json["image_detail"]["id"] : null,
-      image_thumnail_square_id:
-          json['image_detail'] != null ? json["image_detail"]["id"] : null,
+      image_detail_id: json['image_detail'] != null
+          ? json["image_detail"]["id"]
+          : json['image_detail_id'],
       image_detail_path:
           json['image_detail'] != null ? json["image_detail"]["path"] : null,
+      image_thumnail_square_id: json['image_thumnail_square'] != null
+          ? json["image_thumnail_square"]["id"]
+          : json['image_thumnail_square_id'],
       image_thumnail_square_path: json['image_thumnail_square'] != null
           ? json["image_thumnail_square"]["path"]
           : null,
-      image_thumnail_rectangle_path: json['image_thumnail_square'] != null
-          ? json["image_thumnail_square"]["path"]
+      image_thumnail_rectangle_id: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["id"]
+          : json['image_thumnail_rectangle_id'],
+      image_thumnail_rectangle_path: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["path"]
           : null,
       title: json['title'],
       categories:
@@ -177,8 +180,8 @@ class Comic {
     return {
       'id': id,
       'image_detail_id': image_detail_id,
-      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'image_thumnail_square_id': image_thumnail_square_id,
+      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'title': title,
       'author': author,
       'description': description,

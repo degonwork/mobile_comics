@@ -49,8 +49,9 @@ class Chapter {
     return Chapter(
       id: json['_id'] ?? json['id'] ?? json['chapter_id'],
       comic_id: json['comic_id'],
-      image_thumnail_id:
-          json['image_thumnail'] != null ? json["image_thumnail"]["id"] : null,
+      image_thumnail_id: json['image_thumnail'] != null
+          ? json["image_thumnail"]["id"]
+          : json['image_thumnail_id'],
       image_thumnail_path: json['image_thumnail'] != null
           ? json["image_thumnail"]["path"]
           : null,
@@ -61,14 +62,9 @@ class Chapter {
               : DateTime.parse(json['publish_date'])
           : null,
       content: json['content'] != null
-          ? List.from(
-              json['content'].map(
-                (key, value) => MapEntry(
-                  key,
-                  value.toString(),
-                ),
-              ),
-            )
+          ? List<dynamic>.from(json['content'])
+              .map((json) => Map<String, String>.from(json))
+              .toList()
           : [],
       numerical: json['numerical'],
       content_update_time: json['content_update_time'] != null

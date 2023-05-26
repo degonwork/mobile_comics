@@ -17,7 +17,7 @@ class AppConstant {
 
   // Type Image Comic
   static const TYPEIMAGECOMICS = [
-    "image_comic_detail",
+    "image_detail_comic",
     "image_thumnail_square_comic",
     "image_thumnail_rectangle_comic",
   ];

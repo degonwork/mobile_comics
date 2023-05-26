@@ -85,10 +85,12 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                         context
                                                             .read<
                                                                 ComicDetailBloc>()
-                                                            .add(LoadDetailComic(
-                                                                listNewComicsViewMore[
-                                                                        index]
-                                                                    .id));
+                                                            .add(
+                                                              LoadDetailComic(
+                                                                  listNewComicsViewMore[
+                                                                          index]
+                                                                      .id),
+                                                            );
                                                         Navigator.pushNamed(
                                                             context,
                                                             ComicDetailScreen

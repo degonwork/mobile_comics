@@ -89,7 +89,6 @@ class ComicRepo {
           await updateComicToDB(comic: comicApi);
           Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
           if (comic != null) {
-            print(comic);
             return Comic.copyWith(comic);
           }
         } else {
@@ -149,7 +148,6 @@ class ComicRepo {
         typeImage: AppConstant.TYPEIMAGECOMICS[0],
         parent: comic,
       );
-
       String? imageThumnailSquareId = await _imageRepo.createOrUpdateImage(
         imageID: comicDB.image_thumnail_square_id,
         imagePath: comic.image_thumnail_square_path,
@@ -157,7 +155,6 @@ class ComicRepo {
         typeImage: AppConstant.TYPEIMAGECOMICS[1],
         parent: comic,
       );
-
       String? imageThumnailRectangleId = await _imageRepo.createOrUpdateImage(
         imageID: comicDB.image_thumnail_rectangle_id,
         imagePath: comic.image_thumnail_rectangle_path,
@@ -179,7 +176,6 @@ class ComicRepo {
         add_chapter_time: comic.add_chapter_time,
         update_time: comic.update_time,
       );
-
       await HandleDatabase.updateComicToDB(comic: updateComic);
       print("Comic is updated");
       await _chapterRepo.createChapterToDB(comic: comic);
@@ -211,6 +207,7 @@ class ComicRepo {
   Future<List<Comic>> readNewComicsFromDB({required int limit}) async {
     List<Comic> listNewComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
+
     if (listComics.isNotEmpty) {
       List<Comic> listComicsFilter =
           listComics.where((comic) => comic.add_chapter_time != null).toList();
