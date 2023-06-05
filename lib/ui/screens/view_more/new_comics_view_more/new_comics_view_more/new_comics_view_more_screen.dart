@@ -6,6 +6,7 @@ import '../../../../../blocs/view_more/view_more_bloc.dart';
 import '../../../../widgets/back_ground_app.dart';
 import '../../../../../config/size_config.dart';
 import '../../../detail/comic_detail_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewComicViewMoreScreen extends StatelessWidget {
   const NewComicViewMoreScreen({super.key});
@@ -34,9 +35,9 @@ class NewComicViewMoreScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_outlined)),
-                      const Text(
-                        "More New Comics",
-                        style: TextStyle(fontSize: 22),
+                      Text(
+                        AppLocalizations.of(context)!.newComics,
+                        style: const TextStyle(fontSize: 22),
                       ),
                       const SizedBox(width: 50),
                     ],

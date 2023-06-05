@@ -1,6 +1,23 @@
 {
-    "language":"English",
-    "@language": {
-        "description": "The current Language"
-      }
+  "language": "English",
+  "welcomeSplashScreen": "Welcome to comic app",
+  "home": "Home",
+  "library": "Library",
+  "cabinet": "Cabinet",
+  "profile": "Profile",
+  "newComics": "New Comics",
+  "seeMore": "See more comics",
+  "inforComics": "Comic information",
+  "chapters": "Chapters",
+  "numberReads": "Number of reads",
+  "totalChapters": "Total chapters",
+  "genreComics": "Genre Comics",
+  "describe": "Describe",
+  "readComics": "Read comics",
+  "readFirstChapter": "Read first chapter",
+  "continueReading": "Continue reading",
+  "latestChapter": "Latest chapter",
+  "listChapters": "List chapters",
+  "reading": "Reading",
+  "reads": "Reads"
 }

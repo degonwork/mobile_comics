@@ -7,6 +7,7 @@ import '../../widgets/back_ground_app.dart';
 import '../detail/widgets/chapter.dart';
 import '../detail/widgets/infor.dart';
 import '../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   const ComicDetailScreen({super.key});
@@ -18,21 +19,22 @@ class ComicDetailScreen extends StatefulWidget {
 
 class _ComicDetailScreenState extends State<ComicDetailScreen>
     with SingleTickerProviderStateMixin {
-  static const List<Tab> tabs = <Tab>[
-    Tab(text: 'Thông tin'),
-    Tab(text: 'Chương'),
-    // Tab(text: 'Bình luận'),
-  ];
+  late List<Tab> tabs = [];
   late TabController _tabController;
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    List<Tab> tabs = <Tab>[
+      Tab(text: AppLocalizations.of(context)!.inforComics),
+      Tab(text: AppLocalizations.of(context)!.chapters),
+    ];
+    _tabController = TabController(length: tabs.length, vsync: this);
     return Scaffold(
       body: Stack(
         children: [

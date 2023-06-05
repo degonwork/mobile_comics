@@ -10,6 +10,7 @@ import '../../widgets/back_ground_app.dart';
 import '../../widgets/build_ads_banner.dart';
 import 'widgets/new_comic.dart';
 import 'widgets/select_title.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,10 +38,10 @@ class HomeScreen extends StatelessWidget {
                       bottom: SizeConfig.screenHeight * 0.02,
                     ),
                     child: SizedBox(
-                            // height: SizeConfig.screenHeight/ 10,
-                            width: SizeConfig.screenWidth,
-                            child:const BannerAD(),
-                          ),
+                      // height: SizeConfig.screenHeight/ 10,
+                      width: SizeConfig.screenWidth,
+                      child: const BannerAD(),
+                    ),
                     // child: Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //   children: [
@@ -118,7 +119,8 @@ class HomeScreen extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: SizeConfig.screenWidth * 0.041),
                                 child: SelectTitle(
-                                  title: "Truyện mới",
+                                  title:
+                                      AppLocalizations.of(context)!.newComics,
                                   press: () {
                                     Navigator.pushNamed(context,
                                         NewComicViewMoreScreen.routeName);

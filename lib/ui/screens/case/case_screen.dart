@@ -6,6 +6,7 @@ import '../../../config/size_config.dart';
 import 'widgets/favorite.dart';
 import 'widgets/read_offline.dart';
 import 'widgets/reading.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CaseScreen extends StatefulWidget {
   const CaseScreen({super.key});
@@ -16,21 +17,11 @@ class CaseScreen extends StatefulWidget {
 
 class _CaseScreenState extends State<CaseScreen>
     with SingleTickerProviderStateMixin {
-  static const List<Tab> tabs = <Tab>[
-    Tab(text: 'Đang đọc'),
-    Tab(
-      text: 'Yêu thích',
-    ),
-    Tab(
-      text: 'Đọc offline',
-    ),
-  ];
   late TabController _tabController;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
-    _tabController = TabController(length: tabs.length, vsync: this);
   }
 
   @override
@@ -41,6 +32,16 @@ class _CaseScreenState extends State<CaseScreen>
 
   @override
   Widget build(BuildContext context) {
+    List<Tab> tabs = <Tab>[
+      Tab(text: AppLocalizations.of(context)!.reading),
+      const Tab(
+        text: 'Yêu thích',
+      ),
+      const Tab(
+        text: 'Đọc offline',
+      ),
+    ];
+    _tabController = TabController(length: tabs.length, vsync: this);
     SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(

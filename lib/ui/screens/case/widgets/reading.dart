@@ -3,6 +3,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../blocs/case/case_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Reading extends StatelessWidget {
   const Reading({super.key});
@@ -66,7 +67,7 @@ class Reading extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        "${listCaseComic[index].reads ?? ""} lượt xem",
+                                        "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey.shade700,
@@ -84,7 +85,7 @@ class Reading extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "Đang đọc: Chương ${listCaseComic[index].numericChapter}",
+                                "${AppLocalizations.of(context)!.reading}: Chương ${listCaseComic[index].numericChapter}",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.black,

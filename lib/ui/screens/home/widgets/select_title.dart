@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SelectTitle extends StatelessWidget {
   final String title;
@@ -20,9 +21,9 @@ class SelectTitle extends StatelessWidget {
         ),
         TextButton(
           onPressed: press,
-          child: const Text(
-            "Xem thêm",
-            style: TextStyle(color: Colors.yellow),
+          child: Text(
+            AppLocalizations.of(context)!.seeMore,
+            style: const TextStyle(color: Colors.yellow),
           ),
         ),
       ],

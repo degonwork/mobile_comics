@@ -8,6 +8,7 @@ import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
 import '../../../config/size_config.dart';
 import '../router/router_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,10 +45,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Chào mừng bạn đến với App Truyện',
+                  Text(
+                    AppLocalizations.of(context)!.welcomeSplashScreen,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,

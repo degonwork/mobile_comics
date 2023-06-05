@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomNavbar extends StatelessWidget {
   final int currentIndex;
@@ -28,28 +29,28 @@ class BottomNavbar extends StatelessWidget {
               Icons.home_outlined,
               color: Colors.white.withOpacity(0.9),
             ),
-            label: "Trang chủ",
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.library_books,
               color: Colors.white.withOpacity(0.9),
             ),
-            label: 'Thư viện',
+            label: AppLocalizations.of(context)!.library,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.cases_outlined,
               color: Colors.white.withOpacity(0.9),
             ),
-            label: 'Tủ sách',
+            label: AppLocalizations.of(context)!.cabinet,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
               color: Colors.white.withOpacity(0.9),
             ),
-            label: 'Cá nhân',
+            label: AppLocalizations.of(context)!.profile,
           ),
         ],
       ),

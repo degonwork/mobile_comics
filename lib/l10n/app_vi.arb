@@ -1,3 +1,23 @@
 {
-    "language": "Tiếng Việt"
+    "language": "Tiếng Việt",
+    "welcomeSplashScreen": "Chào mừng bạn đến với app truyện",
+    "home": "Trang chủ",
+    "library": "Thư viện",
+    "cabinet": "Tủ truyện",
+    "profile": "Cá nhân",
+    "newComics": "Truyện mới",
+    "seeMore": "Xem thêm",
+    "inforComics": "Thông tin",
+    "chapters": "Chương",
+    "numberReads": "Đã đọc",
+    "totalChapters": "Chương",
+    "genreComics": "Thể loại",
+    "describe": "Describe",
+    "readComics": "Đọc truyện",
+    "readFirstChapter": "Đọc từ đầu",
+    "continueReading": "Đọc tiếp",
+    "latestChapter": "Mới nhất",
+    "listChapters": "Danh sách",
+    "reading": "Đang đọc",
+    "reads": "Lượt đọc"
 }

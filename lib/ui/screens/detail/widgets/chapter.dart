@@ -8,6 +8,7 @@ import '../../read/read_screen.dart';
 import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListChapter extends StatelessWidget {
   const ListChapter({super.key, required this.comic, required this.caseComic});
@@ -27,9 +28,9 @@ class ListChapter extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SizeConfig.screenHeight / 50),
-                const Text(
-                  'Mới nhất',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                Text(
+                  AppLocalizations.of(context)!.latestChapter,
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 SizedBox(height: SizeConfig.screenHeight / 50),
                 GestureDetector(
@@ -80,9 +81,9 @@ class ListChapter extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Danh sách',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    Text(
+                      AppLocalizations.of(context)!.listChapters,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     IconButton(
                       onPressed: () {},

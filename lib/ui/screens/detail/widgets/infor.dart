@@ -4,6 +4,7 @@ import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../screens/detail/widgets/read_button.dart';
 import '../../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Infor extends StatelessWidget {
   const Infor({super.key, required this.comic, required this.caseComic});
@@ -41,7 +42,7 @@ class Infor extends StatelessWidget {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Đã đọc'),
+                              Text(AppLocalizations.of(context)!.numberReads),
                               Text(
                                 comic.reads != null ? '${comic.reads}' : "",
                               ),
@@ -101,7 +102,7 @@ class Infor extends StatelessWidget {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Chương'),
+                              Text(AppLocalizations.of(context)!.totalChapters),
                               comic.chapters!.isNotEmpty
                                   ? Text('${comic.chapters!.length}')
                                   : const Text(""),
@@ -121,9 +122,9 @@ class Infor extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Thể loại',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  Text(
+                    AppLocalizations.of(context)!.genreComics,
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(
                     height: SizeConfig.screenHeight / 80,
@@ -164,9 +165,9 @@ class Infor extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Tóm tắt',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  Text(
+                    AppLocalizations.of(context)!.describe,
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(
                     height: SizeConfig.screenHeight / 75.6,
@@ -178,14 +179,14 @@ class Infor extends StatelessWidget {
               ),
             ),
             SizedBox(height: SizeConfig.screenHeight / 25.2),
-            _loadReadButton(),
+            _loadReadButton(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _loadReadButton() {
+  Widget _loadReadButton(BuildContext context) {
     if (comic.chapters!.isNotEmpty) {
       if (caseComic != AppConstant.caseComicNotExist) {
         return Row(
@@ -196,14 +197,14 @@ class Infor extends StatelessWidget {
               comic: comic,
               numericChapter: 1,
               color: Colors.orangeAccent,
-              title: "Đọc từ đầu",
+              title: AppLocalizations.of(context)!.readFirstChapter,
             ),
             ReadButton(
               id: caseComic.chapterId,
               comic: comic,
               numericChapter: caseComic.numericChapter,
               color: Colors.orangeAccent,
-              title: "Đọc tiếp",
+              title: AppLocalizations.of(context)!.continueReading,
             ),
           ],
         );
@@ -214,12 +215,13 @@ class Infor extends StatelessWidget {
             comic: comic,
             numericChapter: 1,
             color: Colors.orangeAccent,
-            title: "Đọc truyện",
+            title: AppLocalizations.of(context)!.readComics,
           ),
         );
       }
     } else {
-      return const ReadButton(title: "Đọc truyện ", color: Colors.grey);
+      return ReadButton(
+          title: AppLocalizations.of(context)!.readComics, color: Colors.grey);
     }
   }
 }
