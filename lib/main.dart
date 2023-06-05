@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
-
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
+import 'package:full_comics_frontend/l10n/l10n.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../data/repository/device_repository.dart';
@@ -25,7 +25,8 @@ import '../data/repository/category_repository.dart';
 import 'blocs/case/case_bloc.dart';
 import 'data/providers/firebase/notification/firebase_messaging_service.dart';
 import 'data/providers/firebase/notification/local_notification_service.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<dynamic> _firebaseMessagingBackgroundHandler(
     RemoteMessage message) async {
@@ -84,7 +85,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ImageRepo(),
         ),
         RepositoryProvider<CategoryRepo>(
-          create: (context) =>  const CategoryRepo(apiClient:  ApiClient(baseServerUrl:AppConstant.baseServerUrl)),
+          create: (context) => const CategoryRepo(
+              apiClient: ApiClient(baseServerUrl: AppConstant.baseServerUrl)),
         ),
         RepositoryProvider<CategoriesComicsRepo>(
           create: (context) => CategoriesComicsRepo(
@@ -136,18 +138,27 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           BlocProvider<ReadChapterBloc>(
-            create: (context) => ReadChapterBloc(chapterRepo: context.read<ChapterRepo>(),
-            )),
-          BlocProvider<FilterComicBloc>(create: (_) => FilterComicBloc(comicRepo: context.read<ComicRepo>())),  
+              create: (context) => ReadChapterBloc(
+                    chapterRepo: context.read<ChapterRepo>(),
+                  )),
+          BlocProvider<FilterComicBloc>(
+              create: (_) =>
+                  FilterComicBloc(comicRepo: context.read<ComicRepo>())),
           BlocProvider<CaseBloc>(
             create: (context) => CaseBloc(
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
         ],
-    
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          supportedLocales: L10n.all,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,
@@ -157,6 +168,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  
   }
 }

@@ -37,32 +37,33 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-            body: Stack(
-          children: [
-            const BackGroundApp(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Chào mừng bạn đến với App Truyện',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+          body: Stack(
+            children: [
+              const BackGroundApp(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Chào mừng bạn đến với App Truyện',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                Image.asset(
-                  'assets/images/banner_splash.png',
-                  height: SizeConfig.screenHeight / 2.52,
-                  width: SizeConfig.screenWidth / 1.2,
-                ),
-                Container(),
-              ],
-            ),
-          ],
-        ));
+                  Image.asset(
+                    'assets/images/banner_splash.png',
+                    height: SizeConfig.screenHeight / 2.52,
+                    width: SizeConfig.screenWidth / 1.2,
+                  ),
+                  Container(),
+                ],
+              ),
+            ],
+          ),
+        );
       },
     );
   }

@@ -1,4 +1,3 @@
-
 import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import 'package:full_comics_frontend/data/models/comic_model.dart';
 
@@ -24,7 +23,6 @@ class AppConstant {
   static const registerDeviceUrl = "create";
 
   // Type Image Comic
- 
 
   // SharePrefrence
   static const String firebaseToken = "Firebase-token";
@@ -43,15 +41,12 @@ class AppConstant {
   static const limitSeeMoreComic = 20;
 // category
 
-static const categoryAll = "/category/all";
+  static const categoryAll = "/category/all";
 // Error
   static const comicNotExist = Comic(id: "Not-exist");
- 
-
-
 
 // Error
- 
+
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
 }
