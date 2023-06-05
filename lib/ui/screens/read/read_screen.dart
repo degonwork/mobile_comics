@@ -2,13 +2,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
+import '../../../data/models/comic_model.dart';
 
 class ReadScreen extends StatefulWidget {
-  const ReadScreen({super.key});
+  const ReadScreen({
+    super.key,
+    this.chapterId,
+    this.comic,
+    this.numericChapter,
+  });
+  final String? chapterId;
+  final Comic? comic;
+  final int? numericChapter;
 
   @override
   State<ReadScreen> createState() => _ReadScreenState();
@@ -80,6 +89,21 @@ class _ReadScreenState extends State<ReadScreen> {
                         alignment: Alignment.topLeft,
                         child: IconButton(
                           onPressed: () {
+                            if (widget.comic != null &&
+                                widget.chapterId != null &&
+                                widget.numericChapter != null) {
+                              context.read<CaseBloc>().add(
+                                    AddCaseComic(
+                                      chapterId: widget.chapterId!,
+                                      comicId: widget.comic!.id,
+                                      imageThumnailSquareComicPath: widget
+                                          .comic!.image_thumnail_square_path!,
+                                      numericChapter: widget.numericChapter!,
+                                      titleComic: widget.comic!.title!,
+                                      reads: widget.comic!.reads!,
+                                    ),
+                                  );
+                            }
                             Navigator.pop(context);
                           },
                           icon: const Icon(

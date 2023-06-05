@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:full_comics_frontend/data/repository/device_repository.dart';
+import '../data/repository/device_repository.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -16,6 +17,7 @@ import '../config/app_router.dart';
 import '../blocs/view_more/view_more_bloc.dart';
 import '../data/repository/categories_comics_repository.dart';
 import '../data/repository/category_repository.dart';
+import 'blocs/case/case_bloc.dart';
 import 'blocs/comic_detail/comic_detail_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
 import 'data/providers/firebase/notification/firebase_messaging_service.dart';
@@ -132,7 +134,12 @@ class _MyAppState extends State<MyApp> {
             create: (context) => ReadChapterBloc(
               chapterRepo: context.read<ChapterRepo>(),
             ),
-          )
+          ),
+          BlocProvider<CaseBloc>(
+            create: (context) => CaseBloc(
+              comicRepo: context.read<ComicRepo>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -140,7 +147,6 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: Container(),
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,
         ),

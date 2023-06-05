@@ -70,26 +70,20 @@ class ChapterRepo {
           parentId: comic.chapters![i].id,
           typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
         );
-        listChapters.addAll(
-          [
-            Chapter(
-              id: comic.chapters![i].id,
-              comic_id: comic.id,
-              image_thumnail_id: imageThumnailID,
-              chapter_des: comic.chapters![i].chapter_des,
-              numerical: i + 1,
-            )
-          ],
+        listChapters.add(
+          Chapter(
+            id: comic.chapters![i].id,
+            comic_id: comic.id,
+            image_thumnail_id: imageThumnailID,
+            chapter_des: comic.chapters![i].chapter_des,
+            numerical: i + 1,
+          ),
         );
       }
       await HandleDatabase.createChapterToDB(chapters: listChapters);
     } else {
       print("Comic has not Chapters");
     }
-  }
-
-  Future<Chapter?> readChapterByIdFromDB({required String id}) async {
-    return HandleDatabase.readChapterByIDFromDB(id: id);
   }
 
   Future<void> updateChapterToDB({required Chapter chapter}) async {
@@ -127,6 +121,7 @@ class ChapterRepo {
       await _imageRepo.deleteImageChapterContent(chapter: chapter);
       print("deleted content");
     }
-    _imageRepo.createImageChapterContentToDB(chapter: chapter);
+    await _imageRepo.createImageChapterContentToDB(chapter: chapter);
+    print("Repaired content");
   }
 }

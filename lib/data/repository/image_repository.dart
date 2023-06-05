@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import '.././models/comic_model.dart';
 import '.././providers/database/handle_database.dart';
 import '../../config/app_constant.dart';

@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/providers/database/handle_database.dart';
 import '../../data/repository/category_repository.dart';
@@ -39,7 +38,6 @@ class CategoriesComicsRepo {
         }
       }
     }
-    print("Category is empty");
     if (listCategoriesComics.isNotEmpty) {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComics);
@@ -57,7 +55,6 @@ class CategoriesComicsRepo {
     if (categoryDB != null) {
       String categoryId = categoryDB.id;
       CategoriesComics categoriesComics = CategoriesComics(
-        id: const Uuid().v4(),
         comic_id: comic.id,
         category_id: categoryId,
       );

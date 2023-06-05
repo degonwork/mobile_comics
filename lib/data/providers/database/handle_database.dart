@@ -64,7 +64,6 @@ class HandleDatabase {
       {required String comicID}) async {
     List<Chapter> listChapter = await StorageDatabase.instance
         .readChapterByComicIDFromDB(comicID: comicID);
-
     return listChapter;
   }
 
@@ -148,8 +147,9 @@ class HandleDatabase {
   static Future<void> createCategoriesComicsToDB(
       {required List<CategoriesComics> categoriesComics}) async {
     for (int i = 0; i < categoriesComics.length; i++) {
-      CategoriesComics? categoryComic =
-          await readCategoriesComicsByIDFromDB(id: categoriesComics[i].id);
+      CategoriesComics? categoryComic = await readCategoriesComicsFromDB(
+          comicID: categoriesComics[i].comic_id,
+          categoryID: categoriesComics[i].category_id);
       if (categoryComic == null) {
         await StorageDatabase.instance
             .createCategoriesComicsToDB(categoriesComics: categoriesComics[i]);
@@ -159,13 +159,6 @@ class HandleDatabase {
       }
     }
     print("--------------------------------");
-  }
-
-  static Future<CategoriesComics?> readCategoriesComicsByIDFromDB(
-      {required String id}) async {
-    CategoriesComics? categoriesComics =
-        await StorageDatabase.instance.readCategoriesComicsByIDFromDB(id: id);
-    return categoriesComics;
   }
 
   static Future<List<CategoriesComics>> readAllCategoriesComicsFromDB(

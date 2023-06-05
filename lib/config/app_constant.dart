@@ -1,3 +1,4 @@
+import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import 'package:full_comics_frontend/data/models/comic_model.dart';
 
 class AppConstant {
@@ -25,6 +26,8 @@ class AppConstant {
   // SharePrefrence
   static const String FIREBASETOKEN = "Firebase-token";
   static const String UUIDDEVICE = "Uuid-device";
+  static const String TIMESADSLOCAL = "Times-ads";
+  static const String LISTCASECOMICS = "List-case-comics";
 
   // Type Image chapter thumnail
   static const TYPEIMAGETHUMNAILCHAPTER = "image_thumnail_chapter";
@@ -36,6 +39,11 @@ class AppConstant {
   static const LIMITHOMECOMIC = 6;
   static const LIMITVIEWMORECOMIC = 20;
 
+// times ads
+  static const TIMESADS = 5;
+
 // Error
   static const COMICNOTEXIST = Comic(id: "Not-exist");
+  static const CASECOMICNOTEXIST = CaseComic(
+      comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
 }

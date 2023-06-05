@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/data/repository/device_repository.dart';
+import '../../../blocs/case/case_bloc.dart';
+import '../../../data/repository/device_repository.dart';
 import '../../../blocs/home/home_bloc.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
@@ -21,10 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 2),
+      const Duration(seconds: 3),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
         RepositoryProvider.of<DeviceRepo>(context).registerDevice();
+        BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
       },
     );
   }

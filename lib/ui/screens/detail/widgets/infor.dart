@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:full_comics_frontend/config/app_constant.dart';
+import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../screens/detail/widgets/read_button.dart';
 import '../../../../config/size_config.dart';
 
 class Infor extends StatelessWidget {
-  const Infor({super.key, required this.comic});
+  const Infor({super.key, required this.comic, required this.caseComic});
   final Comic comic;
+  final CaseComic caseComic;
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +56,20 @@ class Infor extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: SizeConfig.screenWidth / 36),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                               backgroundColor: Colors.white,
                               radius: 15,
                               child: Icon(Icons.favorite)),
-                          const Spacer(),
+                          Spacer(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Đánh giá'),
+                              Text('Đánh giá'),
                               Row(
-                                children: const [
+                                children: [
                                   Text('1.1K'),
                                   Icon(
                                     Icons.star,
@@ -90,9 +93,10 @@ class Infor extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           const CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15,
-                              child: Icon(Icons.library_books)),
+                            backgroundColor: Colors.white,
+                            radius: 15,
+                            child: Icon(Icons.library_books),
+                          ),
                           const Spacer(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -174,15 +178,48 @@ class Infor extends StatelessWidget {
               ),
             ),
             SizedBox(height: SizeConfig.screenHeight / 25.2),
-            comic.chapters!.isNotEmpty
-                ? ReadButton(
-                    id: comic.chapters!.first.id,
-                    color: Colors.orangeAccent,
-                  )
-                : const ReadButton(color: Colors.grey),
+            _loadReadButton(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _loadReadButton() {
+    if (comic.chapters!.isNotEmpty) {
+      if (caseComic != AppConstant.CASECOMICNOTEXIST) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ReadButton(
+              id: comic.chapters!.first.id,
+              comic: comic,
+              numericChapter: 1,
+              color: Colors.orangeAccent,
+              title: "Đọc từ đầu",
+            ),
+            ReadButton(
+              id: caseComic.chapterId,
+              comic: comic,
+              numericChapter: caseComic.numericChapter,
+              color: Colors.orangeAccent,
+              title: "Đọc tiếp",
+            ),
+          ],
+        );
+      } else {
+        return Center(
+          child: ReadButton(
+            id: comic.chapters!.first.id,
+            comic: comic,
+            numericChapter: 1,
+            color: Colors.orangeAccent,
+            title: "Đọc truyện",
+          ),
+        );
+      }
+    } else {
+      return const ReadButton(title: "Đọc truyện ", color: Colors.grey);
+    }
   }
 }

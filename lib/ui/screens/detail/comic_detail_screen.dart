@@ -41,9 +41,9 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
             builder: (context, state) {
               if (state is ComicDetailLoaded) {
                 final comic = state.comic;
+                final caseComic = state.caseComic;
                 if (comic != AppConstant.COMICNOTEXIST) {
                   return CustomScrollView(
-                    scrollDirection: Axis.vertical,
                     slivers: [
                       SliverAppBar(
                         backgroundColor: Colors.transparent,
@@ -102,8 +102,14 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                                 child: TabBarView(
                                   controller: _tabController,
                                   children: [
-                                    Infor(comic: comic),
-                                    ListChapter(comic: comic),
+                                    Infor(
+                                      comic: comic,
+                                      caseComic: caseComic,
+                                    ),
+                                    ListChapter(
+                                      comic: comic,
+                                      caseComic: caseComic,
+                                    ),
                                   ],
                                 ),
                               ),

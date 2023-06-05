@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
