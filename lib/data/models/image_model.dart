@@ -26,7 +26,7 @@ class Image {
     this.numerical,
   });
  static Future<Image> copyWith(Image image) async {
-  return Image(id: image.id, path: '${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${image.path}', type: image.type, parent_id: image.parent_id);
+  return Image(id: image.id, path: '${AppConstant.baseServerUrl}${AppConstant.imageUrl}${image.path}', type: image.type, parent_id: image.parent_id);
  }
   factory Image.fromJson(Map<String, dynamic> json) {
     return Image(

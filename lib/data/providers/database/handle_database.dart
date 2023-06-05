@@ -9,7 +9,7 @@ class HandleDatabase {
   // process comic
   static Future<void> createComicToDB({required List<Comic> comics}) async {
     for (int i = 0; i < comics.length; i++) {
-      if (comics[i] is Comic) {
+      // if (comics[i] is Comic) {
         Comic? comic = await readComicByIDFromDB(id: comics[i].id);
         if (comic == null) {
           await StorageDatabase.instance.createComicToDB(comic: comics[i]);
@@ -19,15 +19,18 @@ class HandleDatabase {
         }
       }
     }
-    print("--------------------------------");
-  }
+   
+  // print("--------------------------------"); }
 
   static Future<List<Comic>> readManyComicsFromDB() async {
     List<Comic> listComics =
         await StorageDatabase.instance.readManyComicsFromDB();
     return listComics;
   }
-
+  static Future<List<Comic>> readComicByCategoryID({required String id}) async{
+    List<Comic> listComics = await StorageDatabase.instance.readComicByIDCategory(id: id);
+    return listComics;
+  }
   static Future<Comic?> readComicByIDFromDB({required String id}) async {
     Comic? comic = await StorageDatabase.instance.readComicByIDFromDB(id: id);
     return comic;
@@ -72,7 +75,7 @@ static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID
   // process image
   static Future<void> createImageToDB({required List<Image> images}) async {
     for (int i = 0; i < images.length; i++) {
-      if (images[i] is Image) {
+      // if (images[i] is Image == true) {
         Image? imagesFromDB = await readImageFromDB(
           type: images[i].type,
           parentID: images[i].parent_id,
@@ -86,8 +89,8 @@ static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID
         }
       }
     }
-    print("--------------------------------");
-  }
+  //   print("--------------------------------");
+  // }
 
   static Future<Image?> readImageFromDB(
       {required String type, required String parentID, int? numerical}) async {
@@ -119,16 +122,16 @@ static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID
 
   // process category
   static Future<int?> createCategoryToDB({required Category category}) async {
-    if (category is Category) {
+    // if (category is Category) {
       Category? createCategory =
           await readCategoryByNameFromDB(name: category.name);
       if (createCategory == null) {
         return await StorageDatabase.instance
             .createCategoryToDB(category: category);
       }
+      return null;
     }
-    return null;
-  }
+  // }
 
   static Future<Category?> readCategoryByIDFromDB({required String id}) async {
     Category? category =
@@ -153,7 +156,7 @@ static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID
   static Future<void> createCategoriesComicsToDB(
       {required List<CategoriesComics> categoriesComics}) async {
     for (int i = 0; i < categoriesComics.length; i++) {
-      if (categoriesComics[i] is CategoriesComics) {
+      // if (categoriesComics[i] is CategoriesComics) {
         CategoriesComics? categoryComic =
             await readCategoriesComicsByIDFromDB(id: categoriesComics[i].id);
         if (categoryComic == null) {
@@ -165,8 +168,8 @@ static Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID
         }
       }
     }
-    print("--------------------------------");
-  }
+  //   print("--------------------------------");
+  // }
 
   static Future<CategoriesComics?> readCategoriesComicsByIDFromDB(
       {required String id}) async {

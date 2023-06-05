@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
+import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
+
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -15,7 +18,9 @@ import '../blocs/view_more/view_more_bloc.dart';
 import '../data/repository/categories_comics_repository.dart';
 import '../data/repository/category_repository.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ImageRepo(),
         ),
         RepositoryProvider<CategoryRepo>(
-          create: (context) => CategoryRepo(),
+          create: (context) =>  const CategoryRepo(apiClient:  ApiClient(baseServerUrl:AppConstant.baseServerUrl)),
         ),
         RepositoryProvider<CategoriesComicsRepo>(
           create: (context) => CategoriesComicsRepo(
@@ -44,7 +49,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<ChapterRepo>(
           create: (context) => ChapterRepo(
             imageRepo: context.read<ImageRepo>(),
-            chapterUrl: AppConstant.CHAPTERURL,apiClient:const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+            chapterUrl: AppConstant.chapterUrl,apiClient:const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
           ),
         ),
         RepositoryProvider<ComicRepo>(
@@ -53,7 +58,7 @@ class MyApp extends StatelessWidget {
             imageRepo: context.read<ImageRepo>(),
             chapterRepo: context.read<ChapterRepo>(),
             categoriesComicsRepo: context.read<CategoriesComicsRepo>(),
-            comicUrl: AppConstant.COMICURL,
+            comicUrl: AppConstant.comicUrl,
           ),
         ),
       ],
@@ -79,7 +84,8 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ReadChapterBloc>(
             create: (context) => ReadChapterBloc(chapterRepo: context.read<ChapterRepo>(),
-            ))
+            )),
+          BlocProvider<FilterComicBloc>(create: (_) => FilterComicBloc(comicRepo: context.read<ComicRepo>())),  
         ],
 
         child: MaterialApp(

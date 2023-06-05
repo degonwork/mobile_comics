@@ -133,22 +133,22 @@ class Comic {
     List<Chapter> chapters = await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
     // print(chapters);
     Image? imageDetail = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id));
+        type: AppConstant.typeImageComic[0], parentID: comic.id));
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.TYPEIMAGECOMICS[1], parentID: comic.id));
+        type: AppConstant.typeImageComic[1], parentID: comic.id));
     Image? imageThumnailRectangle = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id));
+        type: AppConstant.typeImageComic[2], parentID: comic.id));
     return Comic(
       
       id: comic.id,
       image_detail_path: imageDetail != null
-          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageDetail.path}"
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageDetail.path}"
           : null,
       image_thumnail_square_path: imageThumnailSquare != null
-          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageThumnailSquare.path}"
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageThumnailSquare.path}"
           : null,
       image_thumnail_rectangle_path: imageThumnailRectangle != null
-          ? "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageThumnailRectangle.path}"
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageThumnailRectangle.path}"
           : null,
       title: comic.title,
       author: comic.author,

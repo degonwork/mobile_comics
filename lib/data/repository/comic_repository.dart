@@ -29,22 +29,24 @@ class ComicRepo {
   Future<List<Comic>> fetchAPIAndCreateDBHotComics({required int limit}) async {
     try {
       final response = await _apiClient
-          .getData('$_comicUrl${AppConstant.HOTCOMICURL}?limit=$limit');
+          .getData('$_comicUrl${AppConstant.hotComicUrl}?limit=$limit');
+         
       if (response.statusCode == 200) {
+        
         List<dynamic> jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
           final listHotComicApi =
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
           await createComicToDB(listHomeComic: listHotComicApi);
           List<Comic> listHotComics =
-              await readHotComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
+              await readHotComicsFromDB(limit: AppConstant.limitHomeComic);
           return listHotComics;
         } else {
           print("Hot comic is not available");
           throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed');
+        throw Exception('Load failed 1');
       }
     } catch (e) {
       print(e.toString());
@@ -55,7 +57,7 @@ class ComicRepo {
   Future<List<Comic>> fetchAPIAndCreateDBNewComics({required int limit}) async {
     try {
       final response = await _apiClient
-          .getData('$_comicUrl${AppConstant.NEWCOMICURL}?limit=$limit');
+          .getData('$_comicUrl${AppConstant.newComicUrl}?limit=$limit');
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
@@ -63,14 +65,14 @@ class ComicRepo {
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
           await createComicToDB(listHomeComic: listNewComicsApi);
           List<Comic> listNewComics =
-              await readNewComicsFromDB(limit: AppConstant.LIMITHOMECOMIC);
+              await readNewComicsFromDB(limit: AppConstant.limitHomeComic);
           return listNewComics;
         } else {
           print("New comic is not available");
           throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed');
+        throw Exception('Load failed 2');
       }
     } catch (e) {
       print(e.toString());
@@ -96,12 +98,12 @@ class ComicRepo {
           throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed');
+        throw Exception('Load failed 3');
       }
     } catch (e) {
       print(e.toString());
     }
-    return AppConstant.COMICNOTEXIST;
+    return AppConstant.comicNotExist;
   }
 
   // Process Database
@@ -112,15 +114,15 @@ class ComicRepo {
     for (var homeComic in listHomeComic) {
       String? imageDetailId = await _imageRepo.readIDImageFromDB(
         parentId: homeComic.id,
-        typeImage: AppConstant.TYPEIMAGECOMICS[0],
+        typeImage: AppConstant.typeImageComic[0],
       );
       String? imageThumnailSquareId = await _imageRepo.readIDImageFromDB(
         parentId: homeComic.id,
-        typeImage: AppConstant.TYPEIMAGECOMICS[1],
+        typeImage: AppConstant.typeImageComic[1],
       );
       String? imageThumnailRectangleId = await _imageRepo.readIDImageFromDB(
         parentId: homeComic.id,
-        typeImage: AppConstant.TYPEIMAGECOMICS[2],
+        typeImage: AppConstant.typeImageComic[2],
       );
       Comic comic = Comic(
         id: homeComic.id,
@@ -145,7 +147,7 @@ class ComicRepo {
         imageID: comicDB.image_detail_id,
         imagePath: comic.image_detail_path,
         parentDB: comicDB,
-        typeImage: AppConstant.TYPEIMAGECOMICS[0],
+        typeImage: AppConstant.typeImageComic[0],
         parent: comic,
       );
 
@@ -153,7 +155,7 @@ class ComicRepo {
         imageID: comicDB.image_thumnail_square_id,
         imagePath: comic.image_thumnail_square_path,
         parentDB: comicDB,
-        typeImage: AppConstant.TYPEIMAGECOMICS[1],
+        typeImage: AppConstant.typeImageComic[1],
         parent: comic,
       );
 
@@ -161,7 +163,7 @@ class ComicRepo {
         imageID: comicDB.image_thumnail_rectangle_id,
         imagePath: comic.image_thumnail_rectangle_path,
         parentDB: comicDB,
-        typeImage: AppConstant.TYPEIMAGECOMICS[2],
+        typeImage: AppConstant.typeImageComic[2],
         parent: comic,
       );
       Comic updateComic = Comic(
@@ -206,7 +208,7 @@ class ComicRepo {
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     // (listComics.forEach((element) {print(element.add_chapter_time);}));
     if (listComics.isNotEmpty) {
-    final result =  listComics.where((comic) => comic.add_chapter_time != null ).toList();
+    // final result =  listComics.where((comic) => comic.add_chapter_time != null ).toList();
   //  print(result);
       // listComics.sort((comic1, comic2) =>
       //     (comic2.add_chapter_time!.millisecondsSinceEpoch -
@@ -218,5 +220,16 @@ class ComicRepo {
       listNewComics.sublist(0, limit);
     }
     return listNewComics;
+  }
+  Future<List<Comic>> readComicByCategoryIDFromDB({required String id})async{
+    List<Comic> listComics = [];
+    List<Comic> listComicsReadByCategoryID = await HandleDatabase.readComicByCategoryID(id: id);
+    if (listComicsReadByCategoryID.isNotEmpty) {
+      for (Comic comic in listComicsReadByCategoryID) {
+        listComics.addAll([await Comic.copyWith(comic)]);
+      }
+      return listComics;
+    }
+    return [];
   }
 }

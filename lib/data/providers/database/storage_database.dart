@@ -236,6 +236,7 @@ class StorageDatabase {
   }
 
   // Process category
+  
   Future<int?> createCategoryToDB({required Category category}) async {
     final db = await instance.database;
     final map = category.toMap();
@@ -257,7 +258,20 @@ class StorageDatabase {
       return null;
     }
   }
-
+  Future<List<Comic>> readComicByIDCategory({required String id})async{
+    final db = await instance.database;
+    final maps = await db.query(
+      tableCategoriesComics,
+      columns: CategoriesComicsField.values,
+      where: '${CategoriesComicsField.category_id} = ?',
+      whereArgs: [id]
+      );
+      if (maps.isNotEmpty) {
+       return maps.map((e) => Comic.fromJson(e)).toList();
+      }else{
+        return [];
+      }
+  }
   Future<Category?> readCategoryByIDFromDB({required String id}) async {
     final db = await instance.database;
     final maps = await db.query(

@@ -42,7 +42,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
           builder: (context, state) {
             if (state is ComicDetailLoaded) {
               final comic = state.comic;
-              if (comic != AppConstant.COMICNOTEXIST) {
+              if (comic != AppConstant.comicNotExist) {
                 return CustomScrollView(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,

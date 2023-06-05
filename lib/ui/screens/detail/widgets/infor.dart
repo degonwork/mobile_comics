@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/config/app_constant.dart';
 import 'package:full_comics_frontend/ui/screens/detail/widgets/read_button.dart';
+// import 'package:full_comics_frontend/ui/widgets/reward_ads.dart';
 import '../../../../config/size_config.dart';
 
 class Infor extends StatelessWidget {
@@ -14,8 +15,7 @@ class Infor extends StatelessWidget {
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
           final comic = state.comic;
-          
-          if (comic != AppConstant.COMICNOTEXIST) {
+          if (comic != AppConstant.comicNotExist) {
             return Container(
               padding: EdgeInsets.zero,
               child: SingleChildScrollView(
@@ -62,7 +62,7 @@ class Infor extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: SizeConfig.screenWidth / 36),
-                              child: Row(
+                              child:  Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
@@ -185,6 +185,9 @@ class Infor extends StatelessWidget {
                     ),
                     SizedBox(height: SizeConfig.screenHeight / 25.2),
                     ReadButton(id: comic.chapters!.first.id),
+                    SizedBox(height: SizeConfig.screenHeight/ 75.6,),
+                   
+                    // RewardAD(),  
                   ],
                 ),
               ),

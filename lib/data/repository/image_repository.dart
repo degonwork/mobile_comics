@@ -15,9 +15,9 @@ class ImageRepo {
         Image? imageDetail = Image(
           id: const Uuid().v4(),
           path: homeComic.image_detail_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
-          type: AppConstant.TYPEIMAGECOMICS[0],
+          type: AppConstant.typeImageComic[0],
           parent_id: homeComic.id,
         );
         listImageObject.add(imageDetail);
@@ -26,9 +26,9 @@ class ImageRepo {
         Image? imageThumnailSquare = Image(
           id: const Uuid().v4(),
           path: homeComic.image_thumnail_square_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
-          type: AppConstant.TYPEIMAGECOMICS[1],
+          type: AppConstant.typeImageComic[1],
           parent_id: homeComic.id,
         );
         listImageObject.add(imageThumnailSquare);
@@ -37,9 +37,9 @@ class ImageRepo {
         Image? imageThumnailSquare = Image(
           id: const Uuid().v4(),
           path: homeComic.image_thumnail_rectangle_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
-          type: AppConstant.TYPEIMAGECOMICS[2],
+          type: AppConstant.typeImageComic[2],
           parent_id: homeComic.id,
         );
         listImageObject.add(imageThumnailSquare);
@@ -48,6 +48,7 @@ class ImageRepo {
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
     } else {
+      
       print("Home Comic has not image");
     }
   }
@@ -60,9 +61,9 @@ class ImageRepo {
         Image imageThumnail = Image(
           id: const Uuid().v4(),
           path: chapter.image_thumnail_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
-          type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+          type: AppConstant.typeImageThumnailChapter,
           parent_id: chapter.id,
         );
         listImageObject.add(imageThumnail);
@@ -82,9 +83,9 @@ class ImageRepo {
         Image imageContent = Image(
           id: const Uuid().v4(),
           path: chapter.content![i]
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
-          type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+          type: AppConstant.typeImageChapterContent,
           parent_id: chapter.id,
           numerical: i + 1,
         );
@@ -116,7 +117,7 @@ class ImageRepo {
   Future<List<Image>> readImageChapterContent(
       {required String chapterId}) async {
     return await HandleDatabase.readManyImageFromDB(
-      type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+      type: AppConstant.typeImageChapterContent,
       parentID: chapterId,
     );
   }
@@ -124,7 +125,7 @@ class ImageRepo {
 // delete
   Future<void> deleteImageChapterContent({required Chapter chapter}) async {
     await HandleDatabase.deleteImageToDB(
-      type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+      type: AppConstant.typeImageChapterContent,
       parentID: chapter.id,
     );
     print("Delete content");
@@ -143,7 +144,7 @@ class ImageRepo {
         image: Image(
           id: imageID,
           path: imagePath
-              .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           parent_id: parentDB.id,
           type: typeImage,

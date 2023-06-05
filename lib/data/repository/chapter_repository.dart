@@ -28,7 +28,7 @@ class ChapterRepo {
         List<Image> imageChapterContent = await _imageRepo.readImageChapterContent(chapterId: id);
        List<Image> images = [];
        for (var i = 0; i < imageChapterContent.length; i++) {
-        Image image = Image(id: imageChapterContent[i].id, path: '${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}${imageChapterContent[i].path}', type: imageChapterContent[i].type, parent_id: imageChapterContent[i].parent_id);
+        Image image = Image(id: imageChapterContent[i].id, path: '${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageChapterContent[i].path}', type: imageChapterContent[i].type, parent_id: imageChapterContent[i].parent_id);
         images.add(image);
        }
         return images;
@@ -54,7 +54,7 @@ class ChapterRepo {
     for (int i = 0; i < comic.chapters!.length; i++) {
       String? imageThumnailID = await _imageRepo.readIDImageFromDB(
         parentId: comic.chapters![i].id,
-        typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+        typeImage: AppConstant.typeImageThumnailChapter,
       );
       listChapters.addAll([
         Chapter(
@@ -84,7 +84,7 @@ class ChapterRepo {
         imageID: chapterDB.image_thumnail_id,
         imagePath: chapter.image_thumnail_path,
         parentDB: chapterDB,
-        typeImage: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+        typeImage: AppConstant.typeImageThumnailChapter,
         parent: chapter,
       );
       Chapter updateChapter = Chapter(

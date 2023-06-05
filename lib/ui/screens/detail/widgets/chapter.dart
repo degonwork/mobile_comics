@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_event.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_state.dart';
 import 'package:full_comics_frontend/ui/screens/detail/widgets/read.dart';
 import '../../../../config/size_config.dart';
 
@@ -16,7 +15,7 @@ class ListChapter extends StatelessWidget {
       builder: (context, state) {
         if (state is ComicDetailLoaded) {
          final chapter = state.comic.chapters;
-         print(chapter!.last.id);
+        //  print(chapter!.last.id);
         return Container(
           padding: EdgeInsets.zero,
           child: SingleChildScrollView(
@@ -60,7 +59,7 @@ class ListChapter extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text('${chapter.last.numerical}',style: const TextStyle(fontSize: 30),),
+                      child: Text('${chapter!.last.numerical}',style: const TextStyle(fontSize: 30),),
                     ),
                   ),
                 ),

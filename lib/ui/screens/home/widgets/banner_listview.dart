@@ -35,6 +35,7 @@ class BannerListview extends StatelessWidget {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                     image: imageProvider,
                                     fit: BoxFit.fill,
