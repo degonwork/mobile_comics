@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/comic_model.dart';
@@ -19,10 +18,8 @@ class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
     LoadNewComicsViewMore event,
     Emitter<ViewMoreState> emit,
   ) async {
-    List<Comic>? listNewComicsViewMore =
-        await _comicRepo.readNewComicsFromDB(limit: null);
-    if (listNewComicsViewMore != null) {
-      emit(ViewMoreLoaded(listNewComicsViewMore: listNewComicsViewMore));
-    }
+    List<Comic> listNewComicsViewMore =
+        await _comicRepo.readNewComicsFromDB(limit: 20);
+    emit(ViewMoreLoaded(listNewComicsViewMore));
   }
 }

@@ -11,7 +11,7 @@ class ViewMoreInitial extends ViewMoreState {}
 
 class ViewMoreLoaded extends ViewMoreState {
   final List<Comic> listNewComicsViewMore;
-  const ViewMoreLoaded({required this.listNewComicsViewMore});
+  const ViewMoreLoaded(this.listNewComicsViewMore);
 
   @override
   List<Object> get props => [listNewComicsViewMore];

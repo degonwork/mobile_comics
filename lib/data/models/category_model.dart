@@ -6,8 +6,8 @@ class CategoryField {
     name,
   ];
 
-  static final String id = 'id';
-  static final String name = 'name';
+  static String id = 'id';
+  static String name = 'name';
 }
 
 class Category {
@@ -18,7 +18,7 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json["id"],
+      id: json["id"] ?? json["_id"],
       name: json["name"],
     );
   }

@@ -1,8 +1,6 @@
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
-import 'package:full_comics_frontend/data/models/category_model.dart';
-import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
+import '../../config/app_constant.dart';
 import '.././models/chapter_model.dart';
+import 'image_model.dart';
 
 const String tableComics = 'Comics';
 
@@ -22,19 +20,18 @@ class ComicField {
     add_chapter_time,
   ];
 
-  static final String id = 'id';
-  static final String image_detail_id = 'image_detail_id';
-  static final String image_thumnail_square_id = 'image_thumnail_square_id';
-  static final String image_thumnail_rectangle_id =
-      'image_thumnail_rectangle_id';
-  static final String title = 'title';
-  static final String author = 'author';
-  static final String year = 'year';
-  static final String reads = 'reads';
-  static final String chapter_update_time = 'chapter_update_time';
-  static final String update_time = 'update_time';
-  static final String add_chapter_time = 'add_chapter_time';
-  static final String description = 'description';
+  static String id = 'id';
+  static String image_detail_id = 'image_detail_id';
+  static String image_thumnail_square_id = 'image_thumnail_square_id';
+  static String image_thumnail_rectangle_id = 'image_thumnail_rectangle_id';
+  static String title = 'title';
+  static String author = 'author';
+  static String year = 'year';
+  static String reads = 'reads';
+  static String chapter_update_time = 'chapter_update_time';
+  static String update_time = 'update_time';
+  static String add_chapter_time = 'add_chapter_time';
+  static String description = 'description';
 }
 
 class Comic {
@@ -54,7 +51,8 @@ class Comic {
   final String? image_thumnail_square_id;
   final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
-  final List<dynamic>? categories;
+  final List<String>? categories;
+  final int? times_ads;
 
   const Comic({
     required this.id,
@@ -74,22 +72,41 @@ class Comic {
     this.update_time,
     this.description,
     this.categories,
+    this.times_ads,
   });
 
   factory Comic.fromJson(Map<String, dynamic> json) {
     return Comic(
       id: json['_id'] ?? json['id'],
-      image_detail_path: json['image_detail_path'],
-      image_thumnail_square_path: json['image_thumnail_square_path'],
-      image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
+      image_detail_id: json['image_detail'] != null
+          ? json["image_detail"]["id"]
+          : json['image_detail_id'],
+      image_detail_path:
+          json['image_detail'] != null ? json["image_detail"]["path"] : null,
+      image_thumnail_square_id: json['image_thumnail_square'] != null
+          ? json["image_thumnail_square"]["id"]
+          : json['image_thumnail_square_id'],
+      image_thumnail_square_path: json['image_thumnail_square'] != null
+          ? json["image_thumnail_square"]["path"]
+          : null,
+      image_thumnail_rectangle_id: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["id"]
+          : json['image_thumnail_rectangle_id'],
+      image_thumnail_rectangle_path: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["path"]
+          : null,
       title: json['title'],
-      categories: json['categories'],
+      categories:
+          json['categories'] != null ? List.from(json['categories']) : [],
       author: json['author'],
       description: json['description'],
       year: json['year'],
-      // chapters: json['chapters'] != null
-      //     ? List.from(json['chapters'].map((json) => Chapter.fromJson(json)))
-      //     : null,
+      chapters: json['chapters'] != null
+          ? List.from(json['chapters']).isNotEmpty
+              ? List.from(
+                  json['chapters'].map((json) => Chapter.fromJson(json)))
+              : []
+          : [],
       reads: json['reads'],
       chapter_update_time: json['chapter_update_time'] != null
           ? json['chapter_update_time'] is int
@@ -106,48 +123,33 @@ class Comic {
               ? DateTime.fromMillisecondsSinceEpoch(json['add_chapter_time'])
               : DateTime.parse(json['add_chapter_time'])
           : null,
-      image_detail_id: json["image_detail_id"],
-      image_thumnail_rectangle_id: json["image_thumnail_rectangle_id"],
-      image_thumnail_square_id: json["image_thumnail_square_id"],
+      times_ads: json["times_ads"],
     );
   }
-
-  static Future<Comic> copyWith(Comic comic) async {
-    final listCategories = [];
-    List<CategoriesComics>? categoriesComic = await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
-    if (categoriesComic != null) {
-      for (var i = 0; i < categoriesComic.length; i++) {
-      
-      Category? category = await HandleDatabase.readCategoryByIDFromDB(
-      id: categoriesComic[i].category_id,
-     );
-    
-     listCategories.add(category!.name);
-     
-    }
-    }
-    
-    String? imageDetailUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[0], parentID: comic.id))!
-        .path;
-    String? imageThumnailSquareUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[1], parentID: comic.id))!
-        .path;
-    String? imageThumnailRectangleUrl = (await HandleDatabase.readImageFromDB(
-            type: AppConstant.TYPEIMAGECOMICS[2], parentID: comic.id))!
-        .path;
+  static Comic copyWith(
+    Comic comic, {
+    List<String>? listCategories,
+    List<Chapter>? listChapters,
+    Image? imageDetail,
+    Image? imageThumnailSquare,
+    Image? imageThumnailRectangle,
+  }) {
     return Comic(
-      categories: listCategories,
       id: comic.id,
-      image_detail_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageDetailUrl",
-      image_thumnail_square_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailSquareUrl",
-      image_thumnail_rectangle_path:
-          "${AppConstant.baseServerUrl}${AppConstant.IMAGEURL}$imageThumnailRectangleUrl",
+      image_detail_path: imageDetail != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageDetail.path}"
+          : null,
+      image_thumnail_square_path: imageThumnailSquare != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageThumnailSquare.path}"
+          : null,
+      image_thumnail_rectangle_path: imageThumnailRectangle != null
+          ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageThumnailRectangle.path}"
+          : null,
       title: comic.title,
       author: comic.author,
       description: comic.description,
+      categories: listCategories ?? [],
+      chapters: listChapters ?? [],
       year: comic.year,
       reads: comic.reads,
       chapter_update_time: comic.chapter_update_time,
@@ -160,8 +162,8 @@ class Comic {
     return {
       'id': id,
       'image_detail_id': image_detail_id,
-      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'image_thumnail_square_id': image_thumnail_square_id,
+      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'title': title,
       'author': author,
       'description': description,

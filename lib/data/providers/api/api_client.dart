@@ -11,7 +11,16 @@ class ApiClient {
       final response = await get(Uri.parse(_baseServerUrl + uri));
       return response;
     } catch (e) {
-      return Response(e.toString(), 1);
+      return Response(e.toString(), 404);
+    }
+  }
+
+  Future<Response> postData(String uri, dynamic body) async {
+    try {
+      final response = await post(Uri.parse(_baseServerUrl + uri), body: body);
+      return response;
+    } catch (e) {
+      return Response(e.toString(), 404);
     }
   }
 }

@@ -39,7 +39,6 @@ class StorageDatabase {
       ${ComicField.chapter_update_time} TEXT,
       ${ComicField.update_time} TEXT,
       ${ComicField.add_chapter_time} TEXT
-      
     ) 
     ''');
     await db.execute(''' 
@@ -70,7 +69,6 @@ class StorageDatabase {
     ''');
     await db.execute(''' 
       CREATE TABLE $tableCategoriesComics(
-      ${CategoriesComicsField.id} TEXT,
       ${CategoriesComicsField.comic_id} TEXT,
       ${CategoriesComicsField.category_id} TEXT
     ) 
@@ -78,24 +76,24 @@ class StorageDatabase {
   }
 
   // Process comic
-  Future<void> createComicToDB(Comic comic) async {
+  Future<void> createComicToDB({required Comic comic}) async {
     final db = await instance.database;
     final map = comic.toMap();
     await db.insert(tableComics, map,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<List<Comic>?> readManyComicsFromDB() async {
+  Future<List<Comic>> readManyComicsFromDB() async {
     final db = await instance.database;
     final maps = await db.query(tableComics, columns: ComicField.values);
     if (maps.isNotEmpty) {
       return maps.map((json) => Comic.fromJson(json)).toList();
     } else {
-      return null;
+      return [];
     }
   }
 
-  Future<Comic?> readComicByIDFromDB(String? id) async {
+  Future<Comic?> readComicByIDFromDB({required String id}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableComics,
@@ -110,7 +108,7 @@ class StorageDatabase {
     }
   }
 
-  Future<void> updateComicToDB(Comic comic) async {
+  Future<void> updateComicToDB({required Comic comic}) async {
     final db = await instance.database;
     final map = comic.toMap();
     await db.update(
@@ -122,14 +120,14 @@ class StorageDatabase {
   }
 
   // Process chapter
-  Future<void> createChapterToDB(Chapter chapter) async {
+  Future<void> createChapterToDB({required Chapter chapter}) async {
     final db = await instance.database;
     final map = chapter.toMap();
     await db.insert(tableChapters, map,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<Chapter?> readChapterByIDFromDB(String? id) async {
+  Future<Chapter?> readChapterByIDFromDB({required String id}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableChapters,
@@ -144,7 +142,24 @@ class StorageDatabase {
     }
   }
 
-  Future<void> updateChapterToDB(Chapter chapter) async {
+  Future<List<Chapter>> readChapterByComicIDFromDB(
+      {required String comicID}) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      tableChapters,
+      columns: ChapterField.values,
+      where: '${ChapterField.comic_id} =?',
+      whereArgs: [comicID],
+    );
+    // print('$maps dfsf');
+    if (maps.isNotEmpty) {
+      return maps.map((e) => Chapter.fromJson(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  Future<void> updateChapterToDB({required Chapter chapter}) async {
     final db = await instance.database;
     final map = chapter.toMap();
     await db.update(
@@ -156,7 +171,7 @@ class StorageDatabase {
   }
 
   // Process image
-  Future<void> createImageToDB(Image image) async {
+  Future<void> createImageToDB({required Image image}) async {
     final db = await instance.database;
     final map = image.toMap();
     await db.insert(tableImages, map,
@@ -164,7 +179,7 @@ class StorageDatabase {
   }
 
   Future<Image?> readImageFromDB(
-      {String? type, String? parentId, int? numerical}) async {
+      {required String type, required String parentId, int? numerical}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableImages,
@@ -182,8 +197,8 @@ class StorageDatabase {
     }
   }
 
-  Future<List<Image>?> readManyImageFromDB(
-      {String? type, String? parentId}) async {
+  Future<List<Image>> readManyImageFromDB(
+      {required String type, required String parentId}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableImages,
@@ -191,14 +206,15 @@ class StorageDatabase {
       where: '${ImageField.type} = ? and ${ImageField.parent_id} = ?',
       whereArgs: [type, parentId],
     );
+
     if (maps.isNotEmpty) {
       return maps.map((json) => Image.fromJson(json)).toList();
     } else {
-      return null;
+      return [];
     }
   }
 
-  Future<void> updateImageToDB(Image image) async {
+  Future<void> updateImageToDB({required Image image}) async {
     final db = await instance.database;
     final map = image.toMap();
     await db.update(
@@ -209,7 +225,8 @@ class StorageDatabase {
     );
   }
 
-  Future<void> deleteImageFromDB({String? type, String? parentId}) async {
+  Future<void> deleteImageFromDB(
+      {required String type, required String parentId}) async {
     final db = await instance.database;
     await db.delete(
       tableImages,
@@ -220,14 +237,14 @@ class StorageDatabase {
 
   // Process category
   
-  Future<int> createCategoryToDB(Category category) async {
+  Future<int?> createCategoryToDB({required Category category}) async {
     final db = await instance.database;
     final map = category.toMap();
     return await db.insert(tableCategories, map,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<Category?> readCategoryByNameFromDB(String? name) async {
+  Future<Category?> readCategoryByNameFromDB({required String name}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableCategories,
@@ -241,21 +258,36 @@ class StorageDatabase {
       return null;
     }
   }
-Future<Category?> readCategoryByIDFromDB(String? id) async{
-  final db= await instance.database;
-  final maps = await db.query(
-    tableCategories,
-    columns: CategoryField.values,
-    where: '${CategoryField.id} = ?',
-    whereArgs: [id],
+  Future<List<Comic>> readComicByIDCategory({required String id})async{
+    final db = await instance.database;
+    final maps = await db.query(
+      tableCategoriesComics,
+      columns: CategoriesComicsField.values,
+      where: '${CategoriesComicsField.category_id} = ?',
+      whereArgs: [id]
+      );
+      if (maps.isNotEmpty) {
+       return maps.map((e) => Comic.fromJson(e)).toList();
+      }else{
+        return [];
+      }
+  }
+  Future<Category?> readCategoryByIDFromDB({required String id}) async {
+    final db = await instance.database;
+    final maps = await db.query(
+      tableCategories,
+      columns: CategoryField.values,
+      where: '${CategoryField.id} = ?',
+      whereArgs: [id],
     );
-  if (maps.isNotEmpty) {
+    if (maps.isNotEmpty) {
       return Category.fromJson(maps.first);
     } else {
       return null;
     }
-}
-  Future<void> updateCategoryToDB(Category category) async {
+  }
+
+  Future<void> updateCategoryToDB({required Category category}) async {
     final db = await instance.database;
     final map = category.toMap();
     await db.update(
@@ -266,7 +298,7 @@ Future<Category?> readCategoryByIDFromDB(String? id) async{
     );
   }
 
-  Future<List<Category>?> readAllCategoryFromDB() async {
+  Future<List<Category>> readAllCategoryFromDB() async {
     final db = await instance.database;
     final maps = await db.query(
       tableCategories,
@@ -275,42 +307,27 @@ Future<Category?> readCategoryByIDFromDB(String? id) async{
     if (maps.isNotEmpty) {
       return maps.map((e) => Category.fromJson(e)).toList();
     } else {
-      return null;
+      return [];
     }
   }
 
   // Process categories Comics
   Future<void> createCategoriesComicsToDB(
-      CategoriesComics categoriesComics) async {
+      {required CategoriesComics categoriesComics}) async {
     final db = await instance.database;
     final map = categoriesComics.toMap();
     await db.insert(tableCategoriesComics, map,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<CategoriesComics?> readCategoriesComicsByIDFromDB(String? id) async {
-    final db = await instance.database;
-    final maps = await db.query(
-      tableCategoriesComics,
-      columns: CategoriesComicsField.values,
-      where: '${CategoriesComicsField.id} = ?',
-      whereArgs: [id],
-    );
-    if (maps.isNotEmpty) {
-      return CategoriesComics.fromJson(maps.first);
-    } else {
-      return null;
-    }
-  }
-
   Future<CategoriesComics?> readCategoriesComicsFromDB(
-      String? categoryID, String? comicID) async {
+      {required String categoryID, required String comicID}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableCategoriesComics,
       columns: CategoriesComicsField.values,
       where:
-          '${CategoriesComicsField.category_id} = ? and ${CategoriesComicsField.comic_id} ?',
+          '${CategoriesComicsField.category_id} = ? and ${CategoriesComicsField.comic_id} = ?',
       whereArgs: [categoryID, comicID],
     );
     if (maps.isNotEmpty) {
@@ -320,8 +337,8 @@ Future<Category?> readCategoryByIDFromDB(String? id) async{
     }
   }
 
-  Future<List<CategoriesComics>?> readAllCategoriesComicsDFromDB(
-      String? comicID) async {
+  Future<List<CategoriesComics>> readAllCategoriesComicsDFromDB(
+      {required String comicID}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableCategoriesComics,
@@ -331,12 +348,12 @@ Future<Category?> readCategoryByIDFromDB(String? id) async{
     if (maps.isNotEmpty) {
       return maps.map((e) => CategoriesComics.fromJson(e)).toList();
     } else {
-      return null;
+      return [];
     }
   }
 
   Future<void> deleteAllCategoriesComicsByComicIDFromDB(
-      {String? comicID}) async {
+      {required String comicID}) async {
     final db = await instance.database;
     await db.delete(
       tableCategoriesComics,

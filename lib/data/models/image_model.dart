@@ -1,29 +1,28 @@
 const String tableImages = 'Images';
 
 class ImageField {
-  static final List<String> values = [id, path, type, parent_id, numerical];
-  static final String id = 'id';
-  static final String path = 'path';
-  static final String type = 'type';
-  static final String parent_id = 'parent_id';
-  static final String numerical = 'numerical';
+  static List<String> values = [id, path, type, parent_id, numerical];
+  static String id = 'id';
+  static String path = 'path';
+  static String type = 'type';
+  static String parent_id = 'parent_id';
+  static String numerical = 'numerical';
 }
 
 class Image {
   final String id;
-  final String? path;
-  final String? type;
-  final String? parent_id;
+  final String path;
+  final String type;
+  final String parent_id;
   final int? numerical;
 
   Image({
     required this.id,
     required this.path,
-    this.type,
-    this.parent_id,
+    required this.type,
+    required this.parent_id,
     this.numerical,
   });
-
   factory Image.fromJson(Map<String, dynamic> json) {
     return Image(
       id: json["id"],

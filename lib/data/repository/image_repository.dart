@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import '.././models/comic_model.dart';
 import '.././providers/database/handle_database.dart';
 import '../../config/app_constant.dart';
@@ -7,121 +6,164 @@ import '../models/image_model.dart';
 
 class ImageRepo {
   // Create
-  Future<void> createImageComicToDB(List<Comic> listHomeComic) async {
+  Future<void> createImageComicToDB(
+      {required List<Comic> listHomeComic}) async {
     final List<Image> listImageObject = [];
     for (var homeComic in listHomeComic) {
-      listImageObject.addAll(
-        [
-          Image(
-            id: const Uuid().v4(),
-            path: homeComic.image_detail_path!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-                .removeLast(),
-            type: AppConstant.TYPEIMAGECOMICS[0],
-            parent_id: homeComic.id,
-          ),
-          Image(
-            id: const Uuid().v4(),
-            path: homeComic.image_thumnail_square_path!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-                .removeLast(),
-            type: AppConstant.TYPEIMAGECOMICS[1],
-            parent_id: homeComic.id,
-          ),
-          Image(
-            id: const Uuid().v4(),
-            path: homeComic.image_thumnail_rectangle_path!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-                .removeLast(),
-            type: AppConstant.TYPEIMAGECOMICS[2],
-            parent_id: homeComic.id,
-          ),
-        ],
-      );
+      if (homeComic.image_detail_id != null &&
+          homeComic.image_detail_path != null) {
+        Image imageDetail = Image(
+          id: homeComic.image_detail_id!,
+          path: homeComic.image_detail_path!
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
+              .removeLast(),
+          type: AppConstant.typeImageComic[0],
+          parent_id: homeComic.id,
+        );
+        listImageObject.add(imageDetail);
+      }
+      if (homeComic.image_thumnail_square_id != null &&
+          homeComic.image_thumnail_square_path != null) {
+        Image imageThumnailSquare = Image(
+          id: homeComic.image_thumnail_square_id!,
+          path: homeComic.image_thumnail_square_path!
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
+              .removeLast(),
+          type: AppConstant.typeImageComic[1],
+          parent_id: homeComic.id,
+        );
+        listImageObject.add(imageThumnailSquare);
+      }
+      if (homeComic.image_thumnail_rectangle_id != null &&
+          homeComic.image_thumnail_rectangle_path != null) {
+        Image imageThumnailSquare = Image(
+          id: homeComic.image_thumnail_rectangle_id!,
+          path: homeComic.image_thumnail_rectangle_path!
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
+              .removeLast(),
+          type: AppConstant.typeImageComic[2],
+          parent_id: homeComic.id,
+        );
+        listImageObject.add(imageThumnailSquare);
+      }
     }
-
-    await HandleDatabase.createImageToDB(images: listImageObject);
-  }
-
-  Future<List<String>> readAllIDImageComicFromDB(
-      {required String comicId}) async {
-    final List<String> iDImage = [];
-    for (String typeHomeComic in AppConstant.TYPEIMAGECOMICS) {
-      Image? image = await HandleDatabase.readImageFromDB(
-        type: typeHomeComic,
-        parentID: comicId,
-      );
-      iDImage.add(image!.id);
+    if (listImageObject.isNotEmpty) {
+      await HandleDatabase.createImageToDB(images: listImageObject);
+    } else {
+      
+      print("Home Comic has not image");
     }
-    return iDImage;
   }
 
   Future<void> createImageThumnailChapterToDB(
-      List<Chapter>? listChapters) async {
+      {required List<Chapter> listChapters}) async {
     final List<Image> listImageObject = [];
-    for (var chapter in listChapters!) {
-      listImageObject.addAll(
-        [
-          Image(
-            id: const Uuid().v4(),
-            path: chapter.image_thumnail!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
-                .removeLast(),
-            type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
-            parent_id: chapter.id,
-          ),
-        ],
-      );
+    for (var chapter in listChapters) {
+      if (chapter.image_thumnail_id != null &&
+          chapter.image_thumnail_path != null) {
+        Image imageThumnail = Image(
+          id: chapter.image_thumnail_id!,
+          path: chapter.image_thumnail_path!
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
+              .removeLast(),
+          type: AppConstant.typeImageThumnailChapter,
+          parent_id: chapter.id,
+        );
+        listImageObject.add(imageThumnail);
+      }
     }
-    await HandleDatabase.createImageToDB(images: listImageObject);
+    if (listImageObject.isNotEmpty) {
+      await HandleDatabase.createImageToDB(images: listImageObject);
+    } else {
+      print("Chapter has not image");
+    }
   }
 
-  Future<void> createImageChapterContentToDB(Chapter chapter) async {
+  Future<void> createImageChapterContentToDB({required Chapter chapter}) async {
     final List<Image> listImageObject = [];
-    for (int i = 0; i < chapter.content!.length; i++) {
-      listImageObject.addAll(
-        [
-          Image(
-            id: const Uuid().v4(),
-            path: chapter.content![i]
-                .split("${AppConstant.baseLocalUrl}${AppConstant.IMAGEURL}")
+    if (chapter.content!.isNotEmpty) {
+      for (int i = 0; i < chapter.content!.length; i++) {
+        if (chapter.content![i]["id"] != null &&
+            chapter.content![i]["path"] != null) {
+          Image imageContent = Image(
+            id: chapter.content![i]["id"]!,
+            path: chapter.content![i]["path"]!
+                .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
                 .removeLast(),
-            type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+            type: AppConstant.typeImageChapterContent,
             parent_id: chapter.id,
             numerical: i + 1,
-          ),
-        ],
-      );
+          );
+          listImageObject.add(imageContent);
+        }
+      }
     }
-    await HandleDatabase.createImageToDB(images: listImageObject);
+    if (listImageObject.isNotEmpty) {
+      await HandleDatabase.createImageToDB(images: listImageObject);
+    } else {
+      print("Chapter has not content");
+    }
   }
 
-  // Read
-  Future<String> readIDImageThumnailChapterFromDB(
-      {required String chapterId}) async {
+// Read
+  Future<String?> readIDImageFromDB({
+    required String parentId,
+    required String typeImage,
+  }) async {
     Image? image = await HandleDatabase.readImageFromDB(
-      type: AppConstant.TYPEIMAGETHUMNAILCHAPTER,
+      type: typeImage,
+      parentID: parentId,
+    );
+    if (image != null) {
+      return image.id;
+    }
+    return null;
+  }
+
+  Future<List<Image>> readImageChapterContent(
+      {required String chapterId}) async {
+    return await HandleDatabase.readManyImageFromDB(
+      type: AppConstant.typeImageChapterContent,
       parentID: chapterId,
     );
-    return image!.id;
   }
 
-  Future<List<Image>?> readImageChapterContent(
-      {required String? chapterId}) async {
-    return await HandleDatabase.readManyImageFromDB(
-        type: AppConstant.TYPEIMAGECHAPTERCONTENTS, parentID: chapterId);
-  }
-
-  // Update
-  Future<void> updateImageToDB(Image image) async {
-    return await HandleDatabase.updateImageToDB(image);
-  }
-
-  Future<void> deleteImageChapterContent(Chapter chapter) async {
+// delete
+  Future<void> deleteImageChapterContent({required Chapter chapter}) async {
     await HandleDatabase.deleteImageToDB(
-      type: AppConstant.TYPEIMAGECHAPTERCONTENTS,
+      type: AppConstant.typeImageChapterContent,
       parentID: chapter.id,
     );
-    await createImageChapterContentToDB(chapter);
+    print("Delete content");
+  }
+
+  // More
+  Future<String?> createOrUpdateImage({
+    required String? imageID,
+    required String? imagePath,
+    required dynamic parentDB,
+    required String typeImage,
+    required dynamic parent,
+  }) async {
+    if (imageID != null && imagePath != null) {
+      await HandleDatabase.updateImageToDB(
+        image: Image(
+          id: imageID,
+          path: imagePath
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
+              .removeLast(),
+          parent_id: parentDB.id,
+          type: typeImage,
+        ),
+      );
+      print("${typeImage} is updated");
+      return imageID;
+    } else if (imageID == null && imagePath != null) {
+      await createImageComicToDB(listHomeComic: [parent]);
+      print("${typeImage} is created");
+      return await readIDImageFromDB(
+          parentId: parentDB.id, typeImage: typeImage);
+    }
+    return null;
   }
 }
