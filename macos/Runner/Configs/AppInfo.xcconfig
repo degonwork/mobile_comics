@@ -8,7 +8,7 @@
 PRODUCT_NAME = full_comics_frontend
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.fullComicsFrontend
+PRODUCT_BUNDLE_IDENTIFIER = com.totas.fullComicsFrontend
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.totas. All rights reserved.

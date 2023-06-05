@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
@@ -30,6 +31,8 @@ class BannerListview extends StatelessWidget {
                           imageBuilder: (context, imageProvider) {
                             return GestureDetector(
                               onTap: () {
+                                context.read<ComicDetailBloc>().add(
+                                    LoadDetailComic(listHotComics[index].id));
                                 Navigator.pushNamed(
                                     context, ComicDetailScreen.routeName);
                               },
@@ -45,7 +48,8 @@ class BannerListview extends StatelessWidget {
                             );
                           },
                           errorWidget: (context, url, error) =>
-                              Image.asset("assets/images/banner_splash.png"))
+                              Image.asset("assets/images/banner_splash.png"),
+                        )
                       : Image.asset("assets/images/banner_splash.png");
                 },
                 options: CarouselOptions(
@@ -67,10 +71,12 @@ class BannerListview extends StatelessWidget {
             );
           }
         }
-        return Center(
-          child: Image.asset(
-            "assets/images/banner_splash.png",
-            height: SizeConfig.screenHeight * 0.2,
+        return const Text(
+          "Comics not found",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
           ),
         );
       },

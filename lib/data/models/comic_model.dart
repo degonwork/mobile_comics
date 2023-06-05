@@ -1,7 +1,4 @@
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/models/categoriescomics_model.dart';
-import 'package:full_comics_frontend/data/models/category_model.dart';
-import 'package:full_comics_frontend/data/providers/database/handle_database.dart';
+import '../../config/app_constant.dart';
 import '.././models/chapter_model.dart';
 import 'image_model.dart';
 
@@ -55,6 +52,7 @@ class Comic {
   final String? image_thumnail_rectangle_path;
   final String? image_thumnail_rectangle_id;
   final List<String>? categories;
+  final int? times_ads;
 
   const Comic({
     required this.id,
@@ -74,14 +72,29 @@ class Comic {
     this.update_time,
     this.description,
     this.categories,
+    this.times_ads,
   });
 
   factory Comic.fromJson(Map<String, dynamic> json) {
     return Comic(
       id: json['_id'] ?? json['id'],
-      image_detail_path: json['image_detail_path'],
-      image_thumnail_square_path: json['image_thumnail_square_path'],
-      image_thumnail_rectangle_path: json['image_thumnail_rectangle_path'],
+      image_detail_id: json['image_detail'] != null
+          ? json["image_detail"]["id"]
+          : json['image_detail_id'],
+      image_detail_path:
+          json['image_detail'] != null ? json["image_detail"]["path"] : null,
+      image_thumnail_square_id: json['image_thumnail_square'] != null
+          ? json["image_thumnail_square"]["id"]
+          : json['image_thumnail_square_id'],
+      image_thumnail_square_path: json['image_thumnail_square'] != null
+          ? json["image_thumnail_square"]["path"]
+          : null,
+      image_thumnail_rectangle_id: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["id"]
+          : json['image_thumnail_rectangle_id'],
+      image_thumnail_rectangle_path: json['image_thumnail_rectangle'] != null
+          ? json["image_thumnail_rectangle"]["path"]
+          : null,
       title: json['title'],
       categories:
           json['categories'] != null ? List.from(json['categories']) : [],
@@ -110,36 +123,18 @@ class Comic {
               ? DateTime.fromMillisecondsSinceEpoch(json['add_chapter_time'])
               : DateTime.parse(json['add_chapter_time'])
           : null,
-      image_detail_id: json["image_detail_id"],
-      image_thumnail_rectangle_id: json["image_thumnail_rectangle_id"],
-      image_thumnail_square_id: json["image_thumnail_square_id"],
+      times_ads: json["times_ads"],
     );
   }
-
-  static Future<Comic> copyWith(Comic comic) async {
-    final List<String> listCategories = [];
-    List<CategoriesComics> categoriesComic =
-        await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
-    if (categoriesComic.isNotEmpty) {
-      for (var i = 0; i < categoriesComic.length; i++) {
-        Category? category = await HandleDatabase.readCategoryByIDFromDB(
-          id: categoriesComic[i].category_id,
-        );
-        if (category != null) {
-          listCategories.add(category.name);
-        }
-      }
-    }
-    List<Chapter> chapters = await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
-    // print(chapters);
-    Image? imageDetail = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.typeImageComic[0], parentID: comic.id));
-    Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.typeImageComic[1], parentID: comic.id));
-    Image? imageThumnailRectangle = (await HandleDatabase.readImageFromDB(
-        type: AppConstant.typeImageComic[2], parentID: comic.id));
+  static Comic copyWith(
+    Comic comic, {
+    List<String>? listCategories,
+    List<Chapter>? listChapters,
+    Image? imageDetail,
+    Image? imageThumnailSquare,
+    Image? imageThumnailRectangle,
+  }) {
     return Comic(
-      
       id: comic.id,
       image_detail_path: imageDetail != null
           ? "${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageDetail.path}"
@@ -153,8 +148,8 @@ class Comic {
       title: comic.title,
       author: comic.author,
       description: comic.description,
-      categories: listCategories,
-      chapters: chapters,
+      categories: listCategories ?? [],
+      chapters: listChapters ?? [],
       year: comic.year,
       reads: comic.reads,
       chapter_update_time: comic.chapter_update_time,
@@ -167,8 +162,8 @@ class Comic {
     return {
       'id': id,
       'image_detail_id': image_detail_id,
-      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'image_thumnail_square_id': image_thumnail_square_id,
+      'image_thumnail_rectangle_id': image_thumnail_rectangle_id,
       'title': title,
       'author': author,
       'description': description,

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
@@ -5,6 +8,8 @@ import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic
 
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../data/repository/device_repository.dart';
 import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -17,15 +22,55 @@ import '../config/app_router.dart';
 import '../blocs/view_more/view_more_bloc.dart';
 import '../data/repository/categories_comics_repository.dart';
 import '../data/repository/category_repository.dart';
+import 'blocs/case/case_bloc.dart';
+import 'data/providers/firebase/notification/firebase_messaging_service.dart';
+import 'data/providers/firebase/notification/local_notification_service.dart';
 
-void main() async{
+
+Future<dynamic> _firebaseMessagingBackgroundHandler(
+    RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message ${message.messageId}");
+}
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'This channel is used for important notifications.',
+  importance: Importance.high,
+);
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    FireBaseMessagingService.subscribeTopicOnFirebase();
+    LocalNotificationService.initialize(
+        context, flutterLocalNotificationsPlugin);
+    FireBaseMessagingService.getMessage(
+        channel, flutterLocalNotificationsPlugin);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +94,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<ChapterRepo>(
           create: (context) => ChapterRepo(
             imageRepo: context.read<ImageRepo>(),
-            chapterUrl: AppConstant.chapterUrl,apiClient:const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+            chapterUrl: AppConstant.chapterUrl,
+            apiClient:
+                const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
           ),
         ),
         RepositoryProvider<ComicRepo>(
@@ -59,6 +106,12 @@ class MyApp extends StatelessWidget {
             chapterRepo: context.read<ChapterRepo>(),
             categoriesComicsRepo: context.read<CategoriesComicsRepo>(),
             comicUrl: AppConstant.comicUrl,
+          ),
+        ),
+        RepositoryProvider<DeviceRepo>(
+          create: (context) => DeviceRepo(
+            apiClient: context.read<ApiClient>(),
+            deviceUrl: AppConstant.deviceUrl,
           ),
         ),
       ],
@@ -86,8 +139,13 @@ class MyApp extends StatelessWidget {
             create: (context) => ReadChapterBloc(chapterRepo: context.read<ChapterRepo>(),
             )),
           BlocProvider<FilterComicBloc>(create: (_) => FilterComicBloc(comicRepo: context.read<ComicRepo>())),  
+          BlocProvider<CaseBloc>(
+            create: (context) => CaseBloc(
+              comicRepo: context.read<ComicRepo>(),
+            ),
+          ),
         ],
-
+    
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
@@ -99,5 +157,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }

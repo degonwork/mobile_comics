@@ -28,7 +28,7 @@ class Chapter {
   final String? chapter_des;
   final int? numerical;
   final DateTime? publish_date;
-  final List<String>? content;
+  final List<Map<String, String>>? content;
   final DateTime? content_update_time;
   final DateTime? update_time;
 
@@ -49,15 +49,23 @@ class Chapter {
     return Chapter(
       id: json['_id'] ?? json['id'] ?? json['chapter_id'],
       comic_id: json['comic_id'],
-      image_thumnail_path: json['image_thumnail'],
-      image_thumnail_id: json['image_thumnail_id'],
+      image_thumnail_id: json['image_thumnail'] != null
+          ? json["image_thumnail"]["id"]
+          : json['image_thumnail_id'],
+      image_thumnail_path: json['image_thumnail'] != null
+          ? json["image_thumnail"]["path"]
+          : null,
       chapter_des: json['chapter_des'],
-      // publish_date: json['publish_date'] != null
-      //     ? json['publish_date'] is int
-      //         ? DateTime.fromMillisecondsSinceEpoch(json['publish_date'])
-      //         : DateTime.parse(json['publish_date'])
-      //     : null,
-      content: json['content'] != null ? List.from(json['content']) : [],
+      publish_date: json['publish_date'] != null
+          ? json['publish_date'] is int
+              ? DateTime.fromMillisecondsSinceEpoch(json['publish_date'])
+              : DateTime.parse(json['publish_date'])
+          : null,
+      content: json['content'] != null
+          ? List<dynamic>.from(json['content'])
+              .map((json) => Map<String, String>.from(json))
+              .toList()
+          : [],
       numerical: json['numerical'],
       content_update_time: json['content_update_time'] != null
           ? json['content_update_time'] is int

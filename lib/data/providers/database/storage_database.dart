@@ -39,7 +39,6 @@ class StorageDatabase {
       ${ComicField.chapter_update_time} TEXT,
       ${ComicField.update_time} TEXT,
       ${ComicField.add_chapter_time} TEXT
-      
     ) 
     ''');
     await db.execute(''' 
@@ -70,7 +69,6 @@ class StorageDatabase {
     ''');
     await db.execute(''' 
       CREATE TABLE $tableCategoriesComics(
-      ${CategoriesComicsField.id} TEXT,
       ${CategoriesComicsField.comic_id} TEXT,
       ${CategoriesComicsField.category_id} TEXT
     ) 
@@ -143,22 +141,24 @@ class StorageDatabase {
       return null;
     }
   }
-  Future<List<Chapter>> readChapterByComicIDFromDB({required String comicID}) async{
+
+  Future<List<Chapter>> readChapterByComicIDFromDB(
+      {required String comicID}) async {
     final db = await instance.database;
     final maps = await db.query(
       tableChapters,
       columns: ChapterField.values,
       where: '${ChapterField.comic_id} =?',
       whereArgs: [comicID],
-      );
-      // print('$maps dfsf');
-      if (maps.isNotEmpty) {
-        return maps.map((e) => Chapter.fromJson(e)).toList();
-        
-      }else{
-        return [];
-      }
+    );
+    // print('$maps dfsf');
+    if (maps.isNotEmpty) {
+      return maps.map((e) => Chapter.fromJson(e)).toList();
+    } else {
+      return [];
+    }
   }
+
   Future<void> updateChapterToDB({required Chapter chapter}) async {
     final db = await instance.database;
     final map = chapter.toMap();
@@ -206,7 +206,7 @@ class StorageDatabase {
       where: '${ImageField.type} = ? and ${ImageField.parent_id} = ?',
       whereArgs: [type, parentId],
     );
-   
+
     if (maps.isNotEmpty) {
       return maps.map((json) => Image.fromJson(json)).toList();
     } else {
@@ -320,22 +320,6 @@ class StorageDatabase {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<CategoriesComics?> readCategoriesComicsByIDFromDB(
-      {required String id}) async {
-    final db = await instance.database;
-    final maps = await db.query(
-      tableCategoriesComics,
-      columns: CategoriesComicsField.values,
-      where: '${CategoriesComicsField.id} = ?',
-      whereArgs: [id],
-    );
-    if (maps.isNotEmpty) {
-      return CategoriesComics.fromJson(maps.first);
-    } else {
-      return null;
-    }
-  }
-
   Future<CategoriesComics?> readCategoriesComicsFromDB(
       {required String categoryID, required String comicID}) async {
     final db = await instance.database;
@@ -343,7 +327,7 @@ class StorageDatabase {
       tableCategoriesComics,
       columns: CategoriesComicsField.values,
       where:
-          '${CategoriesComicsField.category_id} = ? and ${CategoriesComicsField.comic_id} ?',
+          '${CategoriesComicsField.category_id} = ? and ${CategoriesComicsField.comic_id} = ?',
       whereArgs: [categoryID, comicID],
     );
     if (maps.isNotEmpty) {

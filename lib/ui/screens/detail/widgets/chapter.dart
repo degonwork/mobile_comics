@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_event.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/read.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../../../../data/models/case_comic_model.dart';
+import '../../../../data/models/chapter_model.dart';
+import '../../../../data/models/comic_model.dart';
+import '../../read/read_screen.dart';
+import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
+import '../../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../../config/size_config.dart';
 
 class ListChapter extends StatelessWidget {
-  const ListChapter({super.key});
+  const ListChapter({super.key, required this.comic, required this.caseComic});
+  final Comic comic;
+  final CaseComic caseComic;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ComicDetailBloc, ComicDetailState>(
-      builder: (context, state) {
-        if (state is ComicDetailLoaded) {
-         final chapter = state.comic.chapters;
-        //  print(chapter!.last.id);
-        return Container(
-          padding: EdgeInsets.zero,
-          child: SingleChildScrollView(
-            child: Column(
+    final chapters = comic.chapters;
+    if (chapters!.isNotEmpty) {
+      return Container(
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SizeConfig.screenHeight / 50),
@@ -29,37 +33,45 @@ class ListChapter extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight / 50),
                 GestureDetector(
-                  onTap: (){
-                    context.read<ReadChapterBloc>().add(LoadChapter(chapter.last.id));
+                  onTap: () {
+                    context
+                        .read<ReadChapterBloc>()
+                        .add(LoadChapter(chapters.last.id));
                     Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 400),
-                                  transitionsBuilder:
-                                      (context, animation, secAnimation, child) {
-                                    return ScaleTransition(
-                                      scale: animation,
-                                      alignment: Alignment.center,
-                                      child: child,
-                                    );
-                                  },
-                                  pageBuilder:
-                                      (context, animation, secAnimation) {
-                                    return const ReadScreen();
-                                  },
-                                ),
-                              );
+                      context,
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 400),
+                        transitionsBuilder:
+                            (context, animation, secAnimation, child) {
+                          return ScaleTransition(
+                            scale: animation,
+                            alignment: Alignment.center,
+                            child: child,
+                          );
+                        },
+                        pageBuilder: (context, animation, secAnimation) {
+                          return ReadScreen(
+                            comic: comic,
+                            chapterId: chapters.last.id,
+                            numericChapter: chapters.length,
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: Container(
-                    height: SizeConfig.screenHeight/ 20,
-                    padding: EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth/50),
+                    height: SizeConfig.screenHeight / 20,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.screenWidth / 50),
                     decoration: BoxDecoration(
                       border: Border.all(width: 0.8),
-                    borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text('${chapter!.last.numerical}',style: const TextStyle(fontSize: 30),),
+                      child: Text(
+                        'Chapter ${chapters.last.numerical}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
@@ -80,31 +92,45 @@ class ListChapter extends StatelessWidget {
                     )
                   ],
                 ),
-                Column(
-                  children: List.generate(chapter.length, (index) => Column(
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 10),
+                child: ScrollablePositionedList.builder(
+                  initialScrollIndex: caseComic.numericChapter != 0
+                      ? _checkPositionScroll(caseComic.numericChapter, chapters)
+                      : 0,
+                  itemCount: chapters.length,
+                  itemBuilder: (context, index) => Column(
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          context.read<ReadChapterBloc>().add(LoadChapter(chapter[index].id));
+                        onTap: () {
+                          context
+                              .read<ReadChapterBloc>()
+                              .add(LoadChapter(chapters[index].id));
                           Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 400),
-                                  transitionsBuilder:
-                                      (context, animation, secAnimation, child) {
-                                    return ScaleTransition(
-                                      scale: animation,
-                                      alignment: Alignment.center,
-                                      child: child,
-                                    );
-                                  },
-                                  pageBuilder:
-                                      (context, animation, secAnimation) {
-                                    return const ReadScreen();
-                                  },
-                                ),
-                              );
+                            context,
+                            PageRouteBuilder(
+                              transitionDuration:
+                                  const Duration(milliseconds: 400),
+                              transitionsBuilder:
+                                  (context, animation, secAnimation, child) {
+                                return ScaleTransition(
+                                  scale: animation,
+                                  alignment: Alignment.center,
+                                  child: child,
+                                );
+                              },
+                              pageBuilder: (context, animation, secAnimation) {
+                                return ReadScreen(
+                                  comic: comic,
+                                  chapterId: chapters[index].id,
+                                  numericChapter: chapters[index].numerical,
+                                );
+                              },
+                            ),
+                          );
                         },
                         child: Container(
                           height: SizeConfig.screenHeight / 20,
@@ -113,54 +139,52 @@ class ListChapter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
-                            child: Text('Chapter ${chapter[index].numerical}',style: const TextStyle(fontSize: 20),),
+                            child: Text(
+                              'Chapter ${chapters[index].numerical}',
+                              style: const TextStyle(fontSize: 20),
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: SizeConfig.screenHeight / 90,),
-              const   Divider(thickness: 1,),
-
+                      SizedBox(
+                        height: SizeConfig.screenHeight / 90,
+                      ),
+                      const Divider(thickness: 1),
                     ],
-                  )),
+                  ),
                 ),
-                // Column(
-                //   children: List.generate(
-                //     2,
-                //     (index) => Padding(
-                //       padding: const EdgeInsets.symmetric(vertical: 10),
-                //       child: Row(
-                //         children: [
-                //           Container(
-                //             height: SizeConfig.screenHeight / 6,
-                //             width: 100,
-                //             decoration: BoxDecoration(
-                //               borderRadius: BorderRadius.circular(5),
-                //               // image: DecorationImage(
-                //               //   image: NetworkImage(
-                //               //       '"https://upload.wikimedia.org/wikipedia/vi/b/b7/Doraemon1.jpg"'),
-                //               //   fit: BoxFit.fill,
-                //               // ),
-                //             ),
-                //           ),
-                //           const SizedBox(width: 18),
-                //           Text(
-                //             '',
-                //             style: const TextStyle(
-                //                 color: Colors.black, fontSize: 18),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // )
-              ],
-            ),
+              ),
+            )
+          ],
+        ),
+      );
+    } else {
+      return const Padding(
+        padding: EdgeInsets.only(top: 200),
+        child: Text(
+          "This comic has no chapters",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
           ),
-        );
-        }
-        return const SizedBox.shrink();
-      },
-      
-    );
+        ),
+      );
+    }
+  }
+
+  int _checkPositionScroll(int position, List<Chapter> chapters) {
+    if (chapters.length <= 6) {
+      position = 0;
+    } else {
+      if (position < 6 ||
+          position == 6 && 6 <= chapters.length - 5 ||
+          position > 6 && position < chapters.length - 5) {
+        position = position - 1;
+      } else {
+        position = chapters.length - 6;
+      }
+    }
+    return position;
   }
 }
