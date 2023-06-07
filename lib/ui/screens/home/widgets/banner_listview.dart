@@ -72,7 +72,7 @@ class BannerListview extends StatelessWidget {
           }
         }
         return const Text(
-          "Comics not found",
+          "Kiểm tra kết nối mạng",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black,

@@ -18,7 +18,7 @@ class ComicDetailScreen extends StatefulWidget {
 }
 
 class _ComicDetailScreenState extends State<ComicDetailScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late List<Tab> tabs = [];
   late TabController _tabController;
   @override
