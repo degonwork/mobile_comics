@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 3),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
-        RepositoryProvider.of<DeviceRepo>(context).registerDevice();
+        // RepositoryProvider.of<DeviceRepo>(context).registerDevice();
         BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
       },
     );
@@ -38,31 +38,33 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          body: Stack(
-            children: [
-              const BackGroundApp(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.welcomeSplashScreen,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                const BackGroundApp(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.welcomeSplashScreen,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Image.asset(
-                    'assets/images/banner_splash.png',
-                    height: SizeConfig.screenHeight / 2.52,
-                    width: SizeConfig.screenWidth / 1.2,
-                  ),
-                  Container(),
-                ],
-              ),
-            ],
+                    Image.asset(
+                      'assets/images/banner_splash.png',
+                      height: SizeConfig.screenHeight / 2.52,
+                      width: SizeConfig.screenWidth / 1.2,
+                    ),
+                    Container(),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },

@@ -45,13 +45,13 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  // await MobileAds.instance.initialize();
+  // await Firebase.initializeApp();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await flutterLocalNotificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
   runApp(const MyApp());
 }
 
@@ -65,11 +65,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    FireBaseMessagingService.subscribeTopicOnFirebase();
-    LocalNotificationService.initialize(
-        context, flutterLocalNotificationsPlugin);
-    FireBaseMessagingService.getMessage(
-        channel, flutterLocalNotificationsPlugin);
+    // FireBaseMessagingService.subscribeTopicOnFirebase();
+    // LocalNotificationService.initialize(
+    //     context, flutterLocalNotificationsPlugin);
+    // FireBaseMessagingService.getMessage(
+    //     channel, flutterLocalNotificationsPlugin);
     super.initState();
   }
 

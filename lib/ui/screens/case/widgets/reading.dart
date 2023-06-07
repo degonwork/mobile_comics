@@ -25,24 +25,27 @@ class Reading extends StatelessWidget {
                     height: 120,
                     child: Row(
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: listCaseComic[index]
-                              .imageThumnailSquareComicPath!,
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              width: 120,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            );
-                          },
-                          errorWidget: (context, url, error) =>
-                              Image.asset("assets/images/banner_splash.png"),
-                        ),
+                        listCaseComic[index].imageThumnailSquareComicPath !=
+                                null
+                            ? CachedNetworkImage(
+                                imageUrl: listCaseComic[index]
+                                    .imageThumnailSquareComicPath!,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                        "assets/images/banner_splash.png"),
+                              )
+                            : Image.asset("assets/images/banner_splash.png"),
                         const SizedBox(width: 20),
                         Expanded(
                           child: Column(
