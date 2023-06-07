@@ -92,7 +92,20 @@ class StorageDatabase {
       return [];
     }
   }
-
+  // Future<List<Comic>> searchComicByTitle(String title)async{
+  //   final db = await instance.database;
+  //   final maps = await db.query(
+  //     tableComics,
+  //     columns: ComicField.values,
+  //     where: '${ComicField.title} = ?',
+  //     whereArgs: [title]
+  //     );
+  //     if (maps.isNotEmpty) {
+  //       return maps.map((e) => Comic.fromJson(e)).toList();
+  //     }else{
+  //       return [] ;
+  //     }
+  // }
   Future<Comic?> readComicByIDFromDB({required String id}) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -107,7 +120,7 @@ class StorageDatabase {
       return null;
     }
   }
-
+ 
   Future<void> updateComicToDB({required Comic comic}) async {
     final db = await instance.database;
     final map = comic.toMap();

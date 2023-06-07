@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
+import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
 import 'package:full_comics_frontend/l10n/l10n.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -149,6 +150,9 @@ class _MyAppState extends State<MyApp> {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
+          BlocProvider<SearchBloc>(
+            create: (context)=> SearchBloc(context.read<ComicRepo>()),
+            ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

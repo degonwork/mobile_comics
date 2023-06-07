@@ -108,7 +108,7 @@ class Reading extends StatelessWidget {
         }
         return const Center(
           child: Text(
-            "Case comic is not available",
+            "Danh sách trống ",
             style: TextStyle(
               fontSize: 18,
             ),

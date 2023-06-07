@@ -38,35 +38,37 @@ class NewComic extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         listNewComics[index].image_thumnail_square_path != null
-                            ? CachedNetworkImage(
-                                imageUrl: listNewComics[index]
-                                    .image_thumnail_square_path!,
-                                imageBuilder: (context, imageProvider) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      context.read<ComicDetailBloc>().add(
-                                          LoadDetailComic(
-                                              listNewComics[index].id));
-                                      Navigator.pushNamed(
-                                          context, ComicDetailScreen.routeName);
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.zero,
-                                      height: SizeConfig.screenHeight / 4.2,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.fill,
+                            ? Expanded(
+                              child: CachedNetworkImage(
+                                  imageUrl: listNewComics[index]
+                                      .image_thumnail_square_path!,
+                                  imageBuilder: (context, imageProvider) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        context.read<ComicDetailBloc>().add(
+                                            LoadDetailComic(
+                                                listNewComics[index].id));
+                                        Navigator.pushNamed(
+                                            context, ComicDetailScreen.routeName);
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.zero,
+                                        height: SizeConfig.screenHeight / 4.2,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
-                              )
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          "assets/images/banner_splash.png"),
+                                ),
+                            )
                             : Image.asset("assets/images/banner_splash.png"),
                         Text(
                           listNewComics[index].title != null
@@ -86,7 +88,7 @@ class NewComic extends StatelessWidget {
           }
         }
         return const Text(
-          "Comics not found",
+          "Kiểm tra kết nối mạng",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black,
