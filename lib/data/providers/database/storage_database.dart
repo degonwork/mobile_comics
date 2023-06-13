@@ -92,20 +92,7 @@ class StorageDatabase {
       return [];
     }
   }
-  // Future<List<Comic>> searchComicByTitle(String title)async{
-  //   final db = await instance.database;
-  //   final maps = await db.query(
-  //     tableComics,
-  //     columns: ComicField.values,
-  //     where: '${ComicField.title} = ?',
-  //     whereArgs: [title]
-  //     );
-  //     if (maps.isNotEmpty) {
-  //       return maps.map((e) => Comic.fromJson(e)).toList();
-  //     }else{
-  //       return [] ;
-  //     }
-  // }
+ 
   Future<Comic?> readComicByIDFromDB({required String id}) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -164,7 +151,6 @@ class StorageDatabase {
       where: '${ChapterField.comic_id} =?',
       whereArgs: [comicID],
     );
-    // print('$maps dfsf');
     if (maps.isNotEmpty) {
       return maps.map((e) => Chapter.fromJson(e)).toList();
     } else {
@@ -271,16 +257,18 @@ class StorageDatabase {
       return null;
     }
   }
-  Future<List<Comic>> readComicByIDCategory({required String id})async{
+  Future<List<CategoriesComics>> readCategoriesComicByIDCategory({required String id})async{
     final db = await instance.database;
+    
     final maps = await db.query(
       tableCategoriesComics,
       columns: CategoriesComicsField.values,
       where: '${CategoriesComicsField.category_id} = ?',
       whereArgs: [id]
       );
+      
       if (maps.isNotEmpty) {
-       return maps.map((e) => Comic.fromJson(e)).toList();
+        return maps.map((e) => CategoriesComics.fromJson(e)).toList();
       }else{
         return [];
       }

@@ -6,7 +6,7 @@ import '../models/category_model.dart';
 
 class CategoriesComicsRepo {
   final CategoryRepo _categoryRepo;
-
+   
   CategoriesComicsRepo({required CategoryRepo categoryRepo})
       : _categoryRepo = categoryRepo;
   Future<void> processCategoriesComicsToDB({required Comic comic}) async {
@@ -19,25 +19,34 @@ class CategoriesComicsRepo {
     }
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
-      for (String category in comic.categories!) {
-        int? i = await _categoryRepo.createCategoryToDB(category);
-        if (i != null) {
-          print("${i + 1}: Category created");
-          await addListCategoriesComics(
-            category: category,
-            listCategoriesComics: listCategoriesComics,
-            comic: comic,
-          );
-        } else {
-          print("Category don't create");
-          await addListCategoriesComics(
-            category: category,
-            listCategoriesComics: listCategoriesComics,
-            comic: comic,
-          );
-        }
+      for (var i = 0; i < comic.categories!.length; i++) {
+       final category = await _categoryRepo.readCategoryByNameFromDB(name: comic.categories![i]);
+       if (category != null) {
+         listCategoriesComics.add(CategoriesComics(comic_id: comic.id, category_id: category.id));
+       }
       }
+      await HandleDatabase.createCategoriesComicsToDB(categoriesComics: listCategoriesComics);
     }
+    // if (comic.categories!.isNotEmpty) {
+    //   for (String category in comic.categories!) {
+    //     int? i = await _categoryRepo.createCategoryToDB();
+    //     if (i != null) {
+    //       print("${i + 1}: Category created");
+    //       await addListCategoriesComics(
+    //         category: category,
+    //         listCategoriesComics: listCategoriesComics,
+    //         comic: comic,
+    //       );
+    //     } else {
+    //       print("Category don't create");
+    //       await addListCategoriesComics(
+    //         category: category,
+    //         listCategoriesComics: listCategoriesComics,
+    //         comic: comic,
+    //       );
+    //     }
+    //   }
+    // }
     if (listCategoriesComics.isNotEmpty) {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComics);

@@ -49,10 +49,10 @@ class _BannerADState extends State<BannerAD> {
         },
         onAdFailedToLoad: (ad,error){
           ad.dispose();
-          print(error);
+          // print(error);
         }
       ),
-      request: AdRequest()
+      request: const AdRequest()
       );
       bannerAd.load();
   }
@@ -64,7 +64,7 @@ class _BannerADState extends State<BannerAD> {
   @override
   Widget build(BuildContext context) {
     return isLoaded ?  SizedBox(
-         height: bannerAd.size.height.toDouble(),
+         height: bannerAd.size.height.toDouble()/2,
          width: bannerAd.size.width.toDouble(),
          child: AdWidget(ad: bannerAd),
     ) : const SizedBox();

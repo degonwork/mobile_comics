@@ -8,6 +8,7 @@ abstract class FilterComicState extends Equatable{
   List<Object> get props => [];
 }
 class LoadComicByCategoryIDInital extends FilterComicState{}
+class LoadingComicByCategory extends FilterComicState{}
 class LoadedComicByCategoryID extends FilterComicState{
   final List<Comic> listComics;
   const LoadedComicByCategoryID(this.listComics);

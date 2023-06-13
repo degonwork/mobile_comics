@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/screens/detail/screens/chapter.dart';
+import 'package:full_comics_frontend/ui/screens/detail/screens/infor.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
 import '../../widgets/back_ground_app.dart';
-import '../detail/widgets/chapter.dart';
-import '../detail/widgets/infor.dart';
+
 import '../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -63,10 +64,16 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                         pinned: true,
                         expandedHeight: SizeConfig.screenHeight / 4,
                         flexibleSpace: FlexibleSpaceBar(
-                          title: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                  comic.title != null ? '${comic.title}' : "")),
+                          // title: Align(
+                          //     alignment: Alignment.bottomCenter,
+                          //     child: Text(
+                          //         comic.title != null ? '${comic.title}' : "",
+                          //         style: const TextStyle(
+                                    
+                          //           fontSize: 30,
+                          //           fontWeight: FontWeight.bold
+                          //         ),
+                          //         )),
                           background: comic.image_detail_path != null
                               ? CachedNetworkImage(
                                   imageUrl: comic.image_detail_path!,
@@ -75,7 +82,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: imageProvider,
-                                            fit: BoxFit.fill),
+                                            fit: BoxFit.cover),
                                       ),
                                     );
                                   },

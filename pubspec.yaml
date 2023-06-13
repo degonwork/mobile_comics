@@ -42,7 +42,6 @@ dependencies:
   intl:
   cached_network_image: ^3.2.3
   path:
-  uuid:
   firebase_messaging: 
   firebase_core: 
   firebase_analytics:
@@ -50,7 +49,6 @@ dependencies:
   device_info_plus:
   android_id:
   shared_preferences:
-  dotted_line:
   scrollable_positioned_list:
   google_mobile_ads: 
   
@@ -98,15 +96,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: Raleway
   #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  #       - asset: fonts/Raleway-Regular.ttf
+  #       - asset: fonts/Raleway-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
+  #   - family: RobotoMono
   #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
+  #       - asset: fonts/RobotoMono-Regular.ttf
+  #       - asset: fonts/RobotoMono-Bold.ttf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,

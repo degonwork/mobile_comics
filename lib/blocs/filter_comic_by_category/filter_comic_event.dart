@@ -5,6 +5,13 @@ abstract class FilterComicEvent extends Equatable{
   @override
   List<Object> get props => [];
 }
+class FilterComicInitial extends FilterComicEvent{
+  
+  
+  @override
+  List<Object> get props => [];
+}
+
 class FilterByIDCategory extends FilterComicEvent{
   final String id;
   const FilterByIDCategory(this.id);

@@ -16,7 +16,7 @@ class CaseScreen extends StatefulWidget {
 }
 
 class _CaseScreenState extends State<CaseScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {

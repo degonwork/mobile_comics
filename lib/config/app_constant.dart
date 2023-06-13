@@ -11,7 +11,7 @@ class AppConstant {
   static const chapterUrl = "/chapters/";
   // Image
   static const imageUrl = "/image/";
-
+ static const search    = "search?q=";
   // Type Image Comic
   static const typeImageComic = [
     "image_comic_detail",

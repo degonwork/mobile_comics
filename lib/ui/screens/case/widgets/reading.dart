@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dotted_line/dotted_line.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/config/size_config.dart';
+import 'package:full_comics_frontend/config/ui_constant.dart';
 import '../../../../blocs/case/case_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -32,6 +34,8 @@ class Reading extends StatelessWidget {
                                     .imageThumnailSquareComicPath!,
                                 imageBuilder: (context, imageProvider) {
                                   return Container(
+                                    width: SizeConfig.screenWidth / 3.6,
+                                    height: SizeConfig.screenHeight / 7.56,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
@@ -62,31 +66,33 @@ class Reading extends StatelessWidget {
                                         listCaseComic[index].titleComic != null
                                             ? listCaseComic[index].titleComic!
                                             : "",
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: titleComic,    
+                                        // style: const TextStyle(
+                                        //   color: Colors.black,
+                                        //   fontSize: 20,
+                                        //   fontWeight: FontWeight.bold,
+                                        // ),
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
                                         "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
-                                        style: TextStyle(
+                                        style: const  TextStyle(
                                           fontSize: 14,
-                                          color: Colors.grey.shade700,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
-                                width: double.infinity,
-                                child: DottedLine(
-                                  dashColor: Colors.black,
-                                ),
-                              ),
+                              const Divider(thickness: 0.8,),
+                              // const SizedBox(
+                              //   height: 10,
+                              //   width: double.infinity,
+                              //   child: DottedLine(
+                              //     dashColor: Colors.black,
+                              //   ),
+                              // ),
                               Text(
                                 "${AppLocalizations.of(context)!.reading}: Chương ${listCaseComic[index].numericChapter}",
                                 style: const TextStyle(
