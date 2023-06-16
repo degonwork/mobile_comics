@@ -44,7 +44,9 @@ class NewComicViewMoreScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Divider(thickness: 1,),
+                const Divider(
+                  thickness: 1,
+                ),
                 BlocBuilder<ViewMoreBloc, ViewMoreState>(
                   builder: (context, state) {
                     if (state is ViewMoreLoaded) {
@@ -78,12 +80,12 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                       .image_thumnail_square_path !=
                                                   null
                                               ? Expanded(
-                                                child: CachedNetworkImage(
+                                                  child: CachedNetworkImage(
                                                     imageUrl: listNewComicsViewMore[
                                                             index]
                                                         .image_thumnail_square_path!,
-                                                    imageBuilder:
-                                                        (context, imageProvider) {
+                                                    imageBuilder: (context,
+                                                        imageProvider) {
                                                       return GestureDetector(
                                                         onTap: () {
                                                           context
@@ -106,7 +108,10 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                               4.2,
                                                           decoration:
                                                               BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
                                                             image:
                                                                 DecorationImage(
                                                               image:
@@ -122,10 +127,13 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                         Image.asset(
                                                             "assets/images/banner_splash.png"),
                                                   ),
-                                              )
+                                                )
                                               : Image.asset(
                                                   "assets/images/banner_splash.png"),
-                                          SizedBox(height: SizeConfig.screenHeight / 75.6,),        
+                                          SizedBox(
+                                            height:
+                                                SizeConfig.screenHeight / 75.6,
+                                          ),
                                           Text(
                                             listNewComicsViewMore[index]
                                                         .title !=
@@ -137,7 +145,9 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: titleComic,
                                           ),
-                                          const  Divider(thickness: 0.5,)
+                                          const Divider(
+                                            thickness: 0.5,
+                                          )
                                         ],
                                       ),
                                     );
@@ -145,16 +155,14 @@ class NewComicViewMoreScreen extends StatelessWidget {
                             ),
                           ),
                         );
+                      } else {
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.amber));
                       }
                     }
-                    return const Text(
-                      "Comics not found",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    );
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.amber));
                   },
                 ),
               ],

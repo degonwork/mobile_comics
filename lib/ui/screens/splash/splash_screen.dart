@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../blocs/case/case_bloc.dart';
 import '../../../data/providers/firebase/notification/firebase_messaging_service.dart';
@@ -75,33 +76,28 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          body: SafeArea(
-            child: Stack(
-              children: [
-                const BackGroundApp(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.welcomeSplashScreen,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/banner_splash.png',
-                      height: SizeConfig.screenHeight / 2.52,
-                      width: SizeConfig.screenWidth / 1.2,
-                    ),
-                    Container(),
-                  ],
-                ),
-              ],
-            ),
+          body: Stack(
+            children: [
+              const BackGroundApp(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextUi(
+                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
+                    fontSize: 20,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  Image.asset(
+                    'assets/images/banner_splash.png',
+                    height: SizeConfig.screenHeight / 2.52,
+                    width: SizeConfig.screenWidth / 1.2,
+                  ),
+                  Container(),
+                ],
+              ),
+            ],
           ),
         );
       },

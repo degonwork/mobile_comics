@@ -69,16 +69,13 @@ class BannerListview extends StatelessWidget {
                 ),
               ),
             );
+          } else {
+            return const Center(
+                child: CircularProgressIndicator(color: Colors.amber));
           }
         }
-        return const Text(
-          "Kiểm tra kết nối mạng",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        );
+        return const Center(
+            child: CircularProgressIndicator(color: Colors.amber));
       },
     );
   }

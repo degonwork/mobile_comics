@@ -69,7 +69,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                           //     child: Text(
                           //         comic.title != null ? '${comic.title}' : "",
                           //         style: const TextStyle(
-                                    
+
                           //           fontSize: 30,
                           //           fontWeight: FontWeight.bold
                           //         ),
@@ -128,16 +128,13 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                       ),
                     ],
                   );
+                } else {
+                  return const Center(
+                      child: CircularProgressIndicator(color: Colors.amber));
                 }
               }
-              return const Text(
-                "This Comic not found",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-              );
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.amber));
             },
           ),
         ],

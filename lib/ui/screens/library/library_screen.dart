@@ -28,11 +28,13 @@ class LibraryScreen extends StatelessWidget {
             padding: EdgeInsets.only(left: SizeConfig.screenWidth / 18),
             child: SingleChildScrollView(
               child: Column(
-               
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SearchScreen(),
-                  const Text('Lọc',style: TextStyle(fontSize: 20),),
+                  const Text(
+                    'Lọc',
+                    style: TextStyle(fontSize: 20),
+                  ),
                   SizedBox(
                     height: SizeConfig.screenHeight / 50.4,
                   ),

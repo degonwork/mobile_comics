@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
-import 'package:full_comics_frontend/blocs/filter_comic_by_category/get_all_category_bloc/get_all_category_event.dart';
+import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_event.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
@@ -24,9 +24,7 @@ import '../data/repository/category_repository.dart';
 import 'blocs/case/case_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'blocs/filter_comic_by_category/get_all_category_bloc/get_all_category_bloc.dart';
-
-
+import 'blocs/get_all_category_bloc/get_all_category_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +36,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
@@ -80,9 +77,10 @@ class MyApp extends StatelessWidget {
             deviceUrl: AppConstant.deviceUrl,
           ),
         ),
-        // RepositoryProvider<CategoryRepo>(
-        //   create: (context)=> CategoryRepo(apiClient: context.read<ApiClient>()),
-        //   ),
+        RepositoryProvider<CategoryRepo>(
+          create: (context) =>
+              CategoryRepo(apiClient: context.read<ApiClient>()),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -109,8 +107,9 @@ class MyApp extends StatelessWidget {
                     chapterRepo: context.read<ChapterRepo>(),
                   )),
           BlocProvider<FilterComicBloc>(
-              create: (_) =>
-                  FilterComicBloc(comicRepo: context.read<ComicRepo>(),categoryRepo: context.read<CategoryRepo>())),
+              create: (_) => FilterComicBloc(
+                  comicRepo: context.read<ComicRepo>(),
+                  categoryRepo: context.read<CategoryRepo>())),
           BlocProvider<CaseBloc>(
             create: (context) => CaseBloc(
               comicRepo: context.read<ComicRepo>(),
@@ -119,14 +118,19 @@ class MyApp extends StatelessWidget {
           BlocProvider<SearchBloc>(
             create: (context) => SearchBloc(context.read<ComicRepo>()),
           ),
-          BlocProvider<FilterComicBloc>
-          (create: (context) => FilterComicBloc(comicRepo: context.read<ComicRepo>(),categoryRepo: context.read<CategoryRepo>())..add(FilterComicInitial())),
+          BlocProvider<FilterComicBloc>(
+              create: (context) => FilterComicBloc(
+                  comicRepo: context.read<ComicRepo>(),
+                  categoryRepo: context.read<CategoryRepo>())
+                ..add(FilterComicInitial())),
           BlocProvider<GetAllCategoryBloc>(
-            create: (context) => GetAllCategoryBloc(context.read<CategoryRepo>())..add(GetAllCategory()),
+            create: (context) =>
+                GetAllCategoryBloc(context.read<CategoryRepo>())
+                  ..add(GetAllCategory()),
           ),
           BlocProvider<SearchComicBloc>(
-            create: (context)=> SearchComicBloc(comicRepo: context.read<ComicRepo>())
-            ),
+              create: (context) =>
+                  SearchComicBloc(comicRepo: context.read<ComicRepo>())),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -138,15 +142,6 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate
           ],
           title: 'Flutter Demo',
-          theme: ThemeData(
-            // textTheme: Theme.of(context).textTheme.apply(
-            //   bodyColor: Colors.black.withAlpha(255),
-            //   fontFamily: 'RobotoMono',
-              
-            // ),
-            // fontFamily: 'Raleway',
-            primarySwatch: Colors.blue,
-          ),
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,
         ),

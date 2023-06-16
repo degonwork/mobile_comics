@@ -7,7 +7,7 @@ abstract class ReadChapterState extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadChapterInital extends ReadChapterState {}
+class ReadChapterInital extends ReadChapterState {}
 
 class LoadedChapter extends ReadChapterState {
   final List<Image> listImageContent;
@@ -16,3 +16,5 @@ class LoadedChapter extends ReadChapterState {
   @override
   List<Object> get props => [listImageContent];
 }
+
+class ReadChapterLoadFailed extends ReadChapterState {}

@@ -14,40 +14,42 @@ class ComicByCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilterComicBloc,FilterComicState>(
-      builder: (context,state){
-        if (state is LoadingComicByCategory) {
-          return const CircularProgressIndicator();
-        }else if(state is LoadedComicByCategoryID){
-          final listComicsFilter = state.listComics;
+    return BlocBuilder<FilterComicBloc, FilterComicState>(
+        builder: (context, state) {
+      if (state is LoadedComicByCategoryID) {
+        final listComicsFilter = state.listComics;
+        if (listComicsFilter.isNotEmpty) {
           return GridView.builder(
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: listComicsFilter.length,
-            gridDelegate:const  SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
               crossAxisCount: 2,
               childAspectRatio: 0.7,
             ),
-            itemBuilder: (context,index){
+            itemBuilder: (context, index) {
               return SizedBox(
                 height: SizeConfig.screenHeight / 3.78,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        listComicsFilter[index].image_thumnail_square_path != null
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    listComicsFilter[index].image_thumnail_square_path != null
                         ? Expanded(
-                          child: CachedNetworkImage(
-                            imageUrl: listComicsFilter[index].image_thumnail_square_path!,
+                            child: CachedNetworkImage(
+                            imageUrl: listComicsFilter[index]
+                                .image_thumnail_square_path!,
                             imageBuilder: (context, imageProvider) {
                               return GestureDetector(
-                                onTap: (){
-                                  context.read<ComicDetailBloc>().add(LoadDetailComic(listComicsFilter[index].id));
+                                onTap: () {
+                                  context.read<ComicDetailBloc>().add(
+                                      LoadDetailComic(
+                                          listComicsFilter[index].id));
                                   Navigator.pushNamed(
-                                    context, ComicDetailScreen.routeName);
+                                      context, ComicDetailScreen.routeName);
                                 },
                                 child: Container(
                                   margin: EdgeInsets.zero,
@@ -56,34 +58,42 @@ class ComicByCategory extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.fill,
+                                      image: imageProvider,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
                               );
                             },
-                            errorWidget: (context, url, error) => Image.asset(
-                              "assets/images/banner_splash.png"),
-                            )
-                          )
-                        : Expanded(child: Image.asset("assets/images/banner_splash.png")),
-                        SizedBox(height: SizeConfig.screenHeight / 75.6,),
-                        Text(
-                          listComicsFilter[index].title != null ? '${listComicsFilter[index].title}' : '',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: titleComic,
-                        ),
-                      ],
+                            errorWidget: (context, url, error) =>
+                                Image.asset("assets/images/banner_splash.png"),
+                          ))
+                        : Expanded(
+                            child:
+                                Image.asset("assets/images/banner_splash.png")),
+                    SizedBox(
+                      height: SizeConfig.screenHeight / 75.6,
+                    ),
+                    Text(
+                      listComicsFilter[index].title != null
+                          ? '${listComicsFilter[index].title}'
+                          : '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: titleComic,
+                    ),
+                  ],
                 ),
               );
-            }
-            );
-        }else{
-          return const SizedBox.shrink();
+            },
+          );
+        } else {
+          return const Center(
+              child: CircularProgressIndicator(color: Colors.amber));
         }
       }
-      );
+      return const Center(
+          child: CircularProgressIndicator(color: Colors.amber));
+    });
   }
 }
