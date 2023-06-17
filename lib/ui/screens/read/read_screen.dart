@@ -47,6 +47,7 @@ class _ReadScreenState extends State<ReadScreen> {
           if (listImage.isNotEmpty) {
             return SafeArea(
               child: Scaffold(
+                backgroundColor: Colors.black87.withOpacity(0.1),
                 body: Stack(
                   children: [
                     GestureDetector(
@@ -62,9 +63,12 @@ class _ReadScreenState extends State<ReadScreen> {
                         itemCount: listImage.length,
                         itemBuilder: (context, index) {
                           return CachedNetworkImage(
+                            // width: ,
+                            // height: ,
                             imageUrl: listImage[index].path,
                             imageBuilder: (context, imageProvider) {
                               return Container(
+                                margin: const EdgeInsets.all(10),
                                 width: SizeConfig.screenWidth,
                                 height: SizeConfig.screenHeight,
                                 decoration: BoxDecoration(

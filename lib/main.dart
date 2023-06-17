@@ -5,7 +5,7 @@ import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/get_all_category_bloc/get_all_category_event.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
-import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
+// import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
 import 'package:full_comics_frontend/l10n/l10n.dart';
 import '../data/repository/device_repository.dart';
@@ -116,9 +116,9 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
-          BlocProvider<SearchBloc>(
-            create: (context) => SearchBloc(context.read<ComicRepo>()),
-          ),
+          // BlocProvider<SearchBloc>(
+          //   create: (context) => SearchBloc(context.read<ComicRepo>()),
+          // ),
           BlocProvider<FilterComicBloc>
           (create: (context) => FilterComicBloc(comicRepo: context.read<ComicRepo>(),categoryRepo: context.read<CategoryRepo>())..add(FilterComicInitial())),
           BlocProvider<GetAllCategoryBloc>(
@@ -146,6 +146,7 @@ class MyApp extends StatelessWidget {
             // ),
             // fontFamily: 'Raleway',
             primarySwatch: Colors.blue,
+            
           ),
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,

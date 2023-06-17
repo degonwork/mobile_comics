@@ -15,10 +15,10 @@ TextStyle kLoginTermsAndPrivacyStyle(Size size) =>
 
 TextStyle kHaveAnAccountStyle(Size size) =>
     GoogleFonts.ubuntu(fontSize: size.height * 0.022, color: Colors.black);
-TextStyle titleComic =   TextStyle(
+TextStyle titleComic =  const TextStyle(
   fontFamily: 'RobotoMono',
   fontSize: 20,
-  color: Colors.yellow.withBlue(2),
+  color: Colors.white,
 );
 TextStyle kLoginOrSignUpTextStyle(
   Size size,

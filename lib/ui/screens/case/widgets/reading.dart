@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+
 import 'package:full_comics_frontend/config/size_config.dart';
 import 'package:full_comics_frontend/config/ui_constant.dart';
 import '../../../../blocs/case/case_bloc.dart';
@@ -29,26 +31,31 @@ class Reading extends StatelessWidget {
                       children: [
                         listCaseComic[index].imageThumnailSquareComicPath !=
                                 null
-                            ? CachedNetworkImage(
-                                imageUrl: listCaseComic[index]
-                                    .imageThumnailSquareComicPath!,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: SizeConfig.screenWidth / 3.6,
-                                    height: SizeConfig.screenHeight / 7.56,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
+                            ? InkWell(
+                              onTap: (){
+                               context.read<CaseBloc>().add(const LoadCaseComic());
+                              },
+                              child: CachedNetworkImage(
+                                  imageUrl: listCaseComic[index]
+                                      .imageThumnailSquareComicPath!,
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      width: SizeConfig.screenWidth / 3.6,
+                                      height: SizeConfig.screenHeight / 7.56,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
-                              )
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          "assets/images/banner_splash.png"),
+                                ),
+                            )
                             : Image.asset("assets/images/banner_splash.png"),
                         const SizedBox(width: 20),
                         Expanded(

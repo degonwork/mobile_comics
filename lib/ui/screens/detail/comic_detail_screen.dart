@@ -131,7 +131,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                 }
               }
               return const Text(
-                "This Comic not found",
+                "",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
