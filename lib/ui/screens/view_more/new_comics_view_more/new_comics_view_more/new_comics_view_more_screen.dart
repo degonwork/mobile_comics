@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/config/ui_constant.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../../blocs/view_more/view_more_bloc.dart';
 import '../../../../widgets/back_ground_app.dart';
@@ -15,7 +16,6 @@ class NewComicViewMoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -36,9 +36,10 @@ class NewComicViewMoreScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_outlined)),
-                      Text(
-                        AppLocalizations.of(context)!.newComics,
-                        style: const TextStyle(fontSize: 20),
+                      TextUi(
+                        text: AppLocalizations.of(context)!.newComics,
+                        fontSize: SizeConfig.font20,
+                        fontWeight: FontWeight.w500,
                       ),
                       const SizedBox(width: 50),
                     ],

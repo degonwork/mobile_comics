@@ -72,7 +72,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
@@ -85,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   TextUi(
                     text: AppLocalizations.of(context)!.welcomeSplashScreen,
-                    fontSize: 20,
+                    fontSize: SizeConfig.font20,
                     color: Colors.blue,
                     fontWeight: FontWeight.w700,
                   ),

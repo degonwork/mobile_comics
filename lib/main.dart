@@ -25,6 +25,7 @@ import 'blocs/case/case_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'blocs/get_all_category_bloc/get_all_category_bloc.dart';
+import 'config/size_config.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
@@ -78,8 +80,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         RepositoryProvider<CategoryRepo>(
-          create: (context) =>
-              CategoryRepo(apiClient: context.read<ApiClient>()),
+          create: (context) => CategoryRepo(
+            apiClient: context.read<ApiClient>(),
+          ),
         ),
       ],
       child: MultiBlocProvider(
@@ -107,9 +110,11 @@ class MyApp extends StatelessWidget {
                     chapterRepo: context.read<ChapterRepo>(),
                   )),
           BlocProvider<FilterComicBloc>(
-              create: (_) => FilterComicBloc(
-                  comicRepo: context.read<ComicRepo>(),
-                  categoryRepo: context.read<CategoryRepo>())),
+            create: (_) => FilterComicBloc(
+              comicRepo: context.read<ComicRepo>(),
+              categoryRepo: context.read<CategoryRepo>(),
+            ),
+          ),
           BlocProvider<CaseBloc>(
             create: (context) => CaseBloc(
               comicRepo: context.read<ComicRepo>(),
@@ -120,17 +125,19 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<FilterComicBloc>(
               create: (context) => FilterComicBloc(
-                  comicRepo: context.read<ComicRepo>(),
-                  categoryRepo: context.read<CategoryRepo>())
-                ..add(FilterComicInitial())),
+                    comicRepo: context.read<ComicRepo>(),
+                    categoryRepo: context.read<CategoryRepo>(),
+                  )..add(FilterComicInitial())),
           BlocProvider<GetAllCategoryBloc>(
-            create: (context) =>
-                GetAllCategoryBloc(context.read<CategoryRepo>())
-                  ..add(GetAllCategory()),
+            create: (context) => GetAllCategoryBloc(
+              context.read<CategoryRepo>(),
+            )..add(GetAllCategory()),
           ),
           BlocProvider<SearchComicBloc>(
-              create: (context) =>
-                  SearchComicBloc(comicRepo: context.read<ComicRepo>())),
+            create: (context) => SearchComicBloc(
+              comicRepo: context.read<ComicRepo>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
