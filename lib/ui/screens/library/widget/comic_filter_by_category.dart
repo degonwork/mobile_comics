@@ -5,7 +5,6 @@ import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_state.dart';
 import 'package:full_comics_frontend/config/ui_constant.dart';
-
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
 
@@ -52,7 +51,7 @@ class ComicByCategory extends StatelessWidget {
                                       context, ComicDetailScreen.routeName);
                                 },
                                 child: Container(
-                                  margin: EdgeInsets.zero,
+                                  margin: EdgeInsets.only(right: SizeConfig.screenHeight / 37.8),
                                   // height: SizeConfig.screenHeight,
                                   height: SizeConfig.screenHeight / 4.2,
                                   decoration: BoxDecoration(
@@ -65,24 +64,21 @@ class ComicByCategory extends StatelessWidget {
                                 ),
                               );
                             },
-                            errorWidget: (context, url, error) =>
-                                Image.asset("assets/images/banner_splash.png"),
-                          ))
-                        : Expanded(
-                            child:
-                                Image.asset("assets/images/banner_splash.png")),
-                    SizedBox(
-                      height: SizeConfig.screenHeight / 75.6,
-                    ),
-                    Text(
-                      listComicsFilter[index].title != null
-                          ? '${listComicsFilter[index].title}'
-                          : '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: titleComic,
-                    ),
-                  ],
+                            errorWidget: (context, url, error) => Image.asset(
+                              "assets/images/banner_splash.png"),
+                            )
+                          )
+                        : Expanded(child: Image.asset("assets/images/banner_splash.png")),
+                        SizedBox(height: SizeConfig.screenHeight / 75.6,),
+                        Text(
+                          listComicsFilter[index].title != null ? '${listComicsFilter[index].title}' : '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: titleComic,
+                        ),
+                        SizedBox(height: SizeConfig.screenHeight / 75.6,),
+                        
+                      ],
                 ),
               );
             },

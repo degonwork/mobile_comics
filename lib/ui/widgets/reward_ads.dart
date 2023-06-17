@@ -23,7 +23,6 @@ class _RewardADState extends State<RewardAD> with TickerProviderStateMixin{
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad){
-          
           rewardedAd =ad;
           setState(() {
             isLoaded =true;

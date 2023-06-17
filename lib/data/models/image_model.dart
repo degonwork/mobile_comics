@@ -36,6 +36,7 @@ class Image {
     this.width,
     required this.parent_id,
     this.numerical,
+    
   });
   factory Image.fromJson(Map<String, dynamic> json) {
     return Image(
@@ -46,6 +47,7 @@ class Image {
       width: json['width'],
       parent_id: json['parent_id'],
       numerical: json['numerical'],
+      
     );
   }
 

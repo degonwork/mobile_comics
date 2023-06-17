@@ -1,5 +1,6 @@
 import 'package:full_comics_frontend/data/providers/api/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// ignore: depend_on_referenced_packages
 import 'package:uuid/uuid.dart';
 import '../../config/app_constant.dart';
 import '../models/device_model.dart';

@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_bloc.dart';
 import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_state.dart';
 import 'package:full_comics_frontend/config/size_config.dart';
-
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
 import 'comic_filter_by_category.dart';
@@ -18,7 +17,6 @@ class FilterComicByCategory extends StatefulWidget {
   @override
   State<FilterComicByCategory> createState() => _FilterComicByCategoryState();
 }
-
 class _FilterComicByCategoryState extends State<FilterComicByCategory> {
   int? selected = 0;
   @override

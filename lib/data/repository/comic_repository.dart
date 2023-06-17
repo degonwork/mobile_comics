@@ -1,5 +1,6 @@
-import 'dart:async';
+
 import 'dart:convert';
+import 'dart:core';
 import '../../data/models/case_comic_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/app_constant.dart';
@@ -112,7 +113,6 @@ class ComicRepo {
     Comic comic = await readComicDetail(id: id);
     return comic;
   }
-
   //SearchComicFormSever
 //  Future<List<Comic>> searchComicFormSever(String query)async{
 //   String url = "${AppConstant.comicUrl}${AppConstant.search}$query";
@@ -254,20 +254,16 @@ class ComicRepo {
     List<Comic> listComicsSearchResult = [];
     try {
       final response = await _apiClient.getData(url);
-
+      
       if (response.statusCode == 200) {
-        dynamic jsonResponse = jsonDecode(response.body);
-        //  print(jsonResponse);
-        //  final vad = jsonResponse['data'];
-        //  print(vad);
+        List jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
-          final data = jsonResponse['data'];
-          // print('$data data');
-          final listComics = data.map((e) => Comic.fromJson(e)).toList();
-          print(listComics);
+          final listComics =
+              jsonResponse.map((e) => Comic.fromJson(e)).toList();
           final listComicSearch = listComics
-              .where((Comic comic) =>
-                  comic.title!.toLowerCase().startsWith(query.toLowerCase()))
+              .where((Comic comic) => comic.title!
+                  .toLowerCase()
+                  .contains(comic.title!.toLowerCase()))
               .toList();
           if (listComicSearch.isNotEmpty) {
             for (Comic comic in listComicSearch) {
@@ -277,7 +273,7 @@ class ComicRepo {
           return listComicsSearchResult;
         }
       } else {
-        throw Exception('Khong tim thay truyen');
+        throw Exception();
       }
     } catch (e) {
       print('${e.toString()} sai o comicrepo');
@@ -285,27 +281,28 @@ class ComicRepo {
     return [];
   }
 
-  Future<List<Comic>> searchComicByTitle(String title) async {
-    List<Comic> listComicsSearchResult = [];
-    if (title != '') {
-      List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
-      if (listComics.isNotEmpty) {
-        final listComicsSearch = listComics
-            .where((Comic comic) =>
-                comic.title!.toLowerCase().startsWith(title.toLowerCase()))
-            .toList();
-        if (listComicsSearch.isNotEmpty) {
-          for (Comic comic in listComicsSearch) {
-            listComicsSearchResult.add(await readHomeComicCopy(comic));
-          }
-          return listComicsSearchResult;
-        }
-      }
-      throw Exception();
-    }
-    return [];
-  }
-
+// search from database
+  // Future<List<Comic>> searchComicByTitle(String title) async {
+  //   List<Comic> listComicsSearchResult = [];
+  //   if (title != '') {
+  //     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
+  //     if (listComics.isNotEmpty) {
+  //       final listComicsSearch = listComics
+  //           .where((Comic comic) =>
+  //               comic.title!.toLowerCase().startsWith(title.toLowerCase()))
+  //           .toList();
+  //       if (listComicsSearch.isNotEmpty) {
+  //         for (Comic comic in listComicsSearch) {
+  //           listComicsSearchResult.add(await readHomeComicCopy(comic));
+  //         }
+  //         return listComicsSearchResult;
+  //       }
+  //     }
+  //     throw Exception();
+  //   }
+  //   return [];
+  // }
+// 
   Future<Comic> readHomeComicCopy(Comic comic) async {
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
         type: AppConstant.typeImageComic[1], parentID: comic.id));
