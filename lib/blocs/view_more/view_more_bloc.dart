@@ -18,8 +18,12 @@ class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
     LoadNewComicsViewMore event,
     Emitter<ViewMoreState> emit,
   ) async {
-    List<Comic> listNewComicsViewMore =
-        await _comicRepo.readNewComicsFromDB(limit: 20);
-    emit(ViewMoreLoaded(listNewComicsViewMore));
+    try {
+      List<Comic> listNewComicsViewMore =
+          await _comicRepo.readNewComicsFromDB(limit: 20);
+      emit(ViewMoreLoaded(listNewComicsViewMore));
+    } catch (e) {
+      emit(ViewMoreLoadFailed());
+    }
   }
 }

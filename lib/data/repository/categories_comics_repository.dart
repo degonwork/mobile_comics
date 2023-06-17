@@ -9,7 +9,8 @@ class CategoriesComicsRepo {
 
   CategoriesComicsRepo({required CategoryRepo categoryRepo})
       : _categoryRepo = categoryRepo;
-  Future<void> processCategoriesComicsToDB({required Comic comic}) async {
+  Future<void> processCategoriesComicsToDB(
+      {required Comic comic, String? categoryName}) async {
     List<CategoriesComics> allCategoriesComicsByComicIDFromDB =
         await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
     if (allCategoriesComicsByComicIDFromDB.isNotEmpty) {
@@ -19,24 +20,21 @@ class CategoriesComicsRepo {
     }
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
-      for (String category in comic.categories!) {
-        int? i = await _categoryRepo.createCategoryToDB(category);
-        if (i != null) {
-          print("${i + 1}: Category created");
-          await addListCategoriesComics(
-            category: category,
-            listCategoriesComics: listCategoriesComics,
-            comic: comic,
-          );
-        } else {
-          print("Category don't create");
-          await addListCategoriesComics(
-            category: category,
-            listCategoriesComics: listCategoriesComics,
-            comic: comic,
-          );
+      for (var i = 0; i < comic.categories!.length; i++) {
+        final category = await _categoryRepo.readCategoryByNameFromDB(
+            name: comic.categories![i]);
+        if (category != null) {
+          listCategoriesComics.add(
+              CategoriesComics(comic_id: comic.id, category_id: category.id));
         }
       }
+    } else if (categoryName != null) {
+      Category? category =
+          await _categoryRepo.readCategoryByNameFromDB(name: categoryName);
+      if (category != null) {}
+      listCategoriesComics.add(
+        CategoriesComics(comic_id: comic.id, category_id: category!.id),
+      );
     }
     if (listCategoriesComics.isNotEmpty) {
       await HandleDatabase.createCategoriesComicsToDB(

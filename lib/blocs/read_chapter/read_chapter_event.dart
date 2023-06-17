@@ -14,3 +14,5 @@ class LoadChapter extends ReadChapterEvent {
 }
 
 class ContinueReading extends ReadChapterEvent {}
+
+class ContinueFailed extends ReadChapterEvent {}

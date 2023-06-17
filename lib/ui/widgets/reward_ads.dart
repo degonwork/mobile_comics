@@ -23,14 +23,14 @@ class _RewardADState extends State<RewardAD> with TickerProviderStateMixin{
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad){
-          print('oke');
+          
           rewardedAd =ad;
           setState(() {
             isLoaded =true;
           });
         },
         onAdFailedToLoad: (error){
-          print('failed');
+          
         }
         )
         );
@@ -45,7 +45,7 @@ class _RewardADState extends State<RewardAD> with TickerProviderStateMixin{
     return Center(
       child: GestureDetector(onTap: (){
         rewardedAd!.show(onUserEarnedReward: (ad,reward){
-          print("ads watched");
+          
         });
       },
       child: RotationTransition(

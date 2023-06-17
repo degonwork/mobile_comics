@@ -21,3 +21,5 @@ class HomeLoaded extends HomeState {
   @override
   List<Object> get props => [listHotComics, listNewComics];
 }
+
+class HomeFailed extends HomeState {}

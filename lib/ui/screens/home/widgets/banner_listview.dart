@@ -12,7 +12,6 @@ class BannerListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeLoaded) {
@@ -69,16 +68,13 @@ class BannerListview extends StatelessWidget {
                 ),
               ),
             );
+          } else {
+            return const Center(
+                child: CircularProgressIndicator(color: Colors.amber));
           }
         }
-        return const Text(
-          "Comics not found",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        );
+        return const Center(
+            child: CircularProgressIndicator(color: Colors.amber));
       },
     );
   }

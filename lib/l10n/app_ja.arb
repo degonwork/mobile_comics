@@ -1,0 +1,23 @@
+{
+    "language": "日本語",
+    "welcomeSplashScreen": "漫画アプリへようこそ",
+    "home": "主要",
+    "library": "図書館",
+    "cabinet": "戸棚",
+    "profile": "ユーザー",
+    "newComics": "新しい漫画",
+    "seeMore": "もっとコミックを見る",
+    "inforComics": "コミックス情報",
+    "chapters": "章",
+    "numberReads": "読み取り数",
+    "totalChapters": "総チャプター数",
+    "genreComics": "ジャンル コミック",
+    "describe": "説明",
+    "readComics": "漫画を読む",
+    "readFirstChapter": "最初の章を読む",
+    "continueReading": "読み続けて",
+    "latestChapter": "最新章",
+    "listChapters": "章をリストする",
+    "reading": "読む",
+    "reads": "読み取り数"
+}

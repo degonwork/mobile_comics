@@ -1,5 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../config/app_constant.dart';
 import '../.././firebase/notification/local_notification_service.dart';
 
 class FireBaseMessagingService {
@@ -11,8 +13,18 @@ class FireBaseMessagingService {
     _fcm.subscribeToTopic("hot-comics");
   }
 
-  static Future<String?> getToken() async {
-    return await _fcm.getToken();
+  static Future<void> createFireBaseTokenToLocal() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final String? firebaseToken = await _fcm.getToken();
+    if (firebaseToken != null &&
+        !sharedPreferences.containsKey(AppConstant.firebaseToken)) {
+      print("firebase token is not available");
+      await sharedPreferences.setString(
+          AppConstant.firebaseToken, firebaseToken);
+      print("Create firebaseToken");
+    } else {
+      print("firebaseToken is available");
+    }
   }
 
   static void getMessage(AndroidNotificationChannel channel,

@@ -5,6 +5,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // RepositoryProvider.of<DeviceRepo>(context).registerDevice();
     return Container();
   }
 }

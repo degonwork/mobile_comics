@@ -14,6 +14,8 @@ class AppRouter {
     SignUpScreen.routeName: (_) => const SignUpScreen(),
     ComicDetailScreen.routeName: (_) => const ComicDetailScreen(),
     NewComicViewMoreScreen.routeName: (_) => const NewComicViewMoreScreen(),
+    
+    // ComicByCategory.routeName: (_) => const ComicByCategory(),
   };
 
   static navigator(BuildContext context, String routeName) {

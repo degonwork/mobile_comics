@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/DUNG/Desktop/comic_mobile/mobile_comics/linux"
+    "cmake.sourceDirectory": "C:/Users/DUNG/Desktop/comic_mobile/mobile_comics/linux",
+    "git.ignoreLimitWarning": true
 }

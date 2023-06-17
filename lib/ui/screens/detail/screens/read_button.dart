@@ -29,6 +29,14 @@ class ReadButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(40),
+          boxShadow:  [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.8),
+              blurRadius: 0.1,
+              spreadRadius: 0.5,
+              // offset: Offset(-4, -4),
+            ),
+          ],
         ),
         child: TextButton(
           onPressed: () {
@@ -59,6 +67,7 @@ class ReadButton extends StatelessWidget {
           },
           child: Text(
             title,
+            textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 20, color: Colors.white),
           ),
         ),

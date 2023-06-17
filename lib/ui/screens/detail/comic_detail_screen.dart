@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/screens/detail/screens/chapter.dart';
+import 'package:full_comics_frontend/ui/screens/detail/screens/infor.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
 import '../../widgets/back_ground_app.dart';
-import '../detail/widgets/chapter.dart';
-import '../detail/widgets/infor.dart';
+
 import '../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   const ComicDetailScreen({super.key});
@@ -17,22 +19,23 @@ class ComicDetailScreen extends StatefulWidget {
 }
 
 class _ComicDetailScreenState extends State<ComicDetailScreen>
-    with SingleTickerProviderStateMixin {
-  static const List<Tab> tabs = <Tab>[
-    Tab(text: 'Thông tin'),
-    Tab(text: 'Chương'),
-    // Tab(text: 'Bình luận'),
-  ];
+    with TickerProviderStateMixin {
+  late List<Tab> tabs = [];
   late TabController _tabController;
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    List<Tab> tabs = <Tab>[
+      Tab(text: AppLocalizations.of(context)!.inforComics),
+      Tab(text: AppLocalizations.of(context)!.chapters),
+    ];
+    _tabController = TabController(length: tabs.length, vsync: this);
     return Scaffold(
       body: Stack(
         children: [
@@ -61,10 +64,16 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                         pinned: true,
                         expandedHeight: SizeConfig.screenHeight / 4,
                         flexibleSpace: FlexibleSpaceBar(
-                          title: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                  comic.title != null ? '${comic.title}' : "")),
+                          // title: Align(
+                          //     alignment: Alignment.bottomCenter,
+                          //     child: Text(
+                          //         comic.title != null ? '${comic.title}' : "",
+                          //         style: const TextStyle(
+
+                          //           fontSize: 30,
+                          //           fontWeight: FontWeight.bold
+                          //         ),
+                          //         )),
                           background: comic.image_detail_path != null
                               ? CachedNetworkImage(
                                   imageUrl: comic.image_detail_path!,
@@ -73,7 +82,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: imageProvider,
-                                            fit: BoxFit.fill),
+                                            fit: BoxFit.cover),
                                       ),
                                     );
                                   },
@@ -119,16 +128,13 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                       ),
                     ],
                   );
+                } else {
+                  return const Center(
+                      child: CircularProgressIndicator(color: Colors.amber));
                 }
               }
-              return const Text(
-                "This Comic not found",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-              );
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.amber));
             },
           ),
         ],

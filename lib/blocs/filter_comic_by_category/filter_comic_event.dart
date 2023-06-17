@@ -1,13 +1,24 @@
 import 'package:equatable/equatable.dart';
 
-abstract class FilterComicEvent extends Equatable{
+abstract class FilterComicEvent extends Equatable {
   const FilterComicEvent();
   @override
   List<Object> get props => [];
 }
-class FilterByIDCategory extends FilterComicEvent{
-  final String id;
-  const FilterByIDCategory(this.id);
+
+class FilterComicInitial extends FilterComicEvent {
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [];
+}
+
+class FilterByIDCategory extends FilterComicEvent {
+  final String categoryName;
+  const FilterByIDCategory(this.categoryName);
+  @override
+  List<Object> get props => [categoryName];
+}
+
+class FilterComicLoadFailed extends FilterComicEvent {
+  @override
+  List<Object> get props => [];
 }
