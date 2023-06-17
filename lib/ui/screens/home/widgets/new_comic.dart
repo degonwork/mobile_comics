@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/ui_constant.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/size_config.dart';
@@ -75,13 +75,15 @@ class NewComic extends StatelessWidget {
                         SizedBox(
                           height: SizeConfig.screenHeight / 75.6,
                         ),
-                        Text(
-                          listNewComics[index].title != null
+                        TextUi(
+                          text: listNewComics[index].title != null
                               ? '${listNewComics[index].title}'
                               : "",
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: titleComic,
+                          textOverflow: TextOverflow.ellipsis,
+                          fontSize: SizeConfig.font18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
                         const Divider(
                           thickness: 0.5,

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/ui_constant.dart';
 import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../../blocs/view_more/view_more_bloc.dart';
@@ -135,16 +134,18 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                             height:
                                                 SizeConfig.screenHeight / 75.6,
                                           ),
-                                          Text(
-                                            listNewComicsViewMore[index]
+                                          TextUi(
+                                            text: listNewComicsViewMore[index]
                                                         .title !=
                                                     null
                                                 ? listNewComicsViewMore[index]
                                                     .title!
                                                 : "",
                                             maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: titleComic,
+                                            textOverflow: TextOverflow.ellipsis,
+                                            fontSize: SizeConfig.font18,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
                                           ),
                                           const Divider(
                                             thickness: 0.5,

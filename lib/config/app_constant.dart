@@ -49,8 +49,4 @@ class AppConstant {
   static const comicNotExist = Comic(id: "Not-exist");
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
-
-// Link Image fluttet
-  static const flutterImageLink =
-      "https://storage.googleapis.com/cms-storage-bucket/70760bf1e88b184bb1bc.png";
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/models/comic_model.dart';
+import '../../../widgets/text_ui.dart';
 import '../../read/read_screen.dart';
 import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../../blocs/read_chapter/read_chapter_event.dart';
@@ -25,16 +26,15 @@ class ReadButton extends StatelessWidget {
     return Center(
       child: Container(
         height: SizeConfig.screenHeight / 12.6,
-        width: SizeConfig.screenWidth / 3,
+        width: SizeConfig.screenWidth / 2.5,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(40),
-          boxShadow:  [
+          boxShadow: [
             BoxShadow(
               color: Colors.white.withOpacity(0.8),
               blurRadius: 0.1,
               spreadRadius: 0.5,
-              // offset: Offset(-4, -4),
             ),
           ],
         ),
@@ -65,10 +65,11 @@ class ReadButton extends StatelessWidget {
               );
             }
           },
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, color: Colors.white),
+          child: TextUi(
+            text: title,
+            fontSize: SizeConfig.font20,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

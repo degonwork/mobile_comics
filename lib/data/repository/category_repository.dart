@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:full_comics_frontend/config/app_constant.dart';
 import 'package:full_comics_frontend/data/providers/api/api_client.dart';
@@ -16,21 +17,22 @@ class CategoryRepo {
           final allCategory =
               jsonResponse.map((e) => Category.fromJson(e)).toList();
           await HandleDatabase.createCategoryToDBByID(categories: allCategory);
+        } else {
+          print("Category is not available");
+          throw const FormatException();
         }
+      } else {
+        print("load failed");
+        throw TimeoutException("Can't connect server");
       }
     } catch (e) {
-      print(
-          '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
+      print(e.toString());
     }
-    return await HandleDatabase.readAllCategoryFromDB();
+    return await getAllCategoryFromDB();
   }
 
-  Future<int?> createCategoryToDB(Category category) async {
-    Category createCategory = Category(
-      id: category.id,
-      name: category.name,
-    );
-    return await HandleDatabase.createCategoryToDB(category: createCategory);
+  Future<List<Category>> getAllCategoryFromDB() async {
+    return await HandleDatabase.readAllCategoryFromDB();
   }
 
   Future<Category?> readCategoryByIDFromDB({required String id}) async {

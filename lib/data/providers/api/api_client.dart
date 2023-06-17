@@ -7,12 +7,11 @@ class ApiClient {
       : _baseServerUrl = baseServerUrl;
 
   Future<Response> getData(String uri) async {
-    try {
-      final response = await get(Uri.parse(_baseServerUrl + uri));
-      return response;
-    } catch (e) {
-      return Response(e.toString(), 404);
-    }
+    final response = await get(Uri.parse(_baseServerUrl + uri))
+        .timeout(const Duration(seconds: 2), onTimeout: () {
+      return Response('Error', 408);
+    });
+    return response;
   }
 
   Future<Response> postData(String uri, dynamic body) async {

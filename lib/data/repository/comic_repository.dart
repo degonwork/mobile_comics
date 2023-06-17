@@ -1,4 +1,4 @@
-
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import '../../data/models/case_comic_model.dart';
@@ -48,16 +48,15 @@ class ComicRepo {
           setTimesAds(listHotComicApi[0].times_ads);
         } else {
           print("Hot comic is not available");
-          throw Exception("Not Found Data");
+          throw const FormatException();
         }
       } else {
         print("load failed");
-        throw Exception('Load failed hot comic');
+        throw TimeoutException("Can't connect server");
       }
     } catch (e) {
       print("------------" + e.toString());
     }
-
     List<Comic> listHotComic = await readHotComicsFromDB(limit: limit);
     if (listHotComic.isNotEmpty) {
       return listHotComic;
@@ -77,10 +76,10 @@ class ComicRepo {
           await createComicToDB(listHomeComic: listNewComicsApi);
         } else {
           print("New comic is not available");
-          throw Exception("Not Found Data");
+          throw throw const FormatException();
         }
       } else {
-        throw Exception('Load failed new comic');
+        throw TimeoutException("Can't connect server");
       }
     } catch (e) {
       print("------------" + e.toString());
@@ -102,10 +101,10 @@ class ComicRepo {
           await updateComicToDB(comic: comicApi);
         } else {
           print("comic is not available");
-          throw Exception("Not Found Data");
+          throw throw const FormatException();
         }
       } else {
-        throw Exception('Load failed comic detail');
+        throw TimeoutException("Can't connect server");
       }
     } catch (e) {
       print(e.toString());
@@ -254,7 +253,7 @@ class ComicRepo {
     List<Comic> listComicsSearchResult = [];
     try {
       final response = await _apiClient.getData(url);
-      
+
       if (response.statusCode == 200) {
         List jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
@@ -302,7 +301,7 @@ class ComicRepo {
   //   }
   //   return [];
   // }
-// 
+//
   Future<Comic> readHomeComicCopy(Comic comic) async {
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
         type: AppConstant.typeImageComic[1], parentID: comic.id));

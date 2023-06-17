@@ -127,7 +127,7 @@ class MyApp extends StatelessWidget {
               create: (context) => FilterComicBloc(
                     comicRepo: context.read<ComicRepo>(),
                     categoryRepo: context.read<CategoryRepo>(),
-                  )..add(FilterComicInitial())),
+                  )..add(FilterComicStart())),
           BlocProvider<GetAllCategoryBloc>(
             create: (context) => GetAllCategoryBloc(
               context.read<CategoryRepo>(),
@@ -148,6 +148,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate
           ],
+          theme: ThemeData(fontFamily: 'Raleway'),
           title: 'Flutter Demo',
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,

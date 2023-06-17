@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
 import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../config/size_config.dart';
 import 'widgets/favorite.dart';
 import 'widgets/read_offline.dart';
@@ -15,8 +16,7 @@ class CaseScreen extends StatefulWidget {
   State<CaseScreen> createState() => _CaseScreenState();
 }
 
-class _CaseScreenState extends State<CaseScreen>
-    with TickerProviderStateMixin {
+class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {
@@ -33,7 +33,13 @@ class _CaseScreenState extends State<CaseScreen>
   @override
   Widget build(BuildContext context) {
     List<Tab> tabs = <Tab>[
-      Tab(text: AppLocalizations.of(context)!.reading),
+      Tab(
+        child: TextUi(
+          text: AppLocalizations.of(context)!.reading,
+          fontSize: SizeConfig.font14,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       const Tab(
         text: 'Yêu thích',
       ),
@@ -54,14 +60,8 @@ class _CaseScreenState extends State<CaseScreen>
               children: [
                 TabBar(
                   controller: _tabController,
-                  labelColor: Colors.blue,
                   tabs: tabs,
-                  unselectedLabelColor: Colors.black,
-                  labelStyle: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  unselectedLabelColor: Colors.blue,
                 ),
                 Expanded(
                   child: TabBarView(

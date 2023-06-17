@@ -121,23 +121,17 @@ class HandleDatabase {
         .deleteImageFromDB(type: type, parentId: parentID);
   }
 
-  // process category
-  static Future<int?> createCategoryToDB({required Category category}) async {
-    Category? createCategory =
-        await readCategoryByNameFromDB(name: category.name);
-    if (createCategory == null) {
-      return await StorageDatabase.instance
-          .createCategoryToDB(category: category);
-    }
-    return null;
-  }
-
   static Future<void> createCategoryToDBByID(
       {required List<Category> categories}) async {
     for (var i = 0; i < categories.length; i++) {
       Category? category = await readCategoryByIDFromDB(id: categories[i].id);
       if (category == null) {
-        await createCategoryToDB(category: categories[i]);
+        print(category);
+        await StorageDatabase.instance
+            .createCategoryToDB(category: categories[i]);
+        print("Category created");
+      } else {
+        print("Category dont created");
       }
     }
   }

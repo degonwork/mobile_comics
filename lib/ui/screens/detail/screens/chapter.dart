@@ -4,6 +4,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../data/models/case_comic_model.dart';
 import '../../../../data/models/chapter_model.dart';
 import '../../../../data/models/comic_model.dart';
+import '../../../widgets/text_ui.dart';
 import '../../read/read_screen.dart';
 import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../../blocs/read_chapter/read_chapter_event.dart';
@@ -28,9 +29,11 @@ class ListChapter extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SizeConfig.screenHeight / 50),
-                Text(
-                  AppLocalizations.of(context)!.latestChapter,
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                TextUi(
+                  text: AppLocalizations.of(context)!.latestChapter,
+                  color: Colors.white,
+                  fontSize: SizeConfig.font20,
+                  fontWeight: FontWeight.w500,
                 ),
                 SizedBox(height: SizeConfig.screenHeight / 50),
                 GestureDetector(
@@ -69,9 +72,10 @@ class ListChapter extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text(
-                        'Chapter ${chapters.last.numerical}',
-                        style: const TextStyle(fontSize: 20),
+                      child: TextUi(
+                        text: 'Chapter ${chapters.last.numerical}',
+                        fontSize: SizeConfig.font20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -81,9 +85,11 @@ class ListChapter extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      AppLocalizations.of(context)!.listChapters,
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    TextUi(
+                      text: AppLocalizations.of(context)!.listChapters,
+                      color: Colors.white,
+                      fontSize: SizeConfig.font20,
+                      fontWeight: FontWeight.w500,
                     ),
                     IconButton(
                       onPressed: () {},
@@ -140,9 +146,10 @@ class ListChapter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
-                            child: Text(
-                              'Chapter ${chapters[index].numerical}',
-                              style: const TextStyle(fontSize: 20),
+                            child: TextUi(
+                              text: 'Chapter ${chapters[index].numerical}',
+                              fontSize: SizeConfig.font20,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),

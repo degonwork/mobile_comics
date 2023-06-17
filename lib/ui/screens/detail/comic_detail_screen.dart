@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/ui/screens/detail/screens/chapter.dart';
 import 'package:full_comics_frontend/ui/screens/detail/screens/infor.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
 import '../../widgets/back_ground_app.dart';
@@ -32,8 +33,21 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     List<Tab> tabs = <Tab>[
-      Tab(text: AppLocalizations.of(context)!.inforComics),
-      Tab(text: AppLocalizations.of(context)!.chapters),
+      Tab(
+        child: TextUi(
+          text: AppLocalizations.of(context)!.inforComics,
+          color: Colors.white,
+          fontSize: SizeConfig.font14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      Tab(
+          child: TextUi(
+        text: AppLocalizations.of(context)!.chapters,
+        color: Colors.black,
+        fontSize: SizeConfig.font14,
+        fontWeight: FontWeight.w500,
+      )),
     ];
     _tabController = TabController(length: tabs.length, vsync: this);
     return Scaffold(

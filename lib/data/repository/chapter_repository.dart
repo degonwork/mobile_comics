@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import '.././models/comic_model.dart';
 import '.././providers/api/api_client.dart';
@@ -30,10 +31,10 @@ class ChapterRepo {
           await updateChapterToDB(chapter: chapter);
         } else {
           print("chapter is not available");
-          // throw Exception("Not Found Data");
+          throw throw const FormatException();
         }
       } else {
-        // throw Exception('Load failed chapter');
+        throw TimeoutException("Can't connect server");
       }
     } catch (e) {
       print(e.toString());
