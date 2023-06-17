@@ -37,36 +37,36 @@ class BannerAD extends StatefulWidget {
 class _BannerADState extends State<BannerAD> {
   late BannerAd bannerAd;
   bool isLoaded = false;
-  initBannerAD(){
+  initBannerAD() {
     bannerAd = BannerAd(
-      size: AdSize.largeBanner,
-      adUnitId: "ca-app-pub-3940256099942544/6300978111",
-      listener: BannerAdListener(
-        onAdLoaded: (ad){
+        size: AdSize.largeBanner,
+        adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        listener: BannerAdListener(onAdLoaded: (ad) {
           setState(() {
-            isLoaded =  true;
+            isLoaded = true;
           });
-        },
-        onAdFailedToLoad: (ad,error){
+        }, onAdFailedToLoad: (ad, error) {
           ad.dispose();
           // print(error);
-        }
-      ),
-      request: const AdRequest()
-      );
-      bannerAd.load();
+        }),
+        request: const AdRequest());
+    bannerAd.load();
   }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     initBannerAD();
   }
+
   @override
   Widget build(BuildContext context) {
-    return isLoaded ?  SizedBox(
-         height: bannerAd.size.height.toDouble()/2,
-         width: bannerAd.size.width.toDouble(),
-         child: AdWidget(ad: bannerAd),
-    ) : const SizedBox();
+    return isLoaded
+        ? SizedBox(
+            height: bannerAd.size.height.toDouble() / 2,
+            width: bannerAd.size.width.toDouble(),
+            child: AdWidget(ad: bannerAd),
+          )
+        : const SizedBox();
   }
 }

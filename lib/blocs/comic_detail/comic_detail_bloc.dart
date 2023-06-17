@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/config/app_constant.dart';
 import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/repository/comic_repository.dart';
@@ -18,8 +19,14 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     LoadDetailComic event,
     Emitter<ComicDetailState> emit,
   ) async {
-    Comic comic = await _comicRepo.fetchDetailComics(id: event.id);
-    CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
-    emit(ComicDetailLoaded(comic, caseComic));
+    emit(const ComicDetailLoaded(
+        AppConstant.comicNotExist, AppConstant.caseComicNotExist));
+    try {
+      Comic comic = await _comicRepo.fetchDetailComics(id: event.id);
+      CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
+      emit(ComicDetailLoaded(comic, caseComic));
+    } catch (e) {
+      emit(ComicDetailLoadFailed());
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/config/ui_constant.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../../blocs/view_more/view_more_bloc.dart';
 import '../../../../widgets/back_ground_app.dart';
@@ -15,7 +16,6 @@ class NewComicViewMoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -36,15 +36,18 @@ class NewComicViewMoreScreen extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_outlined)),
-                      Text(
-                        AppLocalizations.of(context)!.newComics,
-                        style: const TextStyle(fontSize: 20),
+                      TextUi(
+                        text: AppLocalizations.of(context)!.newComics,
+                        fontSize: SizeConfig.font20,
+                        fontWeight: FontWeight.w500,
                       ),
                       const SizedBox(width: 50),
                     ],
                   ),
                 ),
-                const Divider(thickness: 1,),
+                const Divider(
+                  thickness: 1,
+                ),
                 BlocBuilder<ViewMoreBloc, ViewMoreState>(
                   builder: (context, state) {
                     if (state is ViewMoreLoaded) {
@@ -78,12 +81,12 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                       .image_thumnail_square_path !=
                                                   null
                                               ? Expanded(
-                                                child: CachedNetworkImage(
+                                                  child: CachedNetworkImage(
                                                     imageUrl: listNewComicsViewMore[
                                                             index]
                                                         .image_thumnail_square_path!,
-                                                    imageBuilder:
-                                                        (context, imageProvider) {
+                                                    imageBuilder: (context,
+                                                        imageProvider) {
                                                       return GestureDetector(
                                                         onTap: () {
                                                           context
@@ -106,7 +109,10 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                               4.2,
                                                           decoration:
                                                               BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
                                                             image:
                                                                 DecorationImage(
                                                               image:
@@ -122,10 +128,13 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                                         Image.asset(
                                                             "assets/images/banner_splash.png"),
                                                   ),
-                                              )
+                                                )
                                               : Image.asset(
                                                   "assets/images/banner_splash.png"),
-                                          SizedBox(height: SizeConfig.screenHeight / 75.6,),        
+                                          SizedBox(
+                                            height:
+                                                SizeConfig.screenHeight / 75.6,
+                                          ),
                                           Text(
                                             listNewComicsViewMore[index]
                                                         .title !=
@@ -137,7 +146,9 @@ class NewComicViewMoreScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: titleComic,
                                           ),
-                                          const  Divider(thickness: 0.5,)
+                                          const Divider(
+                                            thickness: 0.5,
+                                          )
                                         ],
                                       ),
                                     );
@@ -145,16 +156,14 @@ class NewComicViewMoreScreen extends StatelessWidget {
                             ),
                           ),
                         );
+                      } else {
+                        return const Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.amber));
                       }
                     }
-                    return const Text(
-                      "Comics not found",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    );
+                    return const Center(
+                        child: CircularProgressIndicator(color: Colors.amber));
                   },
                 ),
               ],

@@ -11,7 +11,6 @@ class BottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return SizedBox(
       height: SizeConfig.screenHeight * 0.1,
       width: double.infinity,
@@ -20,6 +19,8 @@ class BottomNavbar extends StatelessWidget {
         unselectedItemColor: Colors.blue,
         iconSize: 28,
         showSelectedLabels: true,
+        selectedFontSize: SizeConfig.font14,
+        unselectedFontSize: SizeConfig.font14,
         currentIndex: currentIndex,
         onTap: onTap,
         type: BottomNavigationBarType.fixed,

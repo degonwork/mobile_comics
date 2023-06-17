@@ -15,15 +15,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadHomeComic>(_onLoadHomeComic);
   }
   Future<void> _onLoadHomeComic(
-    LoadHomeComic evemt,
+    LoadHomeComic event,
     Emitter<HomeState> emit,
   ) async {
-    List<Comic> listHotComics = await _comicRepo.fetchAPIAndCreateDBHotComics(
-        limit: AppConstant.limitHomeComic);
-    List<Comic> listNewComics = await _comicRepo.fetchAPIAndCreateDBNewComics(
-        limit: AppConstant.limitSeeMoreComic);
-    emit(
-      HomeLoaded(listHotComics, listNewComics),
-    );
+    emit(HomeLoaded(const [], const []));
+    try {
+      List<Comic> listHotComics = await _comicRepo.fetchAPIAndCreateDBHotComics(
+          limit: AppConstant.limitHomeComic);
+      List<Comic> listNewComics = await _comicRepo.fetchAPIAndCreateDBNewComics(
+          limit: AppConstant.limitSeeMoreComic);
+      emit(
+        HomeLoaded(listHotComics, listNewComics),
+      );
+    } catch (e) {
+      emit(HomeFailed());
+    }
   }
 }

@@ -50,7 +50,6 @@ class ImageRepo {
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
     } else {
-      
       print("Home Comic has not image");
     }
   }
@@ -84,13 +83,17 @@ class ImageRepo {
     if (chapter.content!.isNotEmpty) {
       for (int i = 0; i < chapter.content!.length; i++) {
         if (chapter.content![i]["id"] != null &&
-            chapter.content![i]["path"] != null) {
+            chapter.content![i]["path"] != null &&
+            chapter.content![i]["height"] != null &&
+            chapter.content![i]["width"] != null) {
           Image imageContent = Image(
             id: chapter.content![i]["id"]!,
             path: chapter.content![i]["path"]!
                 .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
                 .removeLast(),
             type: AppConstant.typeImageChapterContent,
+            height: chapter.content![i]['height'],
+            width: chapter.content![i]['width'],
             parent_id: chapter.id,
             numerical: i + 1,
           );

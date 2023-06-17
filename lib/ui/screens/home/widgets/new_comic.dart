@@ -29,8 +29,7 @@ class NewComic extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   crossAxisCount: 2,
-                  childAspectRatio: 0.7
-                  ,
+                  childAspectRatio: 0.7,
                 ),
                 itemBuilder: (context, index) {
                   return SizedBox(
@@ -41,7 +40,7 @@ class NewComic extends StatelessWidget {
                       children: [
                         listNewComics[index].image_thumnail_square_path != null
                             ? Expanded(
-                              child: CachedNetworkImage(
+                                child: CachedNetworkImage(
                                   imageUrl: listNewComics[index]
                                       .image_thumnail_square_path!,
                                   imageBuilder: (context, imageProvider) {
@@ -50,14 +49,15 @@ class NewComic extends StatelessWidget {
                                         context.read<ComicDetailBloc>().add(
                                             LoadDetailComic(
                                                 listNewComics[index].id));
-                                        Navigator.pushNamed(
-                                            context, ComicDetailScreen.routeName);
+                                        Navigator.pushNamed(context,
+                                            ComicDetailScreen.routeName);
                                       },
                                       child: Container(
                                         margin: EdgeInsets.zero,
                                         height: SizeConfig.screenHeight / 4.2,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           image: DecorationImage(
                                             image: imageProvider,
                                             fit: BoxFit.fill,
@@ -70,35 +70,35 @@ class NewComic extends StatelessWidget {
                                       Image.asset(
                                           "assets/images/banner_splash.png"),
                                 ),
-                            )
+                              )
                             : Image.asset("assets/images/banner_splash.png"),
-                        SizedBox(height: SizeConfig.screenHeight / 75.6,),    
+                        SizedBox(
+                          height: SizeConfig.screenHeight / 75.6,
+                        ),
                         Text(
-                          
                           listNewComics[index].title != null
                               ? '${listNewComics[index].title}'
                               : "",
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,    
-                          style:  titleComic,
+                          overflow: TextOverflow.ellipsis,
+                          style: titleComic,
                         ),
-                       const  Divider(thickness: 0.5,)
+                        const Divider(
+                          thickness: 0.5,
+                        )
                       ],
                     ),
                   );
                 },
               ),
             );
+          } else {
+            return const Center(
+                child: CircularProgressIndicator(color: Colors.amber));
           }
         }
-        return const Text(
-          "Kiểm tra kết nối mạng",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
-        );
+        return const Center(
+            child: CircularProgressIndicator(color: Colors.amber));
       },
     );
   }

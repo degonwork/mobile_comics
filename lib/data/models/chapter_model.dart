@@ -28,7 +28,7 @@ class Chapter {
   final String? chapter_des;
   final int? numerical;
   final DateTime? publish_date;
-  final List<Map<String, String>>? content;
+  final List<Map<String, dynamic>>? content;
   final DateTime? content_update_time;
   final DateTime? update_time;
 
@@ -63,7 +63,7 @@ class Chapter {
           : null,
       content: json['content'] != null
           ? List<dynamic>.from(json['content'])
-              .map((json) => Map<String, String>.from(json))
+              .map((json) => Map<String, dynamic>.from(json))
               .toList()
           : [],
       numerical: json['numerical'],

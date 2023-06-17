@@ -1,6 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
 
+import 'dart:convert';
+import 'dart:core';
 import '../../data/models/case_comic_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/app_constant.dart';
@@ -39,7 +39,6 @@ class ComicRepo {
     try {
       final response = await _apiClient
           .getData('$_comicUrl${AppConstant.hotComicUrl}?limit=$limit');
-
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
@@ -53,11 +52,12 @@ class ComicRepo {
         }
       } else {
         print("load failed");
-        throw Exception('Load failed 1');
+        throw Exception('Load failed hot comic');
       }
     } catch (e) {
       print("------------" + e.toString());
     }
+
     List<Comic> listHotComic = await readHotComicsFromDB(limit: limit);
     if (listHotComic.isNotEmpty) {
       return listHotComic;
@@ -80,7 +80,7 @@ class ComicRepo {
           throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed 2');
+        throw Exception('Load failed new comic');
       }
     } catch (e) {
       print("------------" + e.toString());
@@ -105,7 +105,7 @@ class ComicRepo {
           throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed 3');
+        throw Exception('Load failed comic detail');
       }
     } catch (e) {
       print(e.toString());
@@ -126,6 +126,7 @@ class ComicRepo {
 
 //   }
 //  }
+
   // Process Database
   // Create
   Future<void> createComicToDB({required List<Comic> listHomeComic}) async {
@@ -314,9 +315,6 @@ class ComicRepo {
     );
   }
 
-// Future<List<Comic>> readComicByCategoryID(String categoryID)async{
-//   final listComicID = await HandleDatabase.readComicByCategoryID(id: id)
-// }
   Future<Comic> readComicCopy(Comic comic) async {
     final List<String> listCategories = [];
     List<CategoriesComics> categoriesComic =
@@ -354,6 +352,15 @@ class ComicRepo {
     Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
     if (comic != null) {
       return await readComicCopy(comic);
+    } else {
+      return AppConstant.comicNotExist;
+    }
+  }
+
+  Future<Comic> readComicFilter({required String id}) async {
+    Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
+    if (comic != null) {
+      return await readHomeComicCopy(comic);
     } else {
       return AppConstant.comicNotExist;
     }
@@ -455,6 +462,40 @@ class ComicRepo {
     );
   }
 
+  // Filter comic by categories
+  Future<List<Comic>> fetchAPIAndCreateFilterComicByCategories(
+      {required String categoryName}) async {
+    try {
+      final response = await _apiClient
+          .getData('$_comicUrl${AppConstant.category}$categoryName');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = jsonDecode(response.body);
+        if (jsonResponse.isNotEmpty) {
+          final listComicFilterApi =
+              jsonResponse.map((e) => Comic.fromJson(e)).toList();
+          await createComicToDB(listHomeComic: listComicFilterApi);
+          for (var comicFilter in listComicFilterApi) {
+            await _categoriesComicsRepo.processCategoriesComicsToDB(
+                comic: comicFilter, categoryName: categoryName);
+          }
+        } else {
+          print("Comic filter is not available");
+          throw Exception("Not Found Data");
+        }
+      } else {
+        throw Exception('Load failed comic filter');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+    Category? category =
+        await HandleDatabase.readCategoryByNameFromDB(name: categoryName);
+    if (category != null) {
+      return readComicByCategoryIDFromDB(id: category.id);
+    }
+    return [];
+  }
+
   Future<List<Comic>> readComicByCategoryIDFromDB({required String id}) async {
     List<Comic> listComics = [];
     List<CategoriesComics> listComicsReadByCategoryID =
@@ -462,7 +503,7 @@ class ComicRepo {
     if (listComicsReadByCategoryID.isNotEmpty) {
       for (var i = 0; i < listComicsReadByCategoryID.length; i++) {
         listComics.add(
-            await readComicDetail(id: listComicsReadByCategoryID[i].comic_id));
+            await readComicFilter(id: listComicsReadByCategoryID[i].comic_id));
       }
       return listComics;
     }

@@ -3,6 +3,8 @@ import 'package:full_comics_frontend/data/models/comic_model.dart';
 
 class AppConstant {
   static const baseServerUrl = "http://117.4.194.207:3000";
+  // static const baseServerUrl = "http://10.0.2.2:3000";
+  // static const baseLocalUrl = "http://localhost:3000";
   // Comics
   static const comicUrl = "/comics/";
   static const hotComicUrl = "home/hot-comics";
@@ -11,7 +13,7 @@ class AppConstant {
   static const chapterUrl = "/chapters/";
   // Image
   static const imageUrl = "/image/";
- static const search    = "search?q=";
+  static const search = "search?q=";
   // Type Image Comic
   static const typeImageComic = [
     "image_comic_detail",
@@ -21,8 +23,7 @@ class AppConstant {
   // Device
   static const deviceUrl = "/device/";
   static const registerDeviceUrl = "create";
-
-  // Type Image Comic
+  // Filter Comic by categories
 
   // SharePrefrence
   static const String firebaseToken = "Firebase-token";
@@ -39,14 +40,17 @@ class AppConstant {
 // limit
   static const limitHomeComic = 6;
   static const limitSeeMoreComic = 20;
-// category
 
+// category
+  static const category = "category/";
   static const categoryAll = "/category/all";
+
 // Error
   static const comicNotExist = Comic(id: "Not-exist");
-
-// Error
-
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
+
+// Link Image fluttet
+  static const flutterImageLink =
+      "https://storage.googleapis.com/cms-storage-bucket/70760bf1e88b184bb1bc.png";
 }

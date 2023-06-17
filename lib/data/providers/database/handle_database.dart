@@ -25,11 +25,15 @@ class HandleDatabase {
         await StorageDatabase.instance.readManyComicsFromDB();
     return listComics;
   }
-  static Future<List<CategoriesComics>> readCategoriesComicByCategoryID({required String id}) async{
-    final listCategoriesComics = await StorageDatabase.instance.readCategoriesComicByIDCategory(id: id);
-    
+
+  static Future<List<CategoriesComics>> readCategoriesComicByCategoryID(
+      {required String id}) async {
+    final listCategoriesComics =
+        await StorageDatabase.instance.readCategoriesComicByIDCategory(id: id);
+
     return listCategoriesComics;
   }
+
   static Future<Comic?> readComicByIDFromDB({required String id}) async {
     Comic? comic = await StorageDatabase.instance.readComicByIDFromDB(id: id);
     return comic;
@@ -104,7 +108,6 @@ class HandleDatabase {
       {required String type, required String parentID}) async {
     List<Image> listImages = await StorageDatabase.instance
         .readManyImageFromDB(type: type, parentId: parentID);
-
     return listImages;
   }
 
@@ -128,15 +131,17 @@ class HandleDatabase {
     }
     return null;
   }
-  static Future<void> createCategoryToDBByID({required List<Category> categories})async{
+
+  static Future<void> createCategoryToDBByID(
+      {required List<Category> categories}) async {
     for (var i = 0; i < categories.length; i++) {
       Category? category = await readCategoryByIDFromDB(id: categories[i].id);
       if (category == null) {
         await createCategoryToDB(category: categories[i]);
-        
       }
     }
   }
+
   static Future<Category?> readCategoryByIDFromDB({required String id}) async {
     Category? category =
         await StorageDatabase.instance.readCategoryByIDFromDB(id: id);
@@ -171,7 +176,7 @@ class HandleDatabase {
         print("${i + 1}: CategoriesComics don't create");
       }
     }
-  //   print("--------------------------------");
+    //   print("--------------------------------");
   }
 
   static Future<List<CategoriesComics>> readAllCategoriesComicsFromDB(

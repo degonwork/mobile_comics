@@ -11,52 +11,35 @@ class ChapterRepo {
   final ImageRepo _imageRepo;
   final String _chapterUrl;
   final ApiClient _apiClient;
-  ChapterRepo(
-      {required ImageRepo imageRepo,
-      required String chapterUrl,
-      required ApiClient apiClient})
-      : _chapterUrl = chapterUrl,
+  ChapterRepo({
+    required ImageRepo imageRepo,
+    required String chapterUrl,
+    required ApiClient apiClient,
+  })  : _chapterUrl = chapterUrl,
         _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
   Future<List<Image>> fetchDetailChapters({required String id}) async {
-    List<Image> images = [];
     try {
       final response = await _apiClient.getData('$_chapterUrl$id');
+      print(response);
       if (response.statusCode == 200) {
         dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
           final chapter = Chapter.fromJson(jsonResponse);
           await updateChapterToDB(chapter: chapter);
-          List<Image> imageChapterContent =
-              await _imageRepo.readImageChapterContent(chapterId: id);
-          if (imageChapterContent.isNotEmpty) {
-            imageChapterContent.sort((imageChapterContent1,
-                    imageChapterContent2) =>
-                imageChapterContent1.numerical! -
-                imageChapterContent2.numerical!);
-            for (var i = 0; i < imageChapterContent.length; i++) {
-              Image image = Image(
-                  id: imageChapterContent[i].id,
-                  path:
-                      '${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageChapterContent[i].path}',
-                  type: imageChapterContent[i].type,
-                  parent_id: imageChapterContent[i].parent_id);
-              images.add(image);
-            }
-          }
         } else {
           print("chapter is not available");
-          throw Exception("Not Found Data");
+          // throw Exception("Not Found Data");
         }
       } else {
-        throw Exception('Load failed chapter');
+        // throw Exception('Load failed chapter');
       }
     } catch (e) {
       print(e.toString());
     }
-
-    return images;
+    List<Image> listImage = await readChapterContentFromDB(chapterId: id);
+    return listImage;
   }
 
   // process database
@@ -123,5 +106,33 @@ class ChapterRepo {
     }
     await _imageRepo.createImageChapterContentToDB(chapter: chapter);
     print("Repaired content");
+  }
+
+  Future<List<Image>> readChapterContentFromDB(
+      {required String chapterId}) async {
+    List<Image> images = [];
+    List<Image> imageChapterContent =
+        await _imageRepo.readImageChapterContent(chapterId: chapterId);
+    print(imageChapterContent);
+    if (imageChapterContent.isNotEmpty) {
+      imageChapterContent.sort(
+        (imageChapterContent1, imageChapterContent2) =>
+            imageChapterContent1.numerical! - imageChapterContent2.numerical!,
+      );
+      for (var i = 0; i < imageChapterContent.length; i++) {
+        Image image = Image(
+          id: imageChapterContent[i].id,
+          path:
+              '${AppConstant.baseServerUrl}${AppConstant.imageUrl}${imageChapterContent[i].path}',
+          height: imageChapterContent[i].height,
+          width: imageChapterContent[i].width,
+          type: imageChapterContent[i].type,
+          parent_id: imageChapterContent[i].parent_id,
+        );
+        images.add(image);
+      }
+    }
+    print(images);
+    return images;
   }
 }
