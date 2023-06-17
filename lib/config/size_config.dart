@@ -11,8 +11,7 @@ class SizeConfig {
   }
 
   // font
-  static double font20 = screenWidth / 20.57;
-  static double font16 = screenWidth / 25.71;
-  static double font14 = screenWidth / 29.39;
-  static double font12 = screenWidth / 34.29;
+  static double font20 = screenWidth / 18;
+  static double font16 = screenWidth / 22.5;
+  static double font14 = screenWidth / 25.71;
 }

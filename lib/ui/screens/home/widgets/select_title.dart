@@ -17,7 +17,7 @@ class SelectTitle extends StatelessWidget {
       children: [
         TextUi(
           text: title,
-          fontSize: SizeConfig.font20, // 20
+          fontSize: SizeConfig.font20,
           fontWeight: FontWeight.w500,
         ),
         TextButton(

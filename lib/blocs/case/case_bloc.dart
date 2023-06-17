@@ -35,7 +35,6 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
 
   Future<void> _onLoadCaseComic(
       LoadCaseComic event, Emitter<CaseState> emit) async {
-    emit(const CaseLoaded([]));
     if (state is CaseAdded || state is CaseInitial) {
       final sharedPreferences = await SharedPreferences.getInstance();
       List<CaseComic> listCaseComicLocal = [];

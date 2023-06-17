@@ -13,7 +13,6 @@ class GetAllCategoryBloc
   }
   Future<void> _getAllCategory(
       GetAllCategory event, Emitter<GetAllCategoryState> emitter) async {
-    emitter(const GetLoadded([]));
     try {
       final listCategories = await _categoryRepo.getAllCategory();
       emitter(GetLoadded(listCategories));

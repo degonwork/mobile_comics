@@ -19,7 +19,6 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
 
   Future<void> _filterComicInitial(
       FilterComicInitial event, Emitter<FilterComicState> emitter) async {
-    emitter(const LoadedComicByCategoryID([]));
     try {
       final listCategories = await _categoryRepo.getAllCategory();
       final comicIndexFirst =
@@ -33,7 +32,6 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
 
   Future<void> _filterByIDCategory(
       FilterByIDCategory event, Emitter<FilterComicState> emitter) async {
-    emitter(const LoadedComicByCategoryID([]));
     try {
       List<Comic> listComics =
           await _comicRepo.fetchAPIAndCreateFilterComicByCategories(

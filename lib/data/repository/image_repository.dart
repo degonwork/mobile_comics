@@ -15,7 +15,7 @@ class ImageRepo {
         Image imageDetail = Image(
           id: homeComic.image_detail_id!,
           path: homeComic.image_detail_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[0],
           parent_id: homeComic.id,
@@ -27,7 +27,7 @@ class ImageRepo {
         Image imageThumnailSquare = Image(
           id: homeComic.image_thumnail_square_id!,
           path: homeComic.image_thumnail_square_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[1],
           parent_id: homeComic.id,
@@ -39,7 +39,7 @@ class ImageRepo {
         Image imageThumnailSquare = Image(
           id: homeComic.image_thumnail_rectangle_id!,
           path: homeComic.image_thumnail_rectangle_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[2],
           parent_id: homeComic.id,
@@ -63,7 +63,7 @@ class ImageRepo {
         Image imageThumnail = Image(
           id: chapter.image_thumnail_id!,
           path: chapter.image_thumnail_path!
-              .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageThumnailChapter,
           parent_id: chapter.id,
@@ -89,7 +89,7 @@ class ImageRepo {
           Image imageContent = Image(
             id: chapter.content![i]["id"]!,
             path: chapter.content![i]["path"]!
-                .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+                .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
                 .removeLast(),
             type: AppConstant.typeImageChapterContent,
             height: chapter.content![i]['height'],
@@ -153,7 +153,7 @@ class ImageRepo {
         image: Image(
           id: imageID,
           path: imagePath
-              .split("${AppConstant.baseLocalUrl}${AppConstant.imageUrl}")
+              .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           parent_id: parentDB.id,
           type: typeImage,

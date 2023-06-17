@@ -2,9 +2,9 @@ import 'package:full_comics_frontend/data/models/case_comic_model.dart';
 import 'package:full_comics_frontend/data/models/comic_model.dart';
 
 class AppConstant {
-  // static const baseServerUrl = "http://117.4.194.207:3000";
-  static const baseServerUrl = "http://10.0.2.2:3000";
-  static const baseLocalUrl = "http://localhost:3000";
+  static const baseServerUrl = "http://117.4.194.207:3000";
+  // static const baseServerUrl = "http://10.0.2.2:3000";
+  // static const baseLocalUrl = "http://localhost:3000";
   // Comics
   static const comicUrl = "/comics/";
   static const hotComicUrl = "home/hot-comics";
