@@ -38,11 +38,13 @@ class ComicRepo {
     try {
       final response = await _apiClient
           .getData('$_comicUrl${AppConstant.hotComicUrl}?limit=$limit');
+          
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
           final listHotComicApi =
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
+              
           await createComicToDB(listHomeComic: listHotComicApi);
           setTimesAds(listHotComicApi[0].times_ads);
         } else {
@@ -58,6 +60,7 @@ class ComicRepo {
     }
 
     List<Comic> listHotComic = await readHotComicsFromDB(limit: limit);
+   
     if (listHotComic.isNotEmpty) {
       return listHotComic;
     }
@@ -254,20 +257,16 @@ class ComicRepo {
     List<Comic> listComicsSearchResult = [];
     try {
       final response = await _apiClient.getData(url);
-
+      
       if (response.statusCode == 200) {
-        dynamic jsonResponse = jsonDecode(response.body);
-        //  print(jsonResponse);
-        //  final vad = jsonResponse['data'];
-        //  print(vad);
+        List jsonResponse = jsonDecode(response.body);
         if (jsonResponse.isNotEmpty) {
-          final data = jsonResponse['data'];
-          // print('$data data');
-          final listComics = data.map((e) => Comic.fromJson(e)).toList();
-          print(listComics);
+          final listComics =
+              jsonResponse.map((e) => Comic.fromJson(e)).toList();
           final listComicSearch = listComics
-              .where((Comic comic) =>
-                  comic.title!.toLowerCase().startsWith(query.toLowerCase()))
+              .where((Comic comic) => comic.title!
+                  .toLowerCase()
+                  .contains(comic.title!.toLowerCase()))
               .toList();
           if (listComicSearch.isNotEmpty) {
             for (Comic comic in listComicSearch) {
@@ -277,14 +276,14 @@ class ComicRepo {
           return listComicsSearchResult;
         }
       } else {
-        throw Exception('Khong tim thay truyen');
+        throw Exception();
       }
     } catch (e) {
       print('${e.toString()} sai o comicrepo');
     }
     return [];
   }
-
+// 
   Future<List<Comic>> searchComicByTitle(String title) async {
     List<Comic> listComicsSearchResult = [];
     if (title != '') {

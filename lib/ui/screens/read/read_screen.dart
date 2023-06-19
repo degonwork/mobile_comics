@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
+
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
@@ -43,61 +44,78 @@ class _ReadScreenState extends State<ReadScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                visialbe = !visialbe;
-              });
-            },
-            child: BlocBuilder<ReadChapterBloc, ReadChapterState>(
-              builder: (context, state) {
-                if (state is LoadedChapter) {
-                  final listImage = state.listImageContent;
-                  if (listImage.isNotEmpty) {
-                    return ListView.builder(
-                      controller: controller,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listImage.length,
-                      itemBuilder: (context, index) {
-                        return listImage[index].height != null &&
-                                listImage[index].width != null
-                            ? CachedNetworkImage(
-                                imageUrl: listImage[index].path,
-                                imageBuilder: (context, imageProvider) {
-                                  return SizedBox(
-                                    width: SizeConfig.screenWidth,
-                                    height: SizeConfig.screenWidth *
-                                        (listImage[index].width! /
-                                            listImage[index].height!),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.fitWidth,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      visialbe = !visialbe;
+                    });
+                  },
+                  child: BlocBuilder<ReadChapterBloc, ReadChapterState>(
+                    builder: (context, state) {
+                      if (state is LoadedChapter) {
+                        final listImage = state.listImageContent;
+                        if (listImage.isNotEmpty) {
+                          return ListView.builder(
+                            controller: controller,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listImage.length,
+                            itemBuilder: (context, index) {
+                              return listImage[index].height != null &&
+                                      listImage[index].width != null
+                                  ? CachedNetworkImage(
+                                      imageUrl: listImage[index].path,
+                                      imageBuilder: (context, imageProvider) {
+                                        return SizedBox(
+                                          width: SizeConfig.screenWidth,
+                                          height: SizeConfig.screenWidth *
+                                              (listImage[index].width! /
+                                                  listImage[index].height!),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
-                              )
-                            : Image.asset("assets/images/banner_splash.png");
-                      },
-                    );
-                  } else {
-                    return const Center(
-                        child: CircularProgressIndicator(color: Colors.amber));
-                  }
-                }
-                return const Center(
-                    child: CircularProgressIndicator(color: Colors.amber));
-              },
+                                        );
+                                      },
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/banner_splash.png"),
+                                    )
+                                  : Image.asset("assets/images/banner_splash.png");
+                            },
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator(color: Colors.amber));
+                        }
+                      }
+                      return const Center(
+                          child: CircularProgressIndicator(color: Colors.amber));
+                    },
+                  ),
+                ),
+                // TextButton(
+                //   onPressed: (){
+                    
+                //   },
+                //   child:  const Text(
+                //     "Đọc chương kế tiếp",
+                //     style: TextStyle(
+                //       decoration: TextDecoration.underline,
+                //     ),
+                //     )
+                //   ),
+              ],
             ),
           ),
           Container(

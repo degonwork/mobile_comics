@@ -20,7 +20,7 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
   Future<void> _filterComicInitial(
       FilterComicInitial event, Emitter<FilterComicState> emitter) async {
     try {
-      final listCategories = await _categoryRepo.getAllCategory();
+      final listCategories = await _categoryRepo.getAllCategoryFromDB();
       final comicIndexFirst =
           await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
               categoryName: listCategories[0].name);

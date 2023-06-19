@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/ads_bloc/ads_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
@@ -138,6 +139,9 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => AdsBloc(),
+            ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -23,8 +23,11 @@ class CategoryRepo {
           '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
     }
     return await HandleDatabase.readAllCategoryFromDB();
+    
   }
-
+Future<List<Category>> getAllCategoryFromDB()async{
+  return await HandleDatabase.readAllCategoryFromDB();
+}
   Future<int?> createCategoryToDB(Category category) async {
     Category createCategory = Category(
       id: category.id,

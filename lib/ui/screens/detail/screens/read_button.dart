@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/ads_bloc/ads_bloc.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../read/read_screen.dart';
 import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
@@ -40,6 +41,7 @@ class ReadButton extends StatelessWidget {
         ),
         child: TextButton(
           onPressed: () {
+            context.read<AdsBloc>().add(Increment());
             if (comic != null && id != null && numericChapter != null) {
               context.read<ReadChapterBloc>().add(LoadChapter(id!));
               Navigator.push(

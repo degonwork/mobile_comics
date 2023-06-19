@@ -32,7 +32,7 @@ class ComicByCategory extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return SizedBox(
-                height: SizeConfig.screenHeight / 3.78,
+                // height: SizeConfig.screenHeight / 3.78,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
