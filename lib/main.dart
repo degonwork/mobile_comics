@@ -10,7 +10,6 @@ import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
 import 'package:full_comics_frontend/l10n/l10n.dart';
 import '../data/repository/device_repository.dart';
-import '../blocs/home/home_bloc.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
 import '../ui/screens/splash/splash_screen.dart';
@@ -26,6 +25,8 @@ import 'blocs/case/case_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'blocs/get_all_category_bloc/get_all_category_bloc.dart';
+import 'blocs/hot_comics/hot_comics_bloc.dart';
+import 'blocs/new_comics/new_comics_bloc.dart';
 import 'config/size_config.dart';
 
 void main() {
@@ -91,15 +92,19 @@ class MyApp extends StatelessWidget {
           BlocProvider<BottomNavbarBloc>(
             create: (context) => BottomNavbarBloc(),
           ),
-          BlocProvider<HomeBloc>(
-            create: (context) => HomeBloc(
+          BlocProvider<HotComicsBloc>(
+              create: (context) => HotComicsBloc(
+                    comicRepo: context.read<ComicRepo>(),
+                  )..add(const LoadHotComics())),
+          BlocProvider<NewComicsBloc>(
+            create: (context) => NewComicsBloc(
               comicRepo: context.read<ComicRepo>(),
-            )..add(LoadHomeComic()),
+            )..add(const LoadNewComics()),
           ),
           BlocProvider<ViewMoreBloc>(
             create: (context) => ViewMoreBloc(
               comicRepo: context.read<ComicRepo>(),
-            ),
+            )..add(LoadNewComicsViewMore()),
           ),
           BlocProvider<ComicDetailBloc>(
             create: (context) => ComicDetailBloc(

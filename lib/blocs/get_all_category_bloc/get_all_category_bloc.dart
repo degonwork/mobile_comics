@@ -3,6 +3,8 @@ import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_categor
 import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_state.dart';
 import 'package:full_comics_frontend/data/repository/category_repository.dart';
 
+import '../../data/models/category_model.dart';
+
 class GetAllCategoryBloc
     extends Bloc<GetAllCategoryEvent, GetAllCategoryState> {
   final CategoryRepo _categoryRepo;
@@ -14,8 +16,23 @@ class GetAllCategoryBloc
   Future<void> _getAllCategory(
       GetAllCategory event, Emitter<GetAllCategoryState> emitter) async {
     try {
-      final listCategories = await _categoryRepo.getAllCategory();
-      emitter(GetLoadded(listCategories));
+      List<Category> listCategories =
+          await _categoryRepo.getAllCategoryFromDB();
+      if (listCategories.isEmpty) {
+        await _categoryRepo.getAllCategory();
+        List<Category> listCategoriesResult =
+            await _categoryRepo.getAllCategoryFromDB();
+        emitter(GetLoadded(listCategoriesResult));
+      } else {
+        emitter(GetLoadded(listCategories));
+        // await _categoryRepo.getAllCategory().whenComplete(
+        //   () async {
+        //     List<Category> listCategoriesResult =
+        //         await _categoryRepo.getAllCategoryFromDB();
+        //     emitter(GetLoadded(listCategoriesResult));
+        //   },
+        // );
+      }
     } catch (e) {
       emitter(GetFailure());
     }

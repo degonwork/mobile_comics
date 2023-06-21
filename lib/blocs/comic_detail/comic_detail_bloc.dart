@@ -19,9 +19,13 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     Emitter<ComicDetailState> emit,
   ) async {
     try {
-      Comic comic = await _comicRepo.fetchDetailComics(id: event.id);
+      Comic comic = await _comicRepo.readComicDetailFromDB(id: event.id);
       CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
       emit(ComicDetailLoaded(comic, caseComic));
+      // await _comicRepo.fetchDetailComics(id: event.id).whenComplete(() async {
+      //   Comic comicsResult = await _comicRepo.readComicDetail(id: event.id);
+      //   emit(ComicDetailLoaded(comicsResult, caseComic));
+      // });
     } catch (e) {
       emit(ComicDetailLoadFailed());
     }

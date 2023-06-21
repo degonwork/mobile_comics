@@ -19,10 +19,9 @@ class ChapterRepo {
         _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
-  Future<List<Image>> fetchDetailChapters({required String id}) async {
+  Future<void> fetchDetailChapters({required String id}) async {
     try {
       final response = await _apiClient.getData('$_chapterUrl$id');
-      print(response);
       if (response.statusCode == 200) {
         dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
@@ -30,16 +29,14 @@ class ChapterRepo {
           await updateChapterToDB(chapter: chapter);
         } else {
           print("chapter is not available");
-          // throw Exception("Not Found Data");
+          throw Exception("Not Found Data");
         }
       } else {
-        // throw Exception('Load failed chapter');
+        throw Exception('Load failed chapter');
       }
     } catch (e) {
       print(e.toString());
     }
-    List<Image> listImage = await readChapterContentFromDB(chapterId: id);
-    return listImage;
   }
 
   // process database
@@ -113,7 +110,6 @@ class ChapterRepo {
     List<Image> images = [];
     List<Image> imageChapterContent =
         await _imageRepo.readImageChapterContent(chapterId: chapterId);
-    print(imageChapterContent);
     if (imageChapterContent.isNotEmpty) {
       imageChapterContent.sort(
         (imageChapterContent1, imageChapterContent2) =>

@@ -11,7 +11,6 @@ import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../widgets/build_ads_banner.dart';
 
-
 import 'widgets/new_comic.dart';
 import 'widgets/select_title.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -115,9 +114,6 @@ class HomeScreen extends StatelessWidget {
                         const BannerListview(),
                         BlocBuilder<ViewMoreBloc, ViewMoreState>(
                           builder: (context, state) {
-                            context
-                                .read<ViewMoreBloc>()
-                                .add(LoadNewComicsViewMore());
                             return Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: SizeConfig.screenWidth * 0.041),

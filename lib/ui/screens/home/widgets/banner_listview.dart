@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
-import '../../../../blocs/home/home_bloc.dart';
+import '../../../../blocs/hot_comics/hot_comics_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
 
@@ -12,9 +12,9 @@ class BannerListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<HotComicsBloc, HotComicsState>(
       builder: (context, state) {
-        if (state is HomeLoaded) {
+        if (state is HotComicsLoaded) {
           final listHotComics = state.listHotComics;
           if (listHotComics.isNotEmpty) {
             return SizedBox(

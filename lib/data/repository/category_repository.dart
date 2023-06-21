@@ -7,7 +7,7 @@ import '../providers/database/handle_database.dart';
 class CategoryRepo {
   const CategoryRepo({required this.apiClient});
   final ApiClient apiClient;
-  Future<List<Category>> getAllCategory() async {
+  Future<void> getAllCategory() async {
     try {
       final response = await apiClient.getData(AppConstant.categoryAll);
       if (response.statusCode == 200) {
@@ -22,12 +22,12 @@ class CategoryRepo {
       print(
           '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
     }
-    return await HandleDatabase.readAllCategoryFromDB();
-    
   }
-Future<List<Category>> getAllCategoryFromDB()async{
-  return await HandleDatabase.readAllCategoryFromDB();
-}
+
+  Future<List<Category>> getAllCategoryFromDB() async {
+    return await HandleDatabase.readAllCategoryFromDB();
+  }
+
   Future<int?> createCategoryToDB(Category category) async {
     Category createCategory = Category(
       id: category.id,
