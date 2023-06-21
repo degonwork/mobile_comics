@@ -110,12 +110,6 @@ class MyApp extends StatelessWidget {
               create: (context) => ReadChapterBloc(
                     chapterRepo: context.read<ChapterRepo>(),
                   )),
-          BlocProvider<FilterComicBloc>(
-            create: (_) => FilterComicBloc(
-              comicRepo: context.read<ComicRepo>(),
-              categoryRepo: context.read<CategoryRepo>(),
-            ),
-          ),
           BlocProvider<CaseBloc>(
             create: (context) => CaseBloc(
               comicRepo: context.read<ComicRepo>(),
@@ -128,7 +122,7 @@ class MyApp extends StatelessWidget {
               create: (context) => FilterComicBloc(
                     comicRepo: context.read<ComicRepo>(),
                     categoryRepo: context.read<CategoryRepo>(),
-                  )..add(FilterComicInitial())),
+                  )..add(FilterComicStart())),
           BlocProvider<GetAllCategoryBloc>(
             create: (context) => GetAllCategoryBloc(
               context.read<CategoryRepo>(),
@@ -141,7 +135,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => AdsBloc(),
-            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -14,16 +14,18 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
         _categoryRepo = categoryRepo,
         super(FilterComicInital()) {
     on<FilterByIDCategory>(_filterByIDCategory);
-    on<FilterComicInitial>(_filterComicInitial);
+    on<FilterComicStart>(_filterComicStart);
   }
 
-  Future<void> _filterComicInitial(
-      FilterComicInitial event, Emitter<FilterComicState> emitter) async {
+  Future<void> _filterComicStart(
+      FilterComicStart event, Emitter<FilterComicState> emitter) async {
     try {
       final listCategories = await _categoryRepo.getAllCategoryFromDB();
+      print(listCategories.toString() + "------------------------------");
       final comicIndexFirst =
           await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
               categoryName: listCategories[0].name);
+
       emitter(LoadedComicByCategoryID(comicIndexFirst));
     } catch (e) {
       emitter(FilterComicFailed());

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:full_comics_frontend/config/size_config.dart';
 import 'package:full_comics_frontend/ui/screens/library/widget/comic_filter_by_category.dart';
-import 'package:full_comics_frontend/ui/screens/library/widget/filter_by_category.dart';
+import 'package:full_comics_frontend/ui/screens/library/widget/all_category.dart';
 
 // import 'package:full_comics_frontend/ui/screens/library/widget/filter_by_category.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +32,9 @@ class LibraryScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SearchScreen(),
-                  SizedBox(height: SizeConfig.screenHeight / 50.4,),
+                  SizedBox(
+                    height: SizeConfig.screenHeight / 50.4,
+                  ),
                   const Text(
                     'Thể loại',
                     style: TextStyle(fontSize: 20),
@@ -40,7 +42,7 @@ class LibraryScreen extends StatelessWidget {
                   SizedBox(
                     height: SizeConfig.screenHeight / 50.4,
                   ),
-                  const FilterComicByCategory(),
+                  const AllCategory(),
                   SizedBox(
                     height: SizeConfig.screenHeight / 50.4,
                   ),

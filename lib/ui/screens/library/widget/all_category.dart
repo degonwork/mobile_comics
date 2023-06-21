@@ -1,25 +1,19 @@
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
-// import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
-
 import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_bloc.dart';
 import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_state.dart';
 import 'package:full_comics_frontend/config/size_config.dart';
-
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
 
-
-class FilterComicByCategory extends StatefulWidget {
-  const FilterComicByCategory({super.key});
+class AllCategory extends StatefulWidget {
+  const AllCategory({super.key});
 
   @override
-  State<FilterComicByCategory> createState() => _FilterComicByCategoryState();
+  State<AllCategory> createState() => _AllCategoryState();
 }
 
-class _FilterComicByCategoryState extends State<FilterComicByCategory> {
+class _AllCategoryState extends State<AllCategory> {
   int? selected = 0;
   @override
   Widget build(BuildContext context) {
@@ -55,10 +49,9 @@ class _FilterComicByCategoryState extends State<FilterComicByCategory> {
                               color: selected == index
                                   ? Colors.orange.withOpacity(0.8)
                                   : Colors.blue.withOpacity(0.4),
-                              border: Border.all(
-                                  width: 1, color: Colors.grey),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(10)),
+                              border: Border.all(width: 1, color: Colors.grey),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
                             ),
                             child: Container(
                               margin: const EdgeInsets.all(5),
