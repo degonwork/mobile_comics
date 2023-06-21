@@ -128,7 +128,6 @@ class ChapterRepo {
         images.add(image);
       }
     }
-    print(images);
     return images;
   }
 }

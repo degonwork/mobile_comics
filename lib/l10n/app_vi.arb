@@ -9,6 +9,7 @@
     "seeMore": "Xem thêm",
     "inforComics": "Thông tin",
     "chapters": "Chương",
+    "chapter": "Chương",
     "numberReads": "Đã đọc",
     "totalChapters": "Chương",
     "genreComics": "Thể loại",
@@ -19,5 +20,14 @@
     "latestChapter": "Mới nhất",
     "listChapters": "Danh sách",
     "reading": "Đang đọc",
-    "reads": "Lượt đọc"
+    "reads": "Lượt đọc",
+    "empty": "Danh sách trống",
+    "development": "Tính năng này đang được phát triển",
+    "keywords": "Hãy nhập từ khóa",
+    "search": "Tìm kiếm truyện ...",
+    "viewMore": "Xem thêm",
+    "collapse": "Thu gọn",
+    "favourite": "Yêu thích",
+    "offline": "Đọc offline",
+    "noChapters" : "Truyện này không có chương"
 }

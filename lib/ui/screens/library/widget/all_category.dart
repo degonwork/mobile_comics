@@ -5,6 +5,7 @@ import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_categor
 import 'package:full_comics_frontend/config/size_config.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
+import '../../../widgets/genre_comic.dart';
 
 class AllCategory extends StatefulWidget {
   const AllCategory({super.key});
@@ -23,7 +24,7 @@ class _AllCategoryState extends State<AllCategory> {
           final listCategories = state.listCategories;
           if (listCategories.isNotEmpty) {
             return SizedBox(
-              height: SizeConfig.screenHeight / 25.2,
+              height: SizeConfig.height40,
               child: ListView(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
@@ -40,29 +41,13 @@ class _AllCategoryState extends State<AllCategory> {
                               selected = index;
                             });
                           },
-                          child: Container(
-                            height: SizeConfig.screenHeight / 25.2,
-                            width: SizeConfig.screenWidth / 3.6,
-                            margin: EdgeInsets.only(
-                                right: SizeConfig.screenWidth / 36),
-                            decoration: BoxDecoration(
-                              color: selected == index
-                                  ? Colors.orange.withOpacity(0.8)
-                                  : Colors.blue.withOpacity(0.4),
-                              border: Border.all(width: 1, color: Colors.grey),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Container(
-                              margin: const EdgeInsets.all(5),
-                              child: Center(
-                                child: Center(
-                                    child: Text(
-                                  listCategories[index].name,
-                                  style: const TextStyle(fontSize: 12),
-                                )),
-                              ),
-                            ),
+                          child: GenreComic(
+                            listCategories: listCategories,
+                            selected: selected,
+                            index: index,
+                            color: selected == index
+                                ? Colors.orange.withOpacity(0.8)
+                                : Colors.blue.withOpacity(0.4),
                           ),
                         )),
               ),

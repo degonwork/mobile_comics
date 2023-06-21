@@ -163,6 +163,7 @@ class ComicRepo {
         image_thumnail_rectangle_id: imageThumnailRectangleId,
         add_chapter_time: homeComic.add_chapter_time,
         reads: homeComic.reads,
+        isFull: homeComic.isFull,
       );
       listComics.add(comic);
     }
@@ -208,6 +209,7 @@ class ComicRepo {
         chapter_update_time: comic.chapter_update_time,
         add_chapter_time: comic.add_chapter_time,
         update_time: comic.update_time,
+        isFull: 1,
       );
       await HandleDatabase.updateComicToDB(comic: updateComic);
       print("Comic is updated");

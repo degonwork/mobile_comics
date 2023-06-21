@@ -15,8 +15,7 @@ class CaseScreen extends StatefulWidget {
   State<CaseScreen> createState() => _CaseScreenState();
 }
 
-class _CaseScreenState extends State<CaseScreen>
-    with TickerProviderStateMixin {
+class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {
@@ -34,22 +33,21 @@ class _CaseScreenState extends State<CaseScreen>
   Widget build(BuildContext context) {
     List<Tab> tabs = <Tab>[
       Tab(text: AppLocalizations.of(context)!.reading),
-      const Tab(
-        text: 'Yêu thích',
+      Tab(
+        text: AppLocalizations.of(context)!.favourite,
       ),
-      const Tab(
-        text: 'Đọc offline',
+      Tab(
+        text: AppLocalizations.of(context)!.offline,
       ),
     ];
     _tabController = TabController(length: tabs.length, vsync: this);
     SizeConfig().init(context);
     return Scaffold(
-      body: SafeArea(
-          child: Stack(
+      body: Stack(
         children: [
           const BackGroundApp(),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: SizeConfig.height45),
             child: Column(
               children: [
                 TabBar(
@@ -57,8 +55,8 @@ class _CaseScreenState extends State<CaseScreen>
                   labelColor: Colors.blue,
                   tabs: tabs,
                   unselectedLabelColor: Colors.black,
-                  labelStyle: const TextStyle(
-                    fontSize: 15,
+                  labelStyle: TextStyle(
+                    fontSize: SizeConfig.font16,
                     color: Colors.blue,
                     fontWeight: FontWeight.w400,
                   ),
@@ -78,7 +76,7 @@ class _CaseScreenState extends State<CaseScreen>
             ),
           ),
         ],
-      )),
+      ),
     );
   }
 }

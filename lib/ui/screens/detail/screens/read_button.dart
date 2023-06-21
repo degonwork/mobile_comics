@@ -30,7 +30,7 @@ class ReadButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(40),
-          boxShadow:  [
+          boxShadow: [
             BoxShadow(
               color: Colors.white.withOpacity(0.8),
               blurRadius: 0.1,
@@ -46,23 +46,12 @@ class ReadButton extends StatelessWidget {
               context.read<ReadChapterBloc>().add(LoadChapter(id!));
               Navigator.push(
                 context,
-                PageRouteBuilder(
-                  transitionDuration: const Duration(milliseconds: 400),
-                  transitionsBuilder:
-                      (context, animation, secAnimation, child) {
-                    return ScaleTransition(
-                      scale: animation,
-                      alignment: Alignment.center,
-                      child: child,
-                    );
-                  },
-                  pageBuilder: (context, animation, secAnimation) {
-                    return ReadScreen(
-                      comic: comic,
-                      chapterId: id,
-                      numericChapter: numericChapter,
-                    );
-                  },
+                MaterialPageRoute(
+                  builder: (context) => ReadScreen(
+                    comic: comic,
+                    chapterId: id,
+                    numericChapter: numericChapter,
+                  ),
                 ),
               );
             }

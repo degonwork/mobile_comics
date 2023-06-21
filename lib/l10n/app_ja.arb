@@ -9,6 +9,7 @@
     "seeMore": "もっとコミックを見る",
     "inforComics": "コミックス情報",
     "chapters": "章",
+    "chapter": "章",
     "numberReads": "読み取り数",
     "totalChapters": "総チャプター数",
     "genreComics": "ジャンル コミック",
@@ -19,5 +20,14 @@
     "latestChapter": "最新章",
     "listChapters": "章をリストする",
     "reading": "読む",
-    "reads": "読み取り数"
+    "reads": "読み取り数",
+    "empty": "リストが空です",
+    "development": "この機能は開発中です",
+    "keywords": "キーワードを入力します",
+    "search": "漫画を探す",
+    "viewMore": "続きを見る",
+    "collapse": "崩壊",
+    "favourite": "お気に入り",
+    "offline": "オフライン",
+    "noChapters": "この漫画には章がありません"
 }

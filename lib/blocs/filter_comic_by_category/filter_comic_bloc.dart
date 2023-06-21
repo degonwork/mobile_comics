@@ -4,7 +4,6 @@ import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic
 import 'package:full_comics_frontend/data/models/comic_model.dart';
 import 'package:full_comics_frontend/data/repository/category_repository.dart';
 import 'package:full_comics_frontend/data/repository/comic_repository.dart';
-
 import '../../data/models/category_model.dart';
 
 class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
@@ -52,6 +51,7 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
 
   Future<void> _filterByIDCategory(
       FilterByIDCategory event, Emitter<FilterComicState> emitter) async {
+    emitter(LoadingComicByCategory());
     try {
       List<Comic> listComics = await _comicRepo.readComicByCategoryID(
           categoryName: event.categoryName);

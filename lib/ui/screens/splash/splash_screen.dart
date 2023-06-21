@@ -4,6 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_bloc.dart';
+import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_event.dart';
 import 'package:full_comics_frontend/blocs/new_comics/new_comics_bloc.dart';
 import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -48,6 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 3),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
+        BlocProvider.of<GetAllCategoryBloc>(context)
+            .add(const GetAllCategory());
         BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
         await MobileAds.instance.initialize();
         await Firebase.initializeApp();
@@ -93,8 +97,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                       Image.asset(
                         'assets/images/banner_splash.png',
-                        height: SizeConfig.screenHeight / 2.52,
-                        width: SizeConfig.screenWidth / 1.2,
+                        height: SizeConfig.width230,
+                        width: SizeConfig.width230,
                       ),
                       Container(),
                     ],

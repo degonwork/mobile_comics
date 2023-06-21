@@ -10,7 +10,7 @@ abstract class FilterComicState extends Equatable {
 
 class FilterComicInital extends FilterComicState {}
 
-class LoadComicByCategoryIDInital extends FilterComicState {}
+class LoadingComicByCategory extends FilterComicState {}
 
 class LoadedComicByCategoryID extends FilterComicState {
   final List<Comic> listComics;

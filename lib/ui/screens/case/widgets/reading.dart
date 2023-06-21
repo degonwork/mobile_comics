@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/config/size_config.dart';
-import 'package:full_comics_frontend/config/ui_constant.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../blocs/case/case_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../detail/comic_detail_screen.dart';
 
 class Reading extends StatelessWidget {
@@ -70,36 +68,31 @@ class Reading extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        listCaseComic[index].titleComic != null
+                                      TextUi(
+                                        text: listCaseComic[index].titleComic !=
+                                                null
                                             ? listCaseComic[index].titleComic!
                                             : "",
-                                        style: titleComic,
-                                        // style: const TextStyle(
-                                        //   color: Colors.black,
-                                        //   fontSize: 20,
-                                        //   fontWeight: FontWeight.bold,
-                                        // ),
+                                        fontSize: SizeConfig.font20,
+                                        color: Colors.yellow.withBlue(2),
                                       ),
                                       const SizedBox(height: 10),
-                                      Text(
-                                        "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
+                                      TextUi(
+                                        text:
+                                            "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
+                                        fontSize: SizeConfig.font14,
+                                        color: Colors.white,
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
                               const Divider(thickness: 0.8),
-                              Text(
-                                "${AppLocalizations.of(context)!.reading}: Chương ${listCaseComic[index].numericChapter}",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                ),
+                              TextUi(
+                                text:
+                                    "${AppLocalizations.of(context)!.reading}: ${AppLocalizations.of(context)!.chapters} ${listCaseComic[index].numericChapter}",
+                                fontSize: SizeConfig.font14,
+                                color: Colors.black,
                               )
                             ],
                           ),
@@ -116,12 +109,11 @@ class Reading extends StatelessWidget {
             );
           }
         }
-        return const Center(
-          child: Text(
-            "Danh sách trống ",
-            style: TextStyle(
-              fontSize: 18,
-            ),
+        return Center(
+          child: TextUi(
+            text: AppLocalizations.of(context)!.empty,
+            fontSize: SizeConfig.font18,
+            fontWeight: FontWeight.w500,
           ),
         );
       },

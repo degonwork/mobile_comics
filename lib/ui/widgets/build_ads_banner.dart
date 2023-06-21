@@ -1,29 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-// class BuildAdsBanner extends StatelessWidget {
-//   const BuildAdsBanner({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final adSize = AdSize.banner;
-//     final bannerAds = BannerAd(
-//       size: adSize,
-//       adUnitId: 'ca-app-pub-5859898098878852/9210807199',
-//       listener: const BannerAdListener(),
-//       request: const AdRequest()
-//       );
-//       bannerAds.load();
-//     return Container(
-//       alignment: Alignment.center,
-//       child: AdWidget(ad: bannerAds),
-//       width: bannerAds.size.width.toDouble(),
-//       height: bannerAds.size.height.toDouble(),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -47,7 +21,6 @@ class _BannerADState extends State<BannerAD> {
           });
         }, onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          // print(error);
         }),
         request: const AdRequest());
     bannerAd.load();

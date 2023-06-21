@@ -1,16 +1,13 @@
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_event.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_state.dart';
 import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
-// import 'package:full_comics_frontend/ui/screens/detail/widgets/descreption.dart';
-// import 'package:full_comics_frontend/config/ui_constant.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/size_config.dart';
-import '../../../config/ui_constant.dart';
+import '../../widgets/text_ui.dart';
 import '../detail/comic_detail_screen.dart';
 
 class SearchComicScreen extends StatelessWidget {
@@ -39,7 +36,7 @@ class SearchComicScreen extends StatelessWidget {
                   Icons.search,
                   color: Colors.black.withOpacity(0.8),
                 ),
-                hintText: "Nhập từ khóa để tìm kiếm ...",
+                hintText: AppLocalizations.of(context)!.keywords,
                 hintStyle: TextStyle(color: Colors.black.withOpacity(0.8)),
                 border: InputBorder.none,
               ),
@@ -70,15 +67,13 @@ class SearchComicScreen extends StatelessWidget {
                           return SingleChildScrollView(
                             child: Column(
                               children: [
-                                // Text('Kết quả tìm kiếm cho từ khóa ${}',style: TextStyle(color: Colors.white.withOpacity(0.5)),),
                                 SizedBox(
                                   height: SizeConfig.screenHeight / 37.8,
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    context
-                                        .read<ComicDetailBloc>()
-                                        .add(LoadDetailComic(listComics[index].id));
+                                    context.read<ComicDetailBloc>().add(
+                                        LoadDetailComic(listComics[index].id));
                                     Navigator.pushNamed(
                                         context, ComicDetailScreen.routeName);
                                   },
@@ -88,8 +83,8 @@ class SearchComicScreen extends StatelessWidget {
                                             Radius.circular(10)),
                                         boxShadow: [
                                           BoxShadow(
-                                              color:
-                                                  Colors.white.withOpacity(0.03)),
+                                              color: Colors.white
+                                                  .withOpacity(0.03)),
                                         ]),
                                     height: SizeConfig.screenHeight / 8.4,
                                     child: Row(
@@ -103,21 +98,21 @@ class SearchComicScreen extends StatelessWidget {
                                                   padding: EdgeInsets.zero,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
-                                                          const BorderRadius.all(
-                                                              Radius.circular(10)),
+                                                          const BorderRadius
+                                                                  .all(
+                                                              Radius.circular(
+                                                                  10)),
                                                       image: DecorationImage(
                                                           image: NetworkImage(
                                                               listComics[index]
                                                                   .image_thumnail_square_path!),
                                                           fit: BoxFit.fill)),
                                                   height:
-                                                      SizeConfig.screenHeight / 8.4,
-                                                  width: SizeConfig.screenWidth / 4,
-                                                  // child: CachedNetworkImage(
-                                                  //   imageUrl: listComics[index]
-                                                  //       .image_thumnail_square_path!,
-                                                  //   fit: BoxFit.fill,
-                                                  // ),
+                                                      SizeConfig.screenHeight /
+                                                          8.4,
+                                                  width:
+                                                      SizeConfig.screenWidth /
+                                                          4,
                                                 ),
                                               )
                                             : const CircularProgressIndicator(),
@@ -137,31 +132,30 @@ class SearchComicScreen extends StatelessWidget {
                                             children: [
                                               listComics[index].title != null
                                                   ? Expanded(
-                                                      child: Text(
-                                                      listComics[index].title!,
-                                                      style: titleComic,
+                                                      child: TextUi(
+                                                      text: listComics[index]
+                                                          .title!,
+                                                      fontSize:
+                                                          SizeConfig.font20,
                                                     ))
                                                   : const Text(""),
                                               const SizedBox(),
-                                              listComics[index].description != null
+                                              listComics[index].description !=
+                                                      null
                                                   ? Expanded(
-                                                      child: Text(
-                                                        listComics[index]
+                                                      child: TextUi(
+                                                        text: listComics[index]
                                                             .description!,
                                                         maxLines: 2,
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        style: const TextStyle(
-                                                          color: Colors.black,
-                                                        ),
+                                                        textOverflow:
+                                                            TextOverflow
+                                                                .ellipsis,
                                                       ),
                                                     )
                                                   : const Text(""),
                                             ],
                                           ),
                                         ),
-
-                                        
                                       ],
                                     ),
                                   ),

@@ -38,7 +38,8 @@ class StorageDatabase {
       ${ComicField.reads} INTEGER, 
       ${ComicField.chapter_update_time} TEXT,
       ${ComicField.update_time} TEXT,
-      ${ComicField.add_chapter_time} TEXT
+      ${ComicField.add_chapter_time} TEXT,
+      ${ComicField.isFull} INTEGER
     ) 
     ''');
     await db.execute(''' 

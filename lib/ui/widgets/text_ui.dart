@@ -7,6 +7,8 @@ class TextUi extends StatelessWidget {
   double fontSize;
   FontWeight fontWeight;
   TextAlign textAlign;
+  int? maxLines;
+  TextOverflow? textOverflow;
 
   TextUi({
     Key? key,
@@ -15,6 +17,8 @@ class TextUi extends StatelessWidget {
     required this.text,
     this.fontSize = 12,
     this.fontWeight = FontWeight.w400,
+    this.maxLines = 1,
+    this.textOverflow = TextOverflow.clip,
   }) : super(key: key);
 
   @override
@@ -22,9 +26,10 @@ class TextUi extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: textOverflow,
       style: TextStyle(
         color: color,
-        fontFamily: 'Raleway',
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),

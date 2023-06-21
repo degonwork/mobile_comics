@@ -9,6 +9,8 @@ abstract class ComicDetailState extends Equatable {
 
 class ComicDetailInitial extends ComicDetailState {}
 
+class ComicDetailLoading extends ComicDetailState {}
+
 class ComicDetailLoaded extends ComicDetailState {
   final Comic comic;
   final CaseComic caseComic;

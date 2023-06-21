@@ -4,6 +4,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../data/models/case_comic_model.dart';
 import '../../../../data/models/chapter_model.dart';
 import '../../../../data/models/comic_model.dart';
+import '../../../widgets/text_ui.dart';
 import '../../read/read_screen.dart';
 import '../../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../../blocs/read_chapter/read_chapter_event.dart';
@@ -28,10 +29,10 @@ class ListChapter extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SizeConfig.screenHeight / 50),
-                Text(
-                  AppLocalizations.of(context)!.latestChapter,
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
-                ),
+                TextUi(
+                    text: AppLocalizations.of(context)!.latestChapter,
+                    color: Colors.white,
+                    fontSize: SizeConfig.font20),
                 SizedBox(height: SizeConfig.screenHeight / 50),
                 GestureDetector(
                   onTap: () {
@@ -40,23 +41,12 @@ class ListChapter extends StatelessWidget {
                         .add(LoadChapter(chapters.last.id));
                     Navigator.push(
                       context,
-                      PageRouteBuilder(
-                        transitionDuration: const Duration(milliseconds: 400),
-                        transitionsBuilder:
-                            (context, animation, secAnimation, child) {
-                          return ScaleTransition(
-                            scale: animation,
-                            alignment: Alignment.center,
-                            child: child,
-                          );
-                        },
-                        pageBuilder: (context, animation, secAnimation) {
-                          return ReadScreen(
-                            comic: comic,
-                            chapterId: chapters.last.id,
-                            numericChapter: chapters.length,
-                          );
-                        },
+                      MaterialPageRoute(
+                        builder: (context) => ReadScreen(
+                          comic: comic,
+                          chapterId: chapters.last.id,
+                          numericChapter: chapters.length,
+                        ),
                       ),
                     );
                   },
@@ -69,9 +59,10 @@ class ListChapter extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text(
-                        'Chapter ${chapters.last.numerical}',
-                        style: const TextStyle(fontSize: 20),
+                      child: TextUi(
+                        text:
+                            '${AppLocalizations.of(context)!.chapter} ${chapters.last.numerical}',
+                        fontSize: SizeConfig.font20,
                       ),
                     ),
                   ),
@@ -81,9 +72,10 @@ class ListChapter extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      AppLocalizations.of(context)!.listChapters,
-                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    TextUi(
+                      text: AppLocalizations.of(context)!.listChapters,
+                      color: Colors.white,
+                      fontSize: SizeConfig.font20,
                     ),
                     IconButton(
                       onPressed: () {},
@@ -112,24 +104,15 @@ class ListChapter extends StatelessWidget {
                               .add(LoadChapter(chapters[index].id));
                           Navigator.push(
                             context,
-                            PageRouteBuilder(
-                              transitionDuration:
-                                  const Duration(milliseconds: 400),
-                              transitionsBuilder:
-                                  (context, animation, secAnimation, child) {
-                                return ScaleTransition(
-                                  scale: animation,
-                                  alignment: Alignment.center,
-                                  child: child,
-                                );
-                              },
-                              pageBuilder: (context, animation, secAnimation) {
-                                return ReadScreen(
-                                  comic: comic,
-                                  chapterId: chapters[index].id,
-                                  numericChapter: chapters[index].numerical,
-                                );
-                              },
+                            MaterialPageRoute(
+                              builder: (
+                                context,
+                              ) =>
+                                  ReadScreen(
+                                comic: comic,
+                                chapterId: chapters[index].id,
+                                numericChapter: chapters[index].numerical,
+                              ),
                             ),
                           );
                         },
@@ -140,9 +123,10 @@ class ListChapter extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
-                            child: Text(
-                              'Chapter ${chapters[index].numerical}',
-                              style: const TextStyle(fontSize: 20),
+                            child: TextUi(
+                              text:
+                                  '${AppLocalizations.of(context)!.chapter} ${chapters[index].numerical}',
+                              fontSize: SizeConfig.font20,
                             ),
                           ),
                         ),
@@ -160,15 +144,12 @@ class ListChapter extends StatelessWidget {
         ),
       );
     } else {
-      return const Padding(
-        padding: EdgeInsets.only(top: 200),
-        child: Text(
-          "This comic has no chapters",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-          ),
+      return Padding(
+        padding: const EdgeInsets.only(top: 200),
+        child: TextUi(
+          text: AppLocalizations.of(context)!.noChapters,
+          color: Colors.black,
+          fontSize: SizeConfig.font18,
         ),
       );
     }

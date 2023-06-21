@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/ads_bloc/ads_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
-import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_event.dart';
 import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
 import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
@@ -31,6 +31,11 @@ import 'config/size_config.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -51,7 +56,8 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<CategoryRepo>(
           create: (context) => const CategoryRepo(
-              apiClient: ApiClient(baseServerUrl: AppConstant.baseServerUrl)),
+            apiClient: ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+          ),
         ),
         RepositoryProvider<CategoriesComicsRepo>(
           create: (context) => CategoriesComicsRepo(
@@ -131,7 +137,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<GetAllCategoryBloc>(
             create: (context) => GetAllCategoryBloc(
               context.read<CategoryRepo>(),
-            )..add(GetAllCategory()),
+            ),
           ),
           BlocProvider<SearchComicBloc>(
             create: (context) => SearchComicBloc(
@@ -151,6 +157,9 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate
           ],
+          theme: ThemeData(
+            fontFamily: "Raleway",
+          ),
           title: 'Flutter Demo',
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,
