@@ -10,10 +10,10 @@ import '../screens/detail/comic_detail_screen.dart';
 class GridviewComics extends StatelessWidget {
   const GridviewComics({
     super.key,
-    required this.listNewComics,
+    required this.listComics,
   });
 
-  final List<Comic> listNewComics;
+  final List<Comic> listComics;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class GridviewComics extends StatelessWidget {
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: listNewComics.length,
+        itemCount: listComics.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: SizeConfig.width20,
           mainAxisSpacing: SizeConfig.height20,
@@ -35,16 +35,17 @@ class GridviewComics extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                listNewComics[index].image_thumnail_square_path != null
+                listComics[index].image_thumnail_square_path != null
                     ? Expanded(
                         child: CachedNetworkImage(
                           imageUrl:
-                              listNewComics[index].image_thumnail_square_path!,
+                              listComics[index].image_thumnail_square_path!,
                           imageBuilder: (context, imageProvider) {
                             return GestureDetector(
                               onTap: () {
-                                context.read<ComicDetailBloc>().add(
-                                    LoadDetailComic(listNewComics[index].id));
+                                context
+                                    .read<ComicDetailBloc>()
+                                    .add(LoadDetailComic(listComics[index].id));
                                 Navigator.pushNamed(
                                     context, ComicDetailScreen.routeName);
                               },
@@ -70,8 +71,8 @@ class GridviewComics extends StatelessWidget {
                   height: SizeConfig.height10,
                 ),
                 TextUi(
-                  text: listNewComics[index].title != null
-                      ? '${listNewComics[index].title}'
+                  text: listComics[index].title != null
+                      ? '${listComics[index].title}'
                       : "",
                   maxLines: 1,
                   textOverflow: TextOverflow.ellipsis,

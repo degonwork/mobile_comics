@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
+import 'package:full_comics_frontend/ui/screens/detail/comic_detail_screen.dart';
+import 'package:full_comics_frontend/ui/widgets/back_button_screen.dart';
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
@@ -45,22 +47,28 @@ class _ReadScreenState extends State<ReadScreen> {
                 } else if (state is LoadedChapter) {
                   final listImage = state.listImageContent;
                   if (listImage.isNotEmpty) {
-                    return ListView.builder(
+                    return ListView.separated(
                       scrollDirection: Axis.vertical,
                       itemCount: listImage.length,
                       itemBuilder: (context, index) {
                         return listImage[index].height != null &&
                                 listImage[index].width != null
-                            ? CachedNetworkImage(
-                                imageUrl: listImage[index].path,
-                                imageBuilder: (context, imageProvider) {
-                                  return SizedBox(
-                                    width: SizeConfig.screenWidth,
-                                    height: SizeConfig.screenWidth *
-                                        (listImage[index].width! /
-                                            listImage[index].height!),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.width8,
+                                ),
+                                margin: index == listImage.length - 1
+                                    ? EdgeInsets.only(
+                                        bottom: SizeConfig.height20)
+                                    : const EdgeInsets.only(bottom: 0),
+                                child: CachedNetworkImage(
+                                  imageUrl: listImage[index].path,
+                                  imageBuilder: (context, imageProvider) {
+                                    return SizedBox(
+                                      width: SizeConfig.screenWidth,
+                                      height: SizeConfig.screenWidth *
+                                          (listImage[index].width! /
+                                              listImage[index].height!),
                                       child: Container(
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
@@ -69,59 +77,55 @@ class _ReadScreenState extends State<ReadScreen> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          "assets/images/banner_splash.png"),
+                                ),
                               )
                             : Image.asset("assets/images/banner_splash.png");
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: SizeConfig.height8,
+                        );
                       },
                     );
                   } else {
                     return const Center(
-                        child: CircularProgressIndicator(color: Colors.amber));
+                      child: CircularProgressIndicator(color: Colors.amber),
+                    );
                   }
                 }
                 return const Center(
-                    child: CircularProgressIndicator(color: Colors.amber));
+                  child: CircularProgressIndicator(color: Colors.amber),
+                );
               },
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: AnimatedOpacity(
-              opacity: visialbe ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 400),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  onPressed: () {
-                    if (widget.comic != null &&
-                        widget.chapterId != null &&
-                        widget.numericChapter != null) {
-                      context.read<CaseBloc>().add(
-                            AddCaseComic(
-                              chapterId: widget.chapterId!,
-                              comicId: widget.comic!.id,
-                              imageThumnailSquareComicPath:
-                                  widget.comic!.image_thumnail_square_path!,
-                              numericChapter: widget.numericChapter!,
-                              titleComic: widget.comic!.title!,
-                              reads: widget.comic!.reads!,
-                            ),
-                          );
-                    }
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_circle_left,
-                    size: 50,
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
+          AnimatedOpacity(
+            opacity: visialbe ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 400),
+            child: BackButtonScreen(
+              onTap: () {
+                if (widget.comic != null &&
+                    widget.chapterId != null &&
+                    widget.numericChapter != null) {
+                  context.read<CaseBloc>().add(
+                        AddCaseComic(
+                          chapterId: widget.chapterId!,
+                          comicId: widget.comic!.id,
+                          imageThumnailSquareComicPath:
+                              widget.comic!.image_thumnail_square_path!,
+                          numericChapter: widget.numericChapter!,
+                          titleComic: widget.comic!.title!,
+                          reads: widget.comic!.reads!,
+                        ),
+                      );
+                }
+                Navigator.pushNamed(context, ComicDetailScreen.routeName);
+              },
             ),
           ),
         ],

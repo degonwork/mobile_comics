@@ -19,7 +19,7 @@ class ComicByCategory extends StatelessWidget {
               if (state is LoadedComicByCategoryID) {
                 final listComicsFilter = state.listComics;
                 if (listComicsFilter.isNotEmpty) {
-                  return GridviewComics(listNewComics: listComicsFilter);
+                  return GridviewComics(listComics: listComicsFilter);
                 } else {
                   return const Center(
                       child: CircularProgressIndicator(color: Colors.amber));

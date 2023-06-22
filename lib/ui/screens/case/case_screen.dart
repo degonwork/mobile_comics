@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
 import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
 import '../../../config/size_config.dart';
 import 'widgets/favorite.dart';
@@ -17,11 +15,6 @@ class CaseScreen extends StatefulWidget {
 
 class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
   late TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
-  }
 
   @override
   void dispose() {
@@ -51,6 +44,7 @@ class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
             child: Column(
               children: [
                 TabBar(
+                  indicatorColor: Colors.transparent,
                   controller: _tabController,
                   labelColor: Colors.blue,
                   tabs: tabs,

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
@@ -6,6 +5,7 @@ import 'package:full_comics_frontend/config/size_config.dart';
 import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../blocs/case/case_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../widgets/case_infor.dart';
 import '../../detail/comic_detail_screen.dart';
 
 class Reading extends StatelessWidget {
@@ -19,7 +19,7 @@ class Reading extends StatelessWidget {
           final listCaseComic = state.listCaseComic;
           if (listCaseComic.isNotEmpty) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width15),
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: listCaseComic.length,
@@ -31,73 +31,12 @@ class Reading extends StatelessWidget {
                           .add(LoadDetailComic(listCaseComic[index].comicId));
                       Navigator.pushNamed(context, ComicDetailScreen.routeName);
                     },
-                    child: Row(
-                      children: [
-                        listCaseComic[index].imageThumnailSquareComicPath !=
-                                null
-                            ? CachedNetworkImage(
-                                imageUrl: listCaseComic[index]
-                                    .imageThumnailSquareComicPath!,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: SizeConfig.screenWidth / 3.6,
-                                    height: SizeConfig.screenHeight / 7.56,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
-                              )
-                            : Image.asset("assets/images/banner_splash.png"),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextUi(
-                                        text: listCaseComic[index].titleComic !=
-                                                null
-                                            ? listCaseComic[index].titleComic!
-                                            : "",
-                                        fontSize: SizeConfig.font20,
-                                        color: Colors.yellow.withBlue(2),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      TextUi(
-                                        text:
-                                            "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
-                                        fontSize: SizeConfig.font14,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Divider(thickness: 0.8),
-                              TextUi(
-                                text:
-                                    "${AppLocalizations.of(context)!.reading}: ${AppLocalizations.of(context)!.chapters} ${listCaseComic[index].numericChapter}",
-                                fontSize: SizeConfig.font14,
-                                color: Colors.black,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                    child: CaseInfor(
+                      imageSquare:
+                          listCaseComic[index].imageThumnailSquareComicPath,
+                      title: listCaseComic[index].titleComic,
+                      reads: listCaseComic[index].reads,
+                      numericChapter: listCaseComic[index].numericChapter,
                     ),
                   );
                 },

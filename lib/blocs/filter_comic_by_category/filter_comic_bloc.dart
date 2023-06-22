@@ -23,13 +23,13 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
     try {
       List<Category> listCategories =
           await _categoryRepo.getAllCategoryFromDB();
-      List<Comic> comicIndexFirst = await _comicRepo.readComicByCategoryID(
+      List<Comic> comicIndexFirst = await _comicRepo.readComicByCategoryName(
           categoryName: listCategories[0].name);
       if (comicIndexFirst.isEmpty) {
         await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
             categoryName: listCategories[0].name);
         List<Comic> comicIndexFirstResult = await _comicRepo
-            .readComicByCategoryID(categoryName: listCategories[0].name);
+            .readComicByCategoryName(categoryName: listCategories[0].name);
         emitter(LoadedComicByCategoryID(comicIndexFirstResult));
       } else {
         emitter(LoadedComicByCategoryID(comicIndexFirst));
@@ -53,14 +53,14 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
       FilterByIDCategory event, Emitter<FilterComicState> emitter) async {
     emitter(LoadingComicByCategory());
     try {
-      List<Comic> listComics = await _comicRepo.readComicByCategoryID(
+      List<Comic> listComics = await _comicRepo.readComicByCategoryName(
           categoryName: event.categoryName);
       if (listComics.isEmpty) {
-        await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-            categoryName: event.categoryName);
-        List<Comic> listComicsResult = await _comicRepo.readComicByCategoryID(
-            categoryName: event.categoryName);
-        emitter(LoadedComicByCategoryID(listComicsResult));
+        // await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+        //     categoryName: event.categoryName);
+        // List<Comic> listComicsResult = await _comicRepo.readComicByCategoryName(
+        //     categoryName: event.categoryName);
+        emitter(LoadedComicByCategoryID(listComics));
       } else {
         emitter(LoadedComicByCategoryID(listComics));
         // await _comicRepo

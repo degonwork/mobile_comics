@@ -35,15 +35,13 @@ class LibraryScreen extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: InkWell(
-                        onTap: () => Navigator.push(
+                        onTap: () => Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const SearchComicScreen(),
-                          ),
+                          SearchComicScreen.routeName,
                         ),
                         child: Icon(
                           Icons.search,
-                          size: SizeConfig.width25,
+                          size: SizeConfig.icon25,
                         ),
                       ),
                     ),

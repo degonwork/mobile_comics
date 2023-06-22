@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
-
 import '../../config/size_config.dart';
-import '../../data/models/category_model.dart';
 
 class GenreComic extends StatelessWidget {
   const GenreComic({
     super.key,
     required this.listCategories,
-    required this.selected,
     required this.index,
     required this.color,
   });
 
-  final List<Category> listCategories;
-  final int? selected;
+  final List<String> listCategories;
   final int index;
   final Color color;
 
@@ -41,7 +37,7 @@ class GenreComic extends StatelessWidget {
         child: Center(
           child: Center(
             child: TextUi(
-              text: listCategories[index].name,
+              text: listCategories[index],
               fontSize: SizeConfig.font14,
             ),
           ),

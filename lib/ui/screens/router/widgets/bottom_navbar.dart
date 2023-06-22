@@ -19,8 +19,8 @@ class BottomNavbar extends StatelessWidget {
       child: BottomNavigationBar(
         backgroundColor: Colors.black.withBlue(70),
         unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.amber,
-        iconSize: SizeConfig.width25,
+        selectedItemColor: Colors.yellow.withBlue(2),
+        iconSize: SizeConfig.icon25,
         selectedFontSize: SizeConfig.font14,
         unselectedFontSize: SizeConfig.font14,
         currentIndex: currentIndex,

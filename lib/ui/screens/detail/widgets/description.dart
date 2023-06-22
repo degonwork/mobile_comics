@@ -30,9 +30,9 @@ class _DescreptionState extends State<Descreption> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                widget.text,
-                overflow: TextOverflow.ellipsis,
+              TextUi(
+                text: widget.text,
+                textOverflow: TextOverflow.ellipsis,
               ),
               TextButton(
                 onPressed: () {
@@ -52,7 +52,7 @@ class _DescreptionState extends State<Descreption> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.text),
+              TextUi(text: widget.text),
               TextButton(
                 onPressed: () {
                   setState(() {

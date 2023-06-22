@@ -18,7 +18,7 @@ class NewComic extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.width15,
               ),
-              child: GridviewComics(listNewComics: listNewComics),
+              child: GridviewComics(listComics: listNewComics),
             );
           } else {
             return const Center(

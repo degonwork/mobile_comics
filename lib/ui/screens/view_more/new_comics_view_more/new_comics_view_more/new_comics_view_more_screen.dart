@@ -33,7 +33,7 @@ class NewComicViewMoreScreen extends StatelessWidget {
                     },
                     child: Icon(
                       Icons.arrow_back_ios_new_outlined,
-                      size: SizeConfig.width25,
+                      size: SizeConfig.icon25,
                     ),
                   ),
                 ),
@@ -44,8 +44,8 @@ class NewComicViewMoreScreen extends StatelessWidget {
                       final listNewComicsViewMore = state.listNewComicsViewMore;
                       if (listNewComicsViewMore.isNotEmpty) {
                         return Expanded(
-                          child: GridviewComics(
-                              listNewComics: listNewComicsViewMore),
+                          child:
+                              GridviewComics(listComics: listNewComicsViewMore),
                         );
                       } else {
                         return const Center(

@@ -34,8 +34,7 @@ class _AllCategoryState extends State<AllCategory> {
                     (index) => InkWell(
                           onTap: () {
                             context.read<FilterComicBloc>().add(
-                                  FilterByIDCategory(
-                                      listCategories[index].name),
+                                  FilterByIDCategory(listCategories[index]),
                                 );
                             setState(() {
                               selected = index;
@@ -43,7 +42,6 @@ class _AllCategoryState extends State<AllCategory> {
                           },
                           child: GenreComic(
                             listCategories: listCategories,
-                            selected: selected,
                             index: index,
                             color: selected == index
                                 ? Colors.orange.withOpacity(0.8)

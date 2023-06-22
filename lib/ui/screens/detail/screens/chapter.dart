@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/widgets/chapter_item.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../data/models/case_comic_model.dart';
 import '../../../../data/models/chapter_model.dart';
@@ -20,25 +21,23 @@ class ListChapter extends StatelessWidget {
   Widget build(BuildContext context) {
     final chapters = comic.chapters;
     if (chapters!.isNotEmpty) {
-      return Container(
-        padding: EdgeInsets.zero,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: SizeConfig.screenHeight / 50),
-                TextUi(
-                    text: AppLocalizations.of(context)!.latestChapter,
-                    color: Colors.white,
-                    fontSize: SizeConfig.font20),
-                SizedBox(height: SizeConfig.screenHeight / 50),
-                GestureDetector(
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextUi(
+                text: AppLocalizations.of(context)!.latestChapter,
+                color: Colors.white,
+                fontSize: SizeConfig.font20,
+              ),
+              SizedBox(height: SizeConfig.height10),
+              GestureDetector(
                   onTap: () {
-                    context
-                        .read<ReadChapterBloc>()
-                        .add(LoadChapter(chapters.last.id));
+                    context.read<ReadChapterBloc>().add(
+                          LoadChapter(chapters.last.id),
+                        );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -50,102 +49,61 @@ class ListChapter extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Container(
-                    height: SizeConfig.screenHeight / 20,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.screenWidth / 50),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 0.8),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: TextUi(
-                        text:
-                            '${AppLocalizations.of(context)!.chapter} ${chapters.last.numerical}',
-                        fontSize: SizeConfig.font20,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Divider(thickness: 0.5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextUi(
-                      text: AppLocalizations.of(context)!.listChapters,
-                      color: Colors.white,
-                      fontSize: SizeConfig.font20,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.filter_list_outlined,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 10),
-                child: ScrollablePositionedList.builder(
-                  initialScrollIndex: caseComic.numericChapter != 0
-                      ? _checkPositionScroll(caseComic.numericChapter, chapters)
-                      : 0,
-                  itemCount: chapters.length,
-                  itemBuilder: (context, index) => Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          context
-                              .read<ReadChapterBloc>()
-                              .add(LoadChapter(chapters[index].id));
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (
-                                context,
-                              ) =>
-                                  ReadScreen(
-                                comic: comic,
-                                chapterId: chapters[index].id,
-                                numericChapter: chapters[index].numerical,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: SizeConfig.screenHeight / 20,
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: TextUi(
-                              text:
-                                  '${AppLocalizations.of(context)!.chapter} ${chapters[index].numerical}',
-                              fontSize: SizeConfig.font20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.screenHeight / 90,
-                      ),
-                      const Divider(thickness: 1),
-                    ],
-                  ),
-                ),
+                  child: ChapterItem(numerical: chapters.last.numerical!)),
+              SizedBox(height: SizeConfig.height10),
+              const Divider(thickness: 0.5),
+              TextUi(
+                text: AppLocalizations.of(context)!.listChapters,
+                color: Colors.white,
+                fontSize: SizeConfig.font20,
               ),
-            )
-          ],
-        ),
+            ],
+          ),
+          SizedBox(height: SizeConfig.height10),
+          Expanded(
+            child: ScrollablePositionedList.builder(
+              initialScrollIndex: caseComic.numericChapter != 0
+                  ? _checkPositionScroll(caseComic.numericChapter, chapters)
+                  : 0,
+              itemCount: 10,
+              // chapters.length,
+              itemBuilder: (context, index) => Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // context
+                      //     .read<ReadChapterBloc>()
+                      //     .add(LoadChapter(chapters[index].id));
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (
+                      //       context,
+                      //     ) =>
+                      //         ReadScreen(
+                      //       comic: comic,
+                      //       chapterId: chapters[index].id,
+                      //       numericChapter: chapters[index].numerical,
+                      //     ),
+                      //   ),
+                      // );
+                    },
+                    child: ChapterItem(
+                      numerical: 1,
+                      // chapters[index].numerical
+                    ),
+                  ),
+                  SizedBox(height: SizeConfig.height10),
+                  const Divider(thickness: 1),
+                ],
+              ),
+            ),
+          )
+        ],
       );
     } else {
       return Padding(
-        padding: const EdgeInsets.only(top: 200),
+        padding: EdgeInsets.only(top: SizeConfig.height200),
         child: TextUi(
           text: AppLocalizations.of(context)!.noChapters,
           color: Colors.black,

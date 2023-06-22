@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
-import 'package:full_comics_frontend/ui/screens/detail/screens/read_button.dart';
 import 'package:full_comics_frontend/ui/screens/detail/widgets/description.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../../widgets/genre_comic.dart';
+import '../../../widgets/item_info.dart';
 import '../../../widgets/text_ui.dart';
 
 class Infor extends StatelessWidget {
-  const Infor({super.key, required this.comic, required this.caseComic});
+  const Infor({
+    super.key,
+    required this.comic,
+  });
   final Comic comic;
-  final CaseComic caseComic;
 
   @override
   Widget build(BuildContext context) {
@@ -22,173 +23,67 @@ class Infor extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: EdgeInsets.zero,
-              width: double.infinity,
-              height: SizeConfig.screenHeight / 15.12,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 42,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 0.1,
-                            spreadRadius: 0.5,
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.screenWidth / 30,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const CircleAvatar(
-                            radius: 15,
-                            child: Icon(Icons.remove_red_eye),
-                          ),
-                          const Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(AppLocalizations.of(context)!.numberReads),
-                              Text(
-                                comic.reads != null ? '${comic.reads}' : "",
-                              ),
-                            ],
-                          ),
-                        ],
+            SizedBox(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: SizeConfig.height5),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: ItemInfor(
+                        icon: Icons.remove_red_eye,
+                        titleItem: AppLocalizations.of(context)!.numberReads,
+                        contentItem:
+                            comic.reads != null ? '${comic.reads}' : "",
                       ),
                     ),
-                  ),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  Expanded(
-                    flex: 42,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 0.1,
-                            spreadRadius: 0.5,
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.screenWidth / 36),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                              radius: 12,
-                              child: Icon(
-                                Icons.star,
-                                color: Colors.white,
-                              )),
-                          Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Đánh giá'),
-                              Text('1.1K'),
-                            ],
-                          ),
-                        ],
+                    SizedBox(width: SizeConfig.width10),
+                    Expanded(
+                      flex: 1,
+                      child: ItemInfor(
+                        icon: Icons.star,
+                        titleItem: AppLocalizations.of(context)!.evaluate,
+                        contentItem: AppConstant.evaluate,
                       ),
                     ),
-                  ),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  Expanded(
-                    flex: 42,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 0.1,
-                            spreadRadius: 0.5,
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.screenWidth / 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const CircleAvatar(
-                            radius: 15,
-                            child: Icon(Icons.library_books),
-                          ),
-                          const Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(AppLocalizations.of(context)!.totalChapters),
-                              comic.chapters!.isNotEmpty
-                                  ? Text('${comic.chapters!.length}')
-                                  : const Text(""),
-                            ],
-                          ),
-                        ],
+                    SizedBox(width: SizeConfig.width10),
+                    Expanded(
+                      flex: 1,
+                      child: ItemInfor(
+                        icon: Icons.library_books,
+                        titleItem: AppLocalizations.of(context)!.totalChapters,
+                        contentItem: comic.chapters!.isNotEmpty
+                            ? comic.chapters!.length.toString()
+                            : "",
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const Divider(thickness: 1),
-            Container(
-              padding: EdgeInsets.zero,
+            SizedBox(
               height: SizeConfig.screenHeight / 10,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextUi(
-                      text: AppLocalizations.of(context)!.genreComics,
-                      color: Colors.white,
-                      fontSize: SizeConfig.font20),
-                  SizedBox(
-                    height: SizeConfig.screenHeight / 80,
+                    text: AppLocalizations.of(context)!.genreComics,
+                    color: Colors.white,
+                    fontSize: SizeConfig.font20,
                   ),
+                  SizedBox(height: SizeConfig.height10),
                   Expanded(
                     child: comic.categories!.isNotEmpty
                         ? ListView.separated(
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.screenWidth / 50,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.orangeAccent.withBlue(50),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: TextUi(
-                                    text: comic.categories![index],
-                                    color: Colors.blue
-                                        .withGreen(50)
-                                        .withOpacity(0.8),
-                                    fontSize: SizeConfig.font18),
-                              ),
+                            itemBuilder: (context, index) => GenreComic(
+                              listCategories: comic.categories!,
+                              index: index,
+                              color: Colors.amber,
                             ),
                             separatorBuilder: (context, index) =>
-                                const SizedBox(width: 12),
+                                const SizedBox(width: 0),
                             itemCount: comic.categories!.length,
                           )
                         : Container(),
@@ -196,7 +91,7 @@ class Infor extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: SizeConfig.screenHeight / 40),
+            SizedBox(height: SizeConfig.height10),
             const Divider(thickness: 1),
             TextUi(
               text: AppLocalizations.of(context)!.describe,
@@ -204,56 +99,15 @@ class Infor extends StatelessWidget {
               fontSize: SizeConfig.font20,
             ),
             SizedBox(
-              height: SizeConfig.screenHeight / 75.6,
+              height: SizeConfig.height10,
             ),
             Descreption(
               maxLines: 2,
               text: comic.description != null ? comic.description! : "",
             ),
-            SizedBox(height: SizeConfig.screenHeight / 25.2),
-            _loadReadButton(context),
           ],
         ),
       ),
     );
-  }
-
-  Widget _loadReadButton(BuildContext context) {
-    if (comic.chapters!.isNotEmpty) {
-      if (caseComic != AppConstant.caseComicNotExist) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ReadButton(
-              id: comic.chapters!.first.id,
-              comic: comic,
-              numericChapter: 1,
-              color: Colors.orangeAccent,
-              title: AppLocalizations.of(context)!.readFirstChapter,
-            ),
-            ReadButton(
-              id: caseComic.chapterId,
-              comic: comic,
-              numericChapter: caseComic.numericChapter,
-              color: Colors.orangeAccent,
-              title: AppLocalizations.of(context)!.continueReading,
-            ),
-          ],
-        );
-      } else {
-        return Center(
-          child: ReadButton(
-            id: comic.chapters!.first.id,
-            comic: comic,
-            numericChapter: 1,
-            color: Colors.orangeAccent,
-            title: AppLocalizations.of(context)!.readComics,
-          ),
-        );
-      }
-    } else {
-      return ReadButton(
-          title: AppLocalizations.of(context)!.readComics, color: Colors.grey);
-    }
   }
 }

@@ -96,7 +96,7 @@ class ComicRepo {
         throw Exception('Load failed comic detail');
       }
     } catch (e) {
-      print(e.toString());
+      print(e.toString() + "-----------------------------");
     }
   }
 
@@ -127,10 +127,11 @@ class ComicRepo {
     }
   }
 
-  Future<List<Comic>> readComicByCategoryID(
+  Future<List<Comic>> readComicByCategoryName(
       {required String categoryName}) async {
     Category? category =
         await HandleDatabase.readCategoryByNameFromDB(name: categoryName);
+
     if (category != null) {
       return readComicByCategoryIDFromDB(id: category.id);
     }
@@ -290,9 +291,8 @@ class ComicRepo {
         listComics.add(
             await readComicFilter(id: listComicsReadByCategoryID[i].comic_id));
       }
-      return listComics;
     }
-    return [];
+    return listComics;
   }
 
 // searchComicFromSever

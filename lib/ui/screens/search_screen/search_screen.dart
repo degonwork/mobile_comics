@@ -12,6 +12,7 @@ import '../detail/comic_detail_screen.dart';
 
 class SearchComicScreen extends StatelessWidget {
   const SearchComicScreen({super.key});
+  static const String routeName = '/search-comic';
 
   @override
   Widget build(BuildContext context) {

@@ -15,16 +15,24 @@ class GetAllCategoryBloc
   }
   Future<void> _getAllCategory(
       GetAllCategory event, Emitter<GetAllCategoryState> emitter) async {
+    List<String> listCategoryString = [];
     try {
       List<Category> listCategories =
           await _categoryRepo.getAllCategoryFromDB();
+
       if (listCategories.isEmpty) {
         await _categoryRepo.getAllCategory();
         List<Category> listCategoriesResult =
             await _categoryRepo.getAllCategoryFromDB();
-        emitter(GetLoadded(listCategoriesResult));
+        for (var category in listCategoriesResult) {
+          listCategoryString.add(category.name);
+        }
+        emitter(GetLoadded(listCategoryString));
       } else {
-        emitter(GetLoadded(listCategories));
+        for (var category in listCategories) {
+          listCategoryString.add(category.name);
+        }
+        emitter(GetLoadded(listCategoryString));
         // await _categoryRepo.getAllCategory().whenComplete(
         //   () async {
         //     List<Category> listCategoriesResult =
