@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../config/size_config.dart';
+import 'text_ui.dart';
 
 class CustomAppbar extends StatelessWidget {
   final Widget? iconleftWidget;
@@ -25,7 +26,7 @@ class CustomAppbar extends StatelessWidget {
         TextUi(
           text: text,
           fontSize: SizeConfig.font20,
-          fontWeight: FontWeight.w500,
+          color: AppColor.titleAppbarColor,
         ),
         iconRightWidget ??
             Container(

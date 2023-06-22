@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/screens/search_screen/search_screen.dart';
 import '../ui/screens/detail/comic_detail_screen.dart';
+import '../ui/screens/search_screen/search_screen.dart';
 import '../ui/screens/view_more/new_comics_view_more/new_comics_view_more/new_comics_view_more_screen.dart';
 import '../ui/screens/auth/login/login_screen.dart';
 import '../ui/screens/auth/signup/signup_screen.dart';

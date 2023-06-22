@@ -16,7 +16,7 @@ class TextUi extends StatelessWidget {
     this.textAlign = TextAlign.center,
     required this.text,
     this.fontSize = 12,
-    this.fontWeight = FontWeight.w400,
+    this.fontWeight = FontWeight.w500,
     this.maxLines = 1,
     this.textOverflow = TextOverflow.clip,
   }) : super(key: key);

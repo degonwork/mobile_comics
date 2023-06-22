@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/ui/widgets/gridview_comics.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../../blocs/view_more/view_more_bloc.dart';
 import '../../../../widgets/back_ground_app.dart';
 import '../../../../../config/size_config.dart';
 import '../../../../widgets/custom_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../widgets/gridview_comics.dart';
 
 class NewComicViewMoreScreen extends StatelessWidget {
   const NewComicViewMoreScreen({super.key});
@@ -34,6 +36,7 @@ class NewComicViewMoreScreen extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_back_ios_new_outlined,
                       size: SizeConfig.icon25,
+                      color: AppColor.iconAppbarColor,
                     ),
                   ),
                 ),

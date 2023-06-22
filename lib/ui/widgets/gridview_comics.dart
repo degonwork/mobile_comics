@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../config/size_config.dart';
 import '../../data/models/comic_model.dart';
 import '../screens/detail/comic_detail_screen.dart';
+import 'text_ui.dart';
 
 class GridviewComics extends StatelessWidget {
   const GridviewComics({
@@ -77,7 +78,7 @@ class GridviewComics extends StatelessWidget {
                   maxLines: 1,
                   textOverflow: TextOverflow.ellipsis,
                   fontSize: SizeConfig.font20,
-                  color: Colors.yellow.withBlue(2),
+                  color: AppColor.titleComicColor,
                 ),
               ],
             ),

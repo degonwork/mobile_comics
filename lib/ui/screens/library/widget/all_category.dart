@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_bloc.dart';
-import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_state.dart';
-import 'package:full_comics_frontend/config/size_config.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
+import '../../../../blocs/get_all_category_bloc/get_all_category_bloc.dart';
+import '../../../../blocs/get_all_category_bloc/get_all_category_state.dart';
+import '../../../../config/app_color.dart';
+import '../../../../config/size_config.dart';
 import '../../../widgets/genre_comic.dart';
 
 class AllCategory extends StatefulWidget {
@@ -41,12 +42,11 @@ class _AllCategoryState extends State<AllCategory> {
                             });
                           },
                           child: GenreComic(
-                            listCategories: listCategories,
-                            index: index,
-                            color: selected == index
-                                ? Colors.orange.withOpacity(0.8)
-                                : Colors.blue.withOpacity(0.4),
-                          ),
+                              listCategories: listCategories,
+                              index: index,
+                              color: selected == index
+                                  ? AppColor.selectItemGenreComicColor
+                                  : AppColor.unSelectItemCGenreComicolor),
                         )),
               ),
             );

@@ -22,19 +22,21 @@ class SizeConfig {
   static double height8 = screenHeight / 94.5;
   static double height10 = screenHeight / 75.6;
   static double height15 = screenHeight / 50.4;
+  static double height17 = screenHeight / 44.5;
   static double height20 = screenHeight / 37.8;
   static double height35 = screenHeight / 21.6;
   static double height40 = screenHeight / 18.9;
   static double height45 = screenHeight / 16.8;
   static double height50 = screenHeight / 15.12;
-  static double height60dot5 = screenHeight / 12.5;
+  static double height80 = screenHeight / 9.45;
   static double height100 = screenHeight / 7.56;
   static double height180 = screenHeight / 4.2;
   static double height200 = screenHeight / 3.78;
-  static double height600 = screenHeight / 1.26;
+  static double height535 = screenHeight / 1.413;
 
   // width
   static double width0dot8 = screenWidth / 450;
+  static double width1 = screenWidth / 360;
   static double width8 = screenWidth / 45;
   static double width10 = screenWidth / 36;
   static double width20 = screenWidth / 18;

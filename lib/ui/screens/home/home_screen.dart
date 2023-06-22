@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/data/repository/ads_repository.dart';
+import '../../../data/repository/ads_repository.dart';
 import '../../screens/view_more/new_comics_view_more/new_comics_view_more/new_comics_view_more_screen.dart';
 import '../../screens/home/widgets/banner_listview.dart';
 import '../../../blocs/view_more/view_more_bloc.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../widgets/build_ads_banner.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'widgets/new_comic.dart';
 import 'widgets/select_title.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
-import 'package:full_comics_frontend/ui/screens/detail/screens/chapter.dart';
-import 'package:full_comics_frontend/ui/screens/detail/screens/infor.dart';
-import 'package:full_comics_frontend/ui/widgets/back_button_screen.dart';
-import 'package:full_comics_frontend/ui/widgets/read_button.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/load_read_button.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
+import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
+import '../../widgets/back_button_screen.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../widgets/read_button.dart';
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
+import 'screens/chapter.dart';
+import 'screens/infor.dart';
+import 'widgets/load_read_button.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   const ComicDetailScreen({super.key});
@@ -64,11 +64,13 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                         bottom: PreferredSize(
                           preferredSize:
                               const Size.fromHeight(double.minPositive),
-                          child: Center(
+                          child: Padding(
+                            padding:
+                                EdgeInsets.only(bottom: SizeConfig.height17),
                             child: TextUi(
                               text: comic.title != null ? comic.title! : "",
                               fontSize: SizeConfig.font30,
-                              color: Colors.white,
+                              color: AppColor.titleComicColor,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -103,15 +105,18 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                             SizedBox(
                               height: SizeConfig.height45,
                               child: TabBar(
-                                indicatorColor: Colors.transparent,
+                                indicatorColor:
+                                    AppColor.brownColor.withOpacity(0.2),
+                                indicatorWeight: SizeConfig.width1,
                                 controller: _tabController,
                                 tabs: tabs,
-                                unselectedLabelColor: Colors.black,
-                                labelColor: Colors.yellow.withBlue(2),
+                                unselectedLabelColor:
+                                    AppColor.unSelectTitleColor,
+                                labelColor: AppColor.selectTitleColor,
                               ),
                             ),
                             SizedBox(
-                              height: SizeConfig.height600,
+                              height: SizeConfig.height535,
                               child: Container(
                                 margin:
                                     EdgeInsets.only(top: SizeConfig.height5),
@@ -155,8 +160,8 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
         ],
       ),
       bottomNavigationBar: Container(
-        color: Colors.blueAccent,
-        height: SizeConfig.height60dot5,
+        height: SizeConfig.height80,
+        color: AppColor.navbarColor,
         child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
           builder: (context, state) {
             if (state is ComicDetailLoaded) {
@@ -169,7 +174,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
             }
             return ReadButton(
               title: AppLocalizations.of(context)!.readComics,
-              color: Colors.grey,
+              color: AppColor.disable,
             );
           },
         ),

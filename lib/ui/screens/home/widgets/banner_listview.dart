@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../blocs/hot_comics/hot_comics_bloc.dart';
 import '../../../../config/size_config.dart';
@@ -67,11 +68,11 @@ class BannerListview extends StatelessWidget {
             );
           } else {
             return const Center(
-                child: CircularProgressIndicator(color: Colors.amber));
+                child: CircularProgressIndicator(color: AppColor.circular));
           }
         }
         return const Center(
-            child: CircularProgressIndicator(color: Colors.amber));
+            child: CircularProgressIndicator(color: AppColor.circular));
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../config/size_config.dart';
 
 class BackButtonScreen extends StatelessWidget {
@@ -19,13 +20,13 @@ class BackButtonScreen extends StatelessWidget {
           left: SizeConfig.width15,
           top: SizeConfig.height45,
         ),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: AppColor.backGroundIconBackColor.withOpacity(0.8),
         ),
         child: Icon(
           Icons.arrow_back_ios_new_sharp,
-          color: Colors.black45,
+          color: AppColor.iconAppbarColor,
           size: SizeConfig.icon20,
         ),
       ),

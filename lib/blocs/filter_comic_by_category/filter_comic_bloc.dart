@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_event.dart';
-import 'package:full_comics_frontend/blocs/filter_comic_by_category/filter_comic_state.dart';
-import 'package:full_comics_frontend/data/models/comic_model.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
-import 'package:full_comics_frontend/data/repository/comic_repository.dart';
 import '../../data/models/category_model.dart';
+import '../../data/models/comic_model.dart';
+import '../../data/repository/category_repository.dart';
+import '../../data/repository/comic_repository.dart';
+import 'filter_comic_event.dart';
+import 'filter_comic_state.dart';
 
 class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
   final ComicRepo _comicRepo;

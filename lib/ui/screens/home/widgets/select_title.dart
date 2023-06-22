@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../config/size_config.dart';
+import '../../../widgets/text_ui.dart';
 
 class SelectTitle extends StatelessWidget {
   final String title;
@@ -19,15 +20,14 @@ class SelectTitle extends StatelessWidget {
           TextUi(
             text: title,
             fontSize: SizeConfig.font20,
-            fontWeight: FontWeight.w500,
+            color: AppColor.titleSelectColor,
           ),
           GestureDetector(
             onTap: press,
             child: TextUi(
               text: AppLocalizations.of(context)!.seeMore,
-              color: Colors.yellow,
+              color: AppColor.buttonTextSelectColor,
               fontSize: SizeConfig.font16,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],

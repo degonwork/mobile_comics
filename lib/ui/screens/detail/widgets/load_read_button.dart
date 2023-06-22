@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../config/app_constant.dart';
 import '../../../../data/models/case_comic_model.dart';
 import '../../../../data/models/comic_model.dart';
@@ -22,14 +22,14 @@ class LoadReabutton extends StatelessWidget {
               id: comic.chapters!.first.id,
               comic: comic,
               numericChapter: 1,
-              color: Colors.orangeAccent,
+              color: AppColor.backGroundButtonColor,
               title: AppLocalizations.of(context)!.readFirstChapter,
             ),
             ReadButton(
               id: caseComic.chapterId,
               comic: comic,
               numericChapter: caseComic.numericChapter,
-              color: Colors.orangeAccent,
+              color: AppColor.backGroundButtonColor,
               title: AppLocalizations.of(context)!.continueReading,
             ),
           ],
@@ -40,7 +40,7 @@ class LoadReabutton extends StatelessWidget {
             id: comic.chapters!.first.id,
             comic: comic,
             numericChapter: 1,
-            color: Colors.orangeAccent,
+            color: AppColor.backGroundButtonColor,
             title: AppLocalizations.of(context)!.readComics,
           ),
         );
@@ -48,7 +48,7 @@ class LoadReabutton extends StatelessWidget {
     } else {
       return ReadButton(
         title: AppLocalizations.of(context)!.readComics,
-        color: Colors.grey,
+        color: AppColor.disable,
       );
     }
   }

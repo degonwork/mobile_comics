@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../config/size_config.dart';
+import 'text_ui.dart';
 
 class ChapterItem extends StatelessWidget {
   const ChapterItem({
@@ -17,12 +18,15 @@ class ChapterItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth / 50),
       decoration: BoxDecoration(
         border: Border.all(width: SizeConfig.width0dot8),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(SizeConfig.radius10),
       ),
       child: Center(
         child: TextUi(
-          text: '${AppLocalizations.of(context)!.chapter} $numerical',
+          text: numerical != null
+              ? '${AppLocalizations.of(context)!.chapter} $numerical'
+              : "${AppLocalizations.of(context)!.chapter}: ",
           fontSize: SizeConfig.font20,
+          color: AppColor.contentInforColor,
         ),
       ),
     );

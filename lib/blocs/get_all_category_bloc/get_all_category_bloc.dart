@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_event.dart';
-import 'package:full_comics_frontend/blocs/get_all_category_bloc/get_all_category_state.dart';
-import 'package:full_comics_frontend/data/repository/category_repository.dart';
-
 import '../../data/models/category_model.dart';
+import '../../data/repository/category_repository.dart';
+import 'get_all_category_event.dart';
+import 'get_all_category_state.dart';
 
 class GetAllCategoryBloc
     extends Bloc<GetAllCategoryEvent, GetAllCategoryState> {

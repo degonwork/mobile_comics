@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../widgets/text_ui.dart';
 
 class Descreption extends StatefulWidget {
@@ -33,6 +33,7 @@ class _DescreptionState extends State<Descreption> {
               TextUi(
                 text: widget.text,
                 textOverflow: TextOverflow.ellipsis,
+                color: AppColor.contentDecripberColor,
               ),
               TextButton(
                 onPressed: () {
@@ -41,10 +42,11 @@ class _DescreptionState extends State<Descreption> {
                   });
                 },
                 child: Center(
-                    child: TextUi(
-                  text: AppLocalizations.of(context)!.viewMore,
-                  color: Colors.yellow,
-                )),
+                  child: TextUi(
+                    text: AppLocalizations.of(context)!.viewMore,
+                    color: AppColor.buttonTextSelectColor,
+                  ),
+                ),
               ),
             ],
           );
@@ -52,7 +54,10 @@ class _DescreptionState extends State<Descreption> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextUi(text: widget.text),
+              TextUi(
+                text: widget.text,
+                color: AppColor.contentDecripberColor,
+              ),
               TextButton(
                 onPressed: () {
                   setState(() {
@@ -62,14 +67,17 @@ class _DescreptionState extends State<Descreption> {
                 child: Center(
                   child: TextUi(
                     text: AppLocalizations.of(context)!.collapse,
-                    color: Colors.yellow,
+                    color: AppColor.buttonTextSelectColor,
                   ),
                 ),
               )
             ],
           );
         } else {
-          return Text(widget.text);
+          return TextUi(
+            text: widget.text,
+            color: AppColor.contentDecripberColor,
+          );
         }
       },
     );

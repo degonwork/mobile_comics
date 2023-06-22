@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
-
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../config/size_config.dart';
+import 'text_ui.dart';
 
 class ItemInfor extends StatelessWidget {
   const ItemInfor({
@@ -17,21 +17,13 @@ class ItemInfor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: SizeConfig.height45,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            SizeConfig.radius15,
-          ),
-        ),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           CircleAvatar(
-            backgroundColor: Colors.blue,
+            backgroundColor: AppColor.backGroundIconInforColor,
             radius: SizeConfig.radius15,
             child: Icon(
               icon,
@@ -45,10 +37,12 @@ class ItemInfor extends StatelessWidget {
               TextUi(
                 text: titleItem,
                 fontSize: SizeConfig.font14,
+                color: AppColor.contentInforColor,
               ),
               TextUi(
                 text: contentItem,
                 fontSize: SizeConfig.font14,
+                color: AppColor.contentInforColor,
               ),
             ],
           ),

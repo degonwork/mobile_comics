@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import '../../config/app_color.dart';
 import '../../config/size_config.dart';
+import 'text_ui.dart';
 
 class GenreComic extends StatelessWidget {
   const GenreComic({
@@ -25,7 +26,6 @@ class GenreComic extends StatelessWidget {
           : const EdgeInsets.only(right: 0),
       decoration: BoxDecoration(
         color: color,
-        border: Border.all(width: SizeConfig.radius1, color: Colors.grey),
         borderRadius: BorderRadius.all(
           Radius.circular(
             SizeConfig.radius10,
@@ -39,6 +39,7 @@ class GenreComic extends StatelessWidget {
             child: TextUi(
               text: listCategories[index],
               fontSize: SizeConfig.font14,
+              color: AppColor.genreComicColor,
             ),
           ),
         ),

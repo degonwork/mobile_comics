@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../config/app_color.dart';
 import '../../config/size_config.dart';
+import 'text_ui.dart';
 
 class CaseInfor extends StatelessWidget {
   const CaseInfor({
@@ -56,14 +57,14 @@ class CaseInfor extends StatelessWidget {
                       TextUi(
                         text: title != null ? title! : "",
                         fontSize: SizeConfig.font20,
-                        color: Colors.yellow.withBlue(2),
+                        color: AppColor.titleComicColor,
                       ),
                       SizedBox(height: SizeConfig.height10),
                       TextUi(
                         text:
                             "${reads ?? ""} ${AppLocalizations.of(context)!.reads}",
                         fontSize: SizeConfig.font14,
-                        color: Colors.white,
+                        color: AppColor.caseReadsColor,
                       ),
                     ],
                   ),
@@ -74,7 +75,7 @@ class CaseInfor extends StatelessWidget {
                 text:
                     "${AppLocalizations.of(context)!.reading}: ${AppLocalizations.of(context)!.chapters} $numericChapter",
                 fontSize: SizeConfig.font14,
-                color: Colors.black,
+                color: AppColor.contentInforColor,
               )
             ],
           ),

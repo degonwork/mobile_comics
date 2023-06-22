@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/repository/ads_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../config/app_constant.dart';
+import '../../data/repository/ads_repository.dart';
 part 'ads_event.dart';
 part 'ads_state.dart';
 

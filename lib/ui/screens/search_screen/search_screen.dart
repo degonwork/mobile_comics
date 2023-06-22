@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_bloc.dart';
-import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_event.dart';
-import 'package:full_comics_frontend/blocs/search_comic_bloc/search_comic_state.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../blocs/search_comic_bloc/search_comic_bloc.dart';
+import '../../../blocs/search_comic_bloc/search_comic_event.dart';
+import '../../../blocs/search_comic_bloc/search_comic_state.dart';
 import '../../../config/size_config.dart';
+import '../../widgets/back_ground_app.dart';
 import '../../widgets/text_ui.dart';
 import '../detail/comic_detail_screen.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import '../../../config/app_color.dart';
 import '../../../config/size_config.dart';
+import '../../widgets/back_ground_app.dart';
 import 'widgets/favorite.dart';
 import 'widgets/read_offline.dart';
 import 'widgets/reading.dart';
@@ -44,17 +45,14 @@ class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
             child: Column(
               children: [
                 TabBar(
-                  indicatorColor: Colors.transparent,
+                  indicatorColor: AppColor.brownColor.withOpacity(0.2),
+                  indicatorWeight: SizeConfig.width1,
                   controller: _tabController,
-                  labelColor: Colors.blue,
+                  labelColor: AppColor.selectTitleColor,
                   tabs: tabs,
-                  unselectedLabelColor: Colors.black,
-                  labelStyle: TextStyle(
-                    fontSize: SizeConfig.font16,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  unselectedLabelColor: AppColor.unSelectTitleColor,
                 ),
+                SizedBox(height: SizeConfig.height20),
                 Expanded(
                   child: TabBarView(
                     physics: const ClampingScrollPhysics(),

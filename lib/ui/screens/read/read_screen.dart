@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
-import 'package:full_comics_frontend/ui/screens/detail/comic_detail_screen.dart';
-import 'package:full_comics_frontend/ui/widgets/back_button_screen.dart';
+import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
 import '../../../data/models/comic_model.dart';
+import '../../widgets/back_button_screen.dart';
+import '../detail/comic_detail_screen.dart';
 
 class ReadScreen extends StatefulWidget {
   const ReadScreen({

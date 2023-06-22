@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,12 +15,14 @@ class BottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: SizeConfig.height60dot5,
+    return Container(
+      color: AppColor.navbarColor,
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.height5),
       child: BottomNavigationBar(
-        backgroundColor: Colors.black.withBlue(70),
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.yellow.withBlue(2),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        unselectedItemColor: AppColor.unSelectItemColor,
+        selectedItemColor: AppColor.selectItemColor,
         iconSize: SizeConfig.icon25,
         selectedFontSize: SizeConfig.font14,
         unselectedFontSize: SizeConfig.font14,

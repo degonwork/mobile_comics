@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/ads_bloc/ads_bloc.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
+import '../../blocs/ads_bloc/ads_bloc.dart';
 import '../../data/models/comic_model.dart';
 import 'text_ui.dart';
 import '../screens/read/read_screen.dart';
@@ -60,8 +61,7 @@ class ReadButton extends StatelessWidget {
             text: title,
             textAlign: TextAlign.center,
             fontSize: SizeConfig.font20,
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+            color: AppColor.contentButtonColor,
           ),
         ),
       ),

@@ -1,5 +1,5 @@
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
-import 'package:full_comics_frontend/data/models/comic_model.dart';
+import '../data/models/case_comic_model.dart';
+import '../data/models/comic_model.dart';
 
 class AppConstant {
   static const baseServerUrl = "http://117.4.194.207:3000";

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
+import '../../config/app_constant.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/repository/comic_repository.dart';
 part 'view_more_event.dart';

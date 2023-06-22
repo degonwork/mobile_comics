@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/description.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
+import '../../../../config/app_constant.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../widgets/genre_comic.dart';
 import '../../../widgets/item_info.dart';
 import '../../../widgets/text_ui.dart';
+import '../widgets/description.dart';
 
 class Infor extends StatelessWidget {
   const Infor({
@@ -69,7 +70,7 @@ class Infor extends StatelessWidget {
                 children: [
                   TextUi(
                     text: AppLocalizations.of(context)!.genreComics,
-                    color: Colors.white,
+                    color: AppColor.titleContentColor,
                     fontSize: SizeConfig.font20,
                   ),
                   SizedBox(height: SizeConfig.height10),
@@ -80,7 +81,7 @@ class Infor extends StatelessWidget {
                             itemBuilder: (context, index) => GenreComic(
                               listCategories: comic.categories!,
                               index: index,
-                              color: Colors.amber,
+                              color: AppColor.backGroundGenreComicColor,
                             ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(width: 0),
@@ -95,7 +96,7 @@ class Infor extends StatelessWidget {
             const Divider(thickness: 1),
             TextUi(
               text: AppLocalizations.of(context)!.describe,
-              color: Colors.white,
+              color: AppColor.titleContentColor,
               fontSize: SizeConfig.font20,
             ),
             SizedBox(
@@ -104,7 +105,7 @@ class Infor extends StatelessWidget {
             Descreption(
               maxLines: 2,
               text: comic.description != null ? comic.description! : "",
-            ),
+            )
           ],
         ),
       ),
