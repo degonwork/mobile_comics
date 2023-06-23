@@ -10,6 +10,16 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
       : _chapterRepo = chapterRepo,
         super(ReadChapterInital()) {
     on<LoadChapter>(_onLoadChapter);
+    on<LoadNextChapter>(_onLoadNextChapter);
+  }
+  Future<void> _onLoadNextChapter(LoadNextChapter event,Emitter<ReadChapterState> emitter)async{
+    
+    try {
+      List<Image> listImageNextChapter  = await _chapterRepo.readChapterNext(comicId: event.comicId, numerical: event.numerical);
+      emitter(LoadedChapter(listImageNextChapter));
+    } catch (e) {
+      emitter(ReadChapterLoadFailed());
+    }
   }
   Future<void> _onLoadChapter(
       LoadChapter event, Emitter<ReadChapterState> emit) async {

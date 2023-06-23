@@ -56,7 +56,7 @@ class ComicRepo {
         throw Exception('Load failed hot comic');
       }
     } catch (e) {
-      print("------------" + e.toString());
+      print(e.toString());
     }
 
     List<Comic> listHotComic = await readHotComicsFromDB(limit: limit);
@@ -85,7 +85,7 @@ class ComicRepo {
         throw Exception('Load failed new comic');
       }
     } catch (e) {
-      print("------------" + e.toString());
+      print(e.toString());
     }
     List<Comic> listNewComic = await readNewComicsFromDB(limit: limit);
     if (listNewComic.isNotEmpty) {

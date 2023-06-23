@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+
+
 abstract class ReadChapterEvent extends Equatable {
   const ReadChapterEvent();
   @override
@@ -13,6 +15,13 @@ class LoadChapter extends ReadChapterEvent {
   List<Object> get props => [id];
 }
 
-class ContinueReading extends ReadChapterEvent {}
+// class ContinueReading extends ReadChapterEvent {}
 
 class ContinueFailed extends ReadChapterEvent {}
+class LoadNextChapter extends ReadChapterEvent{
+  final String comicId;
+  final int numerical;
+  const LoadNextChapter(this.comicId,this.numerical);
+  @override
+  List<Object> get props => [comicId,numerical];
+}

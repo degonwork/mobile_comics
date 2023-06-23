@@ -159,6 +159,21 @@ class StorageDatabase {
       return [];
     }
   }
+ //
+ Future<Chapter?> readChapterByNumberic({required String comicId,required int numerical})async{
+  final db= await instance.database;
+  final maps = await db.query(
+    tableChapters,
+    columns: ChapterField.values,
+    where: '${ChapterField.comic_id} = ? and ${ChapterField.numerical} = ?',
+    whereArgs: [comicId,numerical],
+    );
+   if (maps.isNotEmpty) {
+     return Chapter.fromJson(maps.first);
+   }else{
+    return null;
+   }
+ }
 
   Future<void> updateChapterToDB({required Chapter chapter}) async {
     final db = await instance.database;

@@ -4,7 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/blocs/case/case_bloc.dart';
 
+
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
+
 import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
 import '../../../data/models/comic_model.dart';
@@ -58,55 +60,118 @@ class _ReadScreenState extends State<ReadScreen> {
                       if (state is LoadedChapter) {
                         final listImage = state.listImageContent;
                         if (listImage.isNotEmpty) {
-                          return ListView.builder(
-                            controller: controller,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listImage.length,
-                            itemBuilder: (context, index) {
-                              return listImage[index].height != null &&
-                                      listImage[index].width != null
-                                  ? CachedNetworkImage(
-                                      imageUrl: listImage[index].path,
-                                      imageBuilder: (context, imageProvider) {
-                                        return SizedBox(
-                                          width: SizeConfig.screenWidth,
-                                          height: SizeConfig.screenWidth *
-                                              (listImage[index].width! /
-                                                  listImage[index].height!),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.fitWidth,
+                          return Column(
+                            children: [
+                              ListView.builder(
+                                controller: controller,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: listImage.length,
+                                itemBuilder: (context, index) {
+                                  return listImage[index].height != null &&
+                                          listImage[index].width != null
+                                      ? CachedNetworkImage(
+                                          imageUrl: listImage[index].path,
+                                          imageBuilder:
+                                              (context, imageProvider) {
+                                            return SizedBox(
+                                              width: SizeConfig.screenWidth,
+                                              height: SizeConfig.screenWidth *
+                                                  (listImage[index].width! /
+                                                      listImage[index].height!),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.fitWidth,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/banner_splash.png"),
-                                    )
-                                  : Image.asset("assets/images/banner_splash.png");
-                            },
+                                            );
+                                          },
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(
+                                                  "assets/images/banner_splash.png"),
+                                        )
+                                      : Image.asset(
+                                          "assets/images/banner_splash.png");
+                                },
+                              ),
+                              // TextButton(
+                              //     onPressed: () {
+                                    
+                              //       context.read<ReadChapterBloc>().add( LoadChapter(widget.chapterId!));
+                              //       // Navigator.push(
+                              //       //     context,
+                              //       //     MaterialPageRoute(
+                              //       //         builder: (context) => ReadScreen(
+                              //       //               numericChapter: widget.numericChapter,
+                              //       //             )));
+                              //     },
+                              //     child: const Text(
+                              //       "Đọc chương kế tiếp",
+                              //       style: TextStyle(
+                              //         decoration: TextDecoration.underline,
+                              //       ),
+                              //     )),
+                            ],
                           );
+                          // return ListView.builder(
+                          //   controller: controller,
+                          //   shrinkWrap: true,
+                          //   scrollDirection: Axis.vertical,
+                          //   itemCount: listImage.length,
+                          //   itemBuilder: (context, index) {
+                          //     return listImage[index].height != null &&
+                          //             listImage[index].width != null
+                          //         ? CachedNetworkImage(
+                          //             imageUrl: listImage[index].path,
+                          //             imageBuilder: (context, imageProvider) {
+                          //               return SizedBox(
+                          //                 width: SizeConfig.screenWidth,
+                          //                 height: SizeConfig.screenWidth *
+                          //                     (listImage[index].width! /
+                          //                         listImage[index].height!),
+                          //                 child: Padding(
+                          //                   padding: const EdgeInsets.all(8.0),
+                          //                   child: Container(
+                          //                     decoration: BoxDecoration(
+                          //                       image: DecorationImage(
+                          //                         image: imageProvider,
+                          //                         fit: BoxFit.fitWidth,
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               );
+                          //             },
+                          //             errorWidget: (context, url, error) =>
+                          //                 Image.asset(
+                          //                     "assets/images/banner_splash.png"),
+                          //           )
+                          //         : Image.asset("assets/images/banner_splash.png");
+                          //   },
+                          // );
                         } else {
                           return const Center(
-                              child: CircularProgressIndicator(color: Colors.amber));
+                              child: CircularProgressIndicator(
+                                  color: Colors.amber));
                         }
                       }
                       return const Center(
-                          child: CircularProgressIndicator(color: Colors.amber));
+                          child:
+                              CircularProgressIndicator(color: Colors.amber));
                     },
                   ),
                 ),
                 // TextButton(
                 //   onPressed: (){
-                    
+                //    context.read<ReadChapterBloc>().add(LoadNextChapter(widget.comic!.id, widget.numericChapter!));
+                //    Navigator.push(context, MaterialPageRoute(builder: (context) =>  ReadScreen(numericChapter: widget.numericChapter,)));
                 //   },
                 //   child:  const Text(
                 //     "Đọc chương kế tiếp",
@@ -122,7 +187,7 @@ class _ReadScreenState extends State<ReadScreen> {
             margin: const EdgeInsets.only(top: 20),
             child: AnimatedOpacity(
               opacity: visialbe ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 100),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(

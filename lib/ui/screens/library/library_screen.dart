@@ -26,7 +26,7 @@ class LibraryScreen extends StatelessWidget {
         children: [
           const BackGroundApp(),
           Container(
-            padding: EdgeInsets.only(left: SizeConfig.screenWidth / 18),
+            padding: EdgeInsets.only(left: SizeConfig.screenWidth / 18,right: SizeConfig.screenWidth / 18),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

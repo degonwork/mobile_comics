@@ -135,4 +135,13 @@ class ChapterRepo {
     print(images);
     return images;
   }
+  // 
+  Future<List<Image>> readChapterNext({required String comicId,required int numerical})async{
+   final chapter =  await HandleDatabase.readChapterByNumberic(comicId: comicId, numerical: numerical);
+   if (chapter != null) {
+     return readChapterContentFromDB(chapterId: chapter.id);
+   }else{
+    return [];
+   }
+  }
 }
