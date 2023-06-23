@@ -7,8 +7,12 @@ abstract class BottomNavbarEvent extends Equatable {
 
 class ChangeBottomNavbarEvent extends BottomNavbarEvent {
   final Widget currentScreen;
+  final int navigatiorValue;
 
-  ChangeBottomNavbarEvent(this.currentScreen);
+  ChangeBottomNavbarEvent(
+    this.currentScreen,
+    this.navigatiorValue,
+  );
 
   @override
   List<Object> get props => [currentScreen];

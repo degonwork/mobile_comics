@@ -1,5 +1,5 @@
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
-import 'package:full_comics_frontend/data/models/comic_model.dart';
+import '../data/models/case_comic_model.dart';
+import '../data/models/comic_model.dart';
 
 class AppConstant {
   static const baseServerUrl = "http://117.4.194.207:3000";
@@ -46,11 +46,10 @@ class AppConstant {
   static const categoryAll = "/category/all";
 
 // Error
-  static const comicNotExist = Comic(id: "Not-exist");
+  static const comicNotExist = Comic(id: "Not-exist", isFull: 0);
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
 
-// Link Image fluttet
-  static const flutterImageLink =
-      "https://storage.googleapis.com/cms-storage-bucket/70760bf1e88b184bb1bc.png";
+// Đánh giá
+  static const evaluate = "1.1K";
 }

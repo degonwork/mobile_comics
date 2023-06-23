@@ -18,6 +18,7 @@ class ComicField {
     chapter_update_time,
     update_time,
     add_chapter_time,
+    isFull
   ];
 
   static String id = 'id';
@@ -32,6 +33,7 @@ class ComicField {
   static String update_time = 'update_time';
   static String add_chapter_time = 'add_chapter_time';
   static String description = 'description';
+  static String isFull = 'isFull';
 }
 
 class Comic {
@@ -53,9 +55,11 @@ class Comic {
   final String? image_thumnail_rectangle_id;
   final List<String>? categories;
   final int? times_ads;
+  final int isFull;
 
   const Comic({
     required this.id,
+    required this.isFull,
     this.image_detail_path,
     this.image_detail_id,
     this.image_thumnail_rectangle_path,
@@ -124,6 +128,7 @@ class Comic {
               : DateTime.parse(json['add_chapter_time'])
           : null,
       times_ads: json["times_ads"],
+      isFull: json["isFull"] ?? 0,
     );
   }
   static Comic copyWith(
@@ -155,6 +160,7 @@ class Comic {
       chapter_update_time: comic.chapter_update_time,
       update_time: comic.update_time,
       add_chapter_time: comic.add_chapter_time,
+      isFull: comic.isFull,
     );
   }
 
@@ -172,6 +178,7 @@ class Comic {
       'chapter_update_time': chapter_update_time?.toString(),
       'update_time': update_time?.toString(),
       'add_chapter_time': add_chapter_time?.toString(),
+      'isFull': isFull
     };
   }
 }

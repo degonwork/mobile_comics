@@ -27,9 +27,12 @@ class RouterScreen extends StatelessWidget {
           bottomNavigationBar: BottomNavbar(
             currentIndex: state.navigatorValue,
             onTap: (int value) {
-              context
-                  .read<BottomNavbarBloc>()
-                  .add(ChangeBottomNavbarEvent(listScreen[value]));
+              context.read<BottomNavbarBloc>().add(
+                    ChangeBottomNavbarEvent(
+                      listScreen[value],
+                      value,
+                    ),
+                  );
             },
           ),
         );

@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'package:full_comics_frontend/config/app_constant.dart';
-import 'package:full_comics_frontend/data/providers/api/api_client.dart';
+import '../../config/app_constant.dart';
 import '../models/category_model.dart';
+import '../providers/api/api_client.dart';
 import '../providers/database/handle_database.dart';
 
 class CategoryRepo {
   const CategoryRepo({required this.apiClient});
   final ApiClient apiClient;
-  Future<List<Category>> getAllCategory() async {
+  Future<void> getAllCategory() async {
     try {
       final response = await apiClient.getData(AppConstant.categoryAll);
       if (response.statusCode == 200) {
@@ -22,6 +22,9 @@ class CategoryRepo {
       print(
           '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
     }
+  }
+
+  Future<List<Category>> getAllCategoryFromDB() async {
     return await HandleDatabase.readAllCategoryFromDB();
   }
 

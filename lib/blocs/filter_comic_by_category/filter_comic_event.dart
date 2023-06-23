@@ -6,7 +6,7 @@ abstract class FilterComicEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FilterComicInitial extends FilterComicEvent {
+class FilterComicStart extends FilterComicEvent {
   @override
   List<Object> get props => [];
 }

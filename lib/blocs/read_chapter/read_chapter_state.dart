@@ -9,9 +9,10 @@ abstract class ReadChapterState extends Equatable {
 
 class ReadChapterInital extends ReadChapterState {}
 
+class LoadingChapter extends ReadChapterState {}
+
 class LoadedChapter extends ReadChapterState {
   final List<Image> listImageContent;
-
   const LoadedChapter(this.listImageContent);
   @override
   List<Object> get props => [listImageContent];

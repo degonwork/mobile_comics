@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomNavbar extends StatelessWidget {
   final int currentIndex;
-  final Function(int) onTap;
 
-  const BottomNavbar(
-      {super.key, required this.currentIndex, required this.onTap});
+  final Function(int) onTap;
+  const BottomNavbar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: SizeConfig.screenHeight * 0.1,
-      width: double.infinity,
+    return Container(
+      color: AppColor.navbarColor,
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.height5),
       child: BottomNavigationBar(
-        backgroundColor: Colors.black.withBlue(50),
-        unselectedItemColor: Colors.blue,
-        iconSize: 28,
-        showSelectedLabels: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        unselectedItemColor: AppColor.unSelectItemColor,
+        selectedItemColor: AppColor.selectItemColor,
+        iconSize: SizeConfig.icon25,
         selectedFontSize: SizeConfig.font14,
         unselectedFontSize: SizeConfig.font14,
         currentIndex: currentIndex,
@@ -26,30 +31,26 @@ class BottomNavbar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.home_outlined,
-              color: Colors.white.withOpacity(0.9),
             ),
             label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.library_books,
-              color: Colors.white.withOpacity(0.9),
             ),
             label: AppLocalizations.of(context)!.library,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.cases_outlined,
-              color: Colors.white.withOpacity(0.9),
             ),
             label: AppLocalizations.of(context)!.cabinet,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
-              color: Colors.white.withOpacity(0.9),
             ),
             label: AppLocalizations.of(context)!.profile,
           ),

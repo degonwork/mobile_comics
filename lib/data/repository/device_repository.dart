@@ -1,8 +1,8 @@
-import 'package:full_comics_frontend/data/providers/api/api_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import '../../config/app_constant.dart';
 import '../models/device_model.dart';
+import '../providers/api/api_client.dart';
 
 class DeviceRepo {
   final ApiClient _apiClient;

@@ -9,6 +9,7 @@
   "seeMore": "See more comics",
   "inforComics": "Comic information",
   "chapters": "Chapters",
+  "chapter": "Chapter",
   "numberReads": "Number of reads",
   "totalChapters": "Total chapters",
   "genreComics": "Genre Comics",
@@ -19,5 +20,15 @@
   "latestChapter": "Latest chapter",
   "listChapters": "List chapters",
   "reading": "Reading",
-  "reads": "Reads"
+  "reads": "Reads",
+  "empty": "Empty",
+  "development": "This feature is under development",
+  "keywords": "Enter keywords",
+  "search": "Search comics ...",
+  "viewMore": "See more",
+  "collapse": "Collapse",
+  "favourite": "Favourite",
+  "offline": "Offline",
+  "noChapters" : "This comic has no chapters",
+  "evaluate": "Evaluate"
 }

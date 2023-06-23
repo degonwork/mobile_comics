@@ -1,13 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-import 'package:full_comics_frontend/config/size_config.dart';
-import 'package:full_comics_frontend/config/ui_constant.dart';
 import '../../../../blocs/case/case_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../../config/size_config.dart';
+import '../../../widgets/case_infor.dart';
+import '../../../widgets/text_ui.dart';
 import '../../detail/comic_detail_screen.dart';
 
 class Reading extends StatelessWidget {
@@ -21,107 +19,48 @@ class Reading extends StatelessWidget {
           final listCaseComic = state.listCaseComic;
           if (listCaseComic.isNotEmpty) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: listCaseComic.length,
-                itemBuilder: (context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      context
-                          .read<ComicDetailBloc>()
-                          .add(LoadDetailComic(listCaseComic[index].comicId));
-                      Navigator.pushNamed(context, ComicDetailScreen.routeName);
-                    },
-                    child: Row(
-                      children: [
-                        listCaseComic[index].imageThumnailSquareComicPath !=
-                                null
-                            ? CachedNetworkImage(
-                                imageUrl: listCaseComic[index]
-                                    .imageThumnailSquareComicPath!,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: SizeConfig.screenWidth / 3.6,
-                                    height: SizeConfig.screenHeight / 7.56,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        "assets/images/banner_splash.png"),
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width15),
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: listCaseComic.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: index == listCaseComic.length - 1
+                            ? EdgeInsets.only(
+                                bottom: SizeConfig.height20,
                               )
-                            : Image.asset("assets/images/banner_splash.png"),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        listCaseComic[index].titleComic != null
-                                            ? listCaseComic[index].titleComic!
-                                            : "",
-                                        style: titleComic,
-                                        // style: const TextStyle(
-                                        //   color: Colors.black,
-                                        //   fontSize: 20,
-                                        //   fontWeight: FontWeight.bold,
-                                        // ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        "${listCaseComic[index].reads ?? ""} ${AppLocalizations.of(context)!.reads}",
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Divider(thickness: 0.8),
-                              Text(
-                                "${AppLocalizations.of(context)!.reading}: Chương ${listCaseComic[index].numericChapter}",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                ),
-                              )
-                            ],
+                            : const EdgeInsets.only(bottom: 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<ComicDetailBloc>().add(
+                                LoadDetailComic(listCaseComic[index].comicId));
+                            Navigator.pushNamed(
+                                context, ComicDetailScreen.routeName);
+                          },
+                          child: CaseInfor(
+                            imageSquare: listCaseComic[index]
+                                .imageThumnailSquareComicPath,
+                            title: listCaseComic[index].titleComic,
+                            reads: listCaseComic[index].reads,
+                            numericChapter: listCaseComic[index].numericChapter,
                           ),
                         ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const Divider(
-                  color: Colors.green,
-                  thickness: 0.5,
-                ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: SizeConfig.height20,
+                        )),
               ),
             );
           }
         }
-        return const Center(
-          child: Text(
-            "Danh sách trống ",
-            style: TextStyle(
-              fontSize: 18,
-            ),
+        return Center(
+          child: TextUi(
+            text: AppLocalizations.of(context)!.empty,
+            fontSize: SizeConfig.font18,
           ),
         );
       },

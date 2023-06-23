@@ -1,18 +1,13 @@
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/size_config.dart';
-import 'package:full_comics_frontend/ui/screens/library/widget/filter_by_category.dart';
-
-// import 'package:full_comics_frontend/ui/screens/library/widget/filter_by_category.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:full_comics_frontend/blocs/comic_detail/comic_detail_bloc.dart';
-// import 'package:full_comics_frontend/blocs/search_bloc/search_bloc.dart';
-// import 'package:full_comics_frontend/blocs/search_bloc/search_event.dart';
-// import 'package:full_comics_frontend/blocs/search_bloc/search_state.dart';
-// import 'package:full_comics_frontend/config/size_config.dart';
-// import 'package:full_comics_frontend/ui/screens/detail/comic_detail_screen.dart';
-import 'package:full_comics_frontend/ui/screens/library/widget/search_screen.dart';
-import 'package:full_comics_frontend/ui/widgets/back_ground_app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:full_comics_frontend/config/app_color.dart';
+import '../../../config/size_config.dart';
+import '../../widgets/back_ground_app.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/text_ui.dart';
+import '../search_screen/search_screen.dart';
+import 'widget/all_category.dart';
+import 'widget/comic_filter_by_category.dart';
 
 class LibraryScreen extends StatelessWidget {
   const LibraryScreen({super.key});
@@ -20,31 +15,54 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: Stack(
+      body: Stack(
         children: [
           const BackGroundApp(),
           Container(
-            padding: EdgeInsets.only(left: SizeConfig.screenWidth / 18),
+            padding: EdgeInsets.only(
+              top: SizeConfig.height45,
+              left: SizeConfig.width15,
+              right: SizeConfig.width15,
+            ),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SearchScreen(),
-                  const Text(
-                    'Lọc',
-                    style: TextStyle(fontSize: 20),
+                  CustomAppbar(
+                    text: AppLocalizations.of(context)!.library,
+                    iconRightWidget: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          SearchComicScreen.routeName,
+                        ),
+                        child: Icon(
+                          Icons.search,
+                          size: SizeConfig.icon25,
+                          color: AppColor.iconAppbarColor,
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight / 50.4,
+                  SizedBox(height: SizeConfig.height15),
+                  TextUi(
+                    text: AppLocalizations.of(context)!.genreComics,
+                    fontSize: SizeConfig.font20,
+                    color: AppColor.titleContentColor,
                   ),
-                  const FilterComicByCategory(),
+                  SizedBox(height: SizeConfig.height15),
+                  const AllCategory(),
+                  SizedBox(height: SizeConfig.height15),
+                  const ComicByCategory(),
                 ],
               ),
             ),
           ),
         ],
-      )),
+      ),
     );
   }
 }

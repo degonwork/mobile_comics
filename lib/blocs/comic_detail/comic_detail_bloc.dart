@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
+import '../../data/models/case_comic_model.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/repository/comic_repository.dart';
 part 'comic_detail_event.dart';
@@ -18,10 +18,22 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     LoadDetailComic event,
     Emitter<ComicDetailState> emit,
   ) async {
+    emit(ComicDetailLoading());
     try {
-      Comic comic = await _comicRepo.fetchDetailComics(id: event.id);
+      Comic comic = await _comicRepo.readComicDetailFromDB(id: event.id);
       CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
-      emit(ComicDetailLoaded(comic, caseComic));
+      if (comic.isFull == 0) {
+        await _comicRepo.fetchDetailComics(id: event.id);
+        Comic comicsResult =
+            await _comicRepo.readComicDetailFromDB(id: event.id);
+        emit(ComicDetailLoaded(comicsResult, caseComic));
+      } else {
+        emit(ComicDetailLoaded(comic, caseComic));
+        // await _comicRepo.fetchDetailComics(id: event.id).whenComplete(() async {
+        //   Comic comicsResult = await _comicRepo.readComicDetail(id: event.id);
+        //   emit(ComicDetailLoaded(comicsResult, caseComic));
+        // });
+      }
     } catch (e) {
       emit(ComicDetailLoadFailed());
     }
