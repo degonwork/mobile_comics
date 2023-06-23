@@ -42,11 +42,13 @@ class _AllCategoryState extends State<AllCategory> {
                             });
                           },
                           child: GenreComic(
-                              listCategories: listCategories,
-                              index: index,
-                              color: selected == index
-                                  ? AppColor.selectItemGenreComicColor
-                                  : AppColor.unSelectItemCGenreComicolor),
+                            listCategories: listCategories,
+                            index: index,
+                            color: selected == index
+                                ? AppColor.selectItemGenreComicColor
+                                : AppColor.unSelectItemGenreComicolor
+                                    .withOpacity(0.9),
+                          ),
                         )),
               ),
             );

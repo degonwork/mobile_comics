@@ -6,7 +6,7 @@ import '../../../widgets/text_ui.dart';
 class Descreption extends StatefulWidget {
   const Descreption({super.key, required this.maxLines, required this.text});
   final String text;
-  final int maxLines;
+  final int? maxLines;
   @override
   State<Descreption> createState() => _DescreptionState();
 }
@@ -32,6 +32,7 @@ class _DescreptionState extends State<Descreption> {
             children: [
               TextUi(
                 text: widget.text,
+                maxLines: widget.maxLines,
                 textOverflow: TextOverflow.ellipsis,
                 color: AppColor.contentDecripberColor,
               ),
@@ -43,7 +44,7 @@ class _DescreptionState extends State<Descreption> {
                 },
                 child: Center(
                   child: TextUi(
-                    text: AppLocalizations.of(context)!.viewMore,
+                    text: AppLocalizations.of(context)!.collapse,
                     color: AppColor.buttonTextSelectColor,
                   ),
                 ),
@@ -66,7 +67,7 @@ class _DescreptionState extends State<Descreption> {
                 },
                 child: Center(
                   child: TextUi(
-                    text: AppLocalizations.of(context)!.collapse,
+                    text: AppLocalizations.of(context)!.viewMore,
                     color: AppColor.buttonTextSelectColor,
                   ),
                 ),

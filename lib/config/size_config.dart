@@ -32,7 +32,7 @@ class SizeConfig {
   static double height100 = screenHeight / 7.56;
   static double height180 = screenHeight / 4.2;
   static double height200 = screenHeight / 3.78;
-  static double height535 = screenHeight / 1.413;
+  static double height435 = screenHeight / 1.74;
 
   // width
   static double width0dot8 = screenWidth / 450;

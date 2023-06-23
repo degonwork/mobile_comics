@@ -13,6 +13,7 @@ class AppColor {
   static const blueWaterColor = Color(0xFF580EF6);
   static const violetColor = Color(0xFF8E43ED);
   static const redColor = Color(0xFFF65151);
+  static const pinkColor = Color(0xFFFF6EC7);
 
 // Ui color
 // Background app
@@ -38,8 +39,8 @@ class AppColor {
 
   // select
   static const selectItemColor = blueWaterColor;
-  static const selectItemGenreComicColor = redColor;
-  static const unSelectItemCGenreComicolor = greenColor;
+  static const selectItemGenreComicColor = pinkColor;
+  static const unSelectItemGenreComicolor = yellowColor;
   static const selectTitleColor = yellowColor;
   static const unSelectItemColor = brownColor;
   static const unSelectTitleColor = blackColor;
@@ -52,7 +53,7 @@ class AppColor {
   static const navbarColor = blueAccentColor;
   static const backGroundIconBackColor = whiteColor;
   static const backGroundIconInforColor = violetColor;
-  static const backGroundGenreComicColor = greenColor;
+  static const backGroundGenreComicColor = yellowColor;
   static const backGroundButtonColor = redColor;
 
   // circular

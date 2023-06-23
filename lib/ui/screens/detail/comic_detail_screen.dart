@@ -116,7 +116,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                               ),
                             ),
                             SizedBox(
-                              height: SizeConfig.height535,
+                              height: SizeConfig.height435,
                               child: Container(
                                 margin:
                                     EdgeInsets.only(top: SizeConfig.height5),
@@ -160,7 +160,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
         ],
       ),
       bottomNavigationBar: Container(
-        height: SizeConfig.height80,
+        height: SizeConfig.height180,
         color: AppColor.navbarColor,
         child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
           builder: (context, state) {

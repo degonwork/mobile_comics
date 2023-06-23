@@ -99,11 +99,9 @@ class Infor extends StatelessWidget {
               color: AppColor.titleContentColor,
               fontSize: SizeConfig.font20,
             ),
-            SizedBox(
-              height: SizeConfig.height10,
-            ),
+            SizedBox(height: SizeConfig.height10),
             Descreption(
-              maxLines: 2,
+              maxLines: 7,
               text: comic.description != null ? comic.description! : "",
             )
           ],
