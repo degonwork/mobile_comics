@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
+import 'package:full_comics_frontend/data/models/case_comic_model.dart';
+import 'package:full_comics_frontend/ui/screens/detail/widgets/descreption.dart';
+
 import '../../../../config/app_constant.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../widgets/genre_comic.dart';
 import '../../../widgets/item_info.dart';
+import '../../../widgets/read_button.dart';
 import '../../../widgets/text_ui.dart';
-import '../widgets/description.dart';
 
 class Infor extends StatelessWidget {
   const Infor({
     super.key,
-    required this.comic,
+    required this.comic,required this.caseComic
   });
   final Comic comic;
-
+  final CaseComic caseComic;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,13 +103,59 @@ class Infor extends StatelessWidget {
               fontSize: SizeConfig.font20,
             ),
             SizedBox(height: SizeConfig.height10),
-            Descreption(
-              maxLines: 7,
-              text: comic.description != null ? comic.description! : "",
-            )
+            SizedBox(
+              height: SizeConfig.height120,
+              child: SingleChildScrollView(
+                child: Descreption(
+                  maxLines: 2,
+                  text: comic.description != null ? comic.description! : "",
+                ),
+              ),
+            ),
+            SizedBox(height: SizeConfig.height35,),
+            _loadReadButton(context),
+            // LoadReabutton(),
           ],
         ),
       ),
     );
   }
+   Widget _loadReadButton(BuildContext context) {
+    if (comic.chapters!.isNotEmpty) {
+      if (caseComic != AppConstant.caseComicNotExist) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ReadButton(
+              id: comic.chapters!.first.id,
+              comic: comic,
+              numericChapter: 1,
+              color: Colors.orangeAccent,
+              title: AppLocalizations.of(context)!.readFirstChapter,
+            ),
+            ReadButton(
+              id: caseComic.chapterId,
+              comic: comic,
+              numericChapter: caseComic.numericChapter,
+              color: Colors.orangeAccent,
+              title: AppLocalizations.of(context)!.continueReading,
+            ),
+          ],
+        );
+      } else {
+        return Center(
+          child: ReadButton(
+            id: comic.chapters!.first.id,
+            comic: comic,
+            numericChapter: 1,
+            color: Colors.orangeAccent,
+            title: AppLocalizations.of(context)!.readComics,
+          ),
+        );
+      }
+    } else {
+      return ReadButton(
+          title: AppLocalizations.of(context)!.readComics, color: Colors.grey);
+    }
+  } 
 }

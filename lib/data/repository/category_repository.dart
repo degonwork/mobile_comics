@@ -19,8 +19,8 @@ class CategoryRepo {
         }
       }
     } catch (e) {
-      print(
-          '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
+      // print(
+      //     '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
     }
   }
 

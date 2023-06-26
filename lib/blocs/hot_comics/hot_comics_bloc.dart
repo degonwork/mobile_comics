@@ -39,7 +39,7 @@ class HotComicsBloc extends Bloc<HotComicsEvent, HotComicsState> {
         // );
       }
     } catch (e) {
-      print(e.toString() + "------------------------");
+      // print(e.toString());
       emit(HotComicsFailed());
     }
   }

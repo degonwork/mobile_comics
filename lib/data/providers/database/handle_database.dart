@@ -12,9 +12,9 @@ class HandleDatabase {
       Comic? comic = await readComicByIDFromDB(id: comics[i].id);
       if (comic == null) {
         await StorageDatabase.instance.createComicToDB(comic: comics[i]);
-        print("${i + 1}: Comic created");
+        // print("${i + 1}: Comic created");
       } else {
-        print("${i + 1}: Comic don't create");
+        // print("${i + 1}: Comic don't create");
       }
     }
   }
@@ -50,12 +50,12 @@ class HandleDatabase {
       Chapter? chapter = await readChapterByIDFromDB(id: chapters[i].id);
       if (chapter == null) {
         await StorageDatabase.instance.createChapterToDB(chapter: chapters[i]);
-        print("${i + 1}: Chapter created");
+        // print("${i + 1}: Chapter created");
       } else {
-        print("${i + 1}: Chapter dont't create");
+        // print("${i + 1}: Chapter dont't create");
       }
     }
-    print("--------------------------------");
+    
   }
 
   static Future<Chapter?> readChapterByIDFromDB({required String id}) async {
@@ -85,9 +85,9 @@ class HandleDatabase {
       );
       if (imagesFromDB == null) {
         await StorageDatabase.instance.createImageToDB(image: images[i]);
-        print("${i + 1}: ${images[i].type} created");
+        // print("${i + 1}: ${images[i].type} created");
       } else {
-        print("${i + 1}: ${images[i].type} don't create");
+        // print("${i + 1}: ${images[i].type} don't create");
       }
     }
   }
@@ -171,9 +171,9 @@ class HandleDatabase {
       if (categoryComic == null) {
         await StorageDatabase.instance
             .createCategoriesComicsToDB(categoriesComics: categoriesComics[i]);
-        print("${i + 1}: CategoriesComics created");
+        // print("${i + 1}: CategoriesComics created");
       } else {
-        print("${i + 1}: CategoriesComics don't create");
+        // print("${i + 1}: CategoriesComics don't create");
       }
     }
     //   print("--------------------------------");

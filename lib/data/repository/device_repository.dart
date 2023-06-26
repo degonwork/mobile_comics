@@ -21,18 +21,18 @@ class DeviceRepo {
       '$_deviceUrl${AppConstant.registerDeviceUrl}',
       device.toMap(),
     );
-    print("Registed Device");
+    // print("Registed Device");
   }
 
   Future<void> createUuidDeviceToLocal() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     if (!sharedPreferences.containsKey(AppConstant.uuidDevice)) {
-      print("uuid device is not available");
+      // print("uuid device is not available");
       String uuidDevice = const Uuid().v4();
       await sharedPreferences.setString(AppConstant.uuidDevice, uuidDevice);
-      print("Create uuid device");
+      // print("Create uuid device");
     } else {
-      print("uuid device is available");
+      // print("uuid device is available");
     }
   }
 

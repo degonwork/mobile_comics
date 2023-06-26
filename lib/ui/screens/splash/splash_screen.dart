@@ -23,7 +23,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 Future<dynamic> _firebaseMessagingBackgroundHandler(
     RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message ${message.messageId}");
+  // print("Handling a background message ${message.messageId}");
 }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(

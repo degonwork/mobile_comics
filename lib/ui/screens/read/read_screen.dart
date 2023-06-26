@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';

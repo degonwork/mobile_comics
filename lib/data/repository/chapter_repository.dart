@@ -28,14 +28,14 @@ class ChapterRepo {
           final chapter = Chapter.fromJson(jsonResponse);
           await updateChapterToDB(chapter: chapter);
         } else {
-          print("chapter is not available");
+          // print("chapter is not available");
           throw Exception("Not Found Data");
         }
       } else {
         throw Exception('Load failed chapter');
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
@@ -62,7 +62,7 @@ class ChapterRepo {
       }
       await HandleDatabase.createChapterToDB(chapters: listChapters);
     } else {
-      print("Comic has not Chapters");
+      // print("Comic has not Chapters");
     }
   }
 
@@ -90,7 +90,7 @@ class ChapterRepo {
       );
       await HandleDatabase.updateChapterToDB(chapter: updateChapter);
     } else {
-      print("Chapter is not updated");
+      // print("Chapter is not updated");
     }
   }
 
@@ -99,10 +99,10 @@ class ChapterRepo {
         await _imageRepo.readImageChapterContent(chapterId: chapter.id);
     if (imageChapterContents.isNotEmpty) {
       await _imageRepo.deleteImageChapterContent(chapter: chapter);
-      print("deleted content");
+      // print("deleted content");
     }
     await _imageRepo.createImageChapterContentToDB(chapter: chapter);
-    print("Repaired content");
+    // print("Repaired content");
   }
 
   Future<List<Image>> readChapterContentFromDB(

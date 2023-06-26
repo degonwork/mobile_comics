@@ -171,9 +171,11 @@ class SearchComicScreen extends StatelessWidget {
                   );
                 }
               } else if (state is SearchError) {
-                return const Text('Không tìm thấy truyện phù hợp');
+                return Container(
+                  padding: EdgeInsets.only(left: SizeConfig.width15),
+                  child:   Text('Không tìm thấy truyện phù hợp',style: TextStyle(color: Colors.white,fontSize: SizeConfig.font16),));
               }
-              return const SizedBox.shrink();
+             return const SizedBox.shrink();
             }),
           ),
         ],
