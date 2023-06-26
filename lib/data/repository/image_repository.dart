@@ -6,49 +6,47 @@ import '../models/image_model.dart';
 
 class ImageRepo {
   // Create
-  Future<void> createImageComicToDB(
-      {required List<Comic> listHomeComic}) async {
-    final List<Image> listImageObject = [];
-    for (var homeComic in listHomeComic) {
-      if (homeComic.image_detail_id != null &&
-          homeComic.image_detail_path != null) {
+  Future<void> createImageComicToDB({required List<Comic> listComics}) async {
+    final List<Image> listImageCreate = [];
+    for (var comic in listComics) {
+      if (comic.image_detail_id != null && comic.image_detail_path != null) {
         Image imageDetail = Image(
-          id: homeComic.image_detail_id!,
-          path: homeComic.image_detail_path!
+          id: comic.image_detail_id!,
+          path: comic.image_detail_path!
               .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[0],
-          parent_id: homeComic.id,
+          parent_id: comic.id,
         );
-        listImageObject.add(imageDetail);
+        listImageCreate.add(imageDetail);
       }
-      if (homeComic.image_thumnail_square_id != null &&
-          homeComic.image_thumnail_square_path != null) {
+      if (comic.image_thumnail_square_id != null &&
+          comic.image_thumnail_square_path != null) {
         Image imageThumnailSquare = Image(
-          id: homeComic.image_thumnail_square_id!,
-          path: homeComic.image_thumnail_square_path!
+          id: comic.image_thumnail_square_id!,
+          path: comic.image_thumnail_square_path!
               .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[1],
-          parent_id: homeComic.id,
+          parent_id: comic.id,
         );
-        listImageObject.add(imageThumnailSquare);
+        listImageCreate.add(imageThumnailSquare);
       }
-      if (homeComic.image_thumnail_rectangle_id != null &&
-          homeComic.image_thumnail_rectangle_path != null) {
+      if (comic.image_thumnail_rectangle_id != null &&
+          comic.image_thumnail_rectangle_path != null) {
         Image imageThumnailSquare = Image(
-          id: homeComic.image_thumnail_rectangle_id!,
-          path: homeComic.image_thumnail_rectangle_path!
+          id: comic.image_thumnail_rectangle_id!,
+          path: comic.image_thumnail_rectangle_path!
               .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
               .removeLast(),
           type: AppConstant.typeImageComic[2],
-          parent_id: homeComic.id,
+          parent_id: comic.id,
         );
-        listImageObject.add(imageThumnailSquare);
+        listImageCreate.add(imageThumnailSquare);
       }
     }
-    if (listImageObject.isNotEmpty) {
-      await HandleDatabase.createImageToDB(images: listImageObject);
+    if (listImageCreate.isNotEmpty) {
+      await HandleDatabase.createImageToDB(images: listImageCreate);
     } else {
       print("Home Comic has not image");
     }
@@ -162,7 +160,7 @@ class ImageRepo {
       print("${typeImage} is updated");
       return imageID;
     } else if (imageID == null && imagePath != null) {
-      await createImageComicToDB(listHomeComic: [parent]);
+      await createImageComicToDB(listComics: [parent]);
       print("${typeImage} is created");
       return await readIDImageFromDB(
           parentId: parentDB.id, typeImage: typeImage);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -8,23 +9,21 @@ import '../ui/screens/splash/splash_screen.dart';
 import '../data/providers/api/api_client.dart';
 import '../config/app_constant.dart';
 import '../data/repository/comic_repository.dart';
-import '../blocs/bottom_navbar_bloc/bottom_navbar_bloc.dart';
 import '../config/app_router.dart';
 import '../blocs/view_more/view_more_bloc.dart';
 import '../data/repository/categories_comics_repository.dart';
 import '../data/repository/category_repository.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'blocs/ads_bloc/ads_bloc.dart';
+import 'blocs/ads/ads_bloc.dart';
+import 'blocs/bottom_navbar/bottom_navbar_bloc.dart';
 import 'blocs/case/case_bloc.dart';
 import 'blocs/comic_detail/comic_detail_bloc.dart';
 import 'blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'blocs/filter_comic_by_category/filter_comic_event.dart';
-import 'blocs/get_all_category_bloc/get_all_category_bloc.dart';
-import 'blocs/hot_comics/hot_comics_bloc.dart';
-import 'blocs/new_comics/new_comics_bloc.dart';
+import 'blocs/get_all_category/get_all_category_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
-import 'blocs/search_comic_bloc/search_comic_bloc.dart';
+import 'blocs/search_comic/search_comic_bloc.dart';
 import 'config/size_config.dart';
 import 'l10n/l10n.dart';
 
@@ -97,14 +96,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<BottomNavbarBloc>(
             create: (context) => BottomNavbarBloc(),
           ),
-          BlocProvider<HotComicsBloc>(
-              create: (context) => HotComicsBloc(
-                    comicRepo: context.read<ComicRepo>(),
-                  )..add(const LoadHotComics())),
-          BlocProvider<NewComicsBloc>(
-            create: (context) => NewComicsBloc(
-              comicRepo: context.read<ComicRepo>(),
-            )..add(const LoadNewComics()),
+          BlocProvider<HomeBloc>(
+            create: (context) => HomeBloc(comicRepo: context.read<ComicRepo>())
+              ..add(LoadHomeComic()),
           ),
           BlocProvider<ViewMoreBloc>(
             create: (context) => ViewMoreBloc(

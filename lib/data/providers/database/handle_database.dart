@@ -7,11 +7,11 @@ import '../../models/image_model.dart';
 
 class HandleDatabase {
   // process comic
-  static Future<void> createComicToDB({required List<Comic> comics}) async {
-    for (int i = 0; i < comics.length; i++) {
-      Comic? comic = await readComicByIDFromDB(id: comics[i].id);
+  static Future<void> createComicToDB({required List<Comic> listComics}) async {
+    for (int i = 0; i < listComics.length; i++) {
+      Comic? comic = await readComicByIDFromDB(id: listComics[i].id);
       if (comic == null) {
-        await StorageDatabase.instance.createComicToDB(comic: comics[i]);
+        await StorageDatabase.instance.createComicToDB(comic: listComics[i]);
         print("${i + 1}: Comic created");
       } else {
         print("${i + 1}: Comic don't create");

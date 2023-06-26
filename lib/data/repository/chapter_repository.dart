@@ -29,11 +29,8 @@ class ChapterRepo {
           await updateChapterToDB(chapter: chapter);
         } else {
           print("chapter is not available");
-          throw Exception("Not Found Data");
         }
-      } else {
-        throw Exception('Load failed chapter');
-      }
+      } else {}
     } catch (e) {
       print(e.toString());
     }

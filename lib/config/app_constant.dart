@@ -52,4 +52,7 @@ class AppConstant {
 
 // Đánh giá
   static const evaluate = "1.1K";
+
+  // timeout
+  static const timeout = 2;
 }
