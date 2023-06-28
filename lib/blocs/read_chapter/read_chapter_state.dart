@@ -13,9 +13,10 @@ class LoadingChapter extends ReadChapterState {}
 
 class LoadedChapter extends ReadChapterState {
   final List<Image> listImageContent;
-  const LoadedChapter(this.listImageContent);
+  final int currentNumeric;
+  const LoadedChapter(this.listImageContent,this.currentNumeric);
   @override
-  List<Object> get props => [listImageContent];
+  List<Object> get props => [listImageContent,currentNumeric];
 }
 
 class ReadChapterLoadFailed extends ReadChapterState {}

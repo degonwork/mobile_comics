@@ -49,25 +49,6 @@ class LibraryScreen extends StatelessWidget {
                     ),
                   ),
                   ),
-                  // CustomAppbar(
-                  //   text: AppLocalizations.of(context)!.library,
-                  //   iconRightWidget: InkWell(
-                  //     onTap: () {
-                  //       Navigator.pop(context);
-                  //     },
-                  //     child: InkWell(
-                  //       onTap: () => Navigator.pushNamed(
-                  //         context,
-                  //         SearchComicScreen.routeName,
-                  //       ),
-                  //       child: Icon(
-                  //         Icons.search,
-                  //         size: SizeConfig.icon25,
-                  //         color: AppColor.iconAppbarColor,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(height: SizeConfig.height15),
                   TextUi(
                     text: AppLocalizations.of(context)!.genreComics,

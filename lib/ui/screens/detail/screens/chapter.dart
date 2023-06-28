@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../../../../blocs/ads_bloc/ads_bloc.dart';
 import '../../../../data/models/case_comic_model.dart';
 import '../../../../data/models/chapter_model.dart';
 import '../../../../data/models/comic_model.dart';
@@ -38,6 +39,7 @@ class ListChapter extends StatelessWidget {
               ),
               GestureDetector(
                   onTap: () {
+                    context.read<AdsBloc>().add(Increment());
                     context.read<ReadChapterBloc>().add(
                           LoadChapter(chapters.last.id),
                         );
@@ -75,6 +77,7 @@ class ListChapter extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      context.read<AdsBloc>().add(Increment());
                       context
                           .read<ReadChapterBloc>()
                           .add(LoadChapter(chapters[index].id));

@@ -6,7 +6,6 @@ import '../../../../widgets/back_ground_app.dart';
 import '../../../../../config/size_config.dart';
 import '../../../../widgets/custom_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../../../widgets/gridview_comics.dart';
 
 class NewComicViewMoreScreen extends StatelessWidget {
