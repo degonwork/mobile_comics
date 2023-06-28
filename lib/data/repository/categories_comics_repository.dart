@@ -16,7 +16,7 @@ class CategoriesComicsRepo {
     if (allCategoriesComicsByComicIDFromDB.isNotEmpty) {
       await HandleDatabase.deleteAllCategoriesComicsByComicIDFromDB(
           comicID: comic.id);
-      print("deleted CategoriesComics with comicId: ${comic.id}");
+      // print("deleted CategoriesComics with comicId: ${comic.id}");
     }
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
@@ -40,7 +40,7 @@ class CategoriesComicsRepo {
       await HandleDatabase.createCategoriesComicsToDB(
           categoriesComics: listCategoriesComics);
     }
-    print("--------------------------------");
+   
   }
 
   Future<void> addListCategoriesComics({

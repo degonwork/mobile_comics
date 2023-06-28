@@ -50,7 +50,8 @@ class StorageDatabase {
       ${ChapterField.chapter_des} TEXT, 
       ${ChapterField.numerical} INTEGER,
       ${ChapterField.content_update_time} TEXT,
-      ${ChapterField.update_time} TEXT
+      ${ChapterField.update_time} TEXT,
+      ${ChapterField.isFull} INTEGER
     ) 
     ''');
     await db.execute(''' 

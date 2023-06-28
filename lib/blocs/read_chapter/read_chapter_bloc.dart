@@ -18,19 +18,21 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
       List<Image> listImageContent =
           await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
       if (listImageContent.isEmpty) {
-        await _chapterRepo.fetchDetailChapters(id: event.id);
+        await _chapterRepo.fetchDetailChapters(id: event.id, isUpdate: true);
         List<Image> listImageContent =
             await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
         emit(LoadedChapter(listImageContent));
       } else {
         emit(LoadedChapter(listImageContent));
-        // await _chapterRepo.fetchDetailChapters(id: event.id).whenComplete(
-        //   () async {
-        //     List<Image> listImageContent = await _chapterRepo
-        //         .readChapterContentFromDB(chapterId: event.id);
-        //     emit(LoadedChapter(listImageContent));
-        //   },
-        // );
+        await _chapterRepo
+            .fetchDetailChapters(id: event.id, isUpdate: true)
+            .whenComplete(
+          () async {
+            List<Image> listImageContent = await _chapterRepo
+                .readChapterContentFromDB(chapterId: event.id);
+            emit(LoadedChapter(listImageContent));
+          },
+        );
       }
     } catch (e) {
       emit(ReadChapterLoadFailed());

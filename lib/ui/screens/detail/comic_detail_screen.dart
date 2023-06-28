@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
+
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
@@ -9,12 +10,11 @@ import '../../widgets/back_button_screen.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../widgets/read_button.dart';
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
 import 'screens/chapter.dart';
 import 'screens/infor.dart';
-import 'widgets/load_read_button.dart';
+// import 'widgets/load_read_button.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   const ComicDetailScreen({super.key});
@@ -59,6 +59,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                 if (comic != AppConstant.comicNotExist) {
                   return CustomScrollView(
                     slivers: [
+                      
                       SliverAppBar(
                         automaticallyImplyLeading: false,
                         bottom: PreferredSize(
@@ -128,6 +129,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                                   children: [
                                     Infor(
                                       comic: comic,
+                                      caseComic: caseComic,
                                     ),
                                     ListChapter(
                                       comic: comic,
@@ -159,26 +161,26 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
           }),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: SizeConfig.height180,
-        color: AppColor.navbarColor,
-        child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
-          builder: (context, state) {
-            if (state is ComicDetailLoaded) {
-              if (state.comic != AppConstant.comicNotExist) {
-                return LoadReabutton(
-                  comic: state.comic,
-                  caseComic: state.caseComic,
-                );
-              }
-            }
-            return ReadButton(
-              title: AppLocalizations.of(context)!.readComics,
-              color: AppColor.disable,
-            );
-          },
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: SizeConfig.height180,
+      //   color: AppColor.navbarColor,
+      //   child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
+      //     builder: (context, state) {
+      //       if (state is ComicDetailLoaded) {
+      //         if (state.comic != AppConstant.comicNotExist) {
+      //           return LoadReabutton(
+      //             comic: state.comic,
+      //             caseComic: state.caseComic,
+      //           );
+      //         }
+      //       }
+      //       return ReadButton(
+      //         title: AppLocalizations.of(context)!.readComics,
+      //         color: AppColor.disable,
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }

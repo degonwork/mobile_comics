@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await _comicRepo.readHotComicsFromDB(limit: AppConstant.limitHomeComic);
     if (listHotComics.isEmpty) {
       print("Comic DB is empty");
-      await _comicRepo.fetchApiAndCreateDBHomeComic();
+      await _comicRepo.fetchApiHomeComic(isUpdate: false);
       listHotComics = await _comicRepo.readHotComicsFromDB(
           limit: AppConstant.limitHomeComic);
       listNewComics = await _comicRepo.readNewComicsFromDB(
@@ -35,15 +35,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       listNewComics = await _comicRepo.readNewComicsFromDB(
           limit: AppConstant.limitHomeComic);
       emit(HomeLoaded(listHotComics, listNewComics));
-      // await _comicRepo.fetchApiAndCreateDBHomeComic().whenComplete(() async {
-      //   await Future.delayed(const Duration(seconds: 1), () async {
-      //     listHotComics = await _comicRepo.readHotComicsFromDB(
-      //         limit: AppConstant.limitHomeComic);
-      //     listNewComics = await _comicRepo.readNewComicsFromDB(
-      //         limit: AppConstant.limitHomeComic);
-      //     emit(HomeLoaded(listHotComics, listHotComics));
-      //   });
-      // });
+      await _comicRepo.fetchApiHomeComic(isUpdate: true).whenComplete(() async {
+        await Future.delayed(const Duration(seconds: 1), () async {
+          listHotComics = await _comicRepo.readHotComicsFromDB(
+              limit: AppConstant.limitHomeComic);
+          listNewComics = await _comicRepo.readNewComicsFromDB(
+              limit: AppConstant.limitHomeComic);
+          emit(HomeLoaded(listHotComics, listNewComics));
+        });
+      });
     }
   }
 }

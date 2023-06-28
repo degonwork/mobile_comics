@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart';
-
 import '../../data/models/case_comic_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/app_constant.dart';
@@ -36,7 +35,7 @@ class ComicRepo {
         _apiClient = apiClient;
 
   // Fetch Api
-  Future<void> fetchApiAndCreateDBHomeComic() async {
+  Future<void> fetchApiHomeComic({required bool isUpdate}) async {
     List<Comic> listHomeComics = [];
     List<Comic> listHotComics =
         await fetchAPIHotComics(limit: AppConstant.limitHomeComic);
@@ -47,6 +46,21 @@ class ComicRepo {
     if (listHomeComics.isNotEmpty) {
       await createComicToDB(listComics: listHomeComics);
       print("Created comic ----------------------");
+      if (isUpdate) {
+        for (int i = 0; i < listHomeComics.length; i++) {
+          Comic? comicDB = await HandleDatabase.readComicByIDFromDB(
+              id: listHomeComics[i].id);
+          if (comicDB != null) {
+            print("required update ---------------------");
+            await updateHomeComic(
+              comic: listHomeComics[i],
+              comicDB: comicDB,
+              isFull: comicDB.isFull == 0 ? false : true,
+              isDetail: false,
+            );
+          }
+        }
+      }
     } else {
       print("dont create comic ----------------------");
     }
@@ -97,14 +111,31 @@ class ComicRepo {
     return listNewComicsApi;
   }
 
-  Future<void> fetchDetailComics({required String id}) async {
+  Future<Comic?> fetchDetailComics(
+      {required String id, required bool isUpdate}) async {
+    Comic? comicApi;
     try {
       final response = await _apiClient.getData('$_comicUrl$id');
       if (response.statusCode == 200) {
         dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
-          final comicApi = Comic.fromJson(jsonResponse);
-          await updateComicToDB(comic: comicApi);
+          comicApi = Comic.fromJson(jsonResponse);
+          if (isUpdate) {
+            Comic? comicDB =
+                await HandleDatabase.readComicByIDFromDB(id: comicApi.id);
+            if (comicDB != null) {
+              if (comicDB.isFull == 0) {
+                await updateComicDetail(comic: comicApi, comicDB: comicDB);
+              } else {
+                await updateHomeComic(
+                  comic: comicApi,
+                  comicDB: comicDB,
+                  isFull: true,
+                  isDetail: true,
+                );
+              }
+            }
+          }
         } else {
           print("comic is not available");
         }
@@ -114,6 +145,7 @@ class ComicRepo {
     } catch (e) {
       print(e.toString());
     }
+    return comicApi;
   }
 
   Future<void> fetchAPIAndCreateFilterComicByCategories(
@@ -136,7 +168,7 @@ class ComicRepo {
         }
       } else {}
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
   }
 
@@ -144,7 +176,6 @@ class ComicRepo {
       {required String categoryName}) async {
     Category? category =
         await HandleDatabase.readCategoryByNameFromDB(name: categoryName);
-
     if (category != null) {
       return readComicByCategoryIDFromDB(id: category.id);
     }
@@ -176,6 +207,7 @@ class ComicRepo {
         image_thumnail_square_id: imageThumnailSquareId,
         image_thumnail_rectangle_id: imageThumnailRectangleId,
         add_chapter_time: comic.add_chapter_time,
+        update_time: comic.update_time,
         reads: comic.reads,
         isFull: comic.isFull,
       );
@@ -184,10 +216,66 @@ class ComicRepo {
     await HandleDatabase.createComicToDB(listComics: listComicsCreate);
   }
 
-  // Update
-  Future<void> updateComicToDB({required Comic comic}) async {
-    Comic? comicDB = await HandleDatabase.readComicByIDFromDB(id: comic.id);
-    if (comicDB != null) {
+// Update
+  Future<void> updateHomeComic({
+    required Comic comic,
+    required Comic comicDB,
+    required bool isFull,
+    required bool isDetail,
+  }) async {
+    if (comic.reads != comicDB.reads ||
+        comic.add_chapter_time != comicDB.add_chapter_time) {
+      print("reads or add chapter time change ----------------------------");
+      if (isFull && comic.add_chapter_time != comicDB.add_chapter_time) {
+        print(
+            "comic is full add chapter time change ----------------------------");
+        Comic? comicWithAddChapterTimeChange =
+            await fetchDetailComics(id: comic.id, isUpdate: false);
+        if (comicWithAddChapterTimeChange != null) {
+          await _chapterRepo.createChapterToDB(comic: comic);
+          Comic updateComic = Comic(
+            id: comic.id,
+            image_detail_id: comicDB.image_detail_id,
+            image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
+            image_thumnail_square_id: comicDB.image_thumnail_square_id,
+            title: comic.title ?? comicDB.title,
+            author: comic.author ?? comicDB.author,
+            description: comic.description ?? comicDB.description,
+            year: comic.year ?? comicDB.year,
+            reads: comic.reads ?? comicDB.reads,
+            chapter_update_time:
+                comic.chapter_update_time ?? comicDB.chapter_update_time,
+            add_chapter_time:
+                comic.add_chapter_time ?? comicDB.add_chapter_time,
+            update_time: comicDB.update_time,
+            isFull: isFull ? 1 : 0,
+          );
+          await HandleDatabase.updateComicToDB(comic: updateComic);
+        }
+      } else {
+        print("comic is not full");
+        Comic updateComic = Comic(
+          id: comic.id,
+          image_detail_id: comicDB.image_detail_id,
+          image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
+          image_thumnail_square_id: comicDB.image_thumnail_square_id,
+          title: comic.title ?? comicDB.title,
+          author: comic.author ?? comicDB.author,
+          description: comic.description ?? comicDB.description,
+          year: comic.year ?? comicDB.year,
+          reads: comic.reads ?? comicDB.reads,
+          chapter_update_time:
+              comic.chapter_update_time ?? comicDB.chapter_update_time,
+          add_chapter_time: comicDB.add_chapter_time,
+          update_time: comicDB.update_time,
+          isFull: isFull ? 1 : 0,
+        );
+        await HandleDatabase.updateComicToDB(comic: updateComic);
+      }
+      print("Comic updated reads or add_chapter_time");
+    }
+    if (comic.update_time != comicDB.update_time) {
+      print("Update time comic is change -------------------------");
       await _categoriesComicsRepo.processCategoriesComicsToDB(comic: comic);
       String? imageDetailId = await _imageRepo.createOrUpdateImage(
         imageID: comicDB.image_detail_id,
@@ -215,22 +303,71 @@ class ComicRepo {
         image_detail_id: imageDetailId,
         image_thumnail_rectangle_id: imageThumnailRectangleId,
         image_thumnail_square_id: imageThumnailSquareId,
-        title: comic.title,
-        author: comic.author,
-        description: comic.description,
-        year: comic.year,
-        reads: comic.reads,
-        chapter_update_time: comic.chapter_update_time,
-        add_chapter_time: comic.add_chapter_time,
-        update_time: comic.update_time,
-        isFull: 1,
+        title: comic.title ?? comicDB.title,
+        author: comic.author ?? comicDB.author,
+        description: comic.description ?? comicDB.description,
+        year: comic.year ?? comicDB.year,
+        reads: comic.reads ?? comicDB.reads,
+        chapter_update_time: comicDB.chapter_update_time,
+        add_chapter_time: comic.add_chapter_time ?? comicDB.add_chapter_time,
+        update_time: comic.update_time ?? comicDB.update_time,
+        isFull: isFull ? 1 : 0,
       );
       await HandleDatabase.updateComicToDB(comic: updateComic);
-      print("Comic is updated");
-      await _chapterRepo.createChapterToDB(comic: comic);
-    } else {
-      print("Comic is not updated");
+      print("Comic updated full");
     }
+    if (isDetail) {
+      print("this is comic detail");
+      _chapterRepo.updateChapterComicDetail(
+          comic: comic, isFull: isFull, comicDB: comicDB);
+    }
+  }
+
+  Future<void> updateComicDetail({
+    required Comic comic,
+    required Comic comicDB,
+  }) async {
+    await _categoriesComicsRepo.processCategoriesComicsToDB(comic: comic);
+    String? imageDetailId = await _imageRepo.createOrUpdateImage(
+      imageID: comicDB.image_detail_id,
+      imagePath: comic.image_detail_path,
+      parentDB: comicDB,
+      typeImage: AppConstant.typeImageComic[0],
+      parent: comic,
+    );
+    String? imageThumnailSquareId = await _imageRepo.createOrUpdateImage(
+      imageID: comicDB.image_thumnail_square_id,
+      imagePath: comic.image_thumnail_square_path,
+      parentDB: comicDB,
+      typeImage: AppConstant.typeImageComic[1],
+      parent: comic,
+    );
+    String? imageThumnailRectangleId = await _imageRepo.createOrUpdateImage(
+      imageID: comicDB.image_thumnail_rectangle_id,
+      imagePath: comic.image_thumnail_rectangle_path,
+      parentDB: comicDB,
+      typeImage: AppConstant.typeImageComic[2],
+      parent: comic,
+    );
+    Comic updateComic = Comic(
+      id: comic.id,
+      image_detail_id: imageDetailId,
+      image_thumnail_rectangle_id: imageThumnailRectangleId,
+      image_thumnail_square_id: imageThumnailSquareId,
+      title: comic.title ?? comicDB.title,
+      author: comic.author ?? comicDB.author,
+      description: comic.description ?? comicDB.description,
+      year: comic.year ?? comicDB.year,
+      reads: comic.reads ?? comicDB.reads,
+      chapter_update_time:
+          comic.chapter_update_time ?? comicDB.chapter_update_time,
+      add_chapter_time: comic.add_chapter_time ?? comicDB.add_chapter_time,
+      update_time: comic.update_time ?? comicDB.update_time,
+      isFull: 1,
+    );
+    await HandleDatabase.updateComicToDB(comic: updateComic);
+    print("Comic detail updated with is not full");
+    await _chapterRepo.createChapterToDB(comic: comic);
   }
 
   // Read Home comic
@@ -312,31 +449,33 @@ class ComicRepo {
   Future<List<Comic>> searchComic(String query) async {
     String url = "${AppConstant.comicUrl}${AppConstant.search}$query";
     List<Comic> listComicsSearchResult = [];
-    try {
-      final response = await _apiClient.getData(url);
-
-      if (response.statusCode == 200) {
-        List jsonResponse = jsonDecode(response.body);
-        if (jsonResponse.isNotEmpty) {
-          final listComics =
-              jsonResponse.map((e) => Comic.fromJson(e)).toList();
-          final listComicSearch = listComics
-              .where((Comic comic) => comic.title!
-                  .toLowerCase()
-                  .contains(comic.title!.toLowerCase()))
-              .toList();
-          if (listComicSearch.isNotEmpty) {
-            for (Comic comic in listComicSearch) {
-              listComicsSearchResult.add(comic);
+    if (query != '') {
+      try {
+        final response = await _apiClient.getData(url);
+        if (response.statusCode == 200) {
+          List jsonResponse = jsonDecode(response.body);
+          if (jsonResponse.isNotEmpty) {
+            final listComics =
+                jsonResponse.map((e) => Comic.fromJson(e)).toList();
+            final listComicSearch = listComics
+                .where((Comic comic) => comic.title!
+                    .toLowerCase()
+                    .contains(comic.title!.toLowerCase()))
+                .toList();
+            if (listComicSearch.isNotEmpty) {
+              for (Comic comic in listComicSearch) {
+                listComicsSearchResult.add(comic);
+              }
             }
+            return listComicsSearchResult;
           }
-          return listComicsSearchResult;
+          throw Exception();
         }
-      } else {
+      } catch (e) {
         throw Exception();
+        // print('${e.toString()} sai o comicrepo');
       }
-    } catch (e) {
-      print('${e.toString()} sai o comicrepo');
+      // return [];
     }
     return [];
   }
@@ -434,7 +573,7 @@ class ComicRepo {
       listCaseComic: listCaseComic,
       sharedPreferences: sharedPreferences,
     );
-    print("add case comic");
+    // print("add case comic");
   }
 
   Future<void> filterCaseComicByComicID({
@@ -496,13 +635,13 @@ class ComicRepo {
       final timesAdsLocal = sharedPreferences.getInt(AppConstant.timeAdsLocal);
       if (timesAds != null && timesAds != timesAdsLocal) {
         sharedPreferences.setInt(AppConstant.timeAdsLocal, timesAds);
-        print("repaired times ads to local ");
+        // print("repaired times ads to local ");
       } else {
-        print("times ads is the same");
+        // print("times ads is the same");
       }
     } else if (timesAds != null) {
       sharedPreferences.setInt(AppConstant.timeAdsLocal, timesAds);
-      print("set times ads to local");
+      // print("set times ads to local");
     }
   }
 }

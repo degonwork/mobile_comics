@@ -48,7 +48,7 @@ class ImageRepo {
     if (listImageCreate.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageCreate);
     } else {
-      print("Home Comic has not image");
+      // print("Home Comic has not image");
     }
   }
 
@@ -72,7 +72,7 @@ class ImageRepo {
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
     } else {
-      print("Chapter has not image");
+      // print("Chapter has not image");
     }
   }
 
@@ -102,7 +102,7 @@ class ImageRepo {
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
     } else {
-      print("Chapter has not content");
+      // print("Chapter has not content");
     }
   }
 
@@ -135,7 +135,7 @@ class ImageRepo {
       type: AppConstant.typeImageChapterContent,
       parentID: chapter.id,
     );
-    print("Delete content");
+    // print("Delete content");
   }
 
   // More
@@ -157,7 +157,7 @@ class ImageRepo {
           type: typeImage,
         ),
       );
-      print("${typeImage} is updated");
+      // print("$typeImage is updated");
       return imageID;
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listComics: [parent]);
