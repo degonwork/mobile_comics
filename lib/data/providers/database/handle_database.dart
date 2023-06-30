@@ -84,14 +84,12 @@ class HandleDatabase {
       );
       if (imagesFromDB == null) {
         await StorageDatabase.instance.createImageToDB(image: images[i]);
-        // print("${i + 1}: ${images[i].type} created");
+        print("${i + 1}: ${images[i].type} created");
       } else {
-        // print("${i + 1}: ${images[i].type} don't create");
+        print("${i + 1}: ${images[i].type} don't create");
       }
     }
   }
-  //   print("--------------------------------");
-  // }
 
   static Future<Image?> readImageFromDB(
       {required String type, required String parentID, int? numerical}) async {

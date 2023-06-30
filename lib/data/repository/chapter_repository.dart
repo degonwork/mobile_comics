@@ -1,4 +1,6 @@
-import 'dart:convert';
+// import 'dart:convert';
+// import 'package:http/http.dart';
+
 import '.././models/comic_model.dart';
 import '.././providers/api/api_client.dart';
 import '../../config/app_constant.dart';
@@ -23,28 +25,74 @@ class ChapterRepo {
       {required String id, required bool isUpdate}) async {
     Chapter? chapterAPi;
     try {
-      final response = await _apiClient.getData('$_chapterUrl$id');
-      if (response.statusCode == 200) {
-        dynamic jsonResponse = jsonDecode(response.body);
-        if (jsonResponse != null) {
-          chapterAPi = Chapter.fromJson(jsonResponse);
-          if (isUpdate) {
-            Chapter? chapterDB =
-                await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
-            if (chapterDB != null) {
-              if (chapterDB.isFull == 0) {
-                await updateChapterDetail(
-                    chapter: chapterAPi, isFull: false, chapterDB: chapterDB);
-              } else {
-                await updateChapterDetail(
-                    chapter: chapterAPi, isFull: true, chapterDB: chapterDB);
-              }
-            }
+      // Response response = await _apiClient.getData('$_chapterUrl$id');
+      // if (response.statusCode == 200) {
+      // dynamic jsonResponse = jsonDecode(response.body);
+      //   if (jsonResponse != null) {
+      dynamic jsonResponse = {
+        "_id": "649576e014e28ac54662f268",
+        "comic_id": "649576c714e28ac54662f254",
+        "image_thumnail": {
+          "id": "649576e014e28ac54662f25e",
+          "path":
+              "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg"
+        },
+        "content": [
+          {
+            "id": "649576e014e28ac54662f260",
+            "path":
+                "http://117.4.194.207:3000/image/6ac3410a7d8195b5857bf768152b5a781.jpg",
+            "height": 710,
+            "width": 570
+          },
+          {
+            "id": "649576e014e28ac54662f262",
+            "path":
+                "http://117.4.194.207:3000/image/81c3e5ef150944350e78f7fda843df10b.jpg",
+            "height": 275,
+            "width": 183
+          },
+          {
+            "id": "649576e014e28ac54662f264",
+            "path":
+                "http://117.4.194.207:3000/image/e0898d3b1059f210575714a91fdb5a7d09.jpg",
+            "height": 285,
+            "width": 177
+          },
+          {
+            "id": "649576e014e28ac54662f266",
+            "path":
+                "http://117.4.194.207:3000/image/6100c63cfe504506eabf44283dfae815b.jpg",
+            "height": 1500,
+            "width": 880
           }
-        } else {
-          print("chapter is not available");
+        ],
+        "chapter_des": "Chapter 1",
+        "publish_date": 1687516896000,
+        "content_update_time": 1687916896002,
+        "update_time": 1687926907001
+      };
+      chapterAPi = Chapter.fromJson(jsonResponse);
+      if (isUpdate) {
+        Chapter? chapterDB =
+            await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
+        if (chapterDB != null) {
+          if (chapterDB.isFull == 0) {
+            await updateChapterDetail(
+              chapter: chapterAPi,
+              isFullChapter: false,
+              chapterDB: chapterDB,
+            );
+          } else {
+            await updateChapterDetail(
+                chapter: chapterAPi, isFullChapter: true, chapterDB: chapterDB);
+          }
         }
-      } else {}
+      }
+      // } else {
+      //   print("chapter is not available");
+      // }
+      // } else {}
     } catch (e) {
       print(e.toString());
     }
@@ -79,19 +127,30 @@ class ChapterRepo {
     }
   }
 
+  Future<Chapter> readChapterByIdFromDB({required String chapterId}) async {
+    Chapter? chapter =
+        await HandleDatabase.readChapterByIDFromDB(id: chapterId);
+    if (chapter != null) {
+      return chapter;
+    } else {
+      return AppConstant.ChapterNotExist;
+    }
+  }
+
   Future<void> updateChapterComicDetail({
     required Comic comic,
-    required bool isFull,
+    required bool isFullComic,
     required Comic comicDB,
   }) async {
-    if (isFull && comic.chapter_update_time != comicDB.chapter_update_time) {
+    if (isFullComic &&
+        comic.chapter_update_time != comicDB.chapter_update_time) {
+      print(
+          "Comic ${comic.id} chapter update time change ---------------------------");
       if (comic.chapters!.isNotEmpty) {
         for (Chapter chapter in comic.chapters!) {
-          Chapter? chapterWithUpdate =
-              await fetchDetailChapters(id: chapter.id, isUpdate: false);
           Chapter? chapterDB =
               await HandleDatabase.readChapterByIDFromDB(id: chapter.id);
-          if (chapterWithUpdate != null && chapterDB != null) {
+          if (chapterDB != null) {
             String? imageThumnailId = await _imageRepo.createOrUpdateImage(
               imageID: chapterDB.image_thumnail_id,
               imagePath: chapter.image_thumnail_path,
@@ -107,10 +166,32 @@ class ChapterRepo {
               numerical: chapterDB.numerical,
               content_update_time: chapterDB.content_update_time,
               update_time: chapterDB.update_time,
-              isFull: isFull ? 1 : 0,
+              isFull: chapterDB.isFull,
             );
+            print(
+                "chapter isFull ${updateChapter.isFull} ------------------------");
             await HandleDatabase.updateChapterToDB(chapter: updateChapter);
-            print("update chapter in comic detail");
+            print(
+                "update chapter in comic detail ----------------------------------");
+            Comic updateComic = Comic(
+              id: comic.id,
+              image_detail_id: comicDB.image_detail_id,
+              image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
+              image_thumnail_square_id: comicDB.image_thumnail_square_id,
+              title: comicDB.title,
+              author: comicDB.author,
+              description: comicDB.description,
+              year: comicDB.year,
+              reads: comicDB.reads,
+              chapter_update_time:
+                  comic.chapter_update_time ?? comicDB.chapter_update_time,
+              add_chapter_time: comicDB.add_chapter_time,
+              update_time: comicDB.update_time,
+              isFull: isFullComic ? 1 : 0,
+            );
+            await HandleDatabase.updateComicToDB(comic: updateComic);
+            print(
+                "Comic update when chapter update time change -------------------------------");
           }
         }
       }
@@ -119,10 +200,11 @@ class ChapterRepo {
 
   Future<void> updateChapterDetail({
     required Chapter chapter,
-    required bool isFull,
+    required bool isFullChapter,
     required Chapter chapterDB,
   }) async {
-    if (!isFull) {
+    if (!isFullChapter) {
+      print("chapter is not full--------------------------------");
       await _imageRepo.createImageChapterContentToDB(chapter: chapter);
       String? imageThumnailId = await _imageRepo.createOrUpdateImage(
         imageID: chapterDB.image_thumnail_id,
@@ -140,14 +222,32 @@ class ChapterRepo {
         content_update_time:
             chapter.content_update_time ?? chapterDB.content_update_time,
         update_time: chapter.update_time ?? chapterDB.update_time,
-        isFull: isFull ? 1 : 0,
+        isFull: 1,
       );
       await HandleDatabase.updateChapterToDB(chapter: updateChapter);
     } else {
+      print(
+          "Chapter is full in chapter repo----------------------------------------");
       if (chapter.content_update_time != chapterDB.content_update_time) {
+        print("Chapter content is change -----------------------------");
         await updateChapterContent(chapter: chapter);
+        Chapter updateChapter = Chapter(
+          id: chapter.id,
+          comic_id: chapter.comic_id ?? chapterDB.comic_id,
+          image_thumnail_id: chapterDB.image_thumnail_id,
+          chapter_des: chapterDB.chapter_des,
+          numerical: chapterDB.numerical,
+          content_update_time:
+              chapter.content_update_time ?? chapterDB.content_update_time,
+          update_time: chapterDB.update_time,
+          isFull: 1,
+        );
+        await HandleDatabase.updateChapterToDB(chapter: updateChapter);
+        print(
+            "update content and update chapter ------------------------------------");
       }
       if (chapter.update_time != chapterDB.update_time) {
+        print("Chapter update time is change -----------------------------");
         String? imageThumnailId = await _imageRepo.createOrUpdateImage(
           imageID: chapterDB.image_thumnail_id,
           imagePath: chapter.image_thumnail_path,
@@ -164,9 +264,11 @@ class ChapterRepo {
           content_update_time:
               chapter.content_update_time ?? chapterDB.content_update_time,
           update_time: chapter.update_time ?? chapterDB.update_time,
-          isFull: isFull ? 1 : 0,
+          isFull: 1,
         );
         await HandleDatabase.updateChapterToDB(chapter: updateChapter);
+        print(
+            "update chapter with update time change---------------------------");
       }
     }
   }
@@ -207,4 +309,6 @@ class ChapterRepo {
     }
     return images;
   }
+
+// dummy
 }

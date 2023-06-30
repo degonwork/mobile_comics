@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
@@ -22,6 +21,7 @@ import 'blocs/comic_detail/comic_detail_bloc.dart';
 import 'blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import 'blocs/filter_comic_by_category/filter_comic_event.dart';
 import 'blocs/get_all_category/get_all_category_bloc.dart';
+import 'blocs/home/home_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
 import 'blocs/search_comic/search_comic_bloc.dart';
 import 'config/size_config.dart';

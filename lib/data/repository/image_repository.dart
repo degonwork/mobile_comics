@@ -157,7 +157,7 @@ class ImageRepo {
           type: typeImage,
         ),
       );
-      // print("$typeImage is updated");
+      print("$typeImage is updated");
       return imageID;
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listComics: [parent]);
