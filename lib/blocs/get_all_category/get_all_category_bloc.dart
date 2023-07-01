@@ -15,30 +15,35 @@ class GetAllCategoryBloc
   Future<void> _getAllCategory(
       GetAllCategory event, Emitter<GetAllCategoryState> emitter) async {
     List<String> listCategoryString = [];
+    List<Category> listCategories = [];
     try {
-      List<Category> listCategories =
-          await _categoryRepo.getAllCategoryFromDB();
-
+      listCategories = await _categoryRepo.getAllCategoryFromDB();
       if (listCategories.isEmpty) {
+        print("Categories is empty --------------------");
         await _categoryRepo.getAllCategory();
-        List<Category> listCategoriesResult =
-            await _categoryRepo.getAllCategoryFromDB();
-        for (var category in listCategoriesResult) {
-          listCategoryString.add(category.name);
-        }
-        emitter(GetLoadded(listCategoryString));
-      } else {
+        listCategories = await _categoryRepo.getAllCategoryFromDB();
         for (var category in listCategories) {
           listCategoryString.add(category.name);
         }
         emitter(GetLoadded(listCategoryString));
-        // await _categoryRepo.getAllCategory().whenComplete(
-        //   () async {
-        //     List<Category> listCategoriesResult =
-        //         await _categoryRepo.getAllCategoryFromDB();
-        //     emitter(GetLoadded(listCategoriesResult));
-        //   },
-        // );
+      } else {
+        print("Categories is not empty --------------------");
+        for (var category in listCategories) {
+          listCategoryString.add(category.name);
+        }
+        emitter(GetLoadded(listCategoryString));
+        await _categoryRepo.getAllCategory().whenComplete(
+          () async {
+            listCategoryString = [];
+            await Future.delayed(const Duration(seconds: 1), () async {
+              listCategories = await _categoryRepo.getAllCategoryFromDB();
+              for (var category in listCategories) {
+                listCategoryString.add(category.name);
+              }
+              emitter(GetLoadded(listCategoryString));
+            });
+          },
+        );
       }
     } catch (e) {
       emitter(GetFailure());

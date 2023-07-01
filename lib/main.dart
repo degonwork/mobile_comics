@@ -119,16 +119,16 @@ class MyApp extends StatelessWidget {
               comicRepo: context.read<ComicRepo>(),
             ),
           ),
-          BlocProvider<FilterComicBloc>(
-              create: (context) => FilterComicBloc(
-                    comicRepo: context.read<ComicRepo>(),
-                    categoryRepo: context.read<CategoryRepo>(),
-                  )..add(FilterComicStart())),
           BlocProvider<GetAllCategoryBloc>(
             create: (context) => GetAllCategoryBloc(
               context.read<CategoryRepo>(),
             ),
           ),
+          BlocProvider<FilterComicBloc>(
+              create: (context) => FilterComicBloc(
+                    comicRepo: context.read<ComicRepo>(),
+                    categoryRepo: context.read<CategoryRepo>(),
+                  )..add(FilterComicStart())),
           BlocProvider<SearchComicBloc>(
             create: (context) => SearchComicBloc(
               comicRepo: context.read<ComicRepo>(),

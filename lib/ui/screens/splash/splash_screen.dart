@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
         BlocProvider.of<GetAllCategoryBloc>(context)

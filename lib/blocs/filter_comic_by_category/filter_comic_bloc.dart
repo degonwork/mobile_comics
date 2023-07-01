@@ -20,62 +20,67 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
 
   Future<void> _filterComicStart(
       FilterComicStart event, Emitter<FilterComicState> emitter) async {
-    try {
-      List<Category> listCategories =
-          await _categoryRepo.getAllCategoryFromDB();
-      List<Comic> comicIndexFirst = await _comicRepo.readComicByCategoryName(
+    List<Comic> comicIndexFirst = [];
+    List<Category> listCategories = await _categoryRepo.getAllCategoryFromDB();
+    if (listCategories.isNotEmpty) {
+      comicIndexFirst = await _comicRepo.readComicByCategoryName(
           categoryName: listCategories[0].name);
       if (comicIndexFirst.isEmpty) {
+        print("Comic filter is empty ----------------------------");
         await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+            categoryName: listCategories[0].name, isUpdate: false);
+        comicIndexFirst = await _comicRepo.readComicByCategoryName(
             categoryName: listCategories[0].name);
-        List<Comic> comicIndexFirstResult = await _comicRepo
-            .readComicByCategoryName(categoryName: listCategories[0].name);
-        emitter(LoadedComicByCategoryID(comicIndexFirstResult));
-      } else {
         emitter(LoadedComicByCategoryID(comicIndexFirst));
-        // await _comicRepo
-        //     .fetchAPIAndCreateFilterComicByCategories(
-        //         categoryName: listCategories[0].name)
-        //     .whenComplete(
-        //   () async {
-        //     List<Comic> comicIndexFirstResult = await _comicRepo
-        //         .readComicByCategoryID(categoryName: listCategories[0].name);
-        //     emitter(LoadedComicByCategoryID(comicIndexFirstResult));
-        //   },
-        // );
+      } else {
+        print("Comic filter is not empty ----------------------");
+        emitter(LoadedComicByCategoryID(comicIndexFirst));
+        await _comicRepo
+            .fetchAPIAndCreateFilterComicByCategories(
+                categoryName: listCategories[0].name, isUpdate: true)
+            .whenComplete(() async {
+          await Future.delayed(
+            const Duration(seconds: 1),
+            () async {
+              comicIndexFirst = await _comicRepo.readComicByCategoryName(
+                  categoryName: listCategories[0].name);
+              emitter(LoadedComicByCategoryID(comicIndexFirst));
+            },
+          );
+        });
       }
-    } catch (e) {
-      emitter(FilterComicFailed());
     }
   }
 
   Future<void> _filterByIDCategory(
       FilterByIDCategory event, Emitter<FilterComicState> emitter) async {
     emitter(LoadingComicByCategory());
-    try {
-      List<Comic> listComics = await _comicRepo.readComicByCategoryName(
+    List<Comic> listComicsFilter = [];
+    listComicsFilter = await _comicRepo.readComicByCategoryName(
+        categoryName: event.categoryName);
+    if (listComicsFilter.isEmpty) {
+      print("Comic filter is empty ----------------------------");
+      await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+          categoryName: event.categoryName, isUpdate: false);
+      listComicsFilter = await _comicRepo.readComicByCategoryName(
           categoryName: event.categoryName);
-      if (listComics.isEmpty) {
-        // await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-        //     categoryName: event.categoryName);
-        // List<Comic> listComicsResult = await _comicRepo.readComicByCategoryName(
-        //     categoryName: event.categoryName);
-        emitter(LoadedComicByCategoryID(listComics));
-      } else {
-        emitter(LoadedComicByCategoryID(listComics));
-        // await _comicRepo
-        //     .fetchAPIAndCreateFilterComicByCategories(
-        //         categoryName: event.categoryName)
-        //     .whenComplete(
-        //   () async {
-        //     List<Comic> listComicsResult = await _comicRepo
-        //         .readComicByCategoryID(categoryName: event.categoryName);
-        //     emitter(LoadedComicByCategoryID(listComicsResult));
-        //   },
-        // );
-      }
-    } catch (e) {
-      emitter(FilterComicFailed());
+      emitter(LoadedComicByCategoryID(listComicsFilter));
+    } else {
+      print("Comic filter is not empty ----------------------");
+      emitter(LoadedComicByCategoryID(listComicsFilter));
+      await _comicRepo
+          .fetchAPIAndCreateFilterComicByCategories(
+              categoryName: event.categoryName, isUpdate: true)
+          .whenComplete(() async {
+        await Future.delayed(
+          const Duration(seconds: 2),
+          () async {
+            listComicsFilter = await _comicRepo.readComicByCategoryName(
+                categoryName: event.categoryName);
+            emitter(LoadedComicByCategoryID(listComicsFilter));
+          },
+        );
+      });
     }
   }
 }

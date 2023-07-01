@@ -19,30 +19,24 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     Emitter<ComicDetailState> emit,
   ) async {
     emit(ComicDetailLoading());
-    try {
-      Comic comic = await _comicRepo.readComicDetailFromDB(id: event.id);
-      CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
-      if (comic.isFull == 0) {
-        print("Comic not full ----------------------------");
-        await _comicRepo.fetchDetailComics(id: event.id, isUpdate: true);
-        Comic comicsResult =
-            await _comicRepo.readComicDetailFromDB(id: event.id);
-        emit(ComicDetailLoaded(comicsResult, caseComic));
-      } else {
-        print("Comic is full--------------------------------");
-        emit(ComicDetailLoaded(comic, caseComic));
-        await _comicRepo
-            .fetchDetailComics(id: event.id, isUpdate: true)
-            .whenComplete(() async {
-          await Future.delayed(const Duration(seconds: 1), () async {
-            Comic comicsResult =
-                await _comicRepo.readComicDetailFromDB(id: event.id);
-            emit(ComicDetailLoaded(comicsResult, caseComic));
-          });
+    Comic comic = await _comicRepo.readComicDetailFromDB(id: event.id);
+    CaseComic? caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
+    if (comic.isFull == 0) {
+      print("Comic not full ----------------------------");
+      await _comicRepo.fetchDetailComics(id: event.id, isUpdate: true);
+      comic = await _comicRepo.readComicDetailFromDB(id: event.id);
+      emit(ComicDetailLoaded(comic, caseComic));
+    } else {
+      print("Comic is full--------------------------------");
+      emit(ComicDetailLoaded(comic, caseComic));
+      await _comicRepo
+          .fetchDetailComics(id: event.id, isUpdate: true)
+          .whenComplete(() async {
+        await Future.delayed(const Duration(seconds: 1), () async {
+          comic = await _comicRepo.readComicDetailFromDB(id: event.id);
+          emit(ComicDetailLoaded(comic, caseComic));
         });
-      }
-    } catch (e) {
-      emit(ComicDetailLoadFailed());
+      });
     }
   }
 }

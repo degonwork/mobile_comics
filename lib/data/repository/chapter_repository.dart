@@ -309,6 +309,4 @@ class ChapterRepo {
     }
     return images;
   }
-
-// dummy
 }

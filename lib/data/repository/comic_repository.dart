@@ -57,6 +57,7 @@ class ComicRepo {
               comicDB: comicDB,
               isFullComic: comicDB.isFull == 0 ? false : true,
               isDetail: false,
+              isLibrary: false,
             );
           }
         }
@@ -139,8 +140,8 @@ class ComicRepo {
             "path":
                 "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
           },
-          "reads": 4647,
-          "add_chapter_time": 1687926907003,
+          "reads": 4646,
+          "add_chapter_time": 1687926907000,
           "update_time": 1687926907000,
           "times_ads": 5
         },
@@ -232,8 +233,8 @@ class ComicRepo {
             "path":
                 "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
           },
-          "reads": 4647,
-          "add_chapter_time": 1687926907003,
+          "reads": 4646,
+          "add_chapter_time": 1687926907000,
           "update_time": 1687926907000,
           "times_ads": 5
         },
@@ -256,7 +257,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
           },
           "reads": 0,
-          "add_chapter_time": 1687785997001,
+          "add_chapter_time": 1687785997000,
           "update_time": 1687785997000,
           "times_ads": 5
         },
@@ -353,7 +354,6 @@ class ComicRepo {
           "times_ads": 5
         }
       ];
-
       listNewComicsApi = jsonResponse.map((e) => Comic.fromJson(e)).toList();
       //   } else {
       //     print("New comic is not available");
@@ -412,7 +412,7 @@ class ComicRepo {
           }
         }
       ],
-      "reads": 4647,
+      "reads": 4646,
       "image_detail": {
         "id": "649576c714e28ac54662f24a",
         "path":
@@ -428,9 +428,9 @@ class ComicRepo {
         "path":
             "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
       },
-      "chapter_update_time": 1687926907001,
+      "chapter_update_time": null,
       "update_time": 1687926907000,
-      "add_chapter_time": 1687926907003
+      "add_chapter_time": 1687926907000
     };
     comicApi = Comic.fromJson(jsonResponse);
     if (isUpdate) {
@@ -445,6 +445,7 @@ class ComicRepo {
             comicDB: comicDB,
             isFullComic: true,
             isDetail: true,
+            isLibrary: false,
           );
         }
       }
@@ -462,35 +463,376 @@ class ComicRepo {
   }
 
   Future<void> fetchAPIAndCreateFilterComicByCategories(
-      {required String categoryName}) async {
-    try {
-      final response = await _apiClient
-          .getData('$_comicUrl${AppConstant.category}$categoryName');
-      if (response.statusCode == 200) {
-        List<dynamic> jsonResponse = jsonDecode(response.body);
-        if (jsonResponse.isNotEmpty) {
-          final listComicFilterApi =
-              jsonResponse.map((e) => Comic.fromJson(e)).toList();
-          await createComicToDB(listComics: listComicFilterApi);
-          for (var comicFilter in listComicFilterApi) {
-            await _categoriesComicsRepo.processCategoriesComicsToDB(
-                comic: comicFilter, categoryName: categoryName);
+      {required String categoryName, required bool isUpdate}) async {
+    List<dynamic> jsonResponse = [];
+    List<Comic> listComicFilter = [];
+    // try {
+    //   final response = await _apiClient
+    //       .getData('$_comicUrl${AppConstant.category}$categoryName');
+    //   if (response.statusCode == 200) {
+    // List<dynamic> jsonResponse = jsonDecode(response.body);
+
+    // if (jsonResponse.isNotEmpty) {
+    switch (categoryName) {
+      case "Hành động":
+        jsonResponse = [
+          {
+            "id": "648bfd4cdbf16ad1f464bdbe",
+            "title": "Thanh gươm diệt quỷ",
+            "image_detail": {
+              "id": "648bfd4cdbf16ad1f464bdb5",
+              "path":
+                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfd4cdbf16ad1f464bdb7",
+              "path":
+                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfd4cdbf16ad1f464bdb9",
+              "path":
+                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+            },
+            "reads": 9554,
+            "add_chapter_time": 1686895995001,
+            "update_time": 1687536465000,
+            "times_ads": 5
+          },
+          {
+            "id": "648bfbaaa35b676fbcb0820b",
+            "title": "OnePiece",
+            "image_detail": {
+              "id": "648bfbaaa35b676fbcb081f9",
+              "path":
+                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfbaaa35b676fbcb081fb",
+              "path":
+                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfbaaa35b676fbcb081fd",
+              "path":
+                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+            },
+            "reads": 5963,
+            "add_chapter_time": 1687031898000,
+            "update_time": 1687536439000,
+            "times_ads": 5
+          },
+          {
+            "id": "648bfc15a35b676fbcb0828e",
+            "title": "Solo Eving",
+            "image_detail": {
+              "id": "648bfc15a35b676fbcb08283",
+              "path":
+                  "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfc15a35b676fbcb08285",
+              "path":
+                  "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfc15a35b676fbcb08287",
+              "path":
+                  "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+            },
+            "reads": 4621,
+            "add_chapter_time": 1686895683000,
+            "update_time": 1687786052000,
+            "times_ads": 5
+          },
+        ];
+        break;
+      case "Hài hước":
+        jsonResponse = [
+          {
+            "id": "648bfd4cdbf16ad1f464bdbe",
+            "title": "Thanh gươm diệt quỷ",
+            "image_detail": {
+              "id": "648bfd4cdbf16ad1f464bdb5",
+              "path":
+                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfd4cdbf16ad1f464bdb7",
+              "path":
+                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfd4cdbf16ad1f464bdb9",
+              "path":
+                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+            },
+            "reads": 9554,
+            "add_chapter_time": 1686895995001,
+            "update_time": 1687536465000,
+            "times_ads": 5
+          },
+          {
+            "id": "648bfbaaa35b676fbcb0820b",
+            "title": "OnePiece",
+            "image_detail": {
+              "id": "648bfbaaa35b676fbcb081f9",
+              "path":
+                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfbaaa35b676fbcb081fb",
+              "path":
+                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfbaaa35b676fbcb081fd",
+              "path":
+                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+            },
+            "reads": 5963,
+            "add_chapter_time": 1687031898000,
+            "update_time": 1687536439000,
+            "times_ads": 5
+          },
+          {
+            "id": "649576c714e28ac54662f254",
+            "title": "Thế giới mới",
+            "image_detail": {
+              "id": "649576c714e28ac54662f24a",
+              "path":
+                  "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "649576c714e28ac54662f24c",
+              "path":
+                  "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "649576c714e28ac54662f24e",
+              "path":
+                  "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+            },
+            "reads": 4646,
+            "add_chapter_time": 1687926907000,
+            "update_time": 1687926907000,
+            "times_ads": 5
+          },
+          {
+            "id": "6499919ee6b500162a51fc3a",
+            "title": "Anh yêu em",
+            "image_detail": {
+              "id": "6499919ee6b500162a51fc30",
+              "path":
+                  "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "6499919ee6b500162a51fc32",
+              "path":
+                  "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "6499919ee6b500162a51fc34",
+              "path":
+                  "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
+            },
+            "reads": 0,
+            "add_chapter_time": 1687785906000,
+            "update_time": 1687785906000,
+            "times_ads": 5
+          },
+          {
+            "id": "6499a61ce6b500162a51ff92",
+            "title": "Status code",
+            "image_detail": {
+              "id": "6499a61ce6b500162a51ff8b",
+              "path":
+                  "http://117.4.194.207:3000/image/beb144d10b9cc6929b0bd6be2e5fc14e7.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "6499a61ce6b500162a51ff8d",
+              "path":
+                  "http://117.4.194.207:3000/image/35e57bd9a86ab0210be1a627ce3b34b65.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "6499a61ce6b500162a51ff8f",
+              "path":
+                  "http://117.4.194.207:3000/image/d3c2a4499338d68541083fb4a464acad9.jpg"
+            },
+            "reads": 0,
+            "add_chapter_time": 1587785906000,
+            "update_time": 1587785907002,
+            "times_ads": 5
           }
-        } else {
-          print("Comic filter is not available");
-        }
-      } else {}
-    } catch (e) {
-      // print(e.toString());
+        ];
+        break;
+      case "Phiêu lưu":
+        jsonResponse = [
+          {
+            "id": "648bfd4cdbf16ad1f464bdbe",
+            "title": "Thanh gươm diệt quỷ",
+            "image_detail": {
+              "id": "648bfd4cdbf16ad1f464bdb5",
+              "path":
+                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfd4cdbf16ad1f464bdb7",
+              "path":
+                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfd4cdbf16ad1f464bdb9",
+              "path":
+                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+            },
+            "reads": 9554,
+            "add_chapter_time": 1686895995001,
+            "update_time": 1687536465000,
+            "times_ads": 5
+          },
+          {
+            "id": "648bfbaaa35b676fbcb0820b",
+            "title": "OnePiece",
+            "image_detail": {
+              "id": "648bfbaaa35b676fbcb081f9",
+              "path":
+                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfbaaa35b676fbcb081fb",
+              "path":
+                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfbaaa35b676fbcb081fd",
+              "path":
+                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+            },
+            "reads": 5963,
+            "add_chapter_time": 1687031898000,
+            "update_time": 1687536439000,
+            "times_ads": 5
+          },
+          {
+            "id": "648bfc15a35b676fbcb0828e",
+            "title": "Solo Eving",
+            "image_detail": {
+              "id": "648bfc15a35b676fbcb08283",
+              "path":
+                  "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "648bfc15a35b676fbcb08285",
+              "path":
+                  "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "648bfc15a35b676fbcb08287",
+              "path":
+                  "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+            },
+            "reads": 4621,
+            "add_chapter_time": 1686895683000,
+            "update_time": 1687786052000,
+            "times_ads": 5
+          },
+        ];
+        break;
+      case "Lãng mạn":
+        jsonResponse = [
+          {
+            "id": "64999200e6b500162a51fc6d",
+            "title": "Ngôn ngữ tình yêu",
+            "image_detail": {
+              "id": "64999200e6b500162a51fc61",
+              "path":
+                  "http://117.4.194.207:3000/image/37fae1635de4e254b54de2aaa3f90aa4.jpg"
+            },
+            "image_thumnail_square": {
+              "id": "64999200e6b500162a51fc63",
+              "path":
+                  "http://117.4.194.207:3000/image/a1bf244b241365df59e2395d10d18a9a3.jpg"
+            },
+            "image_thumnail_rectangle": {
+              "id": "64999200e6b500162a51fc65",
+              "path":
+                  "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
+            },
+            "reads": 0,
+            "add_chapter_time": 1687785997000,
+            "update_time": 1687785997000,
+            "times_ads": 5
+          }
+        ];
+        break;
     }
+    listComicFilter = jsonResponse.map((e) => Comic.fromJson(e)).toList();
+    await createComicToDB(listComics: listComicFilter);
+    for (var comicFilter in listComicFilter) {
+      await _categoriesComicsRepo.processCategoriesComicsToDB(
+        comic: comicFilter,
+        categoryName: categoryName,
+        isUpdateCategoriesComic: false,
+        isLibrary: true,
+      );
+    }
+    if (isUpdate) {
+      for (int i = 0; i < listComicFilter.length; i++) {
+        Comic? comicDB =
+            await HandleDatabase.readComicByIDFromDB(id: listComicFilter[i].id);
+        if (comicDB != null) {
+          print("required update ---------------------");
+          await updateHomeComic(
+              comic: listComicFilter[i],
+              comicDB: comicDB,
+              isFullComic: comicDB.isFull == 0 ? false : true,
+              isDetail: false,
+              isLibrary: true,
+              categoryName: categoryName);
+        }
+      }
+    }
+    // } else {
+    //   print("Comic filter is not available");
+    // }
+    // } else {}
+    // } catch (e) {
+    //   // print(e.toString());
+    // }
   }
 
-  Future<List<Comic>> readComicByCategoryName(
-      {required String categoryName}) async {
-    Category? category =
-        await HandleDatabase.readCategoryByNameFromDB(name: categoryName);
-    if (category != null) {
-      return readComicByCategoryIDFromDB(id: category.id);
+  // Search Comic
+  Future<List<Comic>> searchComic(String query) async {
+    String url = "${AppConstant.comicUrl}${AppConstant.search}$query";
+    List<Comic> listComicsSearchResult = [];
+    if (query != '') {
+      try {
+        final response = await _apiClient.getData(url);
+        if (response.statusCode == 200) {
+          List jsonResponse = jsonDecode(response.body);
+          if (jsonResponse.isNotEmpty) {
+            final listComics =
+                jsonResponse.map((e) => Comic.fromJson(e)).toList();
+            final listComicSearch = listComics
+                .where((Comic comic) => comic.title!
+                    .toLowerCase()
+                    .contains(comic.title!.toLowerCase()))
+                .toList();
+            if (listComicSearch.isNotEmpty) {
+              for (Comic comic in listComicSearch) {
+                listComicsSearchResult.add(comic);
+              }
+            }
+            return listComicsSearchResult;
+          }
+          throw Exception();
+        }
+      } catch (e) {
+        throw Exception();
+        // print('${e.toString()} sai o comicrepo');
+      }
+      // return [];
     }
     return [];
   }
@@ -535,6 +877,8 @@ class ComicRepo {
     required Comic comicDB,
     required bool isFullComic,
     required bool isDetail,
+    required bool isLibrary,
+    String? categoryName,
   }) async {
     if (comic.reads != comicDB.reads ||
         comic.add_chapter_time != comicDB.add_chapter_time) {
@@ -592,7 +936,12 @@ class ComicRepo {
     if (comic.update_time != comicDB.update_time) {
       print(
           "Update time comic ${comic.id} is change -------------------------");
-      await _categoriesComicsRepo.processCategoriesComicsToDB(comic: comic);
+      await _categoriesComicsRepo.processCategoriesComicsToDB(
+        comic: comic,
+        isUpdateCategoriesComic: true,
+        isLibrary: isLibrary,
+        categoryName: categoryName,
+      );
       String? imageDetailId = await _imageRepo.createOrUpdateImage(
         imageID: comicDB.image_detail_id,
         imagePath: comic.image_detail_path,
@@ -649,7 +998,11 @@ class ComicRepo {
     required Comic comic,
     required Comic comicDB,
   }) async {
-    await _categoriesComicsRepo.processCategoriesComicsToDB(comic: comic);
+    await _categoriesComicsRepo.processCategoriesComicsToDB(
+      comic: comic,
+      isUpdateCategoriesComic: false,
+      isLibrary: false,
+    );
     String? imageDetailId = await _imageRepo.createOrUpdateImage(
       imageID: comicDB.image_detail_id,
       imagePath: comic.image_detail_path,
@@ -743,21 +1096,24 @@ class ComicRepo {
     }
   }
 
-  // Read Comic filter
-  Future<Comic> readComicFilter({required String id}) async {
-    Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
-    if (comic != null) {
-      return await readHomeComicCopy(comic);
-    } else {
-      return AppConstant.comicNotExist;
+  // Read Comic By CategoryName
+  Future<List<Comic>> readComicByCategoryName(
+      {required String categoryName}) async {
+    Category? category =
+        await HandleDatabase.readCategoryByNameFromDB(name: categoryName);
+    if (category != null) {
+      return readComicByCategoryIDFromDB(categoryId: category.id);
     }
+    return [];
   }
 
   // Read comic by category
-  Future<List<Comic>> readComicByCategoryIDFromDB({required String id}) async {
+  Future<List<Comic>> readComicByCategoryIDFromDB(
+      {required String categoryId}) async {
     List<Comic> listComics = [];
     List<CategoriesComics> listComicsReadByCategoryID =
-        await HandleDatabase.readCategoriesComicByCategoryID(id: id);
+        await HandleDatabase.readCategoriesComicByCategoryID(
+            categoryId: categoryId);
     if (listComicsReadByCategoryID.isNotEmpty) {
       for (var i = 0; i < listComicsReadByCategoryID.length; i++) {
         listComics.add(
@@ -767,39 +1123,14 @@ class ComicRepo {
     return listComics;
   }
 
-// searchComicFromSever
-  Future<List<Comic>> searchComic(String query) async {
-    String url = "${AppConstant.comicUrl}${AppConstant.search}$query";
-    List<Comic> listComicsSearchResult = [];
-    if (query != '') {
-      try {
-        final response = await _apiClient.getData(url);
-        if (response.statusCode == 200) {
-          List jsonResponse = jsonDecode(response.body);
-          if (jsonResponse.isNotEmpty) {
-            final listComics =
-                jsonResponse.map((e) => Comic.fromJson(e)).toList();
-            final listComicSearch = listComics
-                .where((Comic comic) => comic.title!
-                    .toLowerCase()
-                    .contains(comic.title!.toLowerCase()))
-                .toList();
-            if (listComicSearch.isNotEmpty) {
-              for (Comic comic in listComicSearch) {
-                listComicsSearchResult.add(comic);
-              }
-            }
-            return listComicsSearchResult;
-          }
-          throw Exception();
-        }
-      } catch (e) {
-        throw Exception();
-        // print('${e.toString()} sai o comicrepo');
-      }
-      // return [];
+  // Read Comic filter
+  Future<Comic> readComicFilter({required String id}) async {
+    Comic? comic = await HandleDatabase.readComicByIDFromDB(id: id);
+    if (comic != null) {
+      return await readHomeComicCopy(comic);
+    } else {
+      return AppConstant.comicNotExist;
     }
-    return [];
   }
 
   Future<List<Comic>> searchComicByTitle(String title) async {
