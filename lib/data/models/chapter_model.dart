@@ -9,6 +9,7 @@ class ChapterField {
     numerical,
     content_update_time,
     update_time,
+    isFull,
   ];
 
   static String id = 'id';
@@ -18,6 +19,7 @@ class ChapterField {
   static String numerical = 'numerical';
   static String content_update_time = 'content_update_time';
   static String update_time = 'update_time';
+  static String isFull = 'isFull';
 }
 
 class Chapter {
@@ -31,6 +33,7 @@ class Chapter {
   final List<Map<String, dynamic>>? content;
   final DateTime? content_update_time;
   final DateTime? update_time;
+  final int isFull;
 
   const Chapter({
     required this.id,
@@ -43,6 +46,7 @@ class Chapter {
     this.content,
     this.content_update_time,
     this.update_time,
+    required this.isFull,
   });
 
   factory Chapter.fromJson(Map<String, dynamic> json) {
@@ -77,6 +81,7 @@ class Chapter {
               ? DateTime.fromMillisecondsSinceEpoch(json['update_time'])
               : DateTime.parse(json['update_time'])
           : null,
+      isFull: json["isFull"] ?? 0,
     );
   }
 
@@ -89,6 +94,7 @@ class Chapter {
       'numerical': numerical,
       'content_update_time': content_update_time?.toString(),
       'update_time': update_time?.toString(),
+      'isFull': isFull
     };
   }
 }

@@ -18,12 +18,12 @@ class FireBaseMessagingService {
     final String? firebaseToken = await _fcm.getToken();
     if (firebaseToken != null &&
         !sharedPreferences.containsKey(AppConstant.firebaseToken)) {
-      print("firebase token is not available");
+      // print("firebase token is not available");
       await sharedPreferences.setString(
           AppConstant.firebaseToken, firebaseToken);
-      print("Create firebaseToken");
+      // print("Create firebaseToken");
     } else {
-      print("firebaseToken is available");
+      // print("firebaseToken is available");
     }
   }
 
@@ -31,7 +31,7 @@ class FireBaseMessagingService {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage remoteMessage) async {
-        print("Message receive frontground $remoteMessage");
+        // print("Message receive frontground $remoteMessage");
         if (remoteMessage.notification != null &&
             remoteMessage.notification?.android != null) {
           LocalNotificationService.display(
@@ -46,10 +46,10 @@ class FireBaseMessagingService {
 
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage remoteMessage) {
-        print("Message receive background $remoteMessage");
+        // print("Message receive background $remoteMessage");
         if (remoteMessage.notification != null) {
-          print(remoteMessage.notification!.title);
-          print(remoteMessage.notification!.body);
+          // print(remoteMessage.notification!.title);
+          // print(remoteMessage.notification!.body);
         }
       },
     );

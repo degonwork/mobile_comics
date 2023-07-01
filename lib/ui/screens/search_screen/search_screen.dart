@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
-import '../../../blocs/search_comic_bloc/search_comic_bloc.dart';
-import '../../../blocs/search_comic_bloc/search_comic_event.dart';
-import '../../../blocs/search_comic_bloc/search_comic_state.dart';
+import '../../../blocs/search_comic/search_comic_bloc.dart';
+import '../../../blocs/search_comic/search_comic_event.dart';
+import '../../../blocs/search_comic/search_comic_state.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../widgets/text_ui.dart';
@@ -171,9 +171,11 @@ class SearchComicScreen extends StatelessWidget {
                   );
                 }
               } else if (state is SearchError) {
-                return const Text('Không tìm thấy truyện phù hợp');
+                return Container(
+                  padding: EdgeInsets.only(left: SizeConfig.width15),
+                  child:   Text('Không tìm thấy truyện phù hợp',style: TextStyle(color: Colors.white,fontSize: SizeConfig.font16),));
               }
-              return const SizedBox.shrink();
+             return const SizedBox.shrink();
             }),
           ),
         ],

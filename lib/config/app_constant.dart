@@ -1,4 +1,5 @@
 import '../data/models/case_comic_model.dart';
+import '../data/models/chapter_model.dart';
 import '../data/models/comic_model.dart';
 
 class AppConstant {
@@ -47,9 +48,13 @@ class AppConstant {
 
 // Error
   static const comicNotExist = Comic(id: "Not-exist", isFull: 0);
+  static const ChapterNotExist = Chapter(id: "Not-exist", isFull: 0);
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
 
 // Đánh giá
   static const evaluate = "1.1K";
+
+  // timeout
+  static const timeout = 2;
 }

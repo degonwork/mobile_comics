@@ -4,13 +4,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../blocs/case/case_bloc.dart';
-import '../../../blocs/get_all_category_bloc/get_all_category_bloc.dart';
-import '../../../blocs/get_all_category_bloc/get_all_category_event.dart';
-import '../../../blocs/hot_comics/hot_comics_bloc.dart';
-import '../../../blocs/new_comics/new_comics_bloc.dart';
+import '../../../blocs/get_all_category/get_all_category_bloc.dart';
+import '../../../blocs/get_all_category/get_all_category_event.dart';
 import '../../../data/providers/firebase/notification/firebase_messaging_service.dart';
 import '../../../data/providers/firebase/notification/local_notification_service.dart';
 import '../../widgets/back_ground_app.dart';
@@ -23,7 +22,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 Future<dynamic> _firebaseMessagingBackgroundHandler(
     RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message ${message.messageId}");
+  // print("Handling a background message ${message.messageId}");
 }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -48,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () async {
         AppRouter.navigator(context, RouterScreen.routeName);
         BlocProvider.of<GetAllCategoryBloc>(context)
@@ -78,36 +77,32 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HotComicsBloc, HotComicsState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return BlocBuilder<NewComicsBloc, NewComicsState>(
-          builder: (context, state) {
-            return Scaffold(
-              body: Stack(
+        return Scaffold(
+          body: Stack(
+            children: [
+              const BackGroundApp(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const BackGroundApp(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextUi(
-                        text: AppLocalizations.of(context)!.welcomeSplashScreen,
-                        fontSize: SizeConfig.font20,
-                        color: AppColor.titleSplashColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      Image.asset(
-                        'assets/images/banner_splash.png',
-                        height: SizeConfig.width230,
-                        width: SizeConfig.width230,
-                      ),
-                      Container(),
-                    ],
+                  TextUi(
+                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
+                    fontSize: SizeConfig.font20,
+                    color: AppColor.titleSplashColor,
+                    fontWeight: FontWeight.w700,
                   ),
+                  Image.asset(
+                    'assets/images/banner_splash.png',
+                    height: SizeConfig.width230,
+                    width: SizeConfig.width230,
+                  ),
+                  Container(),
                 ],
               ),
-            );
-          },
+            ],
+          ),
         );
       },
     );

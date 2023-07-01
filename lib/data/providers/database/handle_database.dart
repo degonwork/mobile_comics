@@ -7,11 +7,11 @@ import '../../models/image_model.dart';
 
 class HandleDatabase {
   // process comic
-  static Future<void> createComicToDB({required List<Comic> comics}) async {
-    for (int i = 0; i < comics.length; i++) {
-      Comic? comic = await readComicByIDFromDB(id: comics[i].id);
+  static Future<void> createComicToDB({required List<Comic> listComics}) async {
+    for (int i = 0; i < listComics.length; i++) {
+      Comic? comic = await readComicByIDFromDB(id: listComics[i].id);
       if (comic == null) {
-        await StorageDatabase.instance.createComicToDB(comic: comics[i]);
+        await StorageDatabase.instance.createComicToDB(comic: listComics[i]);
         print("${i + 1}: Comic created");
       } else {
         print("${i + 1}: Comic don't create");
@@ -55,7 +55,6 @@ class HandleDatabase {
         print("${i + 1}: Chapter dont't create");
       }
     }
-    print("--------------------------------");
   }
 
   static Future<Chapter?> readChapterByIDFromDB({required String id}) async {
@@ -91,8 +90,6 @@ class HandleDatabase {
       }
     }
   }
-  //   print("--------------------------------");
-  // }
 
   static Future<Image?> readImageFromDB(
       {required String type, required String parentID, int? numerical}) async {
@@ -171,9 +168,9 @@ class HandleDatabase {
       if (categoryComic == null) {
         await StorageDatabase.instance
             .createCategoriesComicsToDB(categoriesComics: categoriesComics[i]);
-        print("${i + 1}: CategoriesComics created");
+        // print("${i + 1}: CategoriesComics created");
       } else {
-        print("${i + 1}: CategoriesComics don't create");
+        // print("${i + 1}: CategoriesComics don't create");
       }
     }
     //   print("--------------------------------");

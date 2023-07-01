@@ -25,7 +25,7 @@ class ItemInfor extends StatelessWidget {
               SizeConfig.radius10,
             ),
             border: Border.all(
-                width: SizeConfig.width1, color: AppColor.blackColor)),
+                width: 0.6, color: AppColor.blackColor)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -39,17 +39,20 @@ class ItemInfor extends StatelessWidget {
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextUi(
                   text: titleItem,
                   fontSize: SizeConfig.font14,
                   color: AppColor.contentInforColor,
                 ),
-                TextUi(
-                  text: contentItem,
-                  fontSize: SizeConfig.font14,
-                  color: AppColor.contentInforColor,
+                Center(
+                  child: TextUi(
+                    textAlign: TextAlign.center,
+                    text: contentItem,
+                    fontSize: SizeConfig.font14,
+                    color: AppColor.contentInforColor,
+                  ),
                 ),
               ],
             ),

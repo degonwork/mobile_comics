@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
-import '../../../../blocs/hot_comics/hot_comics_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
 
@@ -13,10 +13,10 @@ class BannerListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HotComicsBloc, HotComicsState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is HotComicsLoaded) {
-          final listHotComics = state.listHotComics;
+        if (state is HomeLoaded) {
+          final listHotComics = state.lisHotComics;
           if (listHotComics.isNotEmpty) {
             return CarouselSlider.builder(
               itemCount: listHotComics.length,

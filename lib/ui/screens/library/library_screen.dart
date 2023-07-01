@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
-import '../../widgets/custom_appbar.dart';
+// import '../../widgets/custom_appbar.dart';
 import '../../widgets/text_ui.dart';
 import '../search_screen/search_screen.dart';
 import 'widget/all_category.dart';
@@ -28,25 +28,46 @@ class LibraryScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomAppbar(
-                    text: AppLocalizations.of(context)!.library,
-                    iconRightWidget: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: InkWell(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          SearchComicScreen.routeName,
-                        ),
-                        child: Icon(
-                          Icons.search,
-                          size: SizeConfig.icon25,
-                          color: AppColor.iconAppbarColor,
-                        ),
+                  TextField(
+                    textAlign: TextAlign.start,
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchComicScreen()));
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
+                      hintText: "Tìm kiếm truyện , thể loại ...",
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        
                       ),
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
                     ),
                   ),
+                  ),
+                  // CustomAppbar(
+                  //   text: AppLocalizations.of(context)!.library,
+                  //   iconRightWidget: InkWell(
+                  //     onTap: () {
+                  //       Navigator.pop(context);
+                  //     },
+                  //     child: InkWell(
+                  //       onTap: () => Navigator.pushNamed(
+                  //         context,
+                  //         SearchComicScreen.routeName,
+                  //       ),
+                  //       child: Icon(
+                  //         Icons.search,
+                  //         size: SizeConfig.icon25,
+                  //         color: AppColor.iconAppbarColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: SizeConfig.height15),
                   TextUi(
                     text: AppLocalizations.of(context)!.genreComics,
