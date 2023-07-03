@@ -125,10 +125,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider<FilterComicBloc>(
-              create: (context) => FilterComicBloc(
-                    comicRepo: context.read<ComicRepo>(),
-                    categoryRepo: context.read<CategoryRepo>(),
-                  )..add(FilterComicStart())),
+            create: (context) => FilterComicBloc(
+              comicRepo: context.read<ComicRepo>(),
+              categoryRepo: context.read<CategoryRepo>(),
+            ),
+          ),
           BlocProvider<SearchComicBloc>(
             create: (context) => SearchComicBloc(
               comicRepo: context.read<ComicRepo>(),

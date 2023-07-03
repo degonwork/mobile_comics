@@ -11,22 +11,9 @@ class CategoriesComicsRepo {
       : _categoryRepo = categoryRepo;
   Future<void> processCategoriesComicsToDB({
     required Comic comic,
-    String? categoryName,
     required bool isUpdateCategoriesComic,
-    required bool isLibrary,
   }) async {
-    if (isLibrary && isUpdateCategoriesComic) {
-      if (categoryName != null) {
-        Category? category =
-            await _categoryRepo.readCategoryByNameFromDB(name: categoryName);
-        if (category != null) {
-          await HandleDatabase.deleteCategoriesComicsByComicIDFromDB(
-              comicID: comic.id, categoryId: category.id);
-          print(
-              "deleted CategoriesComics with comicId and category id: ${comic.id} and ${category.id}");
-        }
-      }
-    } else if (isUpdateCategoriesComic) {
+    if (isUpdateCategoriesComic) {
       List<CategoriesComics> allCategoriesComicsByComicIDFromDB =
           await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
       if (allCategoriesComicsByComicIDFromDB.isNotEmpty) {
@@ -35,7 +22,6 @@ class CategoriesComicsRepo {
         print("deleted CategoriesComics with comicId: ${comic.id}");
       }
     }
-
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
       for (var i = 0; i < comic.categories!.length; i++) {
@@ -46,14 +32,6 @@ class CategoriesComicsRepo {
             CategoriesComics(comic_id: comic.id, category_id: category.id),
           );
         }
-      }
-    } else if (categoryName != null) {
-      Category? category =
-          await _categoryRepo.readCategoryByNameFromDB(name: categoryName);
-      if (category != null) {
-        listCategoriesComics.add(
-          CategoriesComics(comic_id: comic.id, category_id: category.id),
-        );
       }
     }
     if (listCategoriesComics.isNotEmpty) {

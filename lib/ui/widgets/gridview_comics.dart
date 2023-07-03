@@ -33,7 +33,13 @@ class GridviewComics extends StatelessWidget {
             childAspectRatio: 0.82,
           ),
           itemBuilder: (context, index) {
-            return SizedBox(
+            return GestureDetector(
+              onTap: () {
+                context
+                    .read<ComicDetailBloc>()
+                    .add(LoadDetailComic(listComics[index].id));
+                Navigator.pushNamed(context, ComicDetailScreen.routeName);
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,23 +49,14 @@ class GridviewComics extends StatelessWidget {
                             imageUrl:
                                 listComics[index].image_thumnail_square_path!,
                             imageBuilder: (context, imageProvider) {
-                              return GestureDetector(
-                                onTap: () {
-                                  context
-                                      .read<ComicDetailBloc>()
-                                      .add(LoadDetailComic(listComics[index].id));
-                                  Navigator.pushNamed(
-                                      context, ComicDetailScreen.routeName);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      SizeConfig.radius10,
-                                    ),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    SizeConfig.radius10,
+                                  ),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               );

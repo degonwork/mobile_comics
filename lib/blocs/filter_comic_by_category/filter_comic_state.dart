@@ -10,11 +10,11 @@ abstract class FilterComicState extends Equatable {
 
 class FilterComicInital extends FilterComicState {}
 
-class LoadingComicByCategory extends FilterComicState {}
+class ComicByCategoryLoading extends FilterComicState {}
 
-class LoadedComicByCategoryID extends FilterComicState {
+class ComicByCategoryLoaded extends FilterComicState {
   final List<Comic> listComics;
-  const LoadedComicByCategoryID(this.listComics);
+  const ComicByCategoryLoaded(this.listComics);
   @override
   List<Object> get props => [listComics];
 }

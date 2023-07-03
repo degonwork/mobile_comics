@@ -17,7 +17,7 @@ class CategoryRepo {
       {"_id": "648bfbaaa35b676fbcb08200", "name": "Hành động"},
       {"_id": "648bfbaaa35b676fbcb08203", "name": "Hài hước"},
       {"_id": "648bfbaaa35b676fbcb08206", "name": "Phiêu lưu"},
-      {"_id": "64999200e6b500162a51fc6b", "name": "Lãng mạn"}
+      {"_id": "649576c714e28ac54662f252", "name": "Âm nhạc"},
     ];
     // if (jsonResponse.isNotEmpty) {
     List<Category> allCategory =

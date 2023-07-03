@@ -14,12 +14,14 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
       : _comicRepo = comicRepo,
         _categoryRepo = categoryRepo,
         super(FilterComicInital()) {
-    on<FilterByIDCategory>(_filterByIDCategory);
     on<FilterComicStart>(_filterComicStart);
+    on<FilterByIDCategory>(_filterByIDCategory);
   }
 
   Future<void> _filterComicStart(
       FilterComicStart event, Emitter<FilterComicState> emitter) async {
+    emitter(ComicByCategoryLoading());
+    print("start -------------------------------");
     List<Comic> comicIndexFirst = [];
     List<Category> listCategories = await _categoryRepo.getAllCategoryFromDB();
     if (listCategories.isNotEmpty) {
@@ -31,10 +33,10 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
             categoryName: listCategories[0].name, isUpdate: false);
         comicIndexFirst = await _comicRepo.readComicByCategoryName(
             categoryName: listCategories[0].name);
-        emitter(LoadedComicByCategoryID(comicIndexFirst));
+        emitter(ComicByCategoryLoaded(comicIndexFirst));
       } else {
         print("Comic filter is not empty ----------------------");
-        emitter(LoadedComicByCategoryID(comicIndexFirst));
+        emitter(ComicByCategoryLoaded(comicIndexFirst));
         await _comicRepo
             .fetchAPIAndCreateFilterComicByCategories(
                 categoryName: listCategories[0].name, isUpdate: true)
@@ -44,7 +46,7 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
             () async {
               comicIndexFirst = await _comicRepo.readComicByCategoryName(
                   categoryName: listCategories[0].name);
-              emitter(LoadedComicByCategoryID(comicIndexFirst));
+              emitter(ComicByCategoryLoaded(comicIndexFirst));
             },
           );
         });
@@ -54,7 +56,7 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
 
   Future<void> _filterByIDCategory(
       FilterByIDCategory event, Emitter<FilterComicState> emitter) async {
-    emitter(LoadingComicByCategory());
+    emitter(ComicByCategoryLoading());
     List<Comic> listComicsFilter = [];
     listComicsFilter = await _comicRepo.readComicByCategoryName(
         categoryName: event.categoryName);
@@ -64,23 +66,19 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
           categoryName: event.categoryName, isUpdate: false);
       listComicsFilter = await _comicRepo.readComicByCategoryName(
           categoryName: event.categoryName);
-      emitter(LoadedComicByCategoryID(listComicsFilter));
+      emitter(ComicByCategoryLoaded(listComicsFilter));
     } else {
       print("Comic filter is not empty ----------------------");
-      emitter(LoadedComicByCategoryID(listComicsFilter));
-      await _comicRepo
-          .fetchAPIAndCreateFilterComicByCategories(
-              categoryName: event.categoryName, isUpdate: true)
-          .whenComplete(() async {
-        await Future.delayed(
-          const Duration(seconds: 2),
-          () async {
-            listComicsFilter = await _comicRepo.readComicByCategoryName(
-                categoryName: event.categoryName);
-            emitter(LoadedComicByCategoryID(listComicsFilter));
-          },
-        );
-      });
+      emitter(ComicByCategoryLoaded(listComicsFilter));
+      await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+          categoryName: event.categoryName, isUpdate: true);
+      //   .whenComplete(() async {
+      // await Future.delayed(const Duration(seconds: 1), () async {
+      //   listComicsFilter = await _comicRepo.readComicByCategoryName(
+      //       categoryName: event.categoryName);
+      //   emitter(ComicByCategoryLoaded(listComicsFilter));
+      // });
+      // });
     }
   }
 }

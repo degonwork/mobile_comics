@@ -57,7 +57,6 @@ class ComicRepo {
               comicDB: comicDB,
               isFullComic: comicDB.isFull == 0 ? false : true,
               isDetail: false,
-              isLibrary: false,
             );
           }
         }
@@ -95,7 +94,8 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
           },
           "reads": 9554,
-          "add_chapter_time": 1686895995001,
+          "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+          "add_chapter_time": 1686895995000,
           "update_time": 1687536465000,
           "times_ads": 5
         },
@@ -118,6 +118,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
           },
           "reads": 5963,
+          "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
           "add_chapter_time": 1687031898000,
           "update_time": 1687536439000,
           "times_ads": 5
@@ -141,6 +142,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
           },
           "reads": 4646,
+          "categories": ["Hài hước", "Âm nhạc"],
           "add_chapter_time": 1687926907000,
           "update_time": 1687926907000,
           "times_ads": 5
@@ -164,6 +166,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
           },
           "reads": 4621,
+          "categories": ["Drama", "Hành động", "Phiêu lưu"],
           "add_chapter_time": 1686895683000,
           "update_time": 1687786052000,
           "times_ads": 5
@@ -187,6 +190,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
           },
           "reads": 0,
+          "categories": ["Hài hước", "Trường học"],
           "add_chapter_time": 1687785906000,
           "update_time": 1687785906000,
           "times_ads": 5
@@ -234,6 +238,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
           },
           "reads": 4646,
+          "categories": ["Hài hước", "Âm nhạc"],
           "add_chapter_time": 1687926907000,
           "update_time": 1687926907000,
           "times_ads": 5
@@ -257,6 +262,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
           },
           "reads": 0,
+          "categories": ["Sáng tạo", "Lãng mạn"],
           "add_chapter_time": 1687785997000,
           "update_time": 1687785997000,
           "times_ads": 5
@@ -280,6 +286,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
           },
           "reads": 0,
+          "categories": ["Hài hước", "Trường học"],
           "add_chapter_time": 1687785906000,
           "update_time": 1687785906000,
           "times_ads": 5
@@ -303,6 +310,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
           },
           "reads": 5963,
+          "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
           "add_chapter_time": 1687031898000,
           "update_time": 1687536439000,
           "times_ads": 5
@@ -326,7 +334,8 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
           },
           "reads": 9554,
-          "add_chapter_time": 1686895995001,
+          "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+          "add_chapter_time": 1686895995000,
           "update_time": 1687536465000,
           "times_ads": 5
         },
@@ -349,6 +358,7 @@ class ComicRepo {
                 "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
           },
           "reads": 4621,
+          "categories": ["Drama", "Hành động", "Phiêu lưu"],
           "add_chapter_time": 1686895683000,
           "update_time": 1687786052000,
           "times_ads": 5
@@ -445,7 +455,6 @@ class ComicRepo {
             comicDB: comicDB,
             isFullComic: true,
             isDetail: true,
-            isLibrary: false,
           );
         }
       }
@@ -495,7 +504,8 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
             },
             "reads": 9554,
-            "add_chapter_time": 1686895995001,
+            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+            "add_chapter_time": 1686895995000,
             "update_time": 1687536465000,
             "times_ads": 5
           },
@@ -518,6 +528,7 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
             },
             "reads": 5963,
+            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
             "add_chapter_time": 1687031898000,
             "update_time": 1687536439000,
             "times_ads": 5
@@ -541,6 +552,7 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
             },
             "reads": 4621,
+            "categories": ["Drama", "Hành động", "Phiêu lưu"],
             "add_chapter_time": 1686895683000,
             "update_time": 1687786052000,
             "times_ads": 5
@@ -568,7 +580,8 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
             },
             "reads": 9554,
-            "add_chapter_time": 1686895995001,
+            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+            "add_chapter_time": 1686895995000,
             "update_time": 1687536465000,
             "times_ads": 5
           },
@@ -591,6 +604,7 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
             },
             "reads": 5963,
+            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
             "add_chapter_time": 1687031898000,
             "update_time": 1687536439000,
             "times_ads": 5
@@ -614,6 +628,7 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
             },
             "reads": 4646,
+            "categories": ["Hài hước", "Âm nhạc"],
             "add_chapter_time": 1687926907000,
             "update_time": 1687926907000,
             "times_ads": 5
@@ -637,13 +652,14 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
             },
             "reads": 0,
+            "categories": ["Hài hước", "Trường học"],
             "add_chapter_time": 1687785906000,
             "update_time": 1687785906000,
             "times_ads": 5
           },
           {
             "id": "6499a61ce6b500162a51ff92",
-            "title": "Status code",
+            "title": "Http code",
             "image_detail": {
               "id": "6499a61ce6b500162a51ff8b",
               "path":
@@ -660,8 +676,9 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/d3c2a4499338d68541083fb4a464acad9.jpg"
             },
             "reads": 0,
-            "add_chapter_time": 1587785906000,
-            "update_time": 1587785907002,
+            "categories": ["Hài hước"],
+            "add_chapter_time": null,
+            "update_time": null,
             "times_ads": 5
           }
         ];
@@ -687,7 +704,8 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
             },
             "reads": 9554,
-            "add_chapter_time": 1686895995001,
+            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+            "add_chapter_time": 1686895995000,
             "update_time": 1687536465000,
             "times_ads": 5
           },
@@ -710,6 +728,7 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
             },
             "reads": 5963,
+            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
             "add_chapter_time": 1687031898000,
             "update_time": 1687536439000,
             "times_ads": 5
@@ -733,35 +752,37 @@ class ComicRepo {
                   "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
             },
             "reads": 4621,
+            "categories": ["Drama", "Hành động", "Phiêu lưu"],
             "add_chapter_time": 1686895683000,
             "update_time": 1687786052000,
             "times_ads": 5
           },
         ];
         break;
-      case "Lãng mạn":
+      case "Âm nhạc":
         jsonResponse = [
           {
-            "id": "64999200e6b500162a51fc6d",
-            "title": "Ngôn ngữ tình yêu",
+            "id": "649576c714e28ac54662f254",
+            "title": "Thế giới mới",
             "image_detail": {
-              "id": "64999200e6b500162a51fc61",
+              "id": "649576c714e28ac54662f24a",
               "path":
-                  "http://117.4.194.207:3000/image/37fae1635de4e254b54de2aaa3f90aa4.jpg"
+                  "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
             },
             "image_thumnail_square": {
-              "id": "64999200e6b500162a51fc63",
+              "id": "649576c714e28ac54662f24c",
               "path":
-                  "http://117.4.194.207:3000/image/a1bf244b241365df59e2395d10d18a9a3.jpg"
+                  "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
             },
             "image_thumnail_rectangle": {
-              "id": "64999200e6b500162a51fc65",
+              "id": "649576c714e28ac54662f24e",
               "path":
-                  "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
+                  "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
             },
-            "reads": 0,
-            "add_chapter_time": 1687785997000,
-            "update_time": 1687785997000,
+            "reads": 4646,
+            "categories": ["Hài hước", "Âm nhạc"],
+            "add_chapter_time": 1687926907000,
+            "update_time": 1687926907000,
             "times_ads": 5
           }
         ];
@@ -772,9 +793,7 @@ class ComicRepo {
     for (var comicFilter in listComicFilter) {
       await _categoriesComicsRepo.processCategoriesComicsToDB(
         comic: comicFilter,
-        categoryName: categoryName,
         isUpdateCategoriesComic: false,
-        isLibrary: true,
       );
     }
     if (isUpdate) {
@@ -784,12 +803,11 @@ class ComicRepo {
         if (comicDB != null) {
           print("required update ---------------------");
           await updateHomeComic(
-              comic: listComicFilter[i],
-              comicDB: comicDB,
-              isFullComic: comicDB.isFull == 0 ? false : true,
-              isDetail: false,
-              isLibrary: true,
-              categoryName: categoryName);
+            comic: listComicFilter[i],
+            comicDB: comicDB,
+            isFullComic: comicDB.isFull == 0 ? false : true,
+            isDetail: false,
+          );
         }
       }
     }
@@ -877,8 +895,6 @@ class ComicRepo {
     required Comic comicDB,
     required bool isFullComic,
     required bool isDetail,
-    required bool isLibrary,
-    String? categoryName,
   }) async {
     if (comic.reads != comicDB.reads ||
         comic.add_chapter_time != comicDB.add_chapter_time) {
@@ -913,7 +929,7 @@ class ComicRepo {
         }
       } else {
         print(
-            "${comic.id} comic is not full or full and add chapter time dont change");
+            "${comic.id} comic is not full or full and add chapter time change or reads change");
         Comic updateComic = Comic(
           id: comic.id,
           image_detail_id: comicDB.image_detail_id,
@@ -939,8 +955,6 @@ class ComicRepo {
       await _categoriesComicsRepo.processCategoriesComicsToDB(
         comic: comic,
         isUpdateCategoriesComic: true,
-        isLibrary: isLibrary,
-        categoryName: categoryName,
       );
       String? imageDetailId = await _imageRepo.createOrUpdateImage(
         imageID: comicDB.image_detail_id,
@@ -1001,7 +1015,6 @@ class ComicRepo {
     await _categoriesComicsRepo.processCategoriesComicsToDB(
       comic: comic,
       isUpdateCategoriesComic: false,
-      isLibrary: false,
     );
     String? imageDetailId = await _imageRepo.createOrUpdateImage(
       imageID: comicDB.image_detail_id,
