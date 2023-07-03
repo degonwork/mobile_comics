@@ -22,7 +22,7 @@ class BackButtonScreen extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColor.backGroundIconBackColor.withOpacity(0.8),
+          color: AppColor.yellowColor.withOpacity(0.5),
         ),
         child: Icon(
           Icons.arrow_back_ios_new_sharp,

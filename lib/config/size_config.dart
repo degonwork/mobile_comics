@@ -24,10 +24,13 @@ class SizeConfig {
   static double height15 = screenHeight / 50.4;
   static double height17 = screenHeight / 44.5;
   static double height20 = screenHeight / 37.8;
+  static double height30 = screenHeight / 25.2;
   static double height35 = screenHeight / 21.6;
   static double height40 = screenHeight / 18.9;
   static double height45 = screenHeight / 16.8;
   static double height50 = screenHeight / 15.12;
+  static double height60 = screenHeight / 12.6;
+  static double height70 = screenHeight / 10.8;
   static double height80 = screenHeight / 9.45;
   static double height100 = screenHeight / 7.56;
   static double height120 = screenHeight / 6.3;

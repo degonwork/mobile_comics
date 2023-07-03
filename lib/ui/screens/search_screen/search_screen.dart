@@ -23,7 +23,8 @@ class SearchComicScreen extends StatelessWidget {
           width: double.infinity,
           height: SizeConfig.screenHeight / 15.12,
           decoration: BoxDecoration(
-              color: Colors.yellow.withOpacity(0.7),
+              color: Colors.blue.withOpacity(0.8),
+              
               borderRadius: BorderRadius.circular(50)),
           child: Center(
             child: TextField(
@@ -33,12 +34,12 @@ class SearchComicScreen extends StatelessWidget {
               },
               autofocus: true,
               decoration: InputDecoration(
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.search,
-                  color: Colors.black.withOpacity(0.8),
+                  color: Colors.black,
                 ),
                 hintText: AppLocalizations.of(context)!.keywords,
-                hintStyle: TextStyle(color: Colors.black.withOpacity(0.8)),
+                hintStyle: const TextStyle(color: Colors.black),
                 border: InputBorder.none,
               ),
             ),

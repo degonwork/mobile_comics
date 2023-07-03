@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
+import 'package:full_comics_frontend/ui/widgets/build_ads_banner.dart';
 
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
@@ -46,7 +47,9 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
       body: Stack(
         children: [
           const BackGroundApp(),
-          BlocBuilder<ComicDetailBloc, ComicDetailState>(
+          Container(
+            margin: EdgeInsets.only(top: SizeConfig.height70),
+            child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
             builder: (context, state) {
               if (state is ComicDetailLoading) {
                 return const Center(
@@ -59,7 +62,6 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                 if (comic != AppConstant.comicNotExist) {
                   return CustomScrollView(
                     slivers: [
-                      
                       SliverAppBar(
                         automaticallyImplyLeading: false,
                         bottom: PreferredSize(
@@ -154,33 +156,20 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                 child: CircularProgressIndicator(color: Colors.amber),
               );
             },
+                      ),
           ),
-          BackButtonScreen(onTap: () {
-            Navigator.pushNamed(context, RouterScreen.routeName);
-            context.read<CaseBloc>().add(const LoadCaseComic());
-          }),
+          Container(
+            padding: EdgeInsets.only(top: SizeConfig.height10,left: SizeConfig.width20),
+            child: const BannerAD()),
+          Container(
+            margin: EdgeInsets.only(top: SizeConfig.height35),
+            child: BackButtonScreen(onTap: () {
+              Navigator.pushNamed(context, RouterScreen.routeName);
+              context.read<CaseBloc>().add(const LoadCaseComic());
+            }),
+          ),
         ],
       ),
-      // bottomNavigationBar: Container(
-      //   height: SizeConfig.height180,
-      //   color: AppColor.navbarColor,
-      //   child: BlocBuilder<ComicDetailBloc, ComicDetailState>(
-      //     builder: (context, state) {
-      //       if (state is ComicDetailLoaded) {
-      //         if (state.comic != AppConstant.comicNotExist) {
-      //           return LoadReabutton(
-      //             comic: state.comic,
-      //             caseComic: state.caseComic,
-      //           );
-      //         }
-      //       }
-      //       return ReadButton(
-      //         title: AppLocalizations.of(context)!.readComics,
-      //         color: AppColor.disable,
-      //       );
-      //     },
-      //   ),
-      // ),
     );
   }
 }

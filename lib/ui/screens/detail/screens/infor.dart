@@ -112,7 +112,7 @@ class Infor extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: SizeConfig.height35,),
+            SizedBox(height: SizeConfig.height20,),
             _loadReadButton(context),
             // LoadReabutton(),
           ],
