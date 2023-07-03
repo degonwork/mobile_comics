@@ -90,6 +90,7 @@ class StorageDatabase {
   Future<List<Comic>> readManyComicsFromDB() async {
     final db = await instance.database;
     final maps = await db.query(tableComics, columns: ComicField.values);
+    
     if (maps.isNotEmpty) {
       return maps.map((json) => Comic.fromJson(json)).toList();
     } else {
@@ -145,7 +146,22 @@ class StorageDatabase {
       return null;
     }
   }
-
+  //
+   Future<Chapter?> readChapterByNumberic({required String comicId,required int numerical})async{
+  final db= await instance.database;
+  final maps = await db.query(
+    tableChapters,
+    columns: ChapterField.values,
+    where: '${ChapterField.comic_id} = ? and ${ChapterField.numerical}  = ?',
+    whereArgs: [comicId,numerical],
+    );
+   if (maps.isNotEmpty) {
+     return Chapter.fromJson(maps.first);
+   }else{
+    return null;
+   }
+ }
+  //
   Future<List<Chapter>> readChapterByComicIDFromDB(
       {required String comicID}) async {
     final db = await instance.database;

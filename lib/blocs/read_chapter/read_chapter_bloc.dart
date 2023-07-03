@@ -11,7 +11,25 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
       : _chapterRepo = chapterRepo,
         super(ReadChapterInital()) {
     on<LoadChapter>(_onLoadChapter);
+    on<LoadNextChapter>(_onLoadNextChapter);
   }
+  Future<void> _onLoadNextChapter(
+      LoadNextChapter event, Emitter<ReadChapterState> emitter) async {
+    try {
+      List<Image> listImageNextChapter = await _chapterRepo.readChapterNext(
+          comicId: event.id, numerical: event.numerical);
+      int numerical =
+          await _chapterRepo.readChapterNumberic(chapterId: event.id);
+      // print('${event.numerical} -------------------------');
+      emitter(LoadedChapter(
+        listImageNextChapter,
+        // numerical
+      ));
+    } catch (e) {
+      emitter(ReadChapterLoadFailed());
+    }
+  }
+
   Future<void> _onLoadChapter(
       LoadChapter event, Emitter<ReadChapterState> emit) async {
     emit(LoadingChapter());
@@ -42,6 +60,21 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
           });
         },
       );
+
+      //     int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
+
+      //     if (listImageContent.isEmpty) {
+      //       await _chapterRepo.fetchDetailChapters(id: event.id);
+      //       List<Image> listImageContent =
+      //           await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
+      //       int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
+
+      //       emit(LoadedChapter(listImageContent,numerical));
+      //     } else {
+      //       emit(LoadedChapter(listImageContent,numerical));
+      //     }
+      //   } catch (e) {
+      //     emit(ReadChapterLoadFailed());
     }
   }
 }

@@ -307,6 +307,31 @@ class ChapterRepo {
         images.add(image);
       }
     }
+    print(images);
     return images;
+  }
+
+  // readChapter By Numerical
+  Future<List<Image>> readChapterNext(
+      {required String comicId, required int numerical}) async {
+    final chapter = await HandleDatabase.readNextChapterByNumberic(
+        comicId: comicId, numerical: numerical + 1);
+    if (chapter != null) {
+      // print('${chapter.id} -------------------------------------------------------------------------');
+      // await fetchDetailChapters(id: chapter.id);
+      return await readChapterContentFromDB(chapterId: chapter.id);
+    } else {
+      return [];
+    }
+  }
+
+  //
+  Future<int> readChapterNumberic({required String chapterId}) async {
+    Chapter? chapter =
+        await HandleDatabase.readChapterByIDFromDB(id: chapterId);
+    if (chapter != null) {
+      return chapter.numerical!;
+    }
+    return 0;
   }
 }
