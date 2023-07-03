@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
+import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_state.dart';
 import '../../../../blocs/get_all_category/get_all_category_bloc.dart';
 import '../../../../blocs/get_all_category/get_all_category_state.dart';
@@ -16,8 +17,11 @@ class ComicByCategory extends StatelessWidget {
         if (state is GetLoadded) {
           return BlocBuilder<FilterComicBloc, FilterComicState>(
             builder: (context, state) {
-              if (state is LoadedComicByCategoryID) {
+              if (state is ComicByCategoryLoaded) {
                 final listComicsFilter = state.listComics;
+                print("length list comic: " +
+                    listComicsFilter.length.toString() +
+                    "--------------------------------");
                 if (listComicsFilter.isNotEmpty) {
                   return GridviewComics(listComics: listComicsFilter);
                 } else {

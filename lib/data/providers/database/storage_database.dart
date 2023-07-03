@@ -263,12 +263,12 @@ class StorageDatabase {
   }
 
   Future<List<CategoriesComics>> readCategoriesComicByIDCategory(
-      {required String id}) async {
+      {required String categoryId}) async {
     final db = await instance.database;
     final maps = await db.query(tableCategoriesComics,
         columns: CategoriesComicsField.values,
         where: '${CategoriesComicsField.category_id} = ?',
-        whereArgs: [id]);
+        whereArgs: [categoryId]);
 
     if (maps.isNotEmpty) {
       return maps.map((e) => CategoriesComics.fromJson(e)).toList();
@@ -290,17 +290,6 @@ class StorageDatabase {
     } else {
       return null;
     }
-  }
-
-  Future<void> updateCategoryToDB({required Category category}) async {
-    final db = await instance.database;
-    final map = category.toMap();
-    await db.update(
-      tableCategories,
-      map,
-      where: '${CategoryField.id} = ?',
-      whereArgs: [category.id],
-    );
   }
 
   Future<List<Category>> readAllCategoryFromDB() async {
@@ -364,6 +353,17 @@ class StorageDatabase {
       tableCategoriesComics,
       where: '${CategoriesComicsField.comic_id} = ?',
       whereArgs: [comicID],
+    );
+  }
+
+  Future<void> deleteCategoriesComicsByComicIDFromDB(
+      {required String comicID, required String categoryId}) async {
+    final db = await instance.database;
+    await db.delete(
+      tableCategoriesComics,
+      where:
+          '${CategoriesComicsField.comic_id} = ? and ${CategoriesComicsField.category_id} = ?',
+      whereArgs: [comicID, categoryId],
     );
   }
 }

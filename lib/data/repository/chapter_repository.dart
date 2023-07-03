@@ -69,8 +69,8 @@ class ChapterRepo {
         ],
         "chapter_des": "Chapter 1",
         "publish_date": 1687516896000,
-        "content_update_time": 1687916896002,
-        "update_time": 1687926907001
+        "content_update_time": null,
+        "update_time": null
       };
       chapterAPi = Chapter.fromJson(jsonResponse);
       if (isUpdate) {
@@ -309,6 +309,4 @@ class ChapterRepo {
     }
     return images;
   }
-
-// dummy
 }

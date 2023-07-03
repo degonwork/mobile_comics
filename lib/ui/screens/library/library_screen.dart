@@ -30,24 +30,27 @@ class LibraryScreen extends StatelessWidget {
                 children: [
                   TextField(
                     textAlign: TextAlign.start,
-                    onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchComicScreen()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchComicScreen()));
                     },
                     readOnly: true,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
+                      fillColor:
+                          AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
                       hintText: "Tìm kiếm truyện , thể loại ...",
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
-                        
                       ),
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
-                  ),
                   ),
                   // CustomAppbar(
                   //   text: AppLocalizations.of(context)!.library,

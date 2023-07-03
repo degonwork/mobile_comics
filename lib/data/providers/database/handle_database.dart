@@ -27,9 +27,9 @@ class HandleDatabase {
   }
 
   static Future<List<CategoriesComics>> readCategoriesComicByCategoryID(
-      {required String id}) async {
-    final listCategoriesComics =
-        await StorageDatabase.instance.readCategoriesComicByIDCategory(id: id);
+      {required String categoryId}) async {
+    final listCategoriesComics = await StorageDatabase.instance
+        .readCategoriesComicByIDCategory(categoryId: categoryId);
 
     return listCategoriesComics;
   }
@@ -119,22 +119,17 @@ class HandleDatabase {
   }
 
   // process category
-  static Future<int?> createCategoryToDB({required Category category}) async {
-    Category? createCategory =
-        await readCategoryByNameFromDB(name: category.name);
-    if (createCategory == null) {
-      return await StorageDatabase.instance
-          .createCategoryToDB(category: category);
-    }
-    return null;
-  }
-
-  static Future<void> createCategoryToDBByID(
-      {required List<Category> categories}) async {
-    for (var i = 0; i < categories.length; i++) {
-      Category? category = await readCategoryByIDFromDB(id: categories[i].id);
-      if (category == null) {
-        await createCategoryToDB(category: categories[i]);
+  static Future<void> createCategoryToDB(
+      {required List<Category> listCategories}) async {
+    for (int i = 0; i < listCategories.length; i++) {
+      Category? createCategory =
+          await readCategoryByIDFromDB(id: listCategories[i].id);
+      if (createCategory == null) {
+        await StorageDatabase.instance
+            .createCategoryToDB(category: listCategories[i]);
+        print("Categories created");
+      } else {
+        print("Category dont create");
       }
     }
   }
@@ -168,9 +163,9 @@ class HandleDatabase {
       if (categoryComic == null) {
         await StorageDatabase.instance
             .createCategoriesComicsToDB(categoriesComics: categoriesComics[i]);
-        // print("${i + 1}: CategoriesComics created");
+        print("${i + 1}: CategoriesComics created");
       } else {
-        // print("${i + 1}: CategoriesComics don't create");
+        print("${i + 1}: CategoriesComics don't create");
       }
     }
     //   print("--------------------------------");
@@ -195,5 +190,11 @@ class HandleDatabase {
       {required String comicID}) async {
     await StorageDatabase.instance
         .deleteAllCategoriesComicsByComicIDFromDB(comicID: comicID);
+  }
+
+  static Future<void> deleteCategoriesComicsByComicIDFromDB(
+      {required String comicID, required String categoryId}) async {
+    await StorageDatabase.instance.deleteCategoriesComicsByComicIDFromDB(
+        comicID: comicID, categoryId: categoryId);
   }
 }

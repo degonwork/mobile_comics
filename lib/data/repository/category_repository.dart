@@ -8,32 +8,31 @@ class CategoryRepo {
   const CategoryRepo({required this.apiClient});
   final ApiClient apiClient;
   Future<void> getAllCategory() async {
-    try {
-      final response = await apiClient.getData(AppConstant.categoryAll);
-      if (response.statusCode == 200) {
-        List jsonResponse = jsonDecode(response.body);
-        if (jsonResponse.isNotEmpty) {
-          final allCategory =
-              jsonResponse.map((e) => Category.fromJson(e)).toList();
-          await HandleDatabase.createCategoryToDBByID(categories: allCategory);
-        }
-      }
-    } catch (e) {
-      // print(
-      //     '${e.toString()} fgajiogsgsjglsgjkls------------------------------------');
-    }
+    // try {
+    //   final response = await apiClient.getData(AppConstant.categoryAll);
+    //   if (response.statusCode == 200) {
+
+    // List<dynamic> jsonResponse = jsonDecode(response.body);
+    List<dynamic> jsonResponse = [
+      {"_id": "648bfbaaa35b676fbcb08200", "name": "Hành động"},
+      {"_id": "648bfbaaa35b676fbcb08203", "name": "Hài hước"},
+      {"_id": "648bfbaaa35b676fbcb08206", "name": "Phiêu lưu"},
+      {"_id": "649576c714e28ac54662f252", "name": "Âm nhạc"},
+    ];
+    // if (jsonResponse.isNotEmpty) {
+    List<Category> allCategory =
+        jsonResponse.map((e) => Category.fromJson(e)).toList();
+    await HandleDatabase.createCategoryToDB(listCategories: allCategory);
+
+    // }
   }
+  // } catch (e) {
+  // print(
+  //     '${e.toString()} ------------------------------------');
+  // }
 
   Future<List<Category>> getAllCategoryFromDB() async {
     return await HandleDatabase.readAllCategoryFromDB();
-  }
-
-  Future<int?> createCategoryToDB(Category category) async {
-    Category createCategory = Category(
-      id: category.id,
-      name: category.name,
-    );
-    return await HandleDatabase.createCategoryToDB(category: createCategory);
   }
 
   Future<Category?> readCategoryByIDFromDB({required String id}) async {
