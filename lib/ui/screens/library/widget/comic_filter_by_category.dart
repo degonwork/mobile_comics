@@ -15,7 +15,6 @@ class ComicByCategory extends StatelessWidget {
     return BlocBuilder<GetAllCategoryBloc, GetAllCategoryState>(
       builder: (context, state) {
         if (state is GetLoadded) {
-          BlocProvider.of<FilterComicBloc>(context).add(FilterComicStart());
           return BlocBuilder<FilterComicBloc, FilterComicState>(
             builder: (context, state) {
               if (state is ComicByCategoryLoaded) {
