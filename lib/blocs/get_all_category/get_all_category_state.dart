@@ -10,9 +10,10 @@ class GetInitial extends GetAllCategoryState {}
 
 class GetLoadded extends GetAllCategoryState {
   final List<String> listCategories;
-  const GetLoadded(this.listCategories);
+  final int index;
+  const GetLoadded(this.listCategories, this.index);
   @override
-  List<Object?> get props => [listCategories];
+  List<Object?> get props => [listCategories, index];
 }
 
 class GetFailure extends GetAllCategoryState {}
