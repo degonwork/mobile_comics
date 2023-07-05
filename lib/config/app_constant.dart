@@ -48,7 +48,7 @@ class AppConstant {
 
 // Error
   static const comicNotExist = Comic(id: "Not-exist", isFull: 0);
-  static const ChapterNotExist = Chapter(id: "Not-exist", isFull: 0);
+  static const chapterNotExist = Chapter(id: "Not-exist", isFull: 0);
   static const caseComicNotExist = CaseComic(
       comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
 

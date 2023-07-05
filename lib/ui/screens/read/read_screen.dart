@@ -113,7 +113,7 @@ class ReadScreen extends StatelessWidget {
                                         // }
                                         // context.read<ReadChapterBloc>().add(LoadNextChapter(comic!.id, numericChapter!));
                                         print(
-                                            '${numericChapter} -----------------------------------------------------------------------------------');
+                                            '$numericChapter -----------------------------------------------------------------------------------');
                                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>  ReadScreen(numericChapter: numericChapter,chapterId: chapterId,)));
                                       },
                                       child: const Text(

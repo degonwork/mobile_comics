@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 // import 'package:http/http.dart';
+import 'package:http/http.dart';
+
 import '../../data/models/case_comic_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/app_constant.dart';
@@ -69,143 +71,144 @@ class ComicRepo {
   Future<List<Comic>> fetchAPIHotComics({required int limit}) async {
     List<Comic> listHotComicsApi = [];
     try {
-      // Response response = await _apiClient
-      //     .getData('$_comicUrl${AppConstant.hotComicUrl}?limit=$limit');
-      // if (response.statusCode == 200) {
-      //   List<dynamic> jsonResponse = jsonDecode(response.body);
-      //   if (jsonResponse.isNotEmpty) {
-      List<dynamic> jsonResponse = [
-        {
-          "id": "648bfd4cdbf16ad1f464bdbe",
-          "title": "Thanh gươm diệt quỷ",
-          "image_detail": {
-            "id": "648bfd4cdbf16ad1f464bdb5",
-            "path":
-                "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfd4cdbf16ad1f464bdb7",
-            "path":
-                "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfd4cdbf16ad1f464bdb9",
-            "path":
-                "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
-          },
-          "reads": 9554,
-          "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
-          "add_chapter_time": 1686895995000,
-          "update_time": 1687536465000,
-          "times_ads": 5
-        },
-        {
-          "id": "648bfbaaa35b676fbcb0820b",
-          "title": "OnePiece",
-          "image_detail": {
-            "id": "648bfbaaa35b676fbcb081f9",
-            "path":
-                "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfbaaa35b676fbcb081fb",
-            "path":
-                "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfbaaa35b676fbcb081fd",
-            "path":
-                "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
-          },
-          "reads": 5963,
-          "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
-          "add_chapter_time": 1687031898000,
-          "update_time": 1687536439000,
-          "times_ads": 5
-        },
-        {
-          "id": "649576c714e28ac54662f254",
-          "title": "Thế giới mới",
-          "image_detail": {
-            "id": "649576c714e28ac54662f24a",
-            "path":
-                "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "649576c714e28ac54662f24c",
-            "path":
-                "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "649576c714e28ac54662f24e",
-            "path":
-                "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
-          },
-          "reads": 4646,
-          "categories": ["Hài hước", "Âm nhạc"],
-          "add_chapter_time": 1687926907000,
-          "update_time": 1687926907000,
-          "times_ads": 5
-        },
-        {
-          "id": "648bfc15a35b676fbcb0828e",
-          "title": "Solo Eving",
-          "image_detail": {
-            "id": "648bfc15a35b676fbcb08283",
-            "path":
-                "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfc15a35b676fbcb08285",
-            "path":
-                "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfc15a35b676fbcb08287",
-            "path":
-                "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
-          },
-          "reads": 4621,
-          "categories": ["Drama", "Hành động", "Phiêu lưu"],
-          "add_chapter_time": 1686895683000,
-          "update_time": 1687786052000,
-          "times_ads": 5
-        },
-        {
-          "id": "6499919ee6b500162a51fc3a",
-          "title": "Anh yêu em",
-          "image_detail": {
-            "id": "6499919ee6b500162a51fc30",
-            "path":
-                "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "6499919ee6b500162a51fc32",
-            "path":
-                "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "6499919ee6b500162a51fc34",
-            "path":
-                "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
-          },
-          "reads": 0,
-          "categories": ["Hài hước", "Trường học"],
-          "add_chapter_time": 1687785906000,
-          "update_time": 1687785906000,
-          "times_ads": 5
-        }
-      ];
+      Response response = await _apiClient
+          .getData('$_comicUrl${AppConstant.hotComicUrl}?limit=$limit');
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = jsonDecode(response.body);
+        if (jsonResponse.isNotEmpty) {
+        //
+      // List<dynamic> jsonResponse = [
+      //   {
+      //     "id": "648bfd4cdbf16ad1f464bdbe",
+      //     "title": "Thanh gươm diệt quỷ",
+      //     "image_detail": {
+      //       "id": "648bfd4cdbf16ad1f464bdb5",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfd4cdbf16ad1f464bdb7",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfd4cdbf16ad1f464bdb9",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+      //     },
+      //     "reads": 9554,
+      //     "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+      //     "add_chapter_time": 1686895995000,
+      //     "update_time": 1687536465000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "648bfbaaa35b676fbcb0820b",
+      //     "title": "OnePiece",
+      //     "image_detail": {
+      //       "id": "648bfbaaa35b676fbcb081f9",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfbaaa35b676fbcb081fb",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfbaaa35b676fbcb081fd",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+      //     },
+      //     "reads": 5963,
+      //     "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
+      //     "add_chapter_time": 1687031898000,
+      //     "update_time": 1687536439000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "649576c714e28ac54662f254",
+      //     "title": "Thế giới mới",
+      //     "image_detail": {
+      //       "id": "649576c714e28ac54662f24a",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "649576c714e28ac54662f24c",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "649576c714e28ac54662f24e",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+      //     },
+      //     "reads": 4646,
+      //     "categories": ["Hài hước", "Âm nhạc"],
+      //     "add_chapter_time": 1687926907000,
+      //     "update_time": 1687926907000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "648bfc15a35b676fbcb0828e",
+      //     "title": "Solo Eving",
+      //     "image_detail": {
+      //       "id": "648bfc15a35b676fbcb08283",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfc15a35b676fbcb08285",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfc15a35b676fbcb08287",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+      //     },
+      //     "reads": 4621,
+      //     "categories": ["Drama", "Hành động", "Phiêu lưu"],
+      //     "add_chapter_time": 1686895683000,
+      //     "update_time": 1687786052000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "6499919ee6b500162a51fc3a",
+      //     "title": "Anh yêu em",
+      //     "image_detail": {
+      //       "id": "6499919ee6b500162a51fc30",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "6499919ee6b500162a51fc32",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "6499919ee6b500162a51fc34",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
+      //     },
+      //     "reads": 0,
+      //     "categories": ["Hài hước", "Trường học"],
+      //     "add_chapter_time": 1687785906000,
+      //     "update_time": 1687785906000,
+      //     "times_ads": 5
+      //   }
+      // ];
       listHotComicsApi = jsonResponse.map((e) => Comic.fromJson(e)).toList();
       setTimesAds(listHotComicsApi[0].times_ads);
-      //   } else {
-      //     print("Hot comic is not available");
-      //   }
-      // } else {
-      // print("load failed hot comic");
-      // }
+        } else {
+          print("Hot comic is not available");
+        }
+      } else {
+      print("load failed hot comic");
+      }
     } catch (e) {
-      print(e.toString() + "------------------------------------------");
+      // print(e.toString() + "------------------------------------------");
     }
     return listHotComicsApi;
   }
@@ -213,166 +216,167 @@ class ComicRepo {
   Future<List<Comic>> fetchAPINewComics({required int limit}) async {
     List<Comic> listNewComicsApi = [];
     try {
-      //   Response response = await _apiClient
-      //       .getData('$_comicUrl${AppConstant.newComicUrl}?limit=$limit');
-      //   if (response.statusCode == 200) {
-      //     List<dynamic> jsonResponse = jsonDecode(response.body);
-      //     if (jsonResponse.isNotEmpty) {
-      List<dynamic> jsonResponse = [
-        {
-          "id": "649576c714e28ac54662f254",
-          "title": "Thế giới mới",
-          "image_detail": {
-            "id": "649576c714e28ac54662f24a",
-            "path":
-                "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "649576c714e28ac54662f24c",
-            "path":
-                "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "649576c714e28ac54662f24e",
-            "path":
-                "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
-          },
-          "reads": 4646,
-          "categories": ["Hài hước", "Âm nhạc"],
-          "add_chapter_time": 1687926907000,
-          "update_time": 1687926907000,
-          "times_ads": 5
-        },
-        {
-          "id": "64999200e6b500162a51fc6d",
-          "title": "Ngôn ngữ tình yêu",
-          "image_detail": {
-            "id": "64999200e6b500162a51fc61",
-            "path":
-                "http://117.4.194.207:3000/image/37fae1635de4e254b54de2aaa3f90aa4.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "64999200e6b500162a51fc63",
-            "path":
-                "http://117.4.194.207:3000/image/a1bf244b241365df59e2395d10d18a9a3.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "64999200e6b500162a51fc65",
-            "path":
-                "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
-          },
-          "reads": 0,
-          "categories": ["Sáng tạo", "Lãng mạn"],
-          "add_chapter_time": 1687785997000,
-          "update_time": 1687785997000,
-          "times_ads": 5
-        },
-        {
-          "id": "6499919ee6b500162a51fc3a",
-          "title": "Anh yêu em",
-          "image_detail": {
-            "id": "6499919ee6b500162a51fc30",
-            "path":
-                "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "6499919ee6b500162a51fc32",
-            "path":
-                "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "6499919ee6b500162a51fc34",
-            "path":
-                "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
-          },
-          "reads": 0,
-          "categories": ["Hài hước", "Trường học"],
-          "add_chapter_time": 1687785906000,
-          "update_time": 1687785906000,
-          "times_ads": 5
-        },
-        {
-          "id": "648bfbaaa35b676fbcb0820b",
-          "title": "OnePiece",
-          "image_detail": {
-            "id": "648bfbaaa35b676fbcb081f9",
-            "path":
-                "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfbaaa35b676fbcb081fb",
-            "path":
-                "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfbaaa35b676fbcb081fd",
-            "path":
-                "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
-          },
-          "reads": 5963,
-          "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
-          "add_chapter_time": 1687031898000,
-          "update_time": 1687536439000,
-          "times_ads": 5
-        },
-        {
-          "id": "648bfd4cdbf16ad1f464bdbe",
-          "title": "Thanh gươm diệt quỷ",
-          "image_detail": {
-            "id": "648bfd4cdbf16ad1f464bdb5",
-            "path":
-                "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfd4cdbf16ad1f464bdb7",
-            "path":
-                "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfd4cdbf16ad1f464bdb9",
-            "path":
-                "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
-          },
-          "reads": 9554,
-          "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
-          "add_chapter_time": 1686895995000,
-          "update_time": 1687536465000,
-          "times_ads": 5
-        },
-        {
-          "id": "648bfc15a35b676fbcb0828e",
-          "title": "Solo Eving",
-          "image_detail": {
-            "id": "648bfc15a35b676fbcb08283",
-            "path":
-                "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
-          },
-          "image_thumnail_square": {
-            "id": "648bfc15a35b676fbcb08285",
-            "path":
-                "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
-          },
-          "image_thumnail_rectangle": {
-            "id": "648bfc15a35b676fbcb08287",
-            "path":
-                "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
-          },
-          "reads": 4621,
-          "categories": ["Drama", "Hành động", "Phiêu lưu"],
-          "add_chapter_time": 1686895683000,
-          "update_time": 1687786052000,
-          "times_ads": 5
-        }
-      ];
-      listNewComicsApi = jsonResponse.map((e) => Comic.fromJson(e)).toList();
-      //   } else {
-      //     print("New comic is not available");
+        Response response = await _apiClient
+            .getData('$_comicUrl${AppConstant.newComicUrl}?limit=$limit');
+        if (response.statusCode == 200) {
+          List<dynamic> jsonResponse = jsonDecode(response.body);
+          if (jsonResponse.isNotEmpty) {
+        //
+      // List<dynamic> jsonResponse = [
+      //   {
+      //     "id": "649576c714e28ac54662f254",
+      //     "title": "Thế giới mới",
+      //     "image_detail": {
+      //       "id": "649576c714e28ac54662f24a",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "649576c714e28ac54662f24c",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "649576c714e28ac54662f24e",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+      //     },
+      //     "reads": 4646,
+      //     "categories": ["Hài hước", "Âm nhạc"],
+      //     "add_chapter_time": 1687926907000,
+      //     "update_time": 1687926907000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "64999200e6b500162a51fc6d",
+      //     "title": "Ngôn ngữ tình yêu",
+      //     "image_detail": {
+      //       "id": "64999200e6b500162a51fc61",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/37fae1635de4e254b54de2aaa3f90aa4.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "64999200e6b500162a51fc63",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/a1bf244b241365df59e2395d10d18a9a3.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "64999200e6b500162a51fc65",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/c0be3c8f3a866511e56f0d3119282675.jpg"
+      //     },
+      //     "reads": 0,
+      //     "categories": ["Sáng tạo", "Lãng mạn"],
+      //     "add_chapter_time": 1687785997000,
+      //     "update_time": 1687785997000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "6499919ee6b500162a51fc3a",
+      //     "title": "Anh yêu em",
+      //     "image_detail": {
+      //       "id": "6499919ee6b500162a51fc30",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "6499919ee6b500162a51fc32",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "6499919ee6b500162a51fc34",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
+      //     },
+      //     "reads": 0,
+      //     "categories": ["Hài hước", "Trường học"],
+      //     "add_chapter_time": 1687785906000,
+      //     "update_time": 1687785906000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "648bfbaaa35b676fbcb0820b",
+      //     "title": "OnePiece",
+      //     "image_detail": {
+      //       "id": "648bfbaaa35b676fbcb081f9",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfbaaa35b676fbcb081fb",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfbaaa35b676fbcb081fd",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+      //     },
+      //     "reads": 5963,
+      //     "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
+      //     "add_chapter_time": 1687031898000,
+      //     "update_time": 1687536439000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "648bfd4cdbf16ad1f464bdbe",
+      //     "title": "Thanh gươm diệt quỷ",
+      //     "image_detail": {
+      //       "id": "648bfd4cdbf16ad1f464bdb5",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfd4cdbf16ad1f464bdb7",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfd4cdbf16ad1f464bdb9",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+      //     },
+      //     "reads": 9554,
+      //     "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+      //     "add_chapter_time": 1686895995000,
+      //     "update_time": 1687536465000,
+      //     "times_ads": 5
+      //   },
+      //   {
+      //     "id": "648bfc15a35b676fbcb0828e",
+      //     "title": "Solo Eving",
+      //     "image_detail": {
+      //       "id": "648bfc15a35b676fbcb08283",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+      //     },
+      //     "image_thumnail_square": {
+      //       "id": "648bfc15a35b676fbcb08285",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+      //     },
+      //     "image_thumnail_rectangle": {
+      //       "id": "648bfc15a35b676fbcb08287",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+      //     },
+      //     "reads": 4621,
+      //     "categories": ["Drama", "Hành động", "Phiêu lưu"],
+      //     "add_chapter_time": 1686895683000,
+      //     "update_time": 1687786052000,
+      //     "times_ads": 5
       //   }
-      // } else {
-      //   print("load failed new comic");
-      // }
+      // ];
+      listNewComicsApi = jsonResponse.map((e) => Comic.fromJson(e)).toList();
+        } else {
+          print("New comic is not available");
+        }
+      } else {
+        print("load failed new comic");
+      }
     } catch (e) {
-      print(e.toString() + "------------------------------------------");
+      // print(e.toString() + "------------------------------------------");
     }
     return listNewComicsApi;
   }
@@ -380,68 +384,69 @@ class ComicRepo {
   Future<Comic?> fetchDetailComics(
       {required String id, required bool isUpdate}) async {
     Comic? comicApi;
-    // try {
-    //   Response response = await _apiClient.getData('$_comicUrl$id');
-    //   if (response.statusCode == 200) {
-    //     dynamic jsonResponse = jsonDecode(response.body);
-    //     if (jsonResponse != null) {
-    dynamic jsonResponse = {
-      "_id": "649576c714e28ac54662f254",
-      "title": "Thế giới mới",
-      "categories": ["Hài hước", "Âm nhạc"],
-      "author": "Dung",
-      "description":
-          "Tân Thế giới (tiếng Anh: New World) là một trong những tên gọi được sử dụng cho phần lớn Tây Bán cầu của Trái Đất, đặc biệt là châu Mỹ (bao gồm cả các đảo lân cận nó) và châu Đại Dương. Châu Mỹ khi được phát hiện vào thời điểm thế kỷ 16–17 là hoàn toàn mới lạ đối với người châu Âu, những người trước đó cho rằng thế giới chỉ bao gồm châu Âu, châu Á và châu Phi (hay còn gọi là Cựu thế giới)",
-      "year": 2020,
-      "chapters": [
-        {
-          "chapter_id": "649576e014e28ac54662f268",
-          "chapter_des": "Chapter 1",
-          "image_thumnail": {
-            "path":
-                "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg",
-            "id": "649576e014e28ac54662f25e"
-          }
-        },
-        {
-          "chapter_id": "649576ef14e28ac54662f27d",
-          "chapter_des": "Chapter 2",
-          "image_thumnail": {
-            "path":
-                "http://117.4.194.207:3000/image/1ac0be36f126918f95f22110c97989de0.jpg",
-            "id": "649576ef14e28ac54662f271"
-          }
-        },
-        {
-          "chapter_id": "649bb87be6b500162a520dc8",
-          "chapter_des": "Chapter 3",
-          "image_thumnail": {
-            "path":
-                "http://117.4.194.207:3000/image/c7acc10848cabb55d310edd94c9c61f709.jpg",
-            "id": "649bb87be6b500162a520dc0"
-          }
-        }
-      ],
-      "reads": 4646,
-      "image_detail": {
-        "id": "649576c714e28ac54662f24a",
-        "path":
-            "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
-      },
-      "image_thumnail_square": {
-        "id": "649576c714e28ac54662f24c",
-        "path":
-            "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
-      },
-      "image_thumnail_rectangle": {
-        "id": "649576c714e28ac54662f24e",
-        "path":
-            "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
-      },
-      "chapter_update_time": null,
-      "update_time": 1687926907000,
-      "add_chapter_time": 1687926907000
-    };
+    try {
+      Response response = await _apiClient.getData('$_comicUrl$id');
+      if (response.statusCode == 200) {
+        dynamic jsonResponse = jsonDecode(response.body);
+        if (jsonResponse != null) {
+      //
+    // dynamic jsonResponse = {
+    //   "_id": "649576c714e28ac54662f254",
+    //   "title": "Thế giới mới",
+    //   "categories": ["Hài hước", "Âm nhạc"],
+    //   "author": "Dung",
+    //   "description":
+    //       "Tân Thế giới (tiếng Anh: New World) là một trong những tên gọi được sử dụng cho phần lớn Tây Bán cầu của Trái Đất, đặc biệt là châu Mỹ (bao gồm cả các đảo lân cận nó) và châu Đại Dương. Châu Mỹ khi được phát hiện vào thời điểm thế kỷ 16–17 là hoàn toàn mới lạ đối với người châu Âu, những người trước đó cho rằng thế giới chỉ bao gồm châu Âu, châu Á và châu Phi (hay còn gọi là Cựu thế giới)",
+    //   "year": 2020,
+    //   "chapters": [
+    //     {
+    //       "chapter_id": "649576e014e28ac54662f268",
+    //       "chapter_des": "Chapter 1",
+    //       "image_thumnail": {
+    //         "path":
+    //             "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg",
+    //         "id": "649576e014e28ac54662f25e"
+    //       }
+    //     },
+    //     {
+    //       "chapter_id": "649576ef14e28ac54662f27d",
+    //       "chapter_des": "Chapter 2",
+    //       "image_thumnail": {
+    //         "path":
+    //             "http://117.4.194.207:3000/image/1ac0be36f126918f95f22110c97989de0.jpg",
+    //         "id": "649576ef14e28ac54662f271"
+    //       }
+    //     },
+    //     {
+    //       "chapter_id": "649bb87be6b500162a520dc8",
+    //       "chapter_des": "Chapter 3",
+    //       "image_thumnail": {
+    //         "path":
+    //             "http://117.4.194.207:3000/image/c7acc10848cabb55d310edd94c9c61f709.jpg",
+    //         "id": "649bb87be6b500162a520dc0"
+    //       }
+    //     }
+    //   ],
+    //   "reads": 4646,
+    //   "image_detail": {
+    //     "id": "649576c714e28ac54662f24a",
+    //     "path":
+    //         "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+    //   },
+    //   "image_thumnail_square": {
+    //     "id": "649576c714e28ac54662f24c",
+    //     "path":
+    //         "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+    //   },
+    //   "image_thumnail_rectangle": {
+    //     "id": "649576c714e28ac54662f24e",
+    //     "path":
+    //         "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+    //   },
+    //   "chapter_update_time": null,
+    //   "update_time": 1687926907000,
+    //   "add_chapter_time": 1687926907000
+    // };
     comicApi = Comic.fromJson(jsonResponse);
     if (isUpdate) {
       Comic? comicDB =
@@ -459,335 +464,336 @@ class ComicRepo {
         }
       }
     }
-    // } else {
-    //   print("comic is not available");
-    // }
-    // } else {
-    //   print("load failed");
-    // }
-    // } catch (e) {
-    //   print(e.toString());
-    // }
+    } else {
+      print("comic is not available");
+    }
+    } else {
+      print("load failed");
+    }
+    } catch (e) {
+      print(e.toString());
+    }
     return comicApi;
   }
 
   Future<void> fetchAPIAndCreateFilterComicByCategories(
       {required String categoryName, required bool isUpdate}) async {
-    List<dynamic> jsonResponse = [];
+    // List<dynamic> jsonResponse = [];
     List<Comic> listComicFilter = [];
-    // try {
-    //   final response = await _apiClient
-    //       .getData('$_comicUrl${AppConstant.category}$categoryName');
-    //   if (response.statusCode == 200) {
-    // List<dynamic> jsonResponse = jsonDecode(response.body);
+    try {
+      final response = await _apiClient
+          .getData('$_comicUrl${AppConstant.category}$categoryName');
+      if (response.statusCode == 200) {
+    List<dynamic> jsonResponse = jsonDecode(response.body);
 
-    // if (jsonResponse.isNotEmpty) {
-    switch (categoryName) {
-      case "Hành động":
-        jsonResponse = [
-          {
-            "id": "648bfd4cdbf16ad1f464bdbe",
-            "title": "Thanh gươm diệt quỷ",
-            "image_detail": {
-              "id": "648bfd4cdbf16ad1f464bdb5",
-              "path":
-                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfd4cdbf16ad1f464bdb7",
-              "path":
-                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfd4cdbf16ad1f464bdb9",
-              "path":
-                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
-            },
-            "reads": 9554,
-            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
-            "add_chapter_time": 1686895995000,
-            "update_time": 1687536465000,
-            "times_ads": 5
-          },
-          {
-            "id": "648bfbaaa35b676fbcb0820b",
-            "title": "OnePiece",
-            "image_detail": {
-              "id": "648bfbaaa35b676fbcb081f9",
-              "path":
-                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfbaaa35b676fbcb081fb",
-              "path":
-                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfbaaa35b676fbcb081fd",
-              "path":
-                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
-            },
-            "reads": 5963,
-            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
-            "add_chapter_time": 1687031898000,
-            "update_time": 1687536439000,
-            "times_ads": 5
-          },
-          {
-            "id": "648bfc15a35b676fbcb0828e",
-            "title": "Solo Eving",
-            "image_detail": {
-              "id": "648bfc15a35b676fbcb08283",
-              "path":
-                  "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfc15a35b676fbcb08285",
-              "path":
-                  "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfc15a35b676fbcb08287",
-              "path":
-                  "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
-            },
-            "reads": 4621,
-            "categories": ["Drama", "Hành động", "Phiêu lưu"],
-            "add_chapter_time": 1686895683000,
-            "update_time": 1687786052000,
-            "times_ads": 5
-          },
-        ];
-        break;
-      case "Hài hước":
-        jsonResponse = [
-          {
-            "id": "648bfd4cdbf16ad1f464bdbe",
-            "title": "Thanh gươm diệt quỷ",
-            "image_detail": {
-              "id": "648bfd4cdbf16ad1f464bdb5",
-              "path":
-                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfd4cdbf16ad1f464bdb7",
-              "path":
-                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfd4cdbf16ad1f464bdb9",
-              "path":
-                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
-            },
-            "reads": 9554,
-            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
-            "add_chapter_time": 1686895995000,
-            "update_time": 1687536465000,
-            "times_ads": 5
-          },
-          {
-            "id": "648bfbaaa35b676fbcb0820b",
-            "title": "OnePiece",
-            "image_detail": {
-              "id": "648bfbaaa35b676fbcb081f9",
-              "path":
-                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfbaaa35b676fbcb081fb",
-              "path":
-                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfbaaa35b676fbcb081fd",
-              "path":
-                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
-            },
-            "reads": 5963,
-            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
-            "add_chapter_time": 1687031898000,
-            "update_time": 1687536439000,
-            "times_ads": 5
-          },
-          {
-            "id": "649576c714e28ac54662f254",
-            "title": "Thế giới mới",
-            "image_detail": {
-              "id": "649576c714e28ac54662f24a",
-              "path":
-                  "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "649576c714e28ac54662f24c",
-              "path":
-                  "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "649576c714e28ac54662f24e",
-              "path":
-                  "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
-            },
-            "reads": 4646,
-            "categories": ["Hài hước", "Âm nhạc"],
-            "add_chapter_time": 1687926907000,
-            "update_time": 1687926907000,
-            "times_ads": 5
-          },
-          {
-            "id": "6499919ee6b500162a51fc3a",
-            "title": "Anh yêu em",
-            "image_detail": {
-              "id": "6499919ee6b500162a51fc30",
-              "path":
-                  "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "6499919ee6b500162a51fc32",
-              "path":
-                  "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "6499919ee6b500162a51fc34",
-              "path":
-                  "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
-            },
-            "reads": 0,
-            "categories": ["Hài hước", "Trường học"],
-            "add_chapter_time": 1687785906000,
-            "update_time": 1687785906000,
-            "times_ads": 5
-          },
-          {
-            "id": "6499a61ce6b500162a51ff92",
-            "title": "Http code",
-            "image_detail": {
-              "id": "6499a61ce6b500162a51ff8b",
-              "path":
-                  "http://117.4.194.207:3000/image/beb144d10b9cc6929b0bd6be2e5fc14e7.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "6499a61ce6b500162a51ff8d",
-              "path":
-                  "http://117.4.194.207:3000/image/35e57bd9a86ab0210be1a627ce3b34b65.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "6499a61ce6b500162a51ff8f",
-              "path":
-                  "http://117.4.194.207:3000/image/d3c2a4499338d68541083fb4a464acad9.jpg"
-            },
-            "reads": 0,
-            "categories": ["Hài hước"],
-            "add_chapter_time": null,
-            "update_time": null,
-            "times_ads": 5
-          }
-        ];
-        break;
-      case "Phiêu lưu":
-        jsonResponse = [
-          {
-            "id": "648bfd4cdbf16ad1f464bdbe",
-            "title": "Thanh gươm diệt quỷ",
-            "image_detail": {
-              "id": "648bfd4cdbf16ad1f464bdb5",
-              "path":
-                  "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfd4cdbf16ad1f464bdb7",
-              "path":
-                  "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfd4cdbf16ad1f464bdb9",
-              "path":
-                  "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
-            },
-            "reads": 9554,
-            "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
-            "add_chapter_time": 1686895995000,
-            "update_time": 1687536465000,
-            "times_ads": 5
-          },
-          {
-            "id": "648bfbaaa35b676fbcb0820b",
-            "title": "OnePiece",
-            "image_detail": {
-              "id": "648bfbaaa35b676fbcb081f9",
-              "path":
-                  "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfbaaa35b676fbcb081fb",
-              "path":
-                  "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfbaaa35b676fbcb081fd",
-              "path":
-                  "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
-            },
-            "reads": 5963,
-            "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
-            "add_chapter_time": 1687031898000,
-            "update_time": 1687536439000,
-            "times_ads": 5
-          },
-          {
-            "id": "648bfc15a35b676fbcb0828e",
-            "title": "Solo Eving",
-            "image_detail": {
-              "id": "648bfc15a35b676fbcb08283",
-              "path":
-                  "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "648bfc15a35b676fbcb08285",
-              "path":
-                  "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "648bfc15a35b676fbcb08287",
-              "path":
-                  "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
-            },
-            "reads": 4621,
-            "categories": ["Drama", "Hành động", "Phiêu lưu"],
-            "add_chapter_time": 1686895683000,
-            "update_time": 1687786052000,
-            "times_ads": 5
-          },
-        ];
-        break;
-      case "Âm nhạc":
-        jsonResponse = [
-          {
-            "id": "649576c714e28ac54662f254",
-            "title": "Thế giới mới",
-            "image_detail": {
-              "id": "649576c714e28ac54662f24a",
-              "path":
-                  "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
-            },
-            "image_thumnail_square": {
-              "id": "649576c714e28ac54662f24c",
-              "path":
-                  "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
-            },
-            "image_thumnail_rectangle": {
-              "id": "649576c714e28ac54662f24e",
-              "path":
-                  "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
-            },
-            "reads": 4646,
-            "categories": ["Hài hước", "Âm nhạc"],
-            "add_chapter_time": 1687926907000,
-            "update_time": 1687926907000,
-            "times_ads": 5
-          }
-        ];
-        break;
-    }
+    if (jsonResponse.isNotEmpty) {
+      // 
+    // switch (categoryName) {
+    //   case "Hành động":
+    //     jsonResponse = [
+    //       {
+    //         "id": "648bfd4cdbf16ad1f464bdbe",
+    //         "title": "Thanh gươm diệt quỷ",
+    //         "image_detail": {
+    //           "id": "648bfd4cdbf16ad1f464bdb5",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfd4cdbf16ad1f464bdb7",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfd4cdbf16ad1f464bdb9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+    //         },
+    //         "reads": 9554,
+    //         "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+    //         "add_chapter_time": 1686895995000,
+    //         "update_time": 1687536465000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "648bfbaaa35b676fbcb0820b",
+    //         "title": "OnePiece",
+    //         "image_detail": {
+    //           "id": "648bfbaaa35b676fbcb081f9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfbaaa35b676fbcb081fb",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfbaaa35b676fbcb081fd",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+    //         },
+    //         "reads": 5963,
+    //         "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
+    //         "add_chapter_time": 1687031898000,
+    //         "update_time": 1687536439000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "648bfc15a35b676fbcb0828e",
+    //         "title": "Solo Eving",
+    //         "image_detail": {
+    //           "id": "648bfc15a35b676fbcb08283",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfc15a35b676fbcb08285",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfc15a35b676fbcb08287",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+    //         },
+    //         "reads": 4621,
+    //         "categories": ["Drama", "Hành động", "Phiêu lưu"],
+    //         "add_chapter_time": 1686895683000,
+    //         "update_time": 1687786052000,
+    //         "times_ads": 5
+    //       },
+    //     ];
+    //     break;
+    //   case "Hài hước":
+    //     jsonResponse = [
+    //       {
+    //         "id": "648bfd4cdbf16ad1f464bdbe",
+    //         "title": "Thanh gươm diệt quỷ",
+    //         "image_detail": {
+    //           "id": "648bfd4cdbf16ad1f464bdb5",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfd4cdbf16ad1f464bdb7",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfd4cdbf16ad1f464bdb9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+    //         },
+    //         "reads": 9554,
+    //         "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+    //         "add_chapter_time": 1686895995000,
+    //         "update_time": 1687536465000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "648bfbaaa35b676fbcb0820b",
+    //         "title": "OnePiece",
+    //         "image_detail": {
+    //           "id": "648bfbaaa35b676fbcb081f9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfbaaa35b676fbcb081fb",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfbaaa35b676fbcb081fd",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+    //         },
+    //         "reads": 5963,
+    //         "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
+    //         "add_chapter_time": 1687031898000,
+    //         "update_time": 1687536439000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "649576c714e28ac54662f254",
+    //         "title": "Thế giới mới",
+    //         "image_detail": {
+    //           "id": "649576c714e28ac54662f24a",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "649576c714e28ac54662f24c",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "649576c714e28ac54662f24e",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+    //         },
+    //         "reads": 4646,
+    //         "categories": ["Hài hước", "Âm nhạc"],
+    //         "add_chapter_time": 1687926907000,
+    //         "update_time": 1687926907000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "6499919ee6b500162a51fc3a",
+    //         "title": "Anh yêu em",
+    //         "image_detail": {
+    //           "id": "6499919ee6b500162a51fc30",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/a4c36f18c1ac9384e66310486e2c37642.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "6499919ee6b500162a51fc32",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/1e96b3104e746af9d11e6db6d110049185.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "6499919ee6b500162a51fc34",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/aa45a3575569aa10d364fc65a8219dacf.jpg"
+    //         },
+    //         "reads": 0,
+    //         "categories": ["Hài hước", "Trường học"],
+    //         "add_chapter_time": 1687785906000,
+    //         "update_time": 1687785906000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "6499a61ce6b500162a51ff92",
+    //         "title": "Http code",
+    //         "image_detail": {
+    //           "id": "6499a61ce6b500162a51ff8b",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/beb144d10b9cc6929b0bd6be2e5fc14e7.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "6499a61ce6b500162a51ff8d",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/35e57bd9a86ab0210be1a627ce3b34b65.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "6499a61ce6b500162a51ff8f",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/d3c2a4499338d68541083fb4a464acad9.jpg"
+    //         },
+    //         "reads": 0,
+    //         "categories": ["Hài hước"],
+    //         "add_chapter_time": null,
+    //         "update_time": null,
+    //         "times_ads": 5
+    //       }
+    //     ];
+    //     break;
+    //   case "Phiêu lưu":
+    //     jsonResponse = [
+    //       {
+    //         "id": "648bfd4cdbf16ad1f464bdbe",
+    //         "title": "Thanh gươm diệt quỷ",
+    //         "image_detail": {
+    //           "id": "648bfd4cdbf16ad1f464bdb5",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/6ee75f6cbf74118610710bd32e9a478da9.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfd4cdbf16ad1f464bdb7",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/de51283d1510669b0681853ac10b741acd.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfd4cdbf16ad1f464bdb9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/fa46107d3d64eb1a57ce386103ae37eab0.jpg"
+    //         },
+    //         "reads": 9554,
+    //         "categories": ["Hành động", "Phiêu lưu", "Hài hước"],
+    //         "add_chapter_time": 1686895995000,
+    //         "update_time": 1687536465000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "648bfbaaa35b676fbcb0820b",
+    //         "title": "OnePiece",
+    //         "image_detail": {
+    //           "id": "648bfbaaa35b676fbcb081f9",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/c43107d4b1a58610a93785374c2129106bc.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfbaaa35b676fbcb081fb",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/3a5408109834e195f8ef16d310545ce52c.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfbaaa35b676fbcb081fd",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/957ecf5cfab723fc2cc5e2ded5dad1a8.jpg"
+    //         },
+    //         "reads": 5963,
+    //         "categories": ["Hành động", "Hài hước", "Phiêu lưu", "Fantasy"],
+    //         "add_chapter_time": 1687031898000,
+    //         "update_time": 1687536439000,
+    //         "times_ads": 5
+    //       },
+    //       {
+    //         "id": "648bfc15a35b676fbcb0828e",
+    //         "title": "Solo Eving",
+    //         "image_detail": {
+    //           "id": "648bfc15a35b676fbcb08283",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/62ca14e9a10f3ab74e25097610b537e4a7.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "648bfc15a35b676fbcb08285",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/b6185a9c0b6c75debcecde0c9fe510c23.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "648bfc15a35b676fbcb08287",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/8bf7bf43260851073c40957525eae3def.jpg"
+    //         },
+    //         "reads": 4621,
+    //         "categories": ["Drama", "Hành động", "Phiêu lưu"],
+    //         "add_chapter_time": 1686895683000,
+    //         "update_time": 1687786052000,
+    //         "times_ads": 5
+    //       },
+    //     ];
+    //     break;
+    //   case "Âm nhạc":
+    //     jsonResponse = [
+    //       {
+    //         "id": "649576c714e28ac54662f254",
+    //         "title": "Thế giới mới",
+    //         "image_detail": {
+    //           "id": "649576c714e28ac54662f24a",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/fdce1ec913b78fed602ac582262ae8d3.jpg"
+    //         },
+    //         "image_thumnail_square": {
+    //           "id": "649576c714e28ac54662f24c",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/102106d3cc98cc2ca104a0409e4aa878102f.jpg"
+    //         },
+    //         "image_thumnail_rectangle": {
+    //           "id": "649576c714e28ac54662f24e",
+    //           "path":
+    //               "http://117.4.194.207:3000/image/8bae1792a3a79c4d3b264875f759eeba.jpg"
+    //         },
+    //         "reads": 4646,
+    //         "categories": ["Hài hước", "Âm nhạc"],
+    //         "add_chapter_time": 1687926907000,
+    //         "update_time": 1687926907000,
+    //         "times_ads": 5
+    //       }
+    //     ];
+    //     break;
+    // }
     listComicFilter = jsonResponse.map((e) => Comic.fromJson(e)).toList();
     await createComicToDB(listComics: listComicFilter);
     for (var comicFilter in listComicFilter) {
@@ -811,13 +817,13 @@ class ComicRepo {
         }
       }
     }
-    // } else {
-    //   print("Comic filter is not available");
-    // }
-    // } else {}
-    // } catch (e) {
-    //   // print(e.toString());
-    // }
+    } else {
+      print("Comic filter is not available");
+    }
+    } else {}
+    } catch (e) {
+      // print(e.toString());
+    }
   }
 
   // Search Comic
@@ -992,8 +998,7 @@ class ComicRepo {
         update_time: comic.update_time ?? comicDB.update_time,
         isFull: isFullComic ? 1 : 0,
       );
-      print(updateComic.isFull.toString() +
-          " isfull-----------------------------------");
+      
       await HandleDatabase.updateComicToDB(comic: updateComic);
       print("Comic ${comic.id} updated full");
     }

@@ -1,9 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/read_chapter/read_chapter_event.dart';
 import '../../blocs/read_chapter/read_chapter_state.dart';
-import '../../data/models/chapter_model.dart';
+
 import '../../data/repository/chapter_repository.dart';
 import '../../data/models/image_model.dart';
 
@@ -13,82 +11,46 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
       : _chapterRepo = chapterRepo,
         super(ReadChapterInital()) {
     on<LoadChapter>(_onLoadChapter);
-    on<LoadNextChapter>(_onLoadNextChapter);
-    on<SetStateButtonBackIndex>(_onSetStateButtonBackIndex);
+    // on<LoadNextChapter>(_onLoadNextChapter);
   }
-  Future<void> _onLoadNextChapter(
-      LoadNextChapter event, Emitter<ReadChapterState> emitter) async {
-    try {
-      List<Image> listImageNextChapter = await _chapterRepo.readChapterNext(
-          comicId: event.id, numerical: event.numerical);
-      // int numerical =
-      //     await _chapterRepo.readChapterNumberic(chapterId: event.id);
-      // print('${event.numerical} -------------------------');
-      emitter(
-        LoadedChapter(listImageNextChapter, true
-            // numerical
-            ),
-      );
-    } catch (e) {
-      emitter(ReadChapterLoadFailed());
-    }
-  }
-
+  // Future<void> _onLoadNextChapter(LoadNextChapter event,Emitter<ReadChapterState> emitter)async{
+  //   try {
+  //     List<Image> listImageNextChapter  = await _chapterRepo.readChapterNext(comicId: event.id,numerical: event.numerical);
+  //     // int numerical = await _chapterRepo.readNumericNextChapter(comicId: event.id,numerical: event.numerical);
+  //     // String chapterId = await _chapterRepo.readIDChapter(comicId: event.id, numerical: event.numerical);
+  //       emitter(LoadedChapter(listImageNextChapter,event.numerical + 1));
+      
+  //     // int? numerical = (await _chapterRepo.readNumericNextChapter(comicId: event.id,numerical: event.numerical))!.numerical;
+  //     // print('${event.numerical} -------------------------');
+  //     // emitter(LoadedChapter(listImageNextChapter,numerical!));
+  //   } catch (e) {
+  //     emitter(ReadChapterLoadFailed());
+  //   }
+  // }
   Future<void> _onLoadChapter(
       LoadChapter event, Emitter<ReadChapterState> emit) async {
     emit(LoadingChapter());
-    List<Image> listImageContent = [];
-    Chapter chapter =
-        await _chapterRepo.readChapterByIdFromDB(chapterId: event.id);
-    if (chapter.isFull == 0) {
-      print("chapter not full ----------------------------");
-      await _chapterRepo.fetchDetailChapters(id: event.id, isUpdate: true);
-      listImageContent =
+    try {
+      
+      List<Image> listImageContent =
           await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
-      emit(LoadedChapter(listImageContent, true));
-    } else {
-      print("chapter is full--------------------------------");
-      listImageContent =
-          await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
-      emit(LoadedChapter(listImageContent, true));
-      await _chapterRepo
-          .fetchDetailChapters(id: event.id, isUpdate: true)
-          .whenComplete(
-        () async {
-          await Future.delayed(const Duration(seconds: 1), () async {
-            listImageContent = await _chapterRepo.readChapterContentFromDB(
-                chapterId: event.id);
-            emit(
-              LoadedChapter(listImageContent, true),
-            );
-          });
-        },
-      );
-
-      //     int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
-
-      //     if (listImageContent.isEmpty) {
-      //       await _chapterRepo.fetchDetailChapters(id: event.id);
-      //       List<Image> listImageContent =
-      //           await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
-      //       int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
-
-      //       emit(LoadedChapter(listImageContent,numerical));
-      //     } else {
-      //       emit(LoadedChapter(listImageContent,numerical));
-      //     }
-      //   } catch (e) {
-      //     emit(ReadChapterLoadFailed());
-    }
-  }
-
-  void _onSetStateButtonBackIndex(
-    SetStateButtonBackIndex event,
-    Emitter<ReadChapterState> emit,
-  ) {
-    if (state is LoadedChapter) {
-      emit(LoadedChapter(
-          (state as LoadedChapter).listImageContent, !event.visialbe));
+          print(event.id);
+      // int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
+      
+      if (listImageContent.isEmpty) {
+        await _chapterRepo.fetchDetailChapters(id: event.id,isUpdate: true);
+        List<Image> listImageContent =
+            await _chapterRepo.readChapterContentFromDB(chapterId: event.id);
+        // int numerical = await _chapterRepo.readChapterNumberic(chapterId: event.id);
+        
+        // print('$numerical +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');    
+        
+        emit(LoadedChapter(listImageContent,true));
+      } else {
+        emit(LoadedChapter(listImageContent,true));
+      }
+    } catch (e) {
+      emit(ReadChapterLoadFailed());
     }
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:full_comics_frontend/blocs/home/home_bloc.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+// import 'package:full_comics_frontend/config/app_color.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/get_all_category/get_all_category_bloc.dart';
@@ -82,25 +82,56 @@ class _SplashScreenState extends State<SplashScreen> {
         return Scaffold(
           body: Stack(
             children: [
-              const BackGroundApp(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextUi(
-                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
-                    fontSize: SizeConfig.font20,
-                    color: AppColor.titleSplashColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  Image.asset(
-                    'assets/images/banner_splash.png',
-                    height: SizeConfig.width230,
-                    width: SizeConfig.width230,
-                  ),
-                  Container(),
-                ],
+               const BackGroundApp(), 
+              // TextUi(
+              //       text: AppLocalizations.of(context)!.welcomeSplashScreen,
+              //       fontSize: SizeConfig.font20,
+              //       color: AppColor.titleSplashColor,
+              //       fontWeight: FontWeight.w700,
+              //     ),
+              Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/images/anh splash.jpg"),fit: BoxFit.contain)
+                ),
               ),
+              // Image.asset(
+              //       'assets/images/anh splash.jpg',
+              //       height: SizeConfig.screenHeight,
+              //       width: SizeConfig.screenWidth,
+              //     ),
+              // Container(
+              //   margin: EdgeInsets.only(top: SizeConfig.height120),
+              //   child: TextUi(
+              //         text: AppLocalizations.of(context)!.welcomeSplashScreen,
+              //         fontSize: SizeConfig.font20,
+              //         color: AppColor.titleSplashColor,
+              //         fontWeight: FontWeight.w700,
+              //       ),
+              // ),   
+              // Image.asset(
+              //       'assets/images/anh splash.jpg',
+              //       height: SizeConfig.screenHeight,
+              //       width: SizeConfig.screenWidth,
+              //     ),
+              // // const BackGroundApp(),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     TextUi(
+              //       text: AppLocalizations.of(context)!.welcomeSplashScreen,
+              //       fontSize: SizeConfig.font20,
+              //       color: AppColor.titleSplashColor,
+              //       fontWeight: FontWeight.w700,
+              //     ),
+              //     // Image.asset(
+              //     //   'assets/images/anh splash.jpg',
+              //     //   height: SizeConfig.screenHeight,
+              //     //   width: SizeConfig.screenWidth,
+              //     // ),
+              //     Container(),
+              //   ],
+              // ),
             ],
           ),
         );

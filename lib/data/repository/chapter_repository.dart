@@ -1,6 +1,10 @@
 // import 'dart:convert';
 // import 'package:http/http.dart';
 
+import 'dart:convert';
+
+import 'package:http/http.dart';
+
 import '.././models/comic_model.dart';
 import '.././providers/api/api_client.dart';
 import '../../config/app_constant.dart';
@@ -25,53 +29,54 @@ class ChapterRepo {
       {required String id, required bool isUpdate}) async {
     Chapter? chapterAPi;
     try {
-      // Response response = await _apiClient.getData('$_chapterUrl$id');
-      // if (response.statusCode == 200) {
-      // dynamic jsonResponse = jsonDecode(response.body);
-      //   if (jsonResponse != null) {
-      dynamic jsonResponse = {
-        "_id": "649576e014e28ac54662f268",
-        "comic_id": "649576c714e28ac54662f254",
-        "image_thumnail": {
-          "id": "649576e014e28ac54662f25e",
-          "path":
-              "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg"
-        },
-        "content": [
-          {
-            "id": "649576e014e28ac54662f260",
-            "path":
-                "http://117.4.194.207:3000/image/6ac3410a7d8195b5857bf768152b5a781.jpg",
-            "height": 710,
-            "width": 570
-          },
-          {
-            "id": "649576e014e28ac54662f262",
-            "path":
-                "http://117.4.194.207:3000/image/81c3e5ef150944350e78f7fda843df10b.jpg",
-            "height": 275,
-            "width": 183
-          },
-          {
-            "id": "649576e014e28ac54662f264",
-            "path":
-                "http://117.4.194.207:3000/image/e0898d3b1059f210575714a91fdb5a7d09.jpg",
-            "height": 285,
-            "width": 177
-          },
-          {
-            "id": "649576e014e28ac54662f266",
-            "path":
-                "http://117.4.194.207:3000/image/6100c63cfe504506eabf44283dfae815b.jpg",
-            "height": 1500,
-            "width": 880
-          }
-        ],
-        "chapter_des": "Chapter 1",
-        "publish_date": 1687516896000,
-        "content_update_time": null,
-        "update_time": null
-      };
+      Response response = await _apiClient.getData('$_chapterUrl$id');
+      if (response.statusCode == 200) {
+      dynamic jsonResponse = jsonDecode(response.body);
+        if (jsonResponse != null) {
+        //
+      // dynamic jsonResponse = {
+      //   "_id": "649576e014e28ac54662f268",
+      //   "comic_id": "649576c714e28ac54662f254",
+      //   "image_thumnail": {
+      //     "id": "649576e014e28ac54662f25e",
+      //     "path":
+      //         "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg"
+      //   },
+      //   "content": [
+      //     {
+      //       "id": "649576e014e28ac54662f260",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/6ac3410a7d8195b5857bf768152b5a781.jpg",
+      //       "height": 710,
+      //       "width": 570
+      //     },
+      //     {
+      //       "id": "649576e014e28ac54662f262",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/81c3e5ef150944350e78f7fda843df10b.jpg",
+      //       "height": 275,
+      //       "width": 183
+      //     },
+      //     {
+      //       "id": "649576e014e28ac54662f264",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/e0898d3b1059f210575714a91fdb5a7d09.jpg",
+      //       "height": 285,
+      //       "width": 177
+      //     },
+      //     {
+      //       "id": "649576e014e28ac54662f266",
+      //       "path":
+      //           "http://117.4.194.207:3000/image/6100c63cfe504506eabf44283dfae815b.jpg",
+      //       "height": 1500,
+      //       "width": 880
+      //     }
+      //   ],
+      //   "chapter_des": "Chapter 1",
+      //   "publish_date": 1687516896000,
+      //   "content_update_time": null,
+      //   "update_time": null
+      // };
       chapterAPi = Chapter.fromJson(jsonResponse);
       if (isUpdate) {
         Chapter? chapterDB =
@@ -89,10 +94,10 @@ class ChapterRepo {
           }
         }
       }
-      // } else {
-      //   print("chapter is not available");
-      // }
-      // } else {}
+      } else {
+        print("chapter is not available");
+      }
+      } else {}
     } catch (e) {
       print(e.toString());
     }
@@ -133,7 +138,7 @@ class ChapterRepo {
     if (chapter != null) {
       return chapter;
     } else {
-      return AppConstant.ChapterNotExist;
+      return AppConstant.chapterNotExist;
     }
   }
 
