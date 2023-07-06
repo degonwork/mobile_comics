@@ -161,7 +161,7 @@ class ImageRepo {
       return imageID;
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listComics: [parent]);
-      print("${typeImage} is created");
+      print("$typeImage is created");
       return await readIDImageFromDB(
           parentId: parentDB.id, typeImage: typeImage);
     }

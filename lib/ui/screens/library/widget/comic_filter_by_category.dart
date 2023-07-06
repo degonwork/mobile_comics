@@ -18,9 +18,6 @@ class ComicByCategory extends StatelessWidget {
             builder: (context, state) {
               if (state is ComicByCategoryLoaded) {
                 final listComicsFilter = state.listComics;
-                print("length list comic: " +
-                    listComicsFilter.length.toString() +
-                    "--------------------------------");
                 if (listComicsFilter.isNotEmpty) {
                   return GridviewComics(listComics: listComicsFilter);
                 } else {

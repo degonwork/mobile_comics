@@ -163,7 +163,9 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
             child: const BannerAD()),
           Container(
             margin: EdgeInsets.only(top: SizeConfig.height35),
-            child: BackButtonScreen(onTap: () {
+            child: NavigatorButtonScreen(
+              icon: Icons.arrow_back_ios_outlined,
+              onTap: () {
               Navigator.pushNamed(context, RouterScreen.routeName);
               context.read<CaseBloc>().add(const LoadCaseComic());
             }),

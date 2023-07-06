@@ -48,7 +48,7 @@ class StorageDatabase {
       ${ChapterField.comic_id} TEXT,
       ${ChapterField.image_thumnail_id} TEXT, 
       ${ChapterField.chapter_des} TEXT, 
-      ${ChapterField.numerical} INTEGER,
+      ${ChapterField.chapter_index} INTEGER,
       ${ChapterField.content_update_time} TEXT,
       ${ChapterField.update_time} TEXT,
       ${ChapterField.isFull} INTEGER
@@ -147,13 +147,13 @@ class StorageDatabase {
     }
   }
   //
-   Future<Chapter?> readChapterByNumberic({required String comicId,required int numerical})async{
+   Future<Chapter?> readChapterByChapterIndex({required String comicId,required int chapterIndex})async{
   final db= await instance.database;
   final maps = await db.query(
     tableChapters,
     columns: ChapterField.values,
-    where: '${ChapterField.comic_id} = ? and ${ChapterField.numerical}  = ?',
-    whereArgs: [comicId,numerical],
+    where: '${ChapterField.comic_id} = ? and ${ChapterField.chapter_index}  = ?',
+    whereArgs: [comicId,chapterIndex],
     );
    if (maps.isNotEmpty) {
      return Chapter.fromJson(maps.first);

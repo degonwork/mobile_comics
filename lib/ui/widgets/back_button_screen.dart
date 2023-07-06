@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import '../../config/size_config.dart';
 
-class BackButtonScreen extends StatelessWidget {
-  const BackButtonScreen({
+class NavigatorButtonScreen extends StatelessWidget {
+  const NavigatorButtonScreen({
     super.key,
-    required this.onTap,
+    required this.onTap, required this.icon,
   });
   final Function onTap;
-
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -25,7 +25,7 @@ class BackButtonScreen extends StatelessWidget {
           color: AppColor.yellowColor.withOpacity(0.5),
         ),
         child: Icon(
-          Icons.arrow_back_ios_new_sharp,
+          icon,
           color: AppColor.iconAppbarColor,
           size: SizeConfig.icon20,
         ),

@@ -15,10 +15,10 @@ class LoadChapter extends ReadChapterEvent {
 
 class LoadNextChapter extends ReadChapterEvent {
   final String id;
-  final int numerical;
-  const LoadNextChapter(this.id, this.numerical);
+  final int chapterIndex;
+  const LoadNextChapter(this.id, this.chapterIndex);
   @override
-  List<Object> get props => [id, numerical];
+  List<Object> get props => [id, chapterIndex];
 }
 
 class SetStateButtonBackIndex extends ReadChapterEvent {
@@ -28,6 +28,12 @@ class SetStateButtonBackIndex extends ReadChapterEvent {
   List<Object> get props => [visialbe];
 }
 
-class ContinueReading extends ReadChapterEvent {}
+class ContinueReading extends ReadChapterEvent {
+  final String id;
+  final int chapterIndex;
+  const ContinueReading(this.chapterIndex,this.id);
+  @override
+  List<Object> get props => [chapterIndex,id];
+}
 
 class ContinueFailed extends ReadChapterEvent {}

@@ -129,14 +129,14 @@ class Infor extends StatelessWidget {
             ReadButton(
               id: comic.chapters!.first.id,
               comic: comic,
-              numericChapter: 1,
+              // numericChapter: 1,
               color: Colors.orangeAccent,
               title: AppLocalizations.of(context)!.readFirstChapter,
             ),
             ReadButton(
               id: caseComic.chapterId,
               comic: comic,
-              numericChapter: caseComic.numericChapter,
+              // numericChapter: caseComic.numericChapter,
               color: Colors.orangeAccent,
               title: AppLocalizations.of(context)!.continueReading,
             ),
@@ -147,7 +147,7 @@ class Infor extends StatelessWidget {
           child: ReadButton(
             id: comic.chapters!.first.id,
             comic: comic,
-            numericChapter: 1,
+            // numericChapter: 1,
             color: Colors.orangeAccent,
             title: AppLocalizations.of(context)!.readComics,
           ),

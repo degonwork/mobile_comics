@@ -14,15 +14,15 @@ class LoadingChapter extends ReadChapterState {}
 class LoadedChapter extends ReadChapterState {
   final bool visialbe;
   final List<Image> listImageContent;
-  // final int currentNumeric;
+  final int currentNumeric;
   const LoadedChapter(this.listImageContent, this.visialbe
-      // ,this.currentNumeric
+      ,this.currentNumeric
       );
   @override
   List<Object> get props => [
         listImageContent,
-        visialbe
-        // currentNumeric
+        visialbe,
+        currentNumeric
       ];
 }
 

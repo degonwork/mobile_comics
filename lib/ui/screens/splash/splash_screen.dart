@@ -10,14 +10,16 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/get_all_category/get_all_category_bloc.dart';
 import '../../../blocs/get_all_category/get_all_category_event.dart';
+import '../../../config/size_config.dart';
 import '../../../data/providers/firebase/notification/firebase_messaging_service.dart';
 import '../../../data/providers/firebase/notification/local_notification_service.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
-import '../../../config/size_config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 Future<dynamic> _firebaseMessagingBackgroundHandler(
     RemoteMessage message) async {
@@ -82,22 +84,53 @@ class _SplashScreenState extends State<SplashScreen> {
         return Scaffold(
           body: Stack(
             children: [
+              //  const BackGroundApp(), 
+              // // TextUi(
+              // //       text: AppLocalizations.of(context)!.welcomeSplashScreen,
+              // //       fontSize: SizeConfig.font20,
+              // //       color: AppColor.titleSplashColor,
+              // //       fontWeight: FontWeight.w700,
+              // //     ),
+              // Container(
+              //   decoration: const BoxDecoration(
+              //     image: DecorationImage(image: AssetImage("assets/images/anh splash.jpg"),fit: BoxFit.contain)
+              //   ),
+              // ),
+              // // Image.asset(
+              // //       'assets/images/anh splash.jpg',
+              // //       height: SizeConfig.screenHeight,
+              // //       width: SizeConfig.screenWidth,
+              // //     ),
+              // // Container(
+              // //   margin: EdgeInsets.only(top: SizeConfig.height120),
+              // //   child: TextUi(
+              // //         text: AppLocalizations.of(context)!.welcomeSplashScreen,
+              // //         fontSize: SizeConfig.font20,
+              // //         color: AppColor.titleSplashColor,
+              // //         fontWeight: FontWeight.w700,
+              // //       ),
+              // // ),   
+              // // Image.asset(
+              // //       'assets/images/anh splash.jpg',
+              // //       height: SizeConfig.screenHeight,
+              // //       width: SizeConfig.screenWidth,
+              // //     ),
               const BackGroundApp(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextUi(
-                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
+                    text:AppLocalizations.of(context)!.welcomeSplashScreen,
                     fontSize: SizeConfig.font20,
                     color: AppColor.titleSplashColor,
                     fontWeight: FontWeight.w700,
                   ),
-                  Image.asset(
-                    'assets/images/banner_splash.png',
-                    height: SizeConfig.width230,
-                    width: SizeConfig.width230,
-                  ),
+                  // Image.asset(
+                  //   'assets/images/anh splash.jpg',
+                  //   height: SizeConfig.screenHeight,
+                  //   width: SizeConfig.screenWidth,
+                  // ),
                   Container(),
                 ],
               ),

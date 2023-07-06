@@ -1,6 +1,10 @@
 // import 'dart:convert';
 // import 'package:http/http.dart';
 
+import 'dart:convert';
+
+import 'package:http/http.dart';
+
 import '.././models/comic_model.dart';
 import '.././providers/api/api_client.dart';
 import '../../config/app_constant.dart';
@@ -25,53 +29,10 @@ class ChapterRepo {
       {required String id, required bool isUpdate}) async {
     Chapter? chapterAPi;
     try {
-      // Response response = await _apiClient.getData('$_chapterUrl$id');
-      // if (response.statusCode == 200) {
-      // dynamic jsonResponse = jsonDecode(response.body);
-      //   if (jsonResponse != null) {
-      dynamic jsonResponse = {
-        "_id": "649576e014e28ac54662f268",
-        "comic_id": "649576c714e28ac54662f254",
-        "image_thumnail": {
-          "id": "649576e014e28ac54662f25e",
-          "path":
-              "http://117.4.194.207:3000/image/298acc78f434e7e164d373a7c68f735e.jpg"
-        },
-        "content": [
-          {
-            "id": "649576e014e28ac54662f260",
-            "path":
-                "http://117.4.194.207:3000/image/6ac3410a7d8195b5857bf768152b5a781.jpg",
-            "height": 710,
-            "width": 570
-          },
-          {
-            "id": "649576e014e28ac54662f262",
-            "path":
-                "http://117.4.194.207:3000/image/81c3e5ef150944350e78f7fda843df10b.jpg",
-            "height": 275,
-            "width": 183
-          },
-          {
-            "id": "649576e014e28ac54662f264",
-            "path":
-                "http://117.4.194.207:3000/image/e0898d3b1059f210575714a91fdb5a7d09.jpg",
-            "height": 285,
-            "width": 177
-          },
-          {
-            "id": "649576e014e28ac54662f266",
-            "path":
-                "http://117.4.194.207:3000/image/6100c63cfe504506eabf44283dfae815b.jpg",
-            "height": 1500,
-            "width": 880
-          }
-        ],
-        "chapter_des": "Chapter 1",
-        "publish_date": 1687516896000,
-        "content_update_time": null,
-        "update_time": null
-      };
+      Response response = await _apiClient.getData('$_chapterUrl$id');
+      if (response.statusCode == 200) {
+      dynamic jsonResponse = jsonDecode(response.body);
+        if (jsonResponse != null) {
       chapterAPi = Chapter.fromJson(jsonResponse);
       if (isUpdate) {
         Chapter? chapterDB =
@@ -89,10 +50,10 @@ class ChapterRepo {
           }
         }
       }
-      // } else {
-      //   print("chapter is not available");
-      // }
-      // } else {}
+      } else {
+        print("chapter is not available");
+      }
+      } else {}
     } catch (e) {
       print(e.toString());
     }
@@ -116,7 +77,7 @@ class ChapterRepo {
             comic_id: comic.id,
             image_thumnail_id: imageThumnailID,
             chapter_des: comic.chapters![i].chapter_des,
-            numerical: i + 1,
+            chapter_index: comic.chapters![i].chapter_index,
             isFull: comic.chapters![i].isFull,
           ),
         );
@@ -133,7 +94,7 @@ class ChapterRepo {
     if (chapter != null) {
       return chapter;
     } else {
-      return AppConstant.ChapterNotExist;
+      return AppConstant.chapterNotExist;
     }
   }
 
@@ -163,7 +124,7 @@ class ChapterRepo {
               comic_id: chapter.comic_id ?? chapterDB.comic_id,
               image_thumnail_id: imageThumnailId,
               chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
-              numerical: chapterDB.numerical,
+              chapter_index: chapterDB.chapter_index,
               content_update_time: chapterDB.content_update_time,
               update_time: chapterDB.update_time,
               isFull: chapterDB.isFull,
@@ -218,7 +179,7 @@ class ChapterRepo {
         comic_id: chapter.comic_id ?? chapterDB.comic_id,
         image_thumnail_id: imageThumnailId,
         chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
-        numerical: chapterDB.numerical,
+        chapter_index: chapterDB.chapter_index,
         content_update_time:
             chapter.content_update_time ?? chapterDB.content_update_time,
         update_time: chapter.update_time ?? chapterDB.update_time,
@@ -236,7 +197,7 @@ class ChapterRepo {
           comic_id: chapter.comic_id ?? chapterDB.comic_id,
           image_thumnail_id: chapterDB.image_thumnail_id,
           chapter_des: chapterDB.chapter_des,
-          numerical: chapterDB.numerical,
+          chapter_index: chapterDB.chapter_index,
           content_update_time:
               chapter.content_update_time ?? chapterDB.content_update_time,
           update_time: chapterDB.update_time,
@@ -260,7 +221,7 @@ class ChapterRepo {
           comic_id: chapter.comic_id ?? chapterDB.comic_id,
           image_thumnail_id: imageThumnailId,
           chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
-          numerical: chapterDB.numerical,
+          chapter_index: chapterDB.chapter_index,
           content_update_time:
               chapter.content_update_time ?? chapterDB.content_update_time,
           update_time: chapter.update_time ?? chapterDB.update_time,
@@ -307,16 +268,17 @@ class ChapterRepo {
         images.add(image);
       }
     }
-    print(images);
+    // print(images);
     return images;
   }
 
   // readChapter By Numerical
-  Future<List<Image>> readChapterNext(
-      {required String comicId, required int numerical}) async {
-    final chapter = await HandleDatabase.readNextChapterByNumberic(
-        comicId: comicId, numerical: numerical + 1);
+  Future<List<Image>> readImageFromNextChapter(
+      {required String comicId, required int chapterIndex}) async {
+    final chapter = await HandleDatabase.readNextChapterByChapterIndex(
+        comicId: comicId, chapterIndex: chapterIndex);
     if (chapter != null) {
+      
       // print('${chapter.id} -------------------------------------------------------------------------');
       // await fetchDetailChapters(id: chapter.id);
       return await readChapterContentFromDB(chapterId: chapter.id);
@@ -324,14 +286,18 @@ class ChapterRepo {
       return [];
     }
   }
-
+  Future<Chapter?> readNextChapter({required String comicId,required int chapterIndex})async{
+    Chapter? chapter = await HandleDatabase.readNextChapterByChapterIndex(comicId: comicId, chapterIndex: chapterIndex);
+    return chapter;
+  }
   //
-  Future<int> readChapterNumberic({required String chapterId}) async {
+  Future<int> readChapterIndex({required String chapterId}) async {
     Chapter? chapter =
         await HandleDatabase.readChapterByIDFromDB(id: chapterId);
     if (chapter != null) {
-      return chapter.numerical!;
+      return chapter.chapter_index!;
     }
     return 0;
   }
+
 }

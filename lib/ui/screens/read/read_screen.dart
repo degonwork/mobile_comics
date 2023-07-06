@@ -17,14 +17,15 @@ class ReadScreen extends StatelessWidget {
     super.key,
     this.chapterId,
     this.comic,
-    this.numericChapter,
+   
   });
   final String? chapterId;
   final Comic? comic;
-  final int? numericChapter;
+ 
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: Stack(
         children: [
@@ -91,45 +92,6 @@ class ReadScreen extends StatelessWidget {
                                         "assets/images/banner_splash.png");
                               },
                             ),
-                            BlocBuilder<ReadChapterBloc, ReadChapterState>(
-                              builder: (context, state) {
-                                if (state is LoadedChapter) {
-                                  if (numericChapter != null) {
-                                    return TextButton(
-                                      onPressed: () {
-                                        // if (state.currentNumeric != 0) {
-                                        context
-                                            .read<ReadChapterBloc>()
-                                            .add(LoadChapter(comic!.id));
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => ReadScreen(
-                                              numericChapter: numericChapter,
-                                              chapterId: chapterId,
-                                            ),
-                                          ),
-                                        );
-                                        // }
-                                        // context.read<ReadChapterBloc>().add(LoadNextChapter(comic!.id, numericChapter!));
-                                        print(
-                                            '${numericChapter} -----------------------------------------------------------------------------------');
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>  ReadScreen(numericChapter: numericChapter,chapterId: chapterId,)));
-                                      },
-                                      child: const Text(
-                                        "Đọc chương kế tiếp",
-                                        style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  return const Text("Chưa có chương mới");
-                                }
-                                return const Text("data");
-                              },
-                            ),
                           ],
                         ),
                       ),
@@ -154,18 +116,19 @@ class ReadScreen extends StatelessWidget {
                   child: AnimatedOpacity(
                     opacity: state.visialbe ? 1.0 : 0.0,
                     duration: const Duration(milliseconds: 400),
-                    child: BackButtonScreen(
+                    child: NavigatorButtonScreen(
+                      icon: Icons.arrow_back_ios_outlined,
                       onTap: () {
                         if (comic != null &&
-                            chapterId != null &&
-                            numericChapter != null) {
+                            chapterId != null
+                            ) {
                           context.read<CaseBloc>().add(
                                 AddCaseComic(
                                   chapterId: chapterId!,
                                   comicId: comic!.id,
                                   imageThumnailSquareComicPath:
                                       comic!.image_thumnail_square_path!,
-                                  numericChapter: numericChapter!,
+                                  numericChapter: state.currentNumeric,
                                   titleComic: comic!.title!,
                                   reads: comic!.reads!,
                                 ),
@@ -178,7 +141,34 @@ class ReadScreen extends StatelessWidget {
                   ),
                 );
               }
-              return BackButtonScreen(
+              return NavigatorButtonScreen(
+                icon: Icons.arrow_back_ios_outlined,
+                onTap: () =>
+                    Navigator.pushNamed(context, ComicDetailScreen.routeName),
+              );
+            },
+          ),
+          BlocBuilder<ReadChapterBloc, ReadChapterState>(
+            builder: (context, state) {
+              if (state is LoadedChapter) {
+                print(state.currentNumeric.toString() + 'currenttttttttttttttttttttttttttttttttttttttttttttt');
+                return Container(
+                  margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.85,left: SizeConfig.screenWidth * 0.8),
+                  child: AnimatedOpacity(
+                    opacity: state.visialbe ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 400),
+                    child: NavigatorButtonScreen(
+                      icon: Icons.arrow_right_alt_outlined,
+                      onTap: () {
+                        context.read<ReadChapterBloc>().add(LoadNextChapter(comic!.id, state.currentNumeric));
+                        
+                      },
+                    ),
+                  ),
+                );
+              }
+              return NavigatorButtonScreen(
+                icon: Icons.arrow_right_alt_outlined,
                 onTap: () =>
                     Navigator.pushNamed(context, ComicDetailScreen.routeName),
               );

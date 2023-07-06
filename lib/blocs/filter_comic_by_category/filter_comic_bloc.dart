@@ -38,17 +38,17 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
         print("Comic filter is not empty ----------------------");
         emitter(ComicByCategoryLoaded(comicIndexFirst));
         await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-            categoryName: listCategories[0].name, isUpdate: true);
-        //   .whenComplete(() async {
-        // await Future.delayed(
-        //   const Duration(seconds: 1),
-        //   () async {
-        //     comicIndexFirst = await _comicRepo.readComicByCategoryName(
-        //         categoryName: listCategories[0].name);
-        //     emitter(ComicByCategoryLoaded(comicIndexFirst));
-        //   },
-        // );
-        // });
+            categoryName: listCategories[0].name, isUpdate: true)
+          .whenComplete(() async {
+        await Future.delayed(
+          const Duration(seconds: 1),
+          () async {
+            comicIndexFirst = await _comicRepo.readComicByCategoryName(
+                categoryName: listCategories[0].name);
+            emitter(ComicByCategoryLoaded(comicIndexFirst));
+          },
+        );
+        });
       }
     }
   }
@@ -70,14 +70,14 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
       print("Comic filter is not empty ----------------------");
       emitter(ComicByCategoryLoaded(listComicsFilter));
       await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-          categoryName: event.categoryName, isUpdate: true);
-      //     .whenComplete(() async {
-      //   await Future.delayed(const Duration(seconds: 1), () async {
-      //     listComicsFilter = await _comicRepo.readComicByCategoryName(
-      //         categoryName: event.categoryName);
-      //     emitter(ComicByCategoryLoaded(listComicsFilter));
-      //   });
-      // });
+          categoryName: event.categoryName, isUpdate: true)
+          .whenComplete(() async {
+        await Future.delayed(const Duration(seconds: 1), () async {
+          listComicsFilter = await _comicRepo.readComicByCategoryName(
+              categoryName: event.categoryName);
+          emitter(ComicByCategoryLoaded(listComicsFilter));
+        });
+      });
     }
   }
 }
