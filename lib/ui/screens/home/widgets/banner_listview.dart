@@ -47,9 +47,9 @@ class BannerListview extends StatelessWidget {
                           );
                         },
                         errorWidget: (context, url, error) =>
-                            Image.asset("assets/images/banner_splash.png"),
+                            Image.asset("assets/images/anh splash.jpg"),
                       )
-                    : Image.asset("assets/images/banner_splash.png");
+                    : Image.asset("assets/images/anh splash.jpg");
               },
               options: CarouselOptions(
                 height: SizeConfig.height180,

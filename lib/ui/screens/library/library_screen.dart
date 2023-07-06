@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
-// import '../../widgets/custom_appbar.dart';
 import '../../widgets/text_ui.dart';
 import '../search_screen/search_screen.dart';
 import 'widget/all_category.dart';

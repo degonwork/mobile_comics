@@ -15,17 +15,14 @@ import '../detail/comic_detail_screen.dart';
 class ReadScreen extends StatelessWidget {
   const ReadScreen({
     super.key,
-    this.chapterId,
-    this.comic,
-   
+    required this.chapterId,
+    required this.comic,
   });
-  final String? chapterId;
-  final Comic? comic;
- 
+  final String chapterId;
+  final Comic comic;
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       body: Stack(
         children: [
@@ -42,8 +39,6 @@ class ReadScreen extends StatelessWidget {
                   );
                 } else if (state is LoadedChapter) {
                   final listImage = state.listImageContent;
-                  // print(
-                  // '${state.currentNumeric} -----------------------------+++++++++++++++++++++++++++++++++++++++++++++');
                   if (listImage.isNotEmpty) {
                     return GestureDetector(
                       onTap: () => context.read<ReadChapterBloc>().add(
@@ -85,11 +80,11 @@ class ReadScreen extends StatelessWidget {
                                           },
                                           errorWidget: (context, url, error) =>
                                               Image.asset(
-                                                  "assets/images/banner_splash.png"),
+                                                  "assets/images/anh splash.jpg"),
                                         ),
                                       )
                                     : Image.asset(
-                                        "assets/images/banner_splash.png");
+                                        "assets/images/anh splash.jpg");
                               },
                             ),
                           ],
@@ -119,21 +114,17 @@ class ReadScreen extends StatelessWidget {
                     child: NavigatorButtonScreen(
                       icon: Icons.arrow_back_ios_outlined,
                       onTap: () {
-                        if (comic != null &&
-                            chapterId != null
-                            ) {
-                          context.read<CaseBloc>().add(
-                                AddCaseComic(
-                                  chapterId: chapterId!,
-                                  comicId: comic!.id,
-                                  imageThumnailSquareComicPath:
-                                      comic!.image_thumnail_square_path!,
-                                  numericChapter: state.currentNumeric,
-                                  titleComic: comic!.title!,
-                                  reads: comic!.reads!,
-                                ),
-                              );
-                        }
+                        context.read<CaseBloc>().add(
+                              AddCaseComic(
+                                chapterId: chapterId,
+                                comicId: comic.id,
+                                imageThumnailSquareComicPath:
+                                    comic.image_thumnail_square_path!,
+                                numericChapter: state.currentNumeric,
+                                titleComic: comic.title!,
+                                reads: comic.reads!,
+                              ),
+                            );
                         Navigator.pushNamed(
                             context, ComicDetailScreen.routeName);
                       },
@@ -151,21 +142,25 @@ class ReadScreen extends StatelessWidget {
           BlocBuilder<ReadChapterBloc, ReadChapterState>(
             builder: (context, state) {
               if (state is LoadedChapter) {
-                print(state.currentNumeric.toString() + 'currenttttttttttttttttttttttttttttttttttttttttttttt');
-                return Container(
-                  margin: EdgeInsets.only(top: SizeConfig.screenHeight * 0.85,left: SizeConfig.screenWidth * 0.8),
-                  child: AnimatedOpacity(
-                    opacity: state.visialbe ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 400),
-                    child: NavigatorButtonScreen(
-                      icon: Icons.arrow_right_alt_outlined,
-                      onTap: () {
-                        context.read<ReadChapterBloc>().add(LoadNextChapter(comic!.id, state.currentNumeric));
-                        
-                      },
+                if (state.currentNumeric < comic.chapters!.length) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                        top: SizeConfig.screenHeight * 0.85,
+                        left: SizeConfig.screenWidth * 0.8),
+                    child: AnimatedOpacity(
+                      opacity: state.visialbe ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 400),
+                      child: NavigatorButtonScreen(
+                          icon: Icons.arrow_right_alt_outlined,
+                          onTap: () {
+                            context.read<ReadChapterBloc>().add(LoadNextChapter(
+                                comic.id, state.currentNumeric));
+                          }),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return Container();
+                }
               }
               return NavigatorButtonScreen(
                 icon: Icons.arrow_right_alt_outlined,

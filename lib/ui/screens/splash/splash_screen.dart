@@ -20,7 +20,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
 
-
 Future<dynamic> _firebaseMessagingBackgroundHandler(
     RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -84,44 +83,13 @@ class _SplashScreenState extends State<SplashScreen> {
         return Scaffold(
           body: Stack(
             children: [
-              //  const BackGroundApp(), 
-              // // TextUi(
-              // //       text: AppLocalizations.of(context)!.welcomeSplashScreen,
-              // //       fontSize: SizeConfig.font20,
-              // //       color: AppColor.titleSplashColor,
-              // //       fontWeight: FontWeight.w700,
-              // //     ),
-              // Container(
-              //   decoration: const BoxDecoration(
-              //     image: DecorationImage(image: AssetImage("assets/images/anh splash.jpg"),fit: BoxFit.contain)
-              //   ),
-              // ),
-              // // Image.asset(
-              // //       'assets/images/anh splash.jpg',
-              // //       height: SizeConfig.screenHeight,
-              // //       width: SizeConfig.screenWidth,
-              // //     ),
-              // // Container(
-              // //   margin: EdgeInsets.only(top: SizeConfig.height120),
-              // //   child: TextUi(
-              // //         text: AppLocalizations.of(context)!.welcomeSplashScreen,
-              // //         fontSize: SizeConfig.font20,
-              // //         color: AppColor.titleSplashColor,
-              // //         fontWeight: FontWeight.w700,
-              // //       ),
-              // // ),   
-              // // Image.asset(
-              // //       'assets/images/anh splash.jpg',
-              // //       height: SizeConfig.screenHeight,
-              // //       width: SizeConfig.screenWidth,
-              // //     ),
               const BackGroundApp(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextUi(
-                    text:AppLocalizations.of(context)!.welcomeSplashScreen,
+                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
                     fontSize: SizeConfig.font20,
                     color: AppColor.titleSplashColor,
                     fontWeight: FontWeight.w700,

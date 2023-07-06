@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../data/models/case_comic_model.dart';
+
 abstract class ReadChapterEvent extends Equatable {
   const ReadChapterEvent();
   @override
@@ -7,18 +9,18 @@ abstract class ReadChapterEvent extends Equatable {
 }
 
 class LoadChapter extends ReadChapterEvent {
-  final String id;
-  const LoadChapter(this.id);
+  final String chapterId;
+  const LoadChapter(this.chapterId);
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [chapterId];
 }
 
 class LoadNextChapter extends ReadChapterEvent {
-  final String id;
+  final String comicId;
   final int chapterIndex;
-  const LoadNextChapter(this.id, this.chapterIndex);
+  const LoadNextChapter(this.comicId, this.chapterIndex);
   @override
-  List<Object> get props => [id, chapterIndex];
+  List<Object> get props => [comicId, chapterIndex];
 }
 
 class SetStateButtonBackIndex extends ReadChapterEvent {
@@ -29,11 +31,10 @@ class SetStateButtonBackIndex extends ReadChapterEvent {
 }
 
 class ContinueReading extends ReadChapterEvent {
-  final String id;
-  final int chapterIndex;
-  const ContinueReading(this.chapterIndex,this.id);
+  final CaseComic caseComic;
+  const ContinueReading(this.caseComic);
   @override
-  List<Object> get props => [chapterIndex,id];
+  List<Object> get props => [caseComic];
 }
 
 class ContinueFailed extends ReadChapterEvent {}

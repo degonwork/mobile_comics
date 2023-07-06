@@ -49,12 +49,12 @@ class ListChapter extends StatelessWidget {
                         builder: (context) => ReadScreen(
                           comic: comic,
                           chapterId: chapters.last.id,
-                          // numericChapter: chapters.length,
                         ),
                       ),
                     );
                   },
-                  child: ChapterItem(chapterIndex: chapters.last.chapter_index!)),
+                  child:
+                      ChapterItem(chapterIndex: chapters.last.chapter_index!)),
               SizedBox(
                 height: SizeConfig.height10,
               ),
@@ -90,12 +90,12 @@ class ListChapter extends StatelessWidget {
                               ReadScreen(
                             comic: comic,
                             chapterId: chapters[index].id,
-                            // numericChapter: chapters[index].chapter_index,
                           ),
                         ),
                       );
                     },
-                    child: ChapterItem(chapterIndex: chapters[index].chapter_index),
+                    child: ChapterItem(
+                        chapterIndex: chapters[index].chapter_index),
                   ),
                   SizedBox(height: SizeConfig.height10),
                   const Divider(thickness: 1),
