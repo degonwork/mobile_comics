@@ -52,12 +52,7 @@ dependencies:
   scrollable_positioned_list:
   google_mobile_ads: 
   uuid:
-  flutter_launcher_icons: ^0.13.1
-
-flutter_launcher_icons:
-image_path: assets/images/anh splash.jpg
-android: true
-min_sdk_android: 21    
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   # cupertino_icons: ^1.0.2

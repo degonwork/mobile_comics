@@ -62,8 +62,8 @@ class HandleDatabase {
         await StorageDatabase.instance.readChapterByIDFromDB(id: id);
     return chapter;
   }
-  static Future<Chapter?> readNextChapterByNumberic({required String comicId, required int numerical})async{
-    Chapter? chapters = await StorageDatabase.instance.readChapterByNumberic(comicId: comicId, numerical: numerical);
+  static Future<Chapter?> readNextChapterByChapterIndex({required String comicId, required int chapterIndex})async{
+    Chapter? chapters = await StorageDatabase.instance.readChapterByChapterIndex(comicId: comicId, chapterIndex: chapterIndex + 1);
     return chapters;
   }
   static Future<void> updateChapterToDB({required Chapter chapter}) async {

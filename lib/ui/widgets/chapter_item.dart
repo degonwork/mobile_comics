@@ -7,9 +7,9 @@ import 'text_ui.dart';
 class ChapterItem extends StatelessWidget {
   const ChapterItem({
     super.key,
-    required this.numerical,
+    required this.chapterIndex,
   });
-  final int? numerical;
+  final int? chapterIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class ChapterItem extends StatelessWidget {
       ),
       child: Center(
         child: TextUi(
-          text: numerical != null
-              ? '${AppLocalizations.of(context)!.chapter} $numerical'
+          text: chapterIndex != null
+              ? '${AppLocalizations.of(context)!.chapter} $chapterIndex'
               : "${AppLocalizations.of(context)!.chapter}: ",
           fontSize: SizeConfig.font20,
           color: AppColor.contentInforColor,

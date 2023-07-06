@@ -1202,7 +1202,7 @@ class ComicRepo {
         await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
     if (chapters.isNotEmpty) {
       chapters.sort(
-          (chapter1, chapter2) => chapter1.numerical! - chapter2.numerical!);
+          (chapter1, chapter2) => chapter1.chapter_index! - chapter2.chapter_index!);
     }
     Image? imageDetail = (await HandleDatabase.readImageFromDB(
         type: AppConstant.typeImageComic[0], parentID: comic.id));

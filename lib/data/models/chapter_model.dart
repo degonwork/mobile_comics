@@ -6,17 +6,18 @@ class ChapterField {
     image_thumnail_id,
     comic_id,
     chapter_des,
-    numerical,
+    chapter_index,
     content_update_time,
     update_time,
     isFull,
+    
   ];
 
   static String id = 'id';
   static String image_thumnail_id = 'image_thumnail_id';
   static String comic_id = 'comic_id';
   static String chapter_des = 'chapter_des';
-  static String numerical = 'numerical';
+  static String chapter_index = 'chapter_index';
   static String content_update_time = 'content_update_time';
   static String update_time = 'update_time';
   static String isFull = 'isFull';
@@ -28,7 +29,7 @@ class Chapter {
   final String? image_thumnail_path;
   final String? image_thumnail_id;
   final String? chapter_des;
-  final int? numerical;
+  final int? chapter_index;
   final DateTime? publish_date;
   final List<Map<String, dynamic>>? content;
   final DateTime? content_update_time;
@@ -41,7 +42,7 @@ class Chapter {
     this.image_thumnail_path,
     this.image_thumnail_id,
     this.chapter_des,
-    this.numerical,
+    this.chapter_index,
     this.publish_date,
     this.content,
     this.content_update_time,
@@ -70,7 +71,7 @@ class Chapter {
               .map((json) => Map<String, dynamic>.from(json))
               .toList()
           : [],
-      numerical: json['numerical'],
+      chapter_index: json['chapter_index'],
       content_update_time: json['content_update_time'] != null
           ? json['content_update_time'] is int
               ? DateTime.fromMillisecondsSinceEpoch(json['content_update_time'])
@@ -91,7 +92,7 @@ class Chapter {
       'comic_id': comic_id,
       'image_thumnail_id': image_thumnail_id,
       'chapter_des': chapter_des,
-      'numerical': numerical,
+      'chapter_index': chapter_index,
       'content_update_time': content_update_time?.toString(),
       'update_time': update_time?.toString(),
       'isFull': isFull

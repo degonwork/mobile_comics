@@ -16,20 +16,20 @@ class ReadButton extends StatelessWidget {
     required this.color,
     required this.title,
     this.comic,
-    this.numericChapter,
+    // this.numericChapter,
   });
   final String? id;
   final Comic? comic;
   final Color color;
   final String title;
-  final int? numericChapter;
+  // final int? numericChapter;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
         onTap: () {
           context.read<AdsBloc>().add(Increment());
-          if (comic != null && id != null && numericChapter != null) {
+          if (comic != null && id != null) {
             context.read<ReadChapterBloc>().add(LoadChapter(id!));
             Navigator.push(
               context,
@@ -37,7 +37,7 @@ class ReadButton extends StatelessWidget {
                 builder: (context) => ReadScreen(
                   comic: comic,
                   chapterId: id,
-                  numericChapter: numericChapter,
+                  // numericChapter: numericChapter,
                 ),
               ),
             );
