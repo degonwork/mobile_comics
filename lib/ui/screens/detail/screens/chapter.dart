@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+import '../../../../config/app_color.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../blocs/ads/ads_bloc.dart';
 import '../../../../data/models/case_comic_model.dart';
@@ -48,13 +48,12 @@ class ListChapter extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => ReadScreen(
                           comic: comic,
-                          chapterId: chapters.last.id,
-                          // numericChapter: chapters.length,
                         ),
                       ),
                     );
                   },
-                  child: ChapterItem(chapterIndex: chapters.last.chapter_index!)),
+                  child:
+                      ChapterItem(chapterIndex: chapters.last.chapter_index!)),
               SizedBox(
                 height: SizeConfig.height10,
               ),
@@ -89,13 +88,12 @@ class ListChapter extends StatelessWidget {
                           ) =>
                               ReadScreen(
                             comic: comic,
-                            chapterId: chapters[index].id,
-                            // numericChapter: chapters[index].chapter_index,
                           ),
                         ),
                       );
                     },
-                    child: ChapterItem(chapterIndex: chapters[index].chapter_index),
+                    child: ChapterItem(
+                        chapterIndex: chapters[index].chapter_index),
                   ),
                   SizedBox(height: SizeConfig.height10),
                   const Divider(thickness: 1),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+import '../../config/app_color.dart';
 import '../../blocs/ads/ads_bloc.dart';
+import '../../data/models/case_comic_model.dart';
 import '../../data/models/comic_model.dart';
 import 'text_ui.dart';
 import '../screens/read/read_screen.dart';
@@ -12,32 +13,40 @@ import '../../config/size_config.dart';
 class ReadButton extends StatelessWidget {
   const ReadButton({
     super.key,
-    this.id,
+    required this.chapterId,
     required this.color,
     required this.title,
-    this.comic,
-    // this.numericChapter,
+    required this.comic,
+    this.caseComic,
   });
-  final String? id;
-  final Comic? comic;
+  final String chapterId;
+  final Comic comic;
   final Color color;
   final String title;
-  // final int? numericChapter;
+  final CaseComic? caseComic;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
         onTap: () {
           context.read<AdsBloc>().add(Increment());
-          if (comic != null && id != null) {
-            context.read<ReadChapterBloc>().add(LoadChapter(id!));
+          if (caseComic != null) {
+            context.read<ReadChapterBloc>().add(ContinueReading(caseComic!));
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ReadScreen(
                   comic: comic,
-                  chapterId: id,
-                  // numericChapter: numericChapter,
+                ),
+              ),
+            );
+          } else {
+            context.read<ReadChapterBloc>().add(LoadChapter(chapterId));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReadScreen(
+                  comic: comic,
                 ),
               ),
             );

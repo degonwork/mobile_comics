@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+import '../../config/app_color.dart';
 import '../../config/size_config.dart';
 
 class NavigatorButtonScreen extends StatelessWidget {
   const NavigatorButtonScreen({
     super.key,
-    required this.onTap, required this.icon,
+    required this.onTap,
+    required this.icon,
   });
   final Function onTap;
   final IconData icon;

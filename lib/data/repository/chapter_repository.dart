@@ -1,10 +1,5 @@
-// import 'dart:convert';
-// import 'package:http/http.dart';
-
 import 'dart:convert';
-
 import 'package:http/http.dart';
-
 import '.././models/comic_model.dart';
 import '.././providers/api/api_client.dart';
 import '../../config/app_constant.dart';
@@ -31,28 +26,30 @@ class ChapterRepo {
     try {
       Response response = await _apiClient.getData('$_chapterUrl$id');
       if (response.statusCode == 200) {
-      dynamic jsonResponse = jsonDecode(response.body);
+        dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
-      chapterAPi = Chapter.fromJson(jsonResponse);
-      if (isUpdate) {
-        Chapter? chapterDB =
-            await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
-        if (chapterDB != null) {
-          if (chapterDB.isFull == 0) {
-            await updateChapterDetail(
-              chapter: chapterAPi,
-              isFullChapter: false,
-              chapterDB: chapterDB,
-            );
-          } else {
-            await updateChapterDetail(
-                chapter: chapterAPi, isFullChapter: true, chapterDB: chapterDB);
+          chapterAPi = Chapter.fromJson(jsonResponse);
+          if (isUpdate) {
+            Chapter? chapterDB =
+                await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
+            if (chapterDB != null) {
+              if (chapterDB.isFull == 0) {
+                await updateChapterDetail(
+                  chapter: chapterAPi,
+                  isFullChapter: false,
+                  chapterDB: chapterDB,
+                );
+              } else {
+                await updateChapterDetail(
+                    chapter: chapterAPi,
+                    isFullChapter: true,
+                    chapterDB: chapterDB);
+              }
+            }
           }
+        } else {
+          print("chapter is not available");
         }
-      }
-      } else {
-        print("chapter is not available");
-      }
       } else {}
     } catch (e) {
       print(e.toString());
@@ -88,14 +85,13 @@ class ChapterRepo {
     }
   }
 
-  Future<Chapter> readChapterByIdFromDB({required String chapterId}) async {
+  Future<Chapter?> readChapterByIdFromDB({required String chapterId}) async {
     Chapter? chapter =
         await HandleDatabase.readChapterByIDFromDB(id: chapterId);
     if (chapter != null) {
       return chapter;
-    } else {
-      return AppConstant.chapterNotExist;
     }
+    return null;
   }
 
   Future<void> updateChapterComicDetail({
@@ -278,18 +274,19 @@ class ChapterRepo {
     final chapter = await HandleDatabase.readNextChapterByChapterIndex(
         comicId: comicId, chapterIndex: chapterIndex);
     if (chapter != null) {
-      
-      // print('${chapter.id} -------------------------------------------------------------------------');
-      // await fetchDetailChapters(id: chapter.id);
       return await readChapterContentFromDB(chapterId: chapter.id);
     } else {
       return [];
     }
   }
-  Future<Chapter?> readNextChapter({required String comicId,required int chapterIndex})async{
-    Chapter? chapter = await HandleDatabase.readNextChapterByChapterIndex(comicId: comicId, chapterIndex: chapterIndex);
+
+  Future<Chapter?> readNextChapter(
+      {required String comicId, required int chapterIndex}) async {
+    Chapter? chapter = await HandleDatabase.readNextChapterByChapterIndex(
+        comicId: comicId, chapterIndex: chapterIndex);
     return chapter;
   }
+
   //
   Future<int> readChapterIndex({required String chapterId}) async {
     Chapter? chapter =
@@ -299,5 +296,4 @@ class ChapterRepo {
     }
     return 0;
   }
-
 }

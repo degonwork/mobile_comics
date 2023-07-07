@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/descreption.dart';
-
+import '../../../../config/app_color.dart';
+import '../../../../data/models/case_comic_model.dart';
+import '../../../../ui/screens/detail/widgets/descreption.dart';
 import '../../../../config/app_constant.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../../config/size_config.dart';
@@ -13,10 +12,7 @@ import '../../../widgets/read_button.dart';
 import '../../../widgets/text_ui.dart';
 
 class Infor extends StatelessWidget {
-  const Infor({
-    super.key,
-    required this.comic,required this.caseComic
-  });
+  const Infor({super.key, required this.comic, required this.caseComic});
   final Comic comic;
   final CaseComic caseComic;
   @override
@@ -112,50 +108,54 @@ class Infor extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: SizeConfig.height20,),
-            _loadReadButton(context),
-            // LoadReabutton(),
+            SizedBox(
+              height: SizeConfig.height20,
+            ),
+            _loadReadButton(context, caseComic),
           ],
         ),
       ),
     );
   }
-   Widget _loadReadButton(BuildContext context) {
+
+  Widget _loadReadButton(BuildContext context, CaseComic caseComic) {
     if (comic.chapters!.isNotEmpty) {
       if (caseComic != AppConstant.caseComicNotExist) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ReadButton(
-              id: comic.chapters!.first.id,
+              chapterId: comic.chapters!.first.id,
               comic: comic,
-              // numericChapter: 1,
               color: Colors.orangeAccent,
               title: AppLocalizations.of(context)!.readFirstChapter,
             ),
             ReadButton(
-              id: caseComic.chapterId,
+              chapterId: caseComic.chapterId,
               comic: comic,
-              // numericChapter: caseComic.numericChapter,
               color: Colors.orangeAccent,
               title: AppLocalizations.of(context)!.continueReading,
+              caseComic: caseComic,
             ),
           ],
         );
       } else {
         return Center(
           child: ReadButton(
-            id: comic.chapters!.first.id,
+            chapterId: comic.chapters!.first.id,
             comic: comic,
-            // numericChapter: 1,
             color: Colors.orangeAccent,
             title: AppLocalizations.of(context)!.readComics,
           ),
         );
       }
     } else {
-      return ReadButton(
-          title: AppLocalizations.of(context)!.readComics, color: Colors.grey);
+      return Center(
+        child: TextUi(
+          text: "Truyện này không có chương",
+          fontSize: SizeConfig.font16,
+        ),
+      );
     }
-  } 
+  }
 }

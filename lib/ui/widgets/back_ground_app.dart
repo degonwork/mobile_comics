@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+import '../../config/app_color.dart';
 
 class BackGroundApp extends StatelessWidget {
   const BackGroundApp({super.key});

@@ -40,9 +40,9 @@ class CaseInfor extends StatelessWidget {
                   );
                 },
                 errorWidget: (context, url, error) =>
-                    Image.asset("assets/images/banner_splash.png"),
+                    Image.asset("assets/images/anh splash.jpg"),
               )
-            : Image.asset("assets/images/banner_splash.png"),
+            : Image.asset("assets/images/anh splash.jpg"),
         SizedBox(width: SizeConfig.width20),
         Expanded(
           child: Column(
