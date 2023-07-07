@@ -119,8 +119,8 @@ class ReadScreen extends StatelessWidget {
                                 imageThumnailSquareComicPath:
                                     comic.image_thumnail_square_path!,
                                 numericChapter: state.currentNumeric,
-                                titleComic: comic.title!,
-                                reads: comic.reads!,
+                                titleComic: comic.title,
+                                reads: comic.reads,
                               ),
                             );
                         Navigator.pushNamed(
@@ -151,8 +151,12 @@ class ReadScreen extends StatelessWidget {
                       child: NavigatorButtonScreen(
                           icon: Icons.arrow_right_alt_outlined,
                           onTap: () {
-                            context.read<ReadChapterBloc>().add(LoadNextChapter(
-                                comic.id, state.currentNumeric));
+                            context.read<ReadChapterBloc>().add(
+                                  LoadNextChapter(
+                                    comic.id,
+                                    state.currentNumeric,
+                                  ),
+                                );
                           }),
                     ),
                   );

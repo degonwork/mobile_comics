@@ -12,18 +12,21 @@ class CategoriesComicsRepo {
   Future<void> processCategoriesComicsToDB({
     required Comic comic,
     required bool isUpdateCategoriesComic,
+    String? categoryName,
   }) async {
     if (isUpdateCategoriesComic) {
       List<CategoriesComics> allCategoriesComicsByComicIDFromDB =
           await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
       if (allCategoriesComicsByComicIDFromDB.isNotEmpty) {
         await HandleDatabase.deleteAllCategoriesComicsByComicIDFromDB(
-            comicID: comic.id);
+          comicID: comic.id,
+        );
         print("deleted CategoriesComics with comicId: ${comic.id}");
       }
     }
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
+      print("abc------------------------------------------");
       for (var i = 0; i < comic.categories!.length; i++) {
         Category? category = await _categoryRepo.readCategoryByNameFromDB(
             name: comic.categories![i]);
@@ -32,6 +35,14 @@ class CategoriesComicsRepo {
             CategoriesComics(comic_id: comic.id, category_id: category.id),
           );
         }
+      }
+    } else if (categoryName != null) {
+      Category? category =
+          await _categoryRepo.readCategoryByNameFromDB(name: categoryName);
+      if (category != null) {
+        listCategoriesComics.add(
+          CategoriesComics(comic_id: comic.id, category_id: category.id),
+        );
       }
     }
     if (listCategoriesComics.isNotEmpty) {

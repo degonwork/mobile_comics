@@ -13,11 +13,7 @@ class SearchComicBloc extends Bloc<SearchComicEvent, SearchComicState> {
   Future<void> _onSearchByQuery(
       SearchByQuery event, Emitter<SearchComicState> emitter) async {
     emitter(SearchLoading());
-    try {
-      final comicResult = await _comicRepo.searchComic(event.query);
-      emitter(SearchLoadded(comicResult));
-    } catch (e) {
-      emitter(SearchError());
-    }
+    final comicResult = await _comicRepo.searchComic(event.query);
+    emitter(SearchLoadded(comicResult));
   }
 }

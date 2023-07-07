@@ -11,25 +11,25 @@ class AddCaseComic extends CaseEvent {
   final String comicId;
   final String chapterId;
   final String? imageThumnailSquareComicPath;
-  final String? titleComic;
+  final String titleComic;
   final int numericChapter;
-  final int? reads;
+  final int reads;
   const AddCaseComic({
     required this.comicId,
     required this.chapterId,
     this.imageThumnailSquareComicPath,
-    this.titleComic,
+    required this.titleComic,
     required this.numericChapter,
-    this.reads,
+    required this.reads,
   });
   @override
   List<Object> get props => [
         comicId,
         chapterId,
         imageThumnailSquareComicPath!,
-        titleComic!,
+        titleComic,
         numericChapter,
-        reads!
+        reads
       ];
 }
 
