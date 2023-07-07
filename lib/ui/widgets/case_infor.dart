@@ -15,8 +15,8 @@ class CaseInfor extends StatelessWidget {
   });
 
   final String? imageSquare;
-  final String? title;
-  final int? reads;
+  final String title;
+  final int reads;
   final int numericChapter;
 
   @override
@@ -55,14 +55,15 @@ class CaseInfor extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextUi(
-                        text: title != null ? title! : "",
+                        text: title,
                         fontSize: SizeConfig.font20,
                         color: AppColor.titleComicColor,
+                        textOverflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                       SizedBox(height: SizeConfig.height10),
                       TextUi(
-                        text:
-                            "${reads ?? ""} ${AppLocalizations.of(context)!.reads}",
+                        text: "$reads ${AppLocalizations.of(context)!.reads}",
                         fontSize: SizeConfig.font14,
                         color: AppColor.caseReadsColor,
                       ),

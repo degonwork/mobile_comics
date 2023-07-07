@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
         ),
         RepositoryProvider<ImageRepo>(
-          create: (context) => ImageRepo(),
+          create: (context) => ImageRepo(apiClient: context.read<ApiClient>()),
         ),
         RepositoryProvider<CategoryRepo>(
           create: (context) => const CategoryRepo(
@@ -66,8 +66,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ChapterRepo(
             imageRepo: context.read<ImageRepo>(),
             chapterUrl: AppConstant.chapterUrl,
-            apiClient:
-                const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+            apiClient: const ApiClient(
+              baseServerUrl: AppConstant.baseServerUrl,
+            ),
           ),
         ),
         RepositoryProvider<ComicRepo>(

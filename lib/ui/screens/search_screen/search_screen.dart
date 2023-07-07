@@ -24,7 +24,6 @@ class SearchComicScreen extends StatelessWidget {
           height: SizeConfig.screenHeight / 15.12,
           decoration: BoxDecoration(
               color: Colors.blue.withOpacity(0.8),
-              
               borderRadius: BorderRadius.circular(50)),
           child: Center(
             child: TextField(
@@ -132,29 +131,22 @@ class SearchComicScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              listComics[index].title != null
-                                                  ? Expanded(
-                                                      child: TextUi(
-                                                      text: listComics[index]
-                                                          .title!,
-                                                      fontSize:
-                                                          SizeConfig.font20,
-                                                    ))
-                                                  : const Text(""),
+                                              Expanded(
+                                                child: TextUi(
+                                                  text: listComics[index].title,
+                                                  fontSize: SizeConfig.font20,
+                                                ),
+                                              ),
                                               const SizedBox(),
-                                              listComics[index].description !=
-                                                      null
-                                                  ? Expanded(
-                                                      child: TextUi(
-                                                        text: listComics[index]
-                                                            .description!,
-                                                        maxLines: 2,
-                                                        textOverflow:
-                                                            TextOverflow
-                                                                .ellipsis,
-                                                      ),
-                                                    )
-                                                  : const Text(""),
+                                              Expanded(
+                                                child: TextUi(
+                                                  text: listComics[index]
+                                                      .description,
+                                                  maxLines: 2,
+                                                  textOverflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),
@@ -173,10 +165,14 @@ class SearchComicScreen extends StatelessWidget {
                 }
               } else if (state is SearchError) {
                 return Container(
-                  padding: EdgeInsets.only(left: SizeConfig.width15),
-                  child:   Text('Không tìm thấy truyện phù hợp',style: TextStyle(color: Colors.white,fontSize: SizeConfig.font16),));
+                    padding: EdgeInsets.only(left: SizeConfig.width15),
+                    child: Text(
+                      'Không tìm thấy truyện phù hợp',
+                      style: TextStyle(
+                          color: Colors.white, fontSize: SizeConfig.font16),
+                    ));
               }
-             return const SizedBox.shrink();
+              return const SizedBox.shrink();
             }),
           ),
         ],

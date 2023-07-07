@@ -70,9 +70,7 @@ class GridviewComics extends StatelessWidget {
                     height: SizeConfig.height10,
                   ),
                   TextUi(
-                    text: listComics[index].title != null
-                        ? '${listComics[index].title}'
-                        : "",
+                    text: listComics[index].title,
                     maxLines: 1,
                     textOverflow: TextOverflow.ellipsis,
                     fontSize: SizeConfig.font20,

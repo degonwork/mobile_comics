@@ -33,8 +33,7 @@ class Infor extends StatelessWidget {
                       child: ItemInfor(
                         icon: Icons.remove_red_eye,
                         titleItem: AppLocalizations.of(context)!.numberReads,
-                        contentItem:
-                            comic.reads != null ? '${comic.reads}' : "",
+                        contentItem: comic.reads.toString(),
                       ),
                     ),
                     SizedBox(width: SizeConfig.width10),
@@ -104,7 +103,7 @@ class Infor extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Descreption(
                   maxLines: 2,
-                  text: comic.description != null ? comic.description! : "",
+                  text: comic.description,
                 ),
               ),
             ),
@@ -152,7 +151,7 @@ class Infor extends StatelessWidget {
     } else {
       return Center(
         child: TextUi(
-          text: "Truyện này không có chương",
+          text: "Truyện này chưa có chương",
           fontSize: SizeConfig.font16,
         ),
       );

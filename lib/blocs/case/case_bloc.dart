@@ -27,7 +27,7 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
         numericChapter: event.numericChapter,
         imageThumnailSquareComicPath: event.imageThumnailSquareComicPath,
         titleComic: event.titleComic,
-        reads: event.reads!,
+        reads: event.reads,
       );
       emit(CaseAdded());
     }
