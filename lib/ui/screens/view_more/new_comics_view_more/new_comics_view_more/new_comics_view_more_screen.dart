@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
 import '../../../../../blocs/view_more/view_more_bloc.dart';
+import '../../../../../config/app_color.dart';
 import '../../../../widgets/back_ground_app.dart';
 import '../../../../../config/size_config.dart';
 import '../../../../widgets/custom_appbar.dart';

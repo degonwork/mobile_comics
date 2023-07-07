@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/read_chapter/read_chapter_event.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
-import 'package:full_comics_frontend/ui/widgets/build_ads_banner.dart';
+import '../../../blocs/read_chapter/read_chapter_event.dart';
+import '../../../config/app_color.dart';
+import '../../../ui/widgets/build_ads_banner.dart';
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_state.dart';
@@ -15,10 +15,8 @@ import '../detail/comic_detail_screen.dart';
 class ReadScreen extends StatelessWidget {
   const ReadScreen({
     super.key,
-    required this.chapterId,
     required this.comic,
   });
-  final String chapterId;
   final Comic comic;
 
   @override
@@ -116,7 +114,7 @@ class ReadScreen extends StatelessWidget {
                       onTap: () {
                         context.read<CaseBloc>().add(
                               AddCaseComic(
-                                chapterId: chapterId,
+                                chapterId: state.chapterId,
                                 comicId: comic.id,
                                 imageThumnailSquareComicPath:
                                     comic.image_thumnail_square_path!,

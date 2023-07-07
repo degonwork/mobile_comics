@@ -1,4 +1,4 @@
-import 'package:full_comics_frontend/config/app_constant.dart';
+import '../../../config/app_constant.dart';
 import 'package:http/http.dart';
 
 class ApiClient {

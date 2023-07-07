@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
-import 'package:full_comics_frontend/data/models/case_comic_model.dart';
-import 'package:full_comics_frontend/ui/screens/detail/widgets/descreption.dart';
+import '../../../../config/app_color.dart';
+import '../../../../data/models/case_comic_model.dart';
+import '../../../../ui/screens/detail/widgets/descreption.dart';
 import '../../../../config/app_constant.dart';
 import '../../../../data/models/comic_model.dart';
 import '../../../../config/size_config.dart';

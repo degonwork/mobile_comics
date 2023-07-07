@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
+import '../../config/app_color.dart';
 import '../../config/size_config.dart';
 import 'text_ui.dart';
 
@@ -24,8 +24,7 @@ class ItemInfor extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               SizeConfig.radius10,
             ),
-            border: Border.all(
-                width: 0.6, color: AppColor.blackColor)),
+            border: Border.all(width: 0.6, color: AppColor.blackColor)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

@@ -15,10 +15,12 @@ class LoadedChapter extends ReadChapterState {
   final bool visialbe;
   final List<Image> listImageContent;
   final int currentNumeric;
-  const LoadedChapter(
-      this.listImageContent, this.visialbe, this.currentNumeric);
+  final String chapterId;
+  const LoadedChapter(this.listImageContent, this.visialbe, this.currentNumeric,
+      this.chapterId);
   @override
-  List<Object> get props => [listImageContent, visialbe, currentNumeric];
+  List<Object> get props =>
+      [listImageContent, visialbe, currentNumeric, chapterId];
 }
 
 class ReadChapterLoadFailed extends ReadChapterState {}

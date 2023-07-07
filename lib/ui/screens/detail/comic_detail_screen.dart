@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/config/app_color.dart';
-import 'package:full_comics_frontend/ui/widgets/build_ads_banner.dart';
-
+import '../../../config/app_color.dart';
+import '../../../ui/widgets/build_ads_banner.dart';
 import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
