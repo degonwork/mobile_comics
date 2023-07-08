@@ -40,6 +40,8 @@ class GenreComic extends StatelessWidget {
               text: listCategories[index],
               fontSize: SizeConfig.font14,
               color: AppColor.genreComicColor,
+              maxLines: 1,
+              textOverflow: TextOverflow.ellipsis,
             ),
           ),
         ),

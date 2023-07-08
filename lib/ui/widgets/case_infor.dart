@@ -51,23 +51,25 @@ class CaseInfor extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextUi(
-                        text: title,
-                        fontSize: SizeConfig.font20,
-                        color: AppColor.titleComicColor,
-                        textOverflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      SizedBox(height: SizeConfig.height10),
-                      TextUi(
-                        text: "$reads ${AppLocalizations.of(context)!.reads}",
-                        fontSize: SizeConfig.font14,
-                        color: AppColor.caseReadsColor,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextUi(
+                          text: title,
+                          fontSize: SizeConfig.font20,
+                          color: AppColor.titleComicColor,
+                          textOverflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        SizedBox(height: SizeConfig.height10),
+                        TextUi(
+                          text: "$reads ${AppLocalizations.of(context)!.reads}",
+                          fontSize: SizeConfig.font14,
+                          color: AppColor.caseReadsColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

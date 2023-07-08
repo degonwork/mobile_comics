@@ -15,5 +15,3 @@ class GetLoadded extends GetAllCategoryState {
   @override
   List<Object?> get props => [listCategories, index];
 }
-
-class GetFailure extends GetAllCategoryState {}

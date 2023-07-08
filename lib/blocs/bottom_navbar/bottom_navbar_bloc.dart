@@ -11,12 +11,8 @@ class BottomNavbarBloc extends Bloc<BottomNavbarEvent, BottomNavbarState> {
   }
   void _onChangeBottomNavbarState(
       ChangeBottomNavbarEvent event, Emitter<BottomNavbarState> emit) {
-    try {
-      emit(BottomNavbarState(
-          currentScreen: event.currentScreen,
-          navigatorValue: event.navigatiorValue));
-    } catch (e) {
-      emit(ChangeBottomNavbarError());
-    }
+    emit(BottomNavbarState(
+        currentScreen: event.currentScreen,
+        navigatorValue: event.navigatiorValue));
   }
 }

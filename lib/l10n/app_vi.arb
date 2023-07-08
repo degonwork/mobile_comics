@@ -1,6 +1,6 @@
 {
     "language": "Tiếng Việt",
-    "welcomeSplashScreen": "Chào mừng bạn đến với app truyện",
+    "welcomeSplashScreen": "Chào mừng bạn đến với Làng Truyện",
     "home": "Trang chủ",
     "library": "Thư viện",
     "cabinet": "Tủ truyện",
@@ -24,11 +24,12 @@
     "empty": "Danh sách trống",
     "development": "Tính năng này đang được phát triển",
     "keywords": "Hãy nhập từ khóa",
-    "search": "Tìm kiếm truyện ...",
+    "search": "Tìm kiếm truyện, thể loại ...",
     "viewMore": "Xem thêm",
     "collapse": "Thu gọn",
     "favourite": "Yêu thích",
     "offline": "Đọc offline",
-    "noChapters": "Truyện này không có chương",
-    "evaluate": "Đánh giá"
+    "noChapters": "Truyện này chưa có chương",
+    "evaluate": "Đánh giá",
+    "notFound": "Không tìm thấy truyện phù hợp"
 }

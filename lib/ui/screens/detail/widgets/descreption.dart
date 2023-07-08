@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 
 class Descreption extends StatefulWidget {
-  const Descreption({super.key,required this.maxLines, required this.text});
-final String text;
-final int maxLines;
+  const Descreption({super.key, required this.maxLines, required this.text});
+  final String text;
+  final int maxLines;
   @override
   State<Descreption> createState() => _DescreptionState();
 }
 
 class _DescreptionState extends State<Descreption> {
-  
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
@@ -26,33 +26,50 @@ class _DescreptionState extends State<Descreption> {
         );
         textPainter.layout(maxWidth: constraints.maxWidth);
         if (textPainter.didExceedMaxLines && !isExpanded) {
-          
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.text,maxLines: 3,overflow: TextOverflow.ellipsis,),
-              TextButton(onPressed: (){
-                setState(() {
-                  isExpanded = true;
-                });
-              }, child: const Center(child:  Text( "Xem thêm",style: TextStyle(color: Colors.yellow),)),
+              Text(
+                widget.text,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    isExpanded = true;
+                  });
+                },
+                child: Center(
+                  child: TextUi(
+                    text: AppLocalizations.of(context)!.seeMore,
+                    color: Colors.yellow,
+                  ),
+                ),
               ),
             ],
           );
-        } else if(isExpanded){
+        } else if (isExpanded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.text),
-              TextButton(onPressed:(){
-                setState(() {
-                  isExpanded = false;
-                });
-              }, child:const  Center(child:  Text('Thu gọn',style: TextStyle(color: Colors.yellow),))
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    isExpanded = false;
+                  });
+                },
+                child: Center(
+                  child: TextUi(
+                    text: AppLocalizations.of(context)!.collapse,
+                    color: Colors.yellow,
+                  ),
+                ),
               )
             ],
           );
-        }else{
+        } else {
           return Text(widget.text);
         }
       },

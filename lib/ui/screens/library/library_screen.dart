@@ -40,7 +40,7 @@ class LibraryScreen extends StatelessWidget {
                       filled: true,
                       fillColor:
                           AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
-                      hintText: "Tìm kiếm truyện , thể loại ...",
+                      hintText: AppLocalizations.of(context)!.search,
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),

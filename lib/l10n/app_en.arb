@@ -30,5 +30,6 @@
   "favourite": "Favourite",
   "offline": "Offline",
   "noChapters" : "This comic has no chapters",
-  "evaluate": "Evaluate"
+  "evaluate": "Evaluate",
+  "notFound": "Comics not found"
 }
