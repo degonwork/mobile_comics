@@ -23,6 +23,7 @@ class NewComicViewMoreScreen extends StatelessWidget {
               top: SizeConfig.height45,
               left: SizeConfig.width15,
               right: SizeConfig.width15,
+              bottom: SizeConfig.height10
             ),
             child: Column(
               children: [

@@ -34,50 +34,53 @@ class GridviewComics extends StatelessWidget {
             childAspectRatio: 0.82,
           ),
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                context
-                    .read<ComicDetailBloc>()
-                    .add(LoadDetailComic(listComics[index].id));
-                Navigator.pushNamed(context, ComicDetailScreen.routeName);
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  listComics[index].image_thumnail_square_path != null
-                      ? Expanded(
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                listComics[index].image_thumnail_square_path!,
-                            imageBuilder: (context, imageProvider) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    SizeConfig.radius10,
+            return Container(
+              margin: EdgeInsets.only(bottom: SizeConfig.height10),
+              child: GestureDetector(
+                onTap: () {
+                  context
+                      .read<ComicDetailBloc>()
+                      .add(LoadDetailComic(listComics[index].id));
+                  Navigator.pushNamed(context, ComicDetailScreen.routeName);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    listComics[index].image_thumnail_square_path != null
+                        ? Expanded(
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  listComics[index].image_thumnail_square_path!,
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      SizeConfig.radius10,
+                                    ),
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                            },
-                            errorWidget: (context, url, error) =>
-                                Image.asset("assets/images/anh splash.jpg"),
-                          ),
-                        )
-                      : Image.asset("assets/images/anh splash.jpg"),
-                  SizedBox(
-                    height: SizeConfig.height10,
-                  ),
-                  TextUi(
-                    text: listComics[index].title,
-                    maxLines: 1,
-                    textOverflow: TextOverflow.ellipsis,
-                    fontSize: SizeConfig.font20,
-                    color: AppColor.titleComicColor,
-                  ),
-                ],
+                                );
+                              },
+                              errorWidget: (context, url, error) =>
+                                  Image.asset("assets/images/anh splash.jpg"),
+                            ),
+                          )
+                        : Image.asset("assets/images/anh splash.jpg"),
+                    SizedBox(
+                      height: SizeConfig.height10,
+                    ),
+                    TextUi(
+                      text: listComics[index].title,
+                      maxLines: 1,
+                      textOverflow: TextOverflow.ellipsis,
+                      fontSize: SizeConfig.font20,
+                      color: AppColor.titleComicColor,
+                    ),
+                  ],
+                ),
               ),
             );
           },

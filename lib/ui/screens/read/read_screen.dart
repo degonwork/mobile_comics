@@ -22,154 +22,168 @@ class ReadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: [
           Container(
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-              child: const BannerAD()),
-          Container(
-            margin: EdgeInsets.only(top: SizeConfig.height50),
-            child: BlocBuilder<ReadChapterBloc, ReadChapterState>(
-              builder: (context, state) {
-                if (state is LoadingChapter) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: AppColor.disable),
-                  );
-                } else if (state is LoadedChapter) {
-                  final listImage = state.listImageContent;
-                  if (listImage.isNotEmpty) {
-                    return GestureDetector(
-                      onTap: () => context.read<ReadChapterBloc>().add(
-                            SetStateButtonBackIndex(state.visialbe),
-                          ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: listImage.length,
-                              itemBuilder: (context, index) {
-                                return listImage[index].height != null &&
-                                        listImage[index].width != null
-                                    ? Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: SizeConfig.width10,
-                                        ),
-                                        child: CachedNetworkImage(
-                                          imageUrl: listImage[index].path,
-                                          imageBuilder:
-                                              (context, imageProvider) {
-                                            return SizedBox(
-                                              width: SizeConfig.screenWidth,
-                                              height: SizeConfig.screenWidth *
-                                                  (listImage[index].width! /
-                                                      listImage[index].height!),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: imageProvider,
-                                                    fit: BoxFit.cover,
-                                                  ),
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+            child: const BannerAD()),
+          Expanded(
+            child: Stack(
+              children: [
+                // Container(
+                  
+                //     padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+                //     child: const BannerAD()),
+                Container(
+                  margin: EdgeInsets.only(top: SizeConfig.height20),
+                  child: BlocBuilder<ReadChapterBloc, ReadChapterState>(
+                    builder: (context, state) {
+                      if (state is LoadingChapter) {
+                        return const Center(
+                          child: CircularProgressIndicator(color: AppColor.disable),
+                        );
+                      } else if (state is LoadedChapter) {
+                        final listImage = state.listImageContent;
+                        if (listImage.isNotEmpty) {
+                          return GestureDetector(
+                            onTap: () => context.read<ReadChapterBloc>().add(
+                                  SetStateButtonBackIndex(state.visialbe),
+                                ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  MediaQuery.removePadding(
+                                    context: context,
+                                    removeTop: true,
+                                    child: ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: listImage.length,
+                                      itemBuilder: (context, index) {
+                                        return listImage[index].height != null &&
+                                                listImage[index].width != null
+                                            ? Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: SizeConfig.width10,
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                          errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                                  "assets/images/anh splash.jpg"),
-                                        ),
-                                      )
-                                    : Image.asset(
-                                        "assets/images/anh splash.jpg");
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(color: AppColor.disable),
-                    );
-                  }
-                }
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColor.disable),
-                );
-              },
-            ),
-          ),
-          BlocBuilder<ReadChapterBloc, ReadChapterState>(
-            builder: (context, state) {
-              if (state is LoadedChapter) {
-                return Container(
-                  margin: EdgeInsets.only(top: SizeConfig.height50),
-                  child: AnimatedOpacity(
-                    opacity: state.visialbe ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 400),
-                    child: NavigatorButtonScreen(
-                      icon: Icons.arrow_back_ios_outlined,
-                      onTap: () {
-                        context.read<CaseBloc>().add(
-                              AddCaseComic(
-                                chapterId: state.chapterId,
-                                comicId: comic.id,
-                                imageThumnailSquareComicPath:
-                                    comic.image_thumnail_square_path!,
-                                numericChapter: state.currentNumeric,
-                                titleComic: comic.title,
-                                reads: comic.reads,
-                              ),
-                            );
-                        Navigator.pushNamed(
-                            context, ComicDetailScreen.routeName);
-                      },
-                    ),
-                  ),
-                );
-              }
-              return NavigatorButtonScreen(
-                icon: Icons.arrow_back_ios_outlined,
-                onTap: () =>
-                    Navigator.pushNamed(context, ComicDetailScreen.routeName),
-              );
-            },
-          ),
-          BlocBuilder<ReadChapterBloc, ReadChapterState>(
-            builder: (context, state) {
-              if (state is LoadedChapter) {
-                if (state.currentNumeric < comic.chapters!.length) {
-                  return Container(
-                    margin: EdgeInsets.only(
-                        top: SizeConfig.screenHeight * 0.85,
-                        left: SizeConfig.screenWidth * 0.8),
-                    child: AnimatedOpacity(
-                      opacity: state.visialbe ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 400),
-                      child: NavigatorButtonScreen(
-                          icon: Icons.arrow_right_alt_outlined,
-                          onTap: () {
-                            context.read<ReadChapterBloc>().add(
-                                  LoadNextChapter(
-                                    comic.id,
-                                    state.currentNumeric,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: listImage[index].path,
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return SizedBox(
+                                                      width: SizeConfig.screenWidth,
+                                                      height: SizeConfig.screenWidth *
+                                                          (listImage[index].width! /
+                                                              listImage[index].height!),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                            image: imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorWidget: (context, url, error) =>
+                                                      Image.asset(
+                                                          "assets/images/anh splash.jpg"),
+                                                ),
+                                              )
+                                            : Image.asset(
+                                                "assets/images/anh splash.jpg");
+                                      },
+                                    ),
                                   ),
-                                );
-                          }),
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              }
-              return NavigatorButtonScreen(
-                icon: Icons.arrow_right_alt_outlined,
-                onTap: () =>
-                    Navigator.pushNamed(context, ComicDetailScreen.routeName),
-              );
-            },
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(color: AppColor.disable),
+                          );
+                        }
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(color: AppColor.disable),
+                      );
+                    },
+                  ),
+                ),
+                BlocBuilder<ReadChapterBloc, ReadChapterState>(
+                  builder: (context, state) {
+                    if (state is LoadedChapter) {
+                      return Container(
+                        margin: EdgeInsets.only(top: SizeConfig.height5),
+                        child: AnimatedOpacity(
+                          opacity: state.visialbe ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 400),
+                          child: NavigatorButtonScreen(
+                            icon: Icons.arrow_back_ios_outlined,
+                            onTap: () {
+                              context.read<CaseBloc>().add(
+                                    AddCaseComic(
+                                      chapterId: state.chapterId,
+                                      comicId: comic.id,
+                                      imageThumnailSquareComicPath:
+                                          comic.image_thumnail_square_path!,
+                                      numericChapter: state.currentNumeric,
+                                      titleComic: comic.title,
+                                      reads: comic.reads,
+                                    ),
+                                  );
+                              Navigator.pushNamed(
+                                  context, ComicDetailScreen.routeName);
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                    return NavigatorButtonScreen(
+                      icon: Icons.arrow_back_ios_outlined,
+                      onTap: () =>
+                          Navigator.pushNamed(context, ComicDetailScreen.routeName),
+                    );
+                  },
+                ),
+                BlocBuilder<ReadChapterBloc, ReadChapterState>(
+                  builder: (context, state) {
+                    if (state is LoadedChapter) {
+                      if (state.currentNumeric < comic.chapters!.length) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                              top: SizeConfig.screenHeight * 0.8,
+                              left: SizeConfig.screenWidth * 0.8),
+                          child: AnimatedOpacity(
+                            opacity: state.visialbe ? 1.0 : 0.0,
+                            duration: const Duration(milliseconds: 400),
+                            child: NavigatorButtonScreen(
+                                icon: Icons.arrow_right_alt_outlined,
+                                onTap: () {
+                                  context.read<ReadChapterBloc>().add(
+                                        LoadNextChapter(
+                                          comic.id,
+                                          state.currentNumeric,
+                                        ),
+                                      );
+                                }),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }
+                    return NavigatorButtonScreen(
+                      icon: Icons.arrow_right_alt_outlined,
+                      onTap: () =>
+                          Navigator.pushNamed(context, ComicDetailScreen.routeName),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ],
       ),

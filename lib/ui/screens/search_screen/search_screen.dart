@@ -18,7 +18,7 @@ class SearchComicScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.blue.withOpacity(0.7),
         title: Container(
           width: double.infinity,
           height: SizeConfig.screenHeight / 15.12,
