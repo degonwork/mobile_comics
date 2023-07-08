@@ -2,16 +2,16 @@ class CaseComic {
   final String comicId;
   final String chapterId;
   final String? imageThumnailSquareComicPath;
-  final String? titleComic;
-  final int? reads;
+  final String titleComic;
+  final int reads;
   final int numericChapter;
 
   const CaseComic({
     required this.comicId,
     required this.chapterId,
     this.imageThumnailSquareComicPath,
-    this.titleComic,
-    this.reads,
+    required this.titleComic,
+    required this.reads,
     required this.numericChapter,
   });
 
@@ -20,8 +20,8 @@ class CaseComic {
       comicId: json["comic_id"],
       chapterId: json["chapter_id"],
       imageThumnailSquareComicPath: json["image_thumnail_squareComic_path"],
-      titleComic: json["title_comic"],
-      reads: json["reads"],
+      titleComic: json["title_comic"] ?? "",
+      reads: json["reads"] ?? 1000,
       numericChapter: json["numeric_chapter"],
     );
   }

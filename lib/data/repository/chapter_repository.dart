@@ -74,8 +74,11 @@ class ChapterRepo {
             comic_id: comic.id,
             image_thumnail_id: imageThumnailID,
             chapter_des: comic.chapters![i].chapter_des,
-            chapter_index: comic.chapters![i].chapter_index,
+            chapter_index: comic.chapters![i].chapter_index ?? i + 1,
             isFull: comic.chapters![i].isFull,
+            content_update_time: comic.chapters![i].content_update_time,
+            publish_date: comic.chapters![i].publish_date,
+            update_time: comic.chapters![i].update_time,
           ),
         );
       }
@@ -117,13 +120,14 @@ class ChapterRepo {
             );
             Chapter updateChapter = Chapter(
               id: chapter.id,
-              comic_id: chapter.comic_id ?? chapterDB.comic_id,
+              comic_id: chapter.comic_id,
               image_thumnail_id: imageThumnailId,
-              chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
+              chapter_des: chapter.chapter_des,
               chapter_index: chapterDB.chapter_index,
               content_update_time: chapterDB.content_update_time,
               update_time: chapterDB.update_time,
               isFull: chapterDB.isFull,
+              publish_date: chapterDB.publish_date,
             );
             print(
                 "chapter isFull ${updateChapter.isFull} ------------------------");
@@ -140,8 +144,7 @@ class ChapterRepo {
               description: comicDB.description,
               year: comicDB.year,
               reads: comicDB.reads,
-              chapter_update_time:
-                  comic.chapter_update_time ?? comicDB.chapter_update_time,
+              chapter_update_time: comic.chapter_update_time,
               add_chapter_time: comicDB.add_chapter_time,
               update_time: comicDB.update_time,
               isFull: isFullComic ? 1 : 0,
@@ -172,13 +175,13 @@ class ChapterRepo {
       );
       Chapter updateChapter = Chapter(
         id: chapter.id,
-        comic_id: chapter.comic_id ?? chapterDB.comic_id,
+        comic_id: chapter.comic_id,
         image_thumnail_id: imageThumnailId,
-        chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
+        chapter_des: chapter.chapter_des,
         chapter_index: chapterDB.chapter_index,
-        content_update_time:
-            chapter.content_update_time ?? chapterDB.content_update_time,
-        update_time: chapter.update_time ?? chapterDB.update_time,
+        content_update_time: chapter.content_update_time,
+        update_time: chapter.update_time,
+        publish_date: chapter.publish_date,
         isFull: 1,
       );
       await HandleDatabase.updateChapterToDB(chapter: updateChapter);
@@ -190,13 +193,13 @@ class ChapterRepo {
         await updateChapterContent(chapter: chapter);
         Chapter updateChapter = Chapter(
           id: chapter.id,
-          comic_id: chapter.comic_id ?? chapterDB.comic_id,
+          comic_id: chapter.comic_id,
           image_thumnail_id: chapterDB.image_thumnail_id,
           chapter_des: chapterDB.chapter_des,
           chapter_index: chapterDB.chapter_index,
-          content_update_time:
-              chapter.content_update_time ?? chapterDB.content_update_time,
+          content_update_time: chapter.content_update_time,
           update_time: chapterDB.update_time,
+          publish_date: chapterDB.publish_date,
           isFull: 1,
         );
         await HandleDatabase.updateChapterToDB(chapter: updateChapter);
@@ -214,13 +217,13 @@ class ChapterRepo {
         );
         Chapter updateChapter = Chapter(
           id: chapter.id,
-          comic_id: chapter.comic_id ?? chapterDB.comic_id,
+          comic_id: chapter.comic_id,
           image_thumnail_id: imageThumnailId,
-          chapter_des: chapter.chapter_des ?? chapterDB.chapter_des,
+          chapter_des: chapter.chapter_des,
           chapter_index: chapterDB.chapter_index,
-          content_update_time:
-              chapter.content_update_time ?? chapterDB.content_update_time,
-          update_time: chapter.update_time ?? chapterDB.update_time,
+          content_update_time: chapter.content_update_time,
+          update_time: chapter.update_time,
+          publish_date: chapter.publish_date,
           isFull: 1,
         );
         await HandleDatabase.updateChapterToDB(chapter: updateChapter);
@@ -264,7 +267,6 @@ class ChapterRepo {
         images.add(image);
       }
     }
-    // print(images);
     return images;
   }
 

@@ -1,3 +1,5 @@
+import '../../config/app_constant.dart';
+
 const String tableChapters = 'Chapters';
 
 class ChapterField {
@@ -10,7 +12,6 @@ class ChapterField {
     content_update_time,
     update_time,
     isFull,
-    
   ];
 
   static String id = 'id';
@@ -25,28 +26,28 @@ class ChapterField {
 
 class Chapter {
   final String id;
-  final String? comic_id;
+  final String comic_id;
   final String? image_thumnail_path;
   final String? image_thumnail_id;
-  final String? chapter_des;
+  final String chapter_des;
   final int? chapter_index;
-  final DateTime? publish_date;
+  final DateTime publish_date;
   final List<Map<String, dynamic>>? content;
-  final DateTime? content_update_time;
-  final DateTime? update_time;
+  final DateTime content_update_time;
+  final DateTime update_time;
   final int isFull;
 
   const Chapter({
     required this.id,
-    this.comic_id,
+    required this.comic_id,
     this.image_thumnail_path,
     this.image_thumnail_id,
-    this.chapter_des,
-    this.chapter_index,
-    this.publish_date,
+    required this.chapter_des,
+    required this.chapter_index,
+    required this.publish_date,
     this.content,
-    this.content_update_time,
-    this.update_time,
+    required this.content_update_time,
+    required this.update_time,
     required this.isFull,
   });
 
@@ -60,12 +61,12 @@ class Chapter {
       image_thumnail_path: json['image_thumnail'] != null
           ? json["image_thumnail"]["path"]
           : null,
-      chapter_des: json['chapter_des'],
+      chapter_des: json['chapter_des'] ?? "",
       publish_date: json['publish_date'] != null
           ? json['publish_date'] is int
               ? DateTime.fromMillisecondsSinceEpoch(json['publish_date'])
               : DateTime.parse(json['publish_date'])
-          : null,
+          : AppConstant.jsonTimeNull,
       content: json['content'] != null
           ? List<dynamic>.from(json['content'])
               .map((json) => Map<String, dynamic>.from(json))
@@ -76,12 +77,12 @@ class Chapter {
           ? json['content_update_time'] is int
               ? DateTime.fromMillisecondsSinceEpoch(json['content_update_time'])
               : DateTime.parse(json['content_update_time'])
-          : null,
+          : AppConstant.jsonTimeNull,
       update_time: json['update_time'] != null
           ? json['update_time'] is int
               ? DateTime.fromMillisecondsSinceEpoch(json['update_time'])
               : DateTime.parse(json['update_time'])
-          : null,
+          : AppConstant.jsonTimeNull,
       isFull: json["isFull"] ?? 0,
     );
   }
@@ -93,8 +94,8 @@ class Chapter {
       'image_thumnail_id': image_thumnail_id,
       'chapter_des': chapter_des,
       'chapter_index': chapter_index,
-      'content_update_time': content_update_time?.toString(),
-      'update_time': update_time?.toString(),
+      'content_update_time': content_update_time.toString(),
+      'update_time': update_time.toString(),
       'isFull': isFull
     };
   }

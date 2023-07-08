@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+import 'package:full_comics_frontend/config/size_config.dart';
+import 'package:full_comics_frontend/data/providers/api/api_client.dart';
+
 import '.././models/comic_model.dart';
 import '.././providers/database/handle_database.dart';
 import '../../config/app_constant.dart';
@@ -5,7 +10,11 @@ import '../models/chapter_model.dart';
 import '../models/image_model.dart';
 
 class ImageRepo {
+  final ApiClient _apiClient;
   // Create
+
+  ImageRepo({required ApiClient apiClient}) : _apiClient = apiClient;
+
   Future<void> createImageComicToDB({required List<Comic> listComics}) async {
     final List<Image> listImageCreate = [];
     for (var comic in listComics) {
@@ -77,21 +86,32 @@ class ImageRepo {
   }
 
   Future<void> createImageChapterContentToDB({required Chapter chapter}) async {
+    int height;
+    int width;
     final List<Image> listImageObject = [];
     if (chapter.content!.isNotEmpty) {
       for (int i = 0; i < chapter.content!.length; i++) {
         if (chapter.content![i]["id"] != null &&
-            chapter.content![i]["path"] != null &&
-            chapter.content![i]["height"] != null &&
-            chapter.content![i]["width"] != null) {
+            chapter.content![i]["path"] != null) {
+          if (chapter.content![i]['height'] != null &&
+              chapter.content![i]['width'] != null) {
+            width = chapter.content![i]['width'];
+            height = chapter.content![i]['height'];
+          } else {
+            width = SizeConfig.screenWidth.round();
+            height = (width *
+                    await getHeightImage(
+                        width: width, path: chapter.content![i]["path"]))
+                .round();
+          }
           Image imageContent = Image(
             id: chapter.content![i]["id"]!,
             path: chapter.content![i]["path"]!
                 .split("${AppConstant.baseServerUrl}${AppConstant.imageUrl}")
                 .removeLast(),
             type: AppConstant.typeImageChapterContent,
-            height: chapter.content![i]['height'],
-            width: chapter.content![i]['width'],
+            height: height,
+            width: width,
             parent_id: chapter.id,
             numerical: i + 1,
           );
@@ -102,7 +122,7 @@ class ImageRepo {
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
     } else {
-      // print("Chapter has not content");
+      print("Chapter has not content");
     }
   }
 
@@ -166,5 +186,14 @@ class ImageRepo {
           parentId: parentDB.id, typeImage: typeImage);
     }
     return null;
+  }
+
+  Future<double> getHeightImage(
+      {required int width, required String path}) async {
+    final response = await _apiClient.getData(path);
+    final bytes = response.bodyBytes;
+    final buffer = await ImmutableBuffer.fromUint8List(bytes);
+    final descriptor = await ImageDescriptor.encoded(buffer);
+    return width * (descriptor.height / descriptor.width);
   }
 }

@@ -18,5 +18,3 @@ class ComicDetailLoaded extends ComicDetailState {
   @override
   List<Object> get props => [comic, caseComic];
 }
-
-class ComicDetailLoadFailed extends ComicDetailState {}

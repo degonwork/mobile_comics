@@ -46,13 +46,33 @@ class AppConstant {
   static const categoryAll = "/category/all";
 
 // Error
-  static const comicNotExist = Comic(id: "Not-exist", isFull: 0);
+  static final comicNotExist = Comic(
+    id: "Not-exist",
+    isFull: 0,
+    add_chapter_time: DateTime.parse("2023-07-08 00:59:50.980"),
+    author: '',
+    chapter_update_time: DateTime.parse("2023-07-08 00:59:50.980"),
+    description: '',
+    reads: 0,
+    title: '',
+    update_time: DateTime.parse("2023-07-08 00:59:50.980"),
+    year: 0,
+  );
   static const caseComicNotExist = CaseComic(
-      comicId: "Not-exist", chapterId: "Not-exist", numericChapter: 0);
+    comicId: "Not-exist",
+    chapterId: "Not-exist",
+    numericChapter: 0,
+    reads: 0,
+    titleComic: '',
+  );
 
 // Đánh giá
   static const evaluate = "1.1K";
 
   // timeout
-  static const timeout = 2;
+  static const timeout = 30;
+
+  // time string
+  static final DateTime jsonTimeNull =
+      DateTime.parse("2000-01-01 00:00:00.000");
 }

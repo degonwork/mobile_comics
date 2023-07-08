@@ -143,7 +143,7 @@ class ComicRepo {
         print("load failed");
       }
     } catch (e) {
-      print(e.toString());
+      print(e.toString() + "-----------------------------------");
     }
     return comicApi;
   }
@@ -164,6 +164,7 @@ class ComicRepo {
             await _categoriesComicsRepo.processCategoriesComicsToDB(
               comic: comicFilter,
               isUpdateCategoriesComic: false,
+              categoryName: categoryName,
             );
           }
           if (isUpdate) {
@@ -203,9 +204,9 @@ class ComicRepo {
             final listComics =
                 jsonResponse.map((e) => Comic.fromJson(e)).toList();
             final listComicSearch = listComics
-                .where((Comic comic) => comic.title!
+                .where((Comic comic) => comic.title
                     .toLowerCase()
-                    .contains(comic.title!.toLowerCase()))
+                    .contains(comic.title.toLowerCase()))
                 .toList();
             if (listComicSearch.isNotEmpty) {
               for (Comic comic in listComicSearch) {
@@ -218,9 +219,7 @@ class ComicRepo {
         }
       } catch (e) {
         throw Exception();
-        // print('${e.toString()} sai o comicrepo');
       }
-      // return [];
     }
     return [];
   }
@@ -253,6 +252,10 @@ class ComicRepo {
         update_time: comic.update_time,
         reads: comic.reads,
         isFull: comic.isFull,
+        author: comic.author,
+        chapter_update_time: comic.chapter_update_time,
+        description: comic.description,
+        year: comic.year,
       );
       listComicsCreate.add(comicCreate);
     }
@@ -283,15 +286,13 @@ class ComicRepo {
             image_detail_id: comicDB.image_detail_id,
             image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
             image_thumnail_square_id: comicDB.image_thumnail_square_id,
-            title: comicWithAddChapterTimeChange.title ?? comicDB.title,
-            author: comicWithAddChapterTimeChange.author ?? comicDB.author,
-            description: comicWithAddChapterTimeChange.description ??
-                comicDB.description,
-            year: comicWithAddChapterTimeChange.year ?? comicDB.year,
-            reads: comicWithAddChapterTimeChange.reads ?? comicDB.reads,
+            title: comicWithAddChapterTimeChange.title,
+            author: comicWithAddChapterTimeChange.author,
+            description: comicWithAddChapterTimeChange.description,
+            year: comicWithAddChapterTimeChange.year,
+            reads: comicWithAddChapterTimeChange.reads,
             chapter_update_time: comicDB.chapter_update_time,
-            add_chapter_time: comicWithAddChapterTimeChange.add_chapter_time ??
-                comicDB.add_chapter_time,
+            add_chapter_time: comicWithAddChapterTimeChange.add_chapter_time,
             update_time: comicDB.update_time,
             isFull: isFullComic ? 1 : 0,
           );
@@ -305,13 +306,13 @@ class ComicRepo {
           image_detail_id: comicDB.image_detail_id,
           image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
           image_thumnail_square_id: comicDB.image_thumnail_square_id,
-          title: comic.title ?? comicDB.title,
-          author: comic.author ?? comicDB.author,
-          description: comic.description ?? comicDB.description,
-          year: comic.year ?? comicDB.year,
-          reads: comic.reads ?? comicDB.reads,
+          title: comic.title,
+          author: comic.author,
+          description: comic.description,
+          year: comic.year,
+          reads: comic.reads,
           chapter_update_time: comicDB.chapter_update_time,
-          add_chapter_time: comic.add_chapter_time ?? comicDB.add_chapter_time,
+          add_chapter_time: comic.add_chapter_time,
           update_time: comicDB.update_time,
           isFull: isFullComic ? 1 : 0,
         );
@@ -352,14 +353,14 @@ class ComicRepo {
         image_detail_id: imageDetailId,
         image_thumnail_rectangle_id: imageThumnailRectangleId,
         image_thumnail_square_id: imageThumnailSquareId,
-        title: comic.title ?? comicDB.title,
-        author: comic.author ?? comicDB.author,
-        description: comic.description ?? comicDB.description,
-        year: comic.year ?? comicDB.year,
-        reads: comic.reads ?? comicDB.reads,
+        title: comic.title,
+        author: comic.author,
+        description: comic.description,
+        year: comic.year,
+        reads: comic.reads,
         chapter_update_time: comicDB.chapter_update_time,
         add_chapter_time: comicDB.add_chapter_time,
-        update_time: comic.update_time ?? comicDB.update_time,
+        update_time: comic.update_time,
         isFull: isFullComic ? 1 : 0,
       );
 
@@ -411,15 +412,14 @@ class ComicRepo {
       image_detail_id: imageDetailId,
       image_thumnail_rectangle_id: imageThumnailRectangleId,
       image_thumnail_square_id: imageThumnailSquareId,
-      title: comic.title ?? comicDB.title,
-      author: comic.author ?? comicDB.author,
-      description: comic.description ?? comicDB.description,
-      year: comic.year ?? comicDB.year,
-      reads: comic.reads ?? comicDB.reads,
-      chapter_update_time:
-          comic.chapter_update_time ?? comicDB.chapter_update_time,
-      add_chapter_time: comic.add_chapter_time ?? comicDB.add_chapter_time,
-      update_time: comic.update_time ?? comicDB.update_time,
+      title: comic.title,
+      author: comic.author,
+      description: comic.description,
+      year: comic.year,
+      reads: comic.reads,
+      chapter_update_time: comic.chapter_update_time,
+      add_chapter_time: comic.add_chapter_time,
+      update_time: comic.update_time,
       isFull: 1,
     );
     await HandleDatabase.updateComicToDB(comic: updateComic);
@@ -432,17 +432,12 @@ class ComicRepo {
     List<Comic> listHotComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics.isNotEmpty) {
-      List<Comic> listHotComicsFilter =
-          listComics.where((comic) => comic.reads != null).toList();
-      if (listHotComicsFilter.isNotEmpty) {
-        listHotComicsFilter
-            .sort((comic1, comic2) => (comic2.reads! - comic1.reads!));
-        for (Comic comic in listHotComicsFilter) {
-          listHotComics.add(await readHomeComicCopy(comic));
-        }
-        limit = limit > listHotComics.length ? listHotComics.length : limit;
-        return listHotComics.sublist(0, limit);
+      listComics.sort((comic1, comic2) => (comic2.reads - comic1.reads));
+      for (Comic comic in listComics) {
+        listHotComics.add(await readHomeComicCopy(comic));
       }
+      limit = limit > listHotComics.length ? listHotComics.length : limit;
+      return listHotComics.sublist(0, limit);
     }
     return [];
   }
@@ -451,19 +446,15 @@ class ComicRepo {
     List<Comic> listNewComics = [];
     List<Comic> listComics = await HandleDatabase.readManyComicsFromDB();
     if (listComics.isNotEmpty) {
-      List<Comic> listNewComicsFilter =
-          listComics.where((comic) => comic.add_chapter_time != null).toList();
-      if (listNewComicsFilter.isNotEmpty) {
-        listNewComicsFilter.sort(
-          (comic1, comic2) => (comic2.add_chapter_time!.millisecondsSinceEpoch -
-              comic1.add_chapter_time!.millisecondsSinceEpoch),
-        );
-        for (Comic comic in listNewComicsFilter) {
-          listNewComics.add(await readHomeComicCopy(comic));
-        }
-        limit = limit > listNewComics.length ? listNewComics.length : limit;
-        return listNewComics.sublist(0, limit);
+      listComics.sort(
+        (comic1, comic2) => (comic2.add_chapter_time.millisecondsSinceEpoch -
+            comic1.add_chapter_time.millisecondsSinceEpoch),
+      );
+      for (Comic comic in listComics) {
+        listNewComics.add(await readHomeComicCopy(comic));
       }
+      limit = limit > listNewComics.length ? listNewComics.length : limit;
+      return listNewComics.sublist(0, limit);
     }
     return [];
   }
@@ -522,7 +513,7 @@ class ComicRepo {
       if (listComics.isNotEmpty) {
         final listComicsSearch = listComics
             .where((Comic comic) =>
-                comic.title!.toLowerCase().startsWith(title.toLowerCase()))
+                comic.title.toLowerCase().startsWith(title.toLowerCase()))
             .toList();
         if (listComicsSearch.isNotEmpty) {
           for (Comic comic in listComicsSearch) {
@@ -546,10 +537,13 @@ class ComicRepo {
       comic,
       imageThumnailSquare: imageThumnailSquare,
       imageThumnailRectangle: imageThumnailRectangle,
+      id: comic.id,
+      isFull: comic.isFull,
     );
   }
 
   Future<Comic> readComicCopy(Comic comic) async {
+    List<Chapter> listChaptersFilter = [];
     final List<String> listCategories = [];
     List<CategoriesComics> categoriesComic =
         await HandleDatabase.readAllCategoriesComicsFromDB(comicID: comic.id);
@@ -565,20 +559,25 @@ class ComicRepo {
     List<Chapter> chapters =
         await HandleDatabase.readChapterByComicIDFromDB(comicID: comic.id);
     if (chapters.isNotEmpty) {
-      chapters.sort((chapter1, chapter2) =>
-          chapter1.chapter_index! - chapter2.chapter_index!);
+      listChaptersFilter =
+          chapters.where((chapter) => chapter.chapter_index != null).toList();
+      if (listChaptersFilter.isNotEmpty) {
+        listChaptersFilter.sort((chapter1, chapter2) =>
+            chapter1.chapter_index! - chapter2.chapter_index!);
+      }
     }
     Image? imageDetail = (await HandleDatabase.readImageFromDB(
         type: AppConstant.typeImageComic[0], parentID: comic.id));
     Image? imageThumnailSquare = (await HandleDatabase.readImageFromDB(
         type: AppConstant.typeImageComic[1], parentID: comic.id));
-
     return Comic.copyWith(
       comic,
       imageDetail: imageDetail,
       imageThumnailSquare: imageThumnailSquare,
-      listChapters: chapters,
+      listChapters: listChaptersFilter,
       listCategories: listCategories,
+      id: comic.id,
+      isFull: comic.isFull,
     );
   }
 
@@ -587,9 +586,9 @@ class ComicRepo {
     required String comicId,
     required String chapterId,
     String? imageThumnailSquareComicPath,
-    String? titleComic,
+    required String titleComic,
     required int numericChapter,
-    int? reads,
+    required int reads,
   }) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();

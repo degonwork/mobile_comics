@@ -24,7 +24,6 @@ import 'blocs/get_all_category/get_all_category_bloc.dart';
 import 'blocs/home/home_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
 import 'blocs/search_comic/search_comic_bloc.dart';
-import 'config/size_config.dart';
 import 'l10n/l10n.dart';
 
 void main() {
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
@@ -50,7 +48,7 @@ class MyApp extends StatelessWidget {
               const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
         ),
         RepositoryProvider<ImageRepo>(
-          create: (context) => ImageRepo(),
+          create: (context) => ImageRepo(apiClient: context.read<ApiClient>()),
         ),
         RepositoryProvider<CategoryRepo>(
           create: (context) => const CategoryRepo(
@@ -66,8 +64,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ChapterRepo(
             imageRepo: context.read<ImageRepo>(),
             chapterUrl: AppConstant.chapterUrl,
-            apiClient:
-                const ApiClient(baseServerUrl: AppConstant.baseServerUrl),
+            apiClient: const ApiClient(
+              baseServerUrl: AppConstant.baseServerUrl,
+            ),
           ),
         ),
         RepositoryProvider<ComicRepo>(

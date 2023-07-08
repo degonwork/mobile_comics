@@ -69,7 +69,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                               padding:
                                   EdgeInsets.only(bottom: SizeConfig.height17),
                               child: TextUi(
-                                text: comic.title != null ? comic.title! : "",
+                                text: comic.title,
                                 fontSize: SizeConfig.font30,
                                 color: AppColor.titleComicColor,
                                 fontWeight: FontWeight.w700,

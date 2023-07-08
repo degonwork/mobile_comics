@@ -10,8 +10,3 @@ class BottomNavbarState extends Equatable {
   @override
   List<Object> get props => [currentScreen, navigatorValue];
 }
-
-class ChangeBottomNavbarError extends BottomNavbarState {
-  @override
-  List<Object> get props => [];
-}

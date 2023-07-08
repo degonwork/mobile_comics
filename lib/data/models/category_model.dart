@@ -19,7 +19,7 @@ class Category {
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
       id: json["_id"] ?? json["id"],
-      name: json["name"],
+      name: json["name"] ?? "",
     );
   }
 

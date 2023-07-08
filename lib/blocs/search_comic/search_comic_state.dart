@@ -18,5 +18,3 @@ class SearchLoadded extends SearchComicState {
   @override
   List<Object> get props => [listComics];
 }
-
-class SearchError extends SearchComicState {}
