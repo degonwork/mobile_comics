@@ -37,6 +37,7 @@ class ItemInfor extends StatelessWidget {
                 size: SizeConfig.icon20,
               ),
             ),
+            
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

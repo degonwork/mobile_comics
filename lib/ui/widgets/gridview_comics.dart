@@ -23,6 +23,7 @@ class GridviewComics extends StatelessWidget {
       removeTop: true,
       child: SingleChildScrollView(
         child: GridView.builder(
+          scrollDirection: Axis.vertical,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: listComics.length,
