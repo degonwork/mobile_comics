@@ -23,46 +23,44 @@ class LibraryScreen extends StatelessWidget {
               left: SizeConfig.width15,
               right: SizeConfig.width15,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    textAlign: TextAlign.start,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SearchComicScreen()));
-                    },
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor:
-                          AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
-                      hintText: AppLocalizations.of(context)!.search,
-                      hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  textAlign: TextAlign.start,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchComicScreen()));
+                  },
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor:
+                        AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
+                    hintText: AppLocalizations.of(context)!.search,
+                    hintStyle: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
                     ),
                   ),
-                  SizedBox(height: SizeConfig.height15),
-                  TextUi(
-                    text: AppLocalizations.of(context)!.genreComics,
-                    fontSize: SizeConfig.font20,
-                    color: AppColor.titleContentColor,
-                  ),
-                  SizedBox(height: SizeConfig.height15),
-                  const AllCategory(),
-                  SizedBox(height: SizeConfig.height15),
-                  const ComicByCategory(),
-                ],
-              ),
+                ),
+                SizedBox(height: SizeConfig.height15),
+                TextUi(
+                  text: AppLocalizations.of(context)!.genreComics,
+                  fontSize: SizeConfig.font20,
+                  color: AppColor.titleContentColor,
+                ),
+                SizedBox(height: SizeConfig.height15),
+                const AllCategory(),
+                SizedBox(height: SizeConfig.height15),
+       const    Expanded(child:SingleChildScrollView(child:  ComicByCategory())),
+              ],
             ),
           ),
         ],

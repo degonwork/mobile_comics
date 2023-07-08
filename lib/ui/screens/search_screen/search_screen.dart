@@ -67,6 +67,7 @@ class SearchComicScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return SingleChildScrollView(
                             child: Column(
+                              
                               children: [
                                 SizedBox(
                                   height: SizeConfig.screenHeight / 37.8,
@@ -128,11 +129,10 @@ class SearchComicScreen extends StatelessWidget {
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Expanded(
                                                 child: TextUi(
+                                                  textAlign: TextAlign.start,
                                                   text: listComics[index].title,
                                                   fontSize: SizeConfig.font20,
                                                 ),
@@ -140,6 +140,7 @@ class SearchComicScreen extends StatelessWidget {
                                               const SizedBox(),
                                               Expanded(
                                                 child: TextUi(
+                                                  textAlign: TextAlign.start,
                                                   text: listComics[index]
                                                       .description,
                                                   maxLines: 2,
