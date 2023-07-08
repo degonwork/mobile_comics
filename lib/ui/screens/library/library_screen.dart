@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:full_comics_frontend/blocs/search_comic/search_comic_bloc.dart';
+import '../../../blocs/search_comic/search_comic_event.dart';
 import '../../../config/app_color.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
@@ -30,6 +33,9 @@ class LibraryScreen extends StatelessWidget {
                   TextField(
                     textAlign: TextAlign.start,
                     onTap: () {
+                      context
+                          .read<SearchComicBloc>()
+                          .add(const SearchByQuery(""));
                       Navigator.push(
                           context,
                           MaterialPageRoute(

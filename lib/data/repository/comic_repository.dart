@@ -204,9 +204,11 @@ class ComicRepo {
             final listComics =
                 jsonResponse.map((e) => Comic.fromJson(e)).toList();
             final listComicSearch = listComics
-                .where((Comic comic) => comic.title
-                    .toLowerCase()
-                    .contains(comic.title.toLowerCase()))
+                .where(
+                  (Comic comic) => comic.title
+                      .toLowerCase()
+                      .contains(comic.title.toLowerCase()),
+                )
                 .toList();
             if (listComicSearch.isNotEmpty) {
               for (Comic comic in listComicSearch) {
@@ -215,10 +217,10 @@ class ComicRepo {
             }
             return listComicsSearchResult;
           }
-          throw Exception();
+          throw Exception("Comics not found");
         }
       } catch (e) {
-        throw Exception();
+        throw Exception("Comics not found");
       }
     }
     return [];
