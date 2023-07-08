@@ -30,5 +30,6 @@
     "favourite": "お気に入り",
     "offline": "オフライン",
     "noChapters": "この漫画には章がありません",
-    "evaluate": "評価"
+    "evaluate": "評価",
+    "notFound": "コミックが見つかりません"
 }

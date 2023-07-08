@@ -151,7 +151,7 @@ class Infor extends StatelessWidget {
     } else {
       return Center(
         child: TextUi(
-          text: "Truyện này chưa có chương",
+          text: AppLocalizations.of(context)!.noChapters,
           fontSize: SizeConfig.font16,
         ),
       );

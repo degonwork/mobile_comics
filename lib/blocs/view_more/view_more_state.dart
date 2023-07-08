@@ -16,5 +16,3 @@ class ViewMoreLoaded extends ViewMoreState {
   @override
   List<Object> get props => [listNewComicsViewMore];
 }
-
-class ViewMoreLoadFailed extends ViewMoreState {}

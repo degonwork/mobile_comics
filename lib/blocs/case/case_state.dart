@@ -21,8 +21,3 @@ class CaseLoaded extends CaseState {
   @override
   List<Object> get props => [listCaseComic];
 }
-
-class CaseFailed extends CaseState {
-  @override
-  List<Object> get props => [];
-}

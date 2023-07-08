@@ -16,7 +16,6 @@ import '../../../data/providers/firebase/notification/local_notification_service
 import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
 
@@ -78,29 +77,46 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
           body: Stack(
             children: [
               const BackGroundApp(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextUi(
-                    text: AppLocalizations.of(context)!.welcomeSplashScreen,
-                    fontSize: SizeConfig.font20,
-                    color: AppColor.titleSplashColor,
-                    fontWeight: FontWeight.w700,
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.height100),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.width15),
+                        child: TextUi(
+                          text:
+                              AppLocalizations.of(context)!.welcomeSplashScreen,
+                          fontSize: SizeConfig.font18dot5,
+                          color: AppColor.titleSplashColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(height: SizeConfig.height150),
+                      Container(
+                        height: SizeConfig.height250,
+                        width: SizeConfig.width250,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            SizeConfig.radius20,
+                          ),
+                          image: const DecorationImage(
+                            image: AssetImage("assets/images/anh splash.jpg"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Image.asset(
-                  //   'assets/images/anh splash.jpg',
-                  //   height: SizeConfig.screenHeight,
-                  //   width: SizeConfig.screenWidth,
-                  // ),
-                  Container(),
-                ],
+                ),
               ),
             ],
           ),
