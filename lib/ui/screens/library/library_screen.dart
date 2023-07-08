@@ -59,7 +59,8 @@ class LibraryScreen extends StatelessWidget {
                 SizedBox(height: SizeConfig.height15),
                 const AllCategory(),
                 SizedBox(height: SizeConfig.height15),
-       const    Expanded(child:SingleChildScrollView(child:  ComicByCategory())),
+                const Expanded(
+                    child: SingleChildScrollView(child: ComicByCategory())),
               ],
             ),
           ),

@@ -18,13 +18,14 @@ class SearchComicScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.withOpacity(0.7),
+        backgroundColor: Colors.transparent,
         title: Container(
           width: double.infinity,
           height: SizeConfig.screenHeight / 15.12,
           decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.8),
-              borderRadius: BorderRadius.circular(50)),
+            color: Colors.blue.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(50),
+          ),
           child: Center(
             child: TextField(
               style: const TextStyle(color: Colors.black),
@@ -51,131 +52,139 @@ class SearchComicScreen extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: SizeConfig.screenHeight / 37.8),
             child: BlocBuilder<SearchComicBloc, SearchComicState>(
-                builder: (context, state) {
-              if (state is SearchLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is SearchLoadded) {
-                final listComics = state.listComics;
-                if (listComics.isNotEmpty) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.screenWidth / 18),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        cacheExtent: 10,
-                        itemCount: listComics.length,
-                        itemBuilder: (context, index) {
-                          return SingleChildScrollView(
-                            child: Column(
-                              
-                              children: [
-                                SizedBox(
-                                  height: SizeConfig.screenHeight / 37.8,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    context.read<ComicDetailBloc>().add(
-                                        LoadDetailComic(listComics[index].id));
-                                    Navigator.pushNamed(
-                                        context, ComicDetailScreen.routeName);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.white
-                                                  .withOpacity(0.03)),
-                                        ]),
-                                    height: SizeConfig.screenHeight / 8.4,
-                                    child: Row(
-                                      children: [
-                                        listComics[index]
-                                                    .image_thumnail_square_path !=
-                                                null
-                                            ? Expanded(
-                                                flex: 9,
-                                                child: Container(
-                                                  padding: EdgeInsets.zero,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                                  .all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      image: DecorationImage(
-                                                          image: NetworkImage(
-                                                              listComics[index]
-                                                                  .image_thumnail_square_path!),
-                                                          fit: BoxFit.fill)),
-                                                  height:
-                                                      SizeConfig.screenHeight /
-                                                          8.4,
-                                                  width:
-                                                      SizeConfig.screenWidth /
-                                                          4,
-                                                ),
-                                              )
-                                            : const CircularProgressIndicator(),
-                                        Expanded(
-                                          flex: 1,
-                                          child: SizedBox(
-                                            width: SizeConfig.screenWidth / 20,
+              builder: (context, state) {
+                if (state is SearchLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is SearchLoadded) {
+                  final listComics = state.listComics;
+                  if (listComics.isNotEmpty) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.screenWidth / 18),
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          cacheExtent: 10,
+                          itemCount: listComics.length,
+                          itemBuilder: (context, index) {
+                            return SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight / 37.8,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      context.read<ComicDetailBloc>().add(
+                                          LoadDetailComic(
+                                              listComics[index].id));
+                                      Navigator.pushNamed(
+                                          context, ComicDetailScreen.routeName);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.white
+                                                    .withOpacity(0.03)),
+                                          ]),
+                                      height: SizeConfig.screenHeight / 8.4,
+                                      child: Row(
+                                        children: [
+                                          listComics[index]
+                                                      .image_thumnail_square_path !=
+                                                  null
+                                              ? Expanded(
+                                                  flex: 9,
+                                                  child: Container(
+                                                    padding: EdgeInsets.zero,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius
+                                                                    .all(
+                                                                Radius.circular(
+                                                                    10)),
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                listComics[
+                                                                        index]
+                                                                    .image_thumnail_square_path!),
+                                                            fit: BoxFit.fill)),
+                                                    height: SizeConfig
+                                                            .screenHeight /
+                                                        8.4,
+                                                    width:
+                                                        SizeConfig.screenWidth /
+                                                            4,
+                                                  ),
+                                                )
+                                              : const CircularProgressIndicator(),
+                                          Expanded(
+                                            flex: 1,
+                                            child: SizedBox(
+                                              width:
+                                                  SizeConfig.screenWidth / 20,
+                                            ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          flex: 24,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: TextUi(
-                                                  textAlign: TextAlign.start,
-                                                  text: listComics[index].title,
-                                                  fontSize: SizeConfig.font20,
+                                          Expanded(
+                                            flex: 24,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  child: TextUi(
+                                                    textAlign: TextAlign.start,
+                                                    text:
+                                                        listComics[index].title,
+                                                    fontSize: SizeConfig.font20,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(),
-                                              Expanded(
-                                                child: TextUi(
-                                                  textAlign: TextAlign.start,
-                                                  text: listComics[index]
-                                                      .description,
-                                                  maxLines: 2,
-                                                  textOverflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              )
-                                            ],
+                                                const SizedBox(),
+                                                Expanded(
+                                                  child: TextUi(
+                                                    textAlign: TextAlign.start,
+                                                    text: listComics[index]
+                                                        .description,
+                                                    maxLines: 2,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.screenHeight / 37.8,
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-                  );
+                                  SizedBox(
+                                    height: SizeConfig.screenHeight / 37.8,
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
+                    );
+                  }
                 }
-              }
-              return Container(
-                  padding: EdgeInsets.only(left: SizeConfig.width15),
-                  child: Text(
-                    AppLocalizations.of(context)!.notFound,
-                    style: TextStyle(
-                        color: Colors.white, fontSize: SizeConfig.font16),
-                  ));
-            }),
+                if (state is SearchError) {
+                  return Container(
+                      padding: EdgeInsets.only(left: SizeConfig.width15),
+                      child: TextUi(
+                          text: AppLocalizations.of(context)!.notFound,
+                          color: Colors.white,
+                          fontSize: SizeConfig.font16));
+                }
+                return Container();
+              },
+            ),
           ),
         ],
       ),
     );
   }
 }
+
+class TextUI {}

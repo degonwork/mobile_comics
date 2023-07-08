@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/repository/comic_repository.dart';
 import 'search_comic_event.dart';
@@ -10,10 +12,15 @@ class SearchComicBloc extends Bloc<SearchComicEvent, SearchComicState> {
         super(SearchInitial()) {
     on<SearchByQuery>(_onSearchByQuery);
   }
+
   Future<void> _onSearchByQuery(
       SearchByQuery event, Emitter<SearchComicState> emitter) async {
     emitter(SearchLoading());
-    final comicResult = await _comicRepo.searchComic(event.query);
-    emitter(SearchLoadded(comicResult));
+    try {
+      final comicResult = await _comicRepo.searchComic(event.query);
+      emitter(SearchLoadded(comicResult));
+    } catch (e) {
+      emitter(const SearchError());
+    }
   }
 }

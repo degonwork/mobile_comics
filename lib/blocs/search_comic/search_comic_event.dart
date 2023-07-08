@@ -1,11 +1,12 @@
- import 'package:equatable/equatable.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class SearchComicEvent extends Equatable{
+abstract class SearchComicEvent extends Equatable {
   const SearchComicEvent();
-@override
-List<Object> get props => [];
+  @override
+  List<Object> get props => [];
 }
-class SearchByQuery extends SearchComicEvent{
+
+class SearchByQuery extends SearchComicEvent {
   final String query;
   const SearchByQuery(this.query);
   @override
