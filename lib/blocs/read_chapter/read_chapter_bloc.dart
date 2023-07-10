@@ -8,6 +8,7 @@ import '../../data/models/image_model.dart';
 
 class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
   final ChapterRepo _chapterRepo;
+
   ReadChapterBloc({
     required ChapterRepo chapterRepo,
   })  : _chapterRepo = chapterRepo,
@@ -15,8 +16,9 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     on<LoadChapter>(_onLoadChapter);
     on<LoadNextChapter>(_onLoadNextChapter);
     on<SetStateButtonBackIndex>(_onSetStateButtonBackIndex);
-    on<ContinueReading>(_onCountinueReading);
+    on<ContinueReading>(_onContinueReading);
   }
+
   Future<void> _onLoadNextChapter(
       LoadNextChapter event, Emitter<ReadChapterState> emit) async {
     emit(LoadingChapter());
@@ -27,24 +29,21 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
       if (chapter.isFull == 0) {
         try {
           print("chapter not full ----------------------------");
-          await _chapterRepo.fetchDetailChapters(
-              id: chapter.id, isUpdate: true);
-          listImageNextChapter =
-          await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
+          await _chapterRepo.fetchDetailChapters(id: chapter.id);
+          listImageNextChapter = await _chapterRepo.readChapterContentFromDB(
+              chapterId: chapter.id);
           emit(LoadedChapter(
               listImageNextChapter, true, chapter.chapter_index!, chapter.id));
-        } catch(e) {
-            emit(LoadErrorChapter());
+        } catch (e) {
+          emit(LoadErrorChapter());
         }
-      }else {
+      } else {
         print("chapter is full--------------------------------");
         listImageNextChapter =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(
             listImageNextChapter, true, chapter.chapter_index!, chapter.id));
-        await _chapterRepo
-            .fetchDetailChapters(id: chapter.id, isUpdate: true)
-            .whenComplete(
+        await _chapterRepo.fetchDetailChapters(id: chapter.id).whenComplete(
           () async {
             await Future.delayed(const Duration(seconds: 1), () async {
               listImageNextChapter = await _chapterRepo
@@ -69,7 +68,7 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     if (chapter != null && chapter.chapter_index != null) {
       if (chapter.isFull == 0) {
         print("chapter not full ----------------------------");
-        await _chapterRepo.fetchDetailChapters(id: chapter.id, isUpdate: true);
+        await _chapterRepo.fetchDetailChapters(id: chapter.id);
         listImageContent =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(
@@ -80,9 +79,7 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(
             listImageContent, true, chapter.chapter_index!, chapter.id));
-        await _chapterRepo
-            .fetchDetailChapters(id: chapter.id, isUpdate: true)
-            .whenComplete(
+        await _chapterRepo.fetchDetailChapters(id: chapter.id).whenComplete(
           () async {
             await Future.delayed(const Duration(seconds: 1), () async {
               listImageContent = await _chapterRepo.readChapterContentFromDB(
@@ -96,7 +93,7 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     }
   }
 
-  Future<void> _onCountinueReading(
+  Future<void> _onContinueReading(
       ContinueReading event, Emitter<ReadChapterState> emit) async {
     emit(LoadingChapter());
     List<Image> listImageChapterContinue = [];
@@ -105,7 +102,7 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     if (chapter != null && chapter.chapter_index != null) {
       if (chapter.isFull == 0) {
         print("chapter not full ----------------------------");
-        await _chapterRepo.fetchDetailChapters(id: chapter.id, isUpdate: true);
+        await _chapterRepo.fetchDetailChapters(id: chapter.id);
         listImageChapterContinue =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(listImageChapterContinue, true,
@@ -116,11 +113,15 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(listImageChapterContinue, true,
             chapter.chapter_index!, chapter.id));
-        await Future.delayed(const Duration(seconds: 1), () async {
-          listImageChapterContinue = await _chapterRepo
-              .readChapterContentFromDB(chapterId: chapter.id);
-          emit(LoadedChapter(listImageChapterContinue, true,
-              chapter.chapter_index!, chapter.id));
+        await _chapterRepo
+            .fetchDetailChapters(id: chapter.id)
+            .whenComplete(() async {
+          await Future.delayed(const Duration(seconds: 1), () async {
+            listImageChapterContinue = await _chapterRepo
+                .readChapterContentFromDB(chapterId: chapter.id);
+            emit(LoadedChapter(listImageChapterContinue, true,
+                chapter.chapter_index!, chapter.id));
+          });
         });
       }
     }

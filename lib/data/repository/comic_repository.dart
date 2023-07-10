@@ -49,8 +49,8 @@ class ComicRepo {
     try {
       listNewComics =
           await fetchAPINewComics(limit: AppConstant.limitSeeMoreComic);
-    } catch (e){
-    //  Not found New comics
+    } catch (e) {
+      //  Not found New comics
     }
     listHomeComics.addAll(listNewComics);
     if (listHomeComics.isNotEmpty) {
@@ -274,27 +274,31 @@ class ComicRepo {
       if (isFullComic && comic.add_chapter_time != comicDB.add_chapter_time) {
         print(
             "${comic.id} comic is full add chapter time change ----------------------------");
-        Comic? comicWithAddChapterTimeChange =
-            await fetchDetailComics(id: comic.id, isUpdate: false);
-        if (comicWithAddChapterTimeChange != null) {
-          await _chapterRepo.createChapterToDB(
-              comic: comicWithAddChapterTimeChange);
-          Comic updateComic = Comic(
-            id: comicWithAddChapterTimeChange.id,
-            image_detail_id: comicDB.image_detail_id,
-            image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
-            image_thumnail_square_id: comicDB.image_thumnail_square_id,
-            title: comicWithAddChapterTimeChange.title,
-            author: comicWithAddChapterTimeChange.author,
-            description: comicWithAddChapterTimeChange.description,
-            year: comicWithAddChapterTimeChange.year,
-            reads: comicWithAddChapterTimeChange.reads,
-            chapter_update_time: comicDB.chapter_update_time,
-            add_chapter_time: comicWithAddChapterTimeChange.add_chapter_time,
-            update_time: comicDB.update_time,
-            isFull: isFullComic ? 1 : 0,
-          );
-          await HandleDatabase.updateComicToDB(comic: updateComic);
+        try {
+          Comic? comicWithAddChapterTimeChange =
+              await fetchDetailComics(id: comic.id, isUpdate: false);
+          if (comicWithAddChapterTimeChange != null) {
+            await _chapterRepo.createChapterToDB(
+                comic: comicWithAddChapterTimeChange);
+            Comic updateComic = Comic(
+              id: comicWithAddChapterTimeChange.id,
+              image_detail_id: comicDB.image_detail_id,
+              image_thumnail_rectangle_id: comicDB.image_thumnail_rectangle_id,
+              image_thumnail_square_id: comicDB.image_thumnail_square_id,
+              title: comicWithAddChapterTimeChange.title,
+              author: comicWithAddChapterTimeChange.author,
+              description: comicWithAddChapterTimeChange.description,
+              year: comicWithAddChapterTimeChange.year,
+              reads: comicWithAddChapterTimeChange.reads,
+              chapter_update_time: comicDB.chapter_update_time,
+              add_chapter_time: comicWithAddChapterTimeChange.add_chapter_time,
+              update_time: comicDB.update_time,
+              isFull: isFullComic ? 1 : 0,
+            );
+            await HandleDatabase.updateComicToDB(comic: updateComic);
+          }
+        } catch (e) {
+          //  Not found comic
         }
       } else {
         print(

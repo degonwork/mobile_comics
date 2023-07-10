@@ -20,8 +20,8 @@ class ChapterRepo {
         _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
-  Future<Chapter?> fetchDetailChapters(
-      {required String id, required bool isUpdate}) async {
+  Future<void> fetchDetailChapters(
+      {required String id}) async {
     Chapter? chapterAPi;
     try {
       Response response = await _apiClient.getData('$_chapterUrl$id');
@@ -29,7 +29,6 @@ class ChapterRepo {
         dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
           chapterAPi = Chapter.fromJson(jsonResponse);
-          if (isUpdate) {
             Chapter? chapterDB =
                 await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
             if (chapterDB != null) {
@@ -48,11 +47,10 @@ class ChapterRepo {
             }
           }
         }
-      }
     } catch (e) {
      throw Exception("Chapter not found");
     }
-    return chapterAPi;
+
   }
 
   // process database
