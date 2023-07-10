@@ -18,3 +18,6 @@ class ComicByCategoryLoaded extends FilterComicState {
   @override
   List<Object> get props => [listComics];
 }
+
+class ComicByCategoryLoadError extends FilterComicState {}
+

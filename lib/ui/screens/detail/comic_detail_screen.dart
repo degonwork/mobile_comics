@@ -17,6 +17,7 @@ import 'screens/infor.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   const ComicDetailScreen({super.key});
+
   static const String routeName = '/comic-detail';
 
   @override
@@ -27,6 +28,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
     with TickerProviderStateMixin {
   late List<Tab> tabs = [];
   late TabController _tabController;
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -35,7 +37,6 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     List<Tab> tabs = <Tab>[
       Tab(text: AppLocalizations.of(context)!.inforComics),
       Tab(text: AppLocalizations.of(context)!.chapters),
@@ -51,8 +52,8 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
               builder: (context, state) {
                 if (state is ComicDetailLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(color: Colors.amber),
-                  );
+                      child:
+                          CircularProgressIndicator(color: AppColor.circular));
                 }
                 if (state is ComicDetailLoaded) {
                   final comic = state.comic;
@@ -144,14 +145,14 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                         ),
                       ],
                     );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(color: Colors.amber),
-                    );
                   }
                 }
-                return const Center(
-                  child: CircularProgressIndicator(color: Colors.amber),
+                return Center(
+                  child: TextUi(
+                    text: AppLocalizations.of(context)!.notFoundComics,
+                    color: Colors.white,
+                    fontSize: SizeConfig.font16,
+                  ),
                 );
               },
             ),

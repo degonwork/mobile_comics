@@ -24,15 +24,17 @@ import 'blocs/get_all_category/get_all_category_bloc.dart';
 import 'blocs/home/home_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
 import 'blocs/search_comic/search_comic_bloc.dart';
+import 'config/size_config.dart';
 import 'l10n/l10n.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
+  await Future.delayed(const Duration(milliseconds: 1000));
   runApp(const MyApp());
 }
 
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<ApiClient>(
@@ -102,7 +105,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<ViewMoreBloc>(
             create: (context) => ViewMoreBloc(
               comicRepo: context.read<ComicRepo>(),
-            )..add(LoadNewComicsViewMore()),
+            ),
           ),
           BlocProvider<ComicDetailBloc>(
             create: (context) => ComicDetailBloc(

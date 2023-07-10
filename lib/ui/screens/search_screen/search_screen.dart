@@ -12,6 +12,7 @@ import '../detail/comic_detail_screen.dart';
 
 class SearchComicScreen extends StatelessWidget {
   const SearchComicScreen({super.key});
+
   static const String routeName = '/search-comic';
 
   @override
@@ -171,11 +172,13 @@ class SearchComicScreen extends StatelessWidget {
                 }
                 if (state is SearchError) {
                   return Container(
-                      padding: EdgeInsets.only(left: SizeConfig.width15),
-                      child: TextUi(
-                          text: AppLocalizations.of(context)!.notFound,
-                          color: Colors.white,
-                          fontSize: SizeConfig.font16));
+                    padding: EdgeInsets.only(left: SizeConfig.width15),
+                    child: TextUi(
+                      text: AppLocalizations.of(context)!.notFoundComics,
+                      color: Colors.white,
+                      fontSize: SizeConfig.font16,
+                    ),
+                  );
                 }
                 return Container();
               },
@@ -187,4 +190,3 @@ class SearchComicScreen extends StatelessWidget {
   }
 }
 
-class TextUI {}

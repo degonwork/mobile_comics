@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../ui/widgets/text_ui.dart';
 import '../../../../blocs/get_all_category/get_all_category_event.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_event.dart';
@@ -8,6 +9,7 @@ import '../../../../blocs/get_all_category/get_all_category_state.dart';
 import '../../../../config/app_color.dart';
 import '../../../../config/size_config.dart';
 import '../../../widgets/genre_comic.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AllCategory extends StatelessWidget {
   const AllCategory({super.key});
@@ -16,7 +18,12 @@ class AllCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetAllCategoryBloc, GetAllCategoryState>(
       builder: (context, state) {
-        if (state is GetLoadded) {
+        if (state is GetAllCategoryLoading) {
+          return const Center(
+              child:
+              CircularProgressIndicator(color: AppColor.circular));
+        }
+        if (state is GetAllCategoryLoaded) {
           final listCategories = state.listCategories;
           if (listCategories.isNotEmpty) {
             return SizedBox(
@@ -47,13 +54,15 @@ class AllCategory extends StatelessWidget {
                         )),
               ),
             );
-          } else {
-            return const Center(
-                child: CircularProgressIndicator(color: Colors.amber));
           }
         }
-        return const Center(
-            child: CircularProgressIndicator(color: Colors.amber));
+        return Center(
+          child: TextUi(
+            text: AppLocalizations.of(context)!.notFoundCategory,
+            color: Colors.white,
+            fontSize: SizeConfig.font16,
+          ),
+        );
       },
     );
   }

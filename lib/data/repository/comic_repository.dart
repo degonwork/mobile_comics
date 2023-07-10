@@ -37,21 +37,29 @@ class ComicRepo {
   // Fetch Api
   Future<void> fetchApiHomeComic({required bool isUpdate}) async {
     List<Comic> listHomeComics = [];
-    List<Comic> listHotComics =
-        await fetchAPIHotComics(limit: AppConstant.limitHomeComic);
+    List<Comic> listHotComics = [];
+    List<Comic> listNewComics = [];
+    try {
+      listHotComics =
+          await fetchAPIHotComics(limit: AppConstant.limitHomeComic);
+    } catch (e) {
+      //  Not found Hot comics
+    }
     listHomeComics.addAll(listHotComics);
-    List<Comic> listNewComics =
-        await fetchAPINewComics(limit: AppConstant.limitSeeMoreComic);
+    try {
+      listNewComics =
+          await fetchAPINewComics(limit: AppConstant.limitSeeMoreComic);
+    } catch (e){
+    //  Not found New comics
+    }
     listHomeComics.addAll(listNewComics);
     if (listHomeComics.isNotEmpty) {
       await createComicToDB(listComics: listHomeComics);
-      print("Created comic ----------------------");
       if (isUpdate) {
         for (int i = 0; i < listHomeComics.length; i++) {
           Comic? comicDB = await HandleDatabase.readComicByIDFromDB(
               id: listHomeComics[i].id);
           if (comicDB != null) {
-            print("required update ---------------------");
             await updateHomeComic(
               comic: listHomeComics[i],
               comicDB: comicDB,
@@ -62,7 +70,7 @@ class ComicRepo {
         }
       }
     } else {
-      print("dont create comic ----------------------");
+      throw Exception("Home comic Not found");
     }
   }
 
@@ -77,14 +85,11 @@ class ComicRepo {
           listHotComicsApi =
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
           setTimesAds(listHotComicsApi[0].times_ads);
-        } else {
-          print("Hot comic is not available");
+          return listHotComicsApi;
         }
-      } else {
-        print("load failed hot comic");
       }
     } catch (e) {
-      // print(e.toString() + "------------------------------------------");
+      //  Not found Hot comics
     }
     return listHotComicsApi;
   }
@@ -99,14 +104,11 @@ class ComicRepo {
         if (jsonResponse.isNotEmpty) {
           listNewComicsApi =
               jsonResponse.map((e) => Comic.fromJson(e)).toList();
-        } else {
-          print("New comic is not available");
+          return listNewComicsApi;
         }
-      } else {
-        print("load failed new comic");
       }
     } catch (e) {
-      // print(e.toString() + "------------------------------------------");
+      //  Not found New comics
     }
     return listNewComicsApi;
   }
@@ -136,21 +138,17 @@ class ComicRepo {
               }
             }
           }
-        } else {
-          print("comic is not available");
+          return comicApi;
         }
-      } else {
-        print("load failed");
       }
+      throw Exception("Comics not found");
     } catch (e) {
-      print(e.toString() + "-----------------------------------");
+      throw Exception("Comics not found");
     }
-    return comicApi;
   }
 
   Future<void> fetchAPIAndCreateFilterComicByCategories(
       {required String categoryName, required bool isUpdate}) async {
-    // List<dynamic> jsonResponse = [];
     List<Comic> listComicFilter = [];
     try {
       final response = await _apiClient
@@ -182,12 +180,10 @@ class ComicRepo {
               }
             }
           }
-        } else {
-          print("Comic filter is not available");
         }
-      } else {}
+      }
     } catch (e) {
-      // print(e.toString());
+      throw Exception("Filter Comics not found");
     }
   }
 
@@ -201,9 +197,9 @@ class ComicRepo {
         if (response.statusCode == 200) {
           List jsonResponse = jsonDecode(response.body);
           if (jsonResponse.isNotEmpty) {
-            final listComics =
+            List<Comic> listComics =
                 jsonResponse.map((e) => Comic.fromJson(e)).toList();
-            final listComicSearch = listComics
+            List<Comic> listComicSearch = listComics
                 .where(
                   (Comic comic) => comic.title
                       .toLowerCase()
@@ -217,13 +213,13 @@ class ComicRepo {
             }
             return listComicsSearchResult;
           }
-          throw Exception("Comics not found");
         }
+        throw Exception("Search comics not found");
       } catch (e) {
-        throw Exception("Comics not found");
+        throw Exception("Search comics not found");
       }
     }
-    return [];
+    return listComicsSearchResult;
   }
 
   // Process Database

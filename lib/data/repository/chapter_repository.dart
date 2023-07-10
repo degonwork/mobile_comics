@@ -47,12 +47,10 @@ class ChapterRepo {
               }
             }
           }
-        } else {
-          print("chapter is not available");
         }
-      } else {}
+      }
     } catch (e) {
-      print(e.toString());
+     throw Exception("Chapter not found");
     }
     return chapterAPi;
   }

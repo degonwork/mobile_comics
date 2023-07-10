@@ -23,16 +23,20 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     List<Image> listImageNextChapter = [];
     Chapter? chapter = await _chapterRepo.readNextChapter(
         comicId: event.comicId, chapterIndex: event.chapterIndex);
-    print(chapter.toString() + "----------------------------------------");
     if (chapter != null && chapter.chapter_index != null) {
       if (chapter.isFull == 0) {
-        print("chapter not full ----------------------------");
-        await _chapterRepo.fetchDetailChapters(id: chapter.id, isUpdate: true);
-        listImageNextChapter =
-            await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
-        emit(LoadedChapter(
-            listImageNextChapter, true, chapter.chapter_index!, chapter.id));
-      } else {
+        try {
+          print("chapter not full ----------------------------");
+          await _chapterRepo.fetchDetailChapters(
+              id: chapter.id, isUpdate: true);
+          listImageNextChapter =
+          await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
+          emit(LoadedChapter(
+              listImageNextChapter, true, chapter.chapter_index!, chapter.id));
+        } catch(e) {
+            emit(LoadErrorChapter());
+        }
+      }else {
         print("chapter is full--------------------------------");
         listImageNextChapter =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
@@ -52,6 +56,7 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
         );
       }
     }
+    emit(LoadErrorChapter());
   }
 
   //

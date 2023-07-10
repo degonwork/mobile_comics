@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/repository/ads_repository.dart';
-import '../../screens/view_more/new_comics_view_more/new_comics_view_more/new_comics_view_more_screen.dart';
+import '../view_more/new_comics_view_more/new_comics_view_more_screen.dart';
 import '../../screens/home/widgets/banner_listview.dart';
 import '../../../blocs/view_more/view_more_bloc.dart';
 import '../../../config/size_config.dart';
@@ -38,6 +38,9 @@ class HomeScreen extends StatelessWidget {
                             return SelectTitle(
                               title: AppLocalizations.of(context)!.newComics,
                               press: () {
+                                context
+                                    .read<ViewMoreBloc>()
+                                    .add(LoadNewComicsViewMore());
                                 Navigator.pushNamed(
                                     context, NewComicViewMoreScreen.routeName);
                               },

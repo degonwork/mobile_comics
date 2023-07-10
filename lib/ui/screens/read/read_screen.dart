@@ -10,13 +10,16 @@ import '../../../blocs/read_chapter/read_chapter_state.dart';
 import '../../../config/size_config.dart';
 import '../../../data/models/comic_model.dart';
 import '../../widgets/back_button_screen.dart';
+import '../../widgets/text_ui.dart';
 import '../detail/comic_detail_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReadScreen extends StatelessWidget {
   const ReadScreen({
     super.key,
     required this.comic,
   });
+
   final Comic comic;
 
   @override
@@ -25,22 +28,19 @@ class ReadScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-            child: const BannerAD()),
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+              child: const BannerAD()),
           Expanded(
             child: Stack(
               children: [
-                // Container(
-                  
-                //     padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-                //     child: const BannerAD()),
                 Container(
                   margin: EdgeInsets.only(top: SizeConfig.height20),
                   child: BlocBuilder<ReadChapterBloc, ReadChapterState>(
                     builder: (context, state) {
                       if (state is LoadingChapter) {
                         return const Center(
-                          child: CircularProgressIndicator(color: AppColor.disable),
+                          child: CircularProgressIndicator(
+                              color: AppColor.disable),
                         );
                       } else if (state is LoadedChapter) {
                         final listImage = state.listImageContent;
@@ -56,37 +56,49 @@ class ReadScreen extends StatelessWidget {
                                     context: context,
                                     removeTop: true,
                                     child: ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       itemCount: listImage.length,
                                       itemBuilder: (context, index) {
-                                        return listImage[index].height != null &&
+                                        return listImage[index].height !=
+                                                    null &&
                                                 listImage[index].width != null
                                             ? Container(
                                                 padding: EdgeInsets.symmetric(
-                                                  horizontal: SizeConfig.width10,
+                                                  horizontal:
+                                                      SizeConfig.width10,
                                                 ),
                                                 child: CachedNetworkImage(
-                                                  imageUrl: listImage[index].path,
+                                                  imageUrl:
+                                                      listImage[index].path,
                                                   imageBuilder:
                                                       (context, imageProvider) {
                                                     return SizedBox(
-                                                      width: SizeConfig.screenWidth,
-                                                      height: SizeConfig.screenWidth *
-                                                          (listImage[index].width! /
-                                                              listImage[index].height!),
+                                                      width: SizeConfig
+                                                          .screenWidth,
+                                                      height: SizeConfig
+                                                              .screenWidth *
+                                                          (listImage[index]
+                                                                  .width! /
+                                                              listImage[index]
+                                                                  .height!),
                                                       child: Container(
-                                                        decoration: BoxDecoration(
-                                                          image: DecorationImage(
-                                                            image: imageProvider,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image:
+                                                                imageProvider,
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
                                                       ),
                                                     );
                                                   },
-                                                  errorWidget: (context, url, error) =>
+                                                  errorWidget: (context, url,
+                                                          error) =>
                                                       Image.asset(
                                                           "assets/images/anh splash.jpg"),
                                                 ),
@@ -100,14 +112,14 @@ class ReadScreen extends StatelessWidget {
                               ),
                             ),
                           );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(color: AppColor.disable),
-                          );
                         }
                       }
-                      return const Center(
-                        child: CircularProgressIndicator(color: AppColor.disable),
+                      return Center(
+                        child: TextUi(
+                          text: AppLocalizations.of(context)!.notFoundComics,
+                          color: Colors.white,
+                          fontSize: SizeConfig.font16,
+                        ),
                       );
                     },
                   ),
@@ -143,8 +155,8 @@ class ReadScreen extends StatelessWidget {
                     }
                     return NavigatorButtonScreen(
                       icon: Icons.arrow_back_ios_outlined,
-                      onTap: () =>
-                          Navigator.pushNamed(context, ComicDetailScreen.routeName),
+                      onTap: () => Navigator.pushNamed(
+                          context, ComicDetailScreen.routeName),
                     );
                   },
                 ),
@@ -177,8 +189,8 @@ class ReadScreen extends StatelessWidget {
                     }
                     return NavigatorButtonScreen(
                       icon: Icons.arrow_right_alt_outlined,
-                      onTap: () =>
-                          Navigator.pushNamed(context, ComicDetailScreen.routeName),
+                      onTap: () => Navigator.pushNamed(
+                          context, ComicDetailScreen.routeName),
                     );
                   },
                 ),

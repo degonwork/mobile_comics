@@ -21,3 +21,7 @@ class CaseLoaded extends CaseState {
   @override
   List<Object> get props => [listCaseComic];
 }
+
+
+
+

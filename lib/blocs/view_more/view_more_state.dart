@@ -9,6 +9,9 @@ abstract class ViewMoreState extends Equatable {
 
 class ViewMoreInitial extends ViewMoreState {}
 
+class ViewMoreLoading extends ViewMoreState {}
+
+
 class ViewMoreLoaded extends ViewMoreState {
   final List<Comic> listNewComicsViewMore;
   const ViewMoreLoaded(this.listNewComicsViewMore);
@@ -16,3 +19,6 @@ class ViewMoreLoaded extends ViewMoreState {
   @override
   List<Object> get props => [listNewComicsViewMore];
 }
+
+class ViewMoreLoadError extends ViewMoreState {}
+

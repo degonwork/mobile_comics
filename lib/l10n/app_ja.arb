@@ -31,5 +31,7 @@
     "offline": "オフライン",
     "noChapters": "この漫画には章がありません",
     "evaluate": "評価",
-    "notFound": "コミックが見つかりません"
+    "notFoundComics": "コミックが見つかりません",
+    "notFoundCategory": "カテゴリが見つかりません",
+    "contentNotFound" : "コンテンツが見つかりません"
 }

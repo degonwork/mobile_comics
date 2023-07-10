@@ -9,31 +9,38 @@ import 'get_all_category_state.dart';
 class GetAllCategoryBloc
     extends Bloc<GetAllCategoryEvent, GetAllCategoryState> {
   final CategoryRepo _categoryRepo;
+
   GetAllCategoryBloc(CategoryRepo categoryRepo)
       : _categoryRepo = categoryRepo,
-        super(GetInitial()) {
+        super(GetAllCategoryInitial()) {
     on<GetAllCategory>(_getAllCategory);
     on<SetStateCategoryIndex>(_setStateIndexCategory);
   }
+
   Future<void> _getAllCategory(
       GetAllCategory event, Emitter<GetAllCategoryState> emitter) async {
     List<String> listCategoryString = [];
     List<Category> listCategories = [];
     listCategories = await _categoryRepo.getAllCategoryFromDB();
+    emitter(GetAllCategoryLoading());
     if (listCategories.isEmpty) {
       print("Categories is empty --------------------");
-      await _categoryRepo.getAllCategory();
-      listCategories = await _categoryRepo.getAllCategoryFromDB();
-      for (var category in listCategories) {
-        listCategoryString.add(category.name);
+      try {
+        await _categoryRepo.getAllCategory();
+        listCategories = await _categoryRepo.getAllCategoryFromDB();
+        for (var category in listCategories) {
+          listCategoryString.add(category.name);
+        }
+        emitter(GetAllCategoryLoaded(listCategoryString, 0));
+      } catch(e) {
+        emitter(GetAllCategoryLoadError());
       }
-      emitter(GetLoadded(listCategoryString, 0));
     } else {
       print("Categories is not empty --------------------");
       for (var category in listCategories) {
         listCategoryString.add(category.name);
       }
-      emitter(GetLoadded(listCategoryString, 0));
+      emitter(GetAllCategoryLoaded(listCategoryString, 0));
       await _categoryRepo.getAllCategory().whenComplete(
         () async {
           listCategoryString = [];
@@ -43,7 +50,7 @@ class GetAllCategoryBloc
               listCategoryString.add(category.name);
             }
             emitter(
-              GetLoadded(listCategoryString, 0),
+              GetAllCategoryLoaded(listCategoryString, 0),
             );
           });
         },
@@ -53,8 +60,9 @@ class GetAllCategoryBloc
 
   void _setStateIndexCategory(
       SetStateCategoryIndex event, Emitter<GetAllCategoryState> emit) {
-    if (state is GetLoadded) {
-      emit(GetLoadded((state as GetLoadded).listCategories, event.index));
+    if (state is GetAllCategoryLoaded) {
+      emit(GetAllCategoryLoaded(
+          (state as GetAllCategoryLoaded).listCategories, event.index));
     }
   }
 }

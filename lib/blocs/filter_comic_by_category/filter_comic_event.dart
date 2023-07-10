@@ -18,7 +18,4 @@ class FilterByIDCategory extends FilterComicEvent {
   List<Object> get props => [categoryName];
 }
 
-class FilterComicLoadFailed extends FilterComicEvent {
-  @override
-  List<Object> get props => [];
-}
+

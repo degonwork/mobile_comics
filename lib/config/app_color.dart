@@ -57,7 +57,7 @@ class AppColor {
   static const backGroundButtonColor = redColor;
 
   // circular
-  static const circular = violetColor;
+  static const circular = yellowColor;
   // disable
   static const disable = Colors.grey;
 }

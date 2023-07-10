@@ -35,7 +35,6 @@ class _CaseScreenState extends State<CaseScreen> with TickerProviderStateMixin {
       ),
     ];
     _tabController = TabController(length: tabs.length, vsync: this);
-    SizeConfig().init(context);
     return Scaffold(
       body: Stack(
         children: [

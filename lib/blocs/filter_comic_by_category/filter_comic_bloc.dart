@@ -9,6 +9,7 @@ import 'filter_comic_state.dart';
 class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
   final ComicRepo _comicRepo;
   final CategoryRepo _categoryRepo;
+
   FilterComicBloc(
       {required ComicRepo comicRepo, required CategoryRepo categoryRepo})
       : _comicRepo = comicRepo,
@@ -29,12 +30,16 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
           categoryName: listCategories[0].name);
       if (comicIndexFirst.isEmpty) {
         print("Comic filter is empty ----------------------------");
-        await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-            categoryName: listCategories[0].name, isUpdate: false);
-        comicIndexFirst = await _comicRepo.readComicByCategoryName(
-            categoryName: listCategories[0].name);
-        emitter(ComicByCategoryLoaded(comicIndexFirst));
-      } else {
+        try {
+          await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+              categoryName: listCategories[0].name, isUpdate: false);
+          comicIndexFirst = await _comicRepo.readComicByCategoryName(
+              categoryName: listCategories[0].name);
+          emitter(ComicByCategoryLoaded(comicIndexFirst));
+        } catch(e) {
+          emitter(ComicByCategoryLoadError());
+        }
+      }else {
         print("Comic filter is not empty ----------------------");
         emitter(ComicByCategoryLoaded(comicIndexFirst));
         await _comicRepo
@@ -51,6 +56,8 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
           );
         });
       }
+    } else {
+      emitter(ComicByCategoryLoadError());
     }
   }
 
@@ -62,12 +69,16 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
         categoryName: event.categoryName);
     if (listComicsFilter.isEmpty) {
       print("Comic filter is empty ----------------------------");
-      await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
-          categoryName: event.categoryName, isUpdate: false);
-      listComicsFilter = await _comicRepo.readComicByCategoryName(
-          categoryName: event.categoryName);
-      emitter(ComicByCategoryLoaded(listComicsFilter));
-    } else {
+      try {
+        await _comicRepo.fetchAPIAndCreateFilterComicByCategories(
+            categoryName: event.categoryName, isUpdate: false);
+        listComicsFilter = await _comicRepo.readComicByCategoryName(
+            categoryName: event.categoryName);
+        emitter(ComicByCategoryLoaded(listComicsFilter));
+      } catch(e) {
+        emitter(ComicByCategoryLoadError());
+      }
+    }else {
       print("Comic filter is not empty ----------------------");
       emitter(ComicByCategoryLoaded(listComicsFilter));
       await _comicRepo

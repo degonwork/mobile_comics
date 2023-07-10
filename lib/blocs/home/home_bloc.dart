@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/app_constant.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/repository/comic_repository.dart';
+
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ComicRepo _comicRepo;
+
   HomeBloc({required ComicRepo comicRepo})
       : _comicRepo = comicRepo,
         super(HomeInitial()) {
@@ -23,15 +26,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     listHotComics =
         await _comicRepo.readHotComicsFromDB(limit: AppConstant.limitHomeComic);
     if (listHotComics.isEmpty) {
-      print("Comic DB is empty");
-      await _comicRepo.fetchApiHomeComic(isUpdate: false);
-      listHotComics = await _comicRepo.readHotComicsFromDB(
-          limit: AppConstant.limitHomeComic);
-      listNewComics = await _comicRepo.readNewComicsFromDB(
-          limit: AppConstant.limitHomeComic);
-      emit(HomeLoaded(listHotComics, listNewComics));
+      try {
+        await _comicRepo.fetchApiHomeComic(isUpdate: false);
+        listHotComics = await _comicRepo.readHotComicsFromDB(
+            limit: AppConstant.limitHomeComic);
+        listNewComics = await _comicRepo.readNewComicsFromDB(
+            limit: AppConstant.limitHomeComic);
+        emit(HomeLoaded(listHotComics, listNewComics));
+      } catch (e) {
+        emit(HomeLoadError());
+      }
     } else {
-      print("Comic DB is not empty");
       listNewComics = await _comicRepo.readNewComicsFromDB(
           limit: AppConstant.limitHomeComic);
       emit(HomeLoaded(listHotComics, listNewComics));

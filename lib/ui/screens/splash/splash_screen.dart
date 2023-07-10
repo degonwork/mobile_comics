@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -15,7 +16,6 @@ import '../../../data/providers/firebase/notification/firebase_messaging_service
 import '../../../data/providers/firebase/notification/local_notification_service.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../../config/app_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/text_ui.dart';
 import '../router/router_screen.dart';
 
@@ -77,7 +77,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(

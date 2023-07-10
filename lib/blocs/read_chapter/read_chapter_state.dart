@@ -22,3 +22,6 @@ class LoadedChapter extends ReadChapterState {
   List<Object> get props =>
       [listImageContent, visialbe, currentNumeric, chapterId];
 }
+class LoadErrorChapter extends ReadChapterState {}
+
+

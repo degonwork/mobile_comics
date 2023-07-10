@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/app_constant.dart';
 import '../../data/models/comic_model.dart';
 import '../../data/repository/comic_repository.dart';
+
 part 'view_more_event.dart';
+
 part 'view_more_state.dart';
 
 class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
   final ComicRepo _comicRepo;
+
   ViewMoreBloc({required ComicRepo comicRepo})
       : _comicRepo = comicRepo,
         super(ViewMoreInitial()) {
@@ -19,6 +22,7 @@ class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
     LoadNewComicsViewMore event,
     Emitter<ViewMoreState> emit,
   ) async {
+    emit(ViewMoreLoading());
     List<Comic> listNewComicsViewMore = [];
     listNewComicsViewMore = await _comicRepo.readNewComicsFromDB(
         limit: AppConstant.limitSeeMoreComic);
@@ -26,7 +30,11 @@ class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
       await _comicRepo.fetchAPINewComics(limit: AppConstant.limitSeeMoreComic);
       listNewComicsViewMore = await _comicRepo.readNewComicsFromDB(
           limit: AppConstant.limitSeeMoreComic);
-      emit(ViewMoreLoaded(listNewComicsViewMore));
+      if (listNewComicsViewMore.isNotEmpty) {
+        emit(ViewMoreLoaded(listNewComicsViewMore));
+      } else {
+        emit(ViewMoreLoadError());
+      }
     } else {
       emit(ViewMoreLoaded(listNewComicsViewMore));
       await _comicRepo

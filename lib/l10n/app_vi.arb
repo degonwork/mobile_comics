@@ -31,5 +31,7 @@
     "offline": "Đọc offline",
     "noChapters": "Truyện này chưa có chương",
     "evaluate": "Đánh giá",
-    "notFound": "Không tìm thấy truyện phù hợp"
+    "notFoundComics": "Không tìm thấy truyện",
+    "notFoundCategory": "Không tìm thấy thể loại truyện",
+    "contentNotFound" : "Không tìm thấy nội dung chương này"
 }

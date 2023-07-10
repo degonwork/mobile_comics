@@ -20,7 +20,7 @@ class CategoryRepo {
         }
       }
     } catch (e) {
-      print('${e.toString()} ------------------------------------');
+      throw Exception("Category not found");
     }
   }
 

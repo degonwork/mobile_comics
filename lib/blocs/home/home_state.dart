@@ -19,3 +19,5 @@ class HomeLoaded extends HomeState {
   @override
   List<Object> get props => [lisHotComics, lisNewComics];
 }
+
+class HomeLoadError extends HomeState {}

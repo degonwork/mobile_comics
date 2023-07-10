@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
 import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/app_color.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BannerListview extends StatelessWidget {
   const BannerListview({super.key});
@@ -15,6 +17,10 @@ class BannerListview extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
+        if (state is HomeLoading) {
+          return const Center(
+              child: CircularProgressIndicator(color: AppColor.circular));
+        }
         if (state is HomeLoaded) {
           final listHotComics = state.lisHotComics;
           if (listHotComics.isNotEmpty) {
@@ -66,13 +72,15 @@ class BannerListview extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
               ),
             );
-          } else {
-            return const Center(
-                child: CircularProgressIndicator(color: AppColor.circular));
           }
         }
-        return const Center(
-            child: CircularProgressIndicator(color: AppColor.circular));
+        return Center(
+          child: TextUi(
+            text: AppLocalizations.of(context)!.notFoundComics,
+            color: Colors.white,
+            fontSize: SizeConfig.font16,
+          ),
+        );
       },
     );
   }
