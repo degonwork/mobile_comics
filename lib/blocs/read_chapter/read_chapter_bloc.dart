@@ -54,8 +54,9 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
           },
         );
       }
+    } else {
+      emit(LoadErrorChapter());
     }
-    emit(LoadErrorChapter());
   }
 
   //
@@ -68,11 +69,15 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     if (chapter != null && chapter.chapter_index != null) {
       if (chapter.isFull == 0) {
         print("chapter not full ----------------------------");
-        await _chapterRepo.fetchDetailChapters(id: chapter.id);
-        listImageContent =
-            await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
-        emit(LoadedChapter(
-            listImageContent, true, chapter.chapter_index!, chapter.id));
+        try {
+          await _chapterRepo.fetchDetailChapters(id: chapter.id);
+          listImageContent = await _chapterRepo.readChapterContentFromDB(
+              chapterId: chapter.id);
+          emit(LoadedChapter(
+              listImageContent, true, chapter.chapter_index!, chapter.id));
+        } catch (e) {
+          emit(LoadErrorChapter());
+        }
       } else {
         print("chapter is full--------------------------------");
         listImageContent =
@@ -90,6 +95,8 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
           },
         );
       }
+    } else {
+      emit(LoadErrorChapter());
     }
   }
 
@@ -102,12 +109,17 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
     if (chapter != null && chapter.chapter_index != null) {
       if (chapter.isFull == 0) {
         print("chapter not full ----------------------------");
+        try {
         await _chapterRepo.fetchDetailChapters(id: chapter.id);
         listImageChapterContinue =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
         emit(LoadedChapter(listImageChapterContinue, true,
             chapter.chapter_index!, chapter.id));
-      } else {
+      } catch(e) {
+          emit(LoadErrorChapter());
+        }
+      }
+      else {
         print("chapter is full--------------------------------");
         listImageChapterContinue =
             await _chapterRepo.readChapterContentFromDB(chapterId: chapter.id);
@@ -124,6 +136,8 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
           });
         });
       }
+    } else {
+      emit(LoadErrorChapter());
     }
   }
 
