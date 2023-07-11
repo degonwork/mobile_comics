@@ -153,7 +153,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: "Raleway",
           ),
-          title: 'Flutter Demo',
+          title: 'Làng truyện',
           initialRoute: SplashScreen.routeName,
           routes: AppRouter.routes,
         ),

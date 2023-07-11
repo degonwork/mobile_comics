@@ -1,6 +1,8 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
@@ -62,6 +64,14 @@ class ReadScreen extends StatelessWidget {
                                       scrollDirection: Axis.vertical,
                                       itemCount: listImage.length,
                                       itemBuilder: (context, index) {
+                                        final imageUrl = listImage[index].path;
+                                        void deleteCacheNetworkImage()async{
+                                          CachedNetworkImage.evictFromCache(imageUrl);
+                                          // var file = await DefaultCacheManager().getFileFromCache(listImage[index].path);
+                                          // var files = await DefaultCacheManager().getSingleFile(listImage[index].path);
+                                    
+                                        }
+                                        
                                         return listImage[index].height !=
                                                     null &&
                                                 listImage[index].width != null
@@ -71,8 +81,13 @@ class ReadScreen extends StatelessWidget {
                                                       SizeConfig.width10,
                                                 ),
                                                 child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      listImage[index].path,
+                                                  cacheManager: CacheManager(
+                                                    Config(
+                                                      'customCacheKey',
+                                                      stalePeriod: const Duration(minutes: 10),
+                                                    )
+                                                  ),
+                                                  imageUrl:imageUrl,
                                                   imageBuilder:
                                                       (context, imageProvider) {
                                                     return SizedBox(
@@ -97,6 +112,7 @@ class ReadScreen extends StatelessWidget {
                                                       ),
                                                     );
                                                   },
+                                                  
                                                   errorWidget: (context, url,
                                                           error) =>
                                                       Image.asset(
