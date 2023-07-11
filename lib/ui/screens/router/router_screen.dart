@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/bottom_navbar/bottom_navbar_bloc.dart';
-import '../../../config/size_config.dart';
 import '../case/case_screen.dart';
 import '../home/home_screen.dart';
 import '../library/library_screen.dart';

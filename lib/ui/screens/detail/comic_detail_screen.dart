@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
-import '../../../blocs/case/case_bloc.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../config/app_constant.dart';
 import '../../widgets/back_button_screen.dart';
@@ -167,7 +166,6 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                 icon: Icons.arrow_back_ios_outlined,
                 onTap: () {
                   Navigator.pushNamed(context, RouterScreen.routeName);
-                  context.read<CaseBloc>().add(const LoadCaseComic());
                 }),
           ),
         ],

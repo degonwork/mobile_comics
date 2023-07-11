@@ -20,27 +20,28 @@ class CaseBloc extends Bloc<CaseEvent, CaseState> {
 
   Future<void> _onAddCaseComic(
       AddCaseComic event, Emitter<CaseState> emit) async {
-    if (state is CaseLoaded || state is CaseAdded) {
-      await _comicRepo.addCaseComic(
-        comicId: event.comicId,
-        chapterId: event.chapterId,
-        numericChapter: event.numericChapter,
-        imageThumnailSquareComicPath: event.imageThumnailSquareComicPath,
-        titleComic: event.titleComic,
-        reads: event.reads,
-      );
-      emit(CaseAdded());
-    }
+    await _comicRepo.addCaseComic(
+      comicId: event.comicId,
+      chapterId: event.chapterId,
+      numericChapter: event.numericChapter,
+      imageThumnailSquareComicPath: event.imageThumnailSquareComicPath,
+      titleComic: event.titleComic,
+      reads: event.reads,
+    );
+    add(const LoadCaseComic());
   }
 
   Future<void> _onLoadCaseComic(
       LoadCaseComic event, Emitter<CaseState> emit) async {
-    if (state is CaseAdded || state is CaseInitial) {
-      final sharedPreferences = await SharedPreferences.getInstance();
-      List<CaseComic> listCaseComicLocal = [];
-      listCaseComicLocal =
-          await _comicRepo.getListCaseComicFromLocal(sharedPreferences);
+    emit(CaseLoading());
+    final sharedPreferences = await SharedPreferences.getInstance();
+    List<CaseComic> listCaseComicLocal = [];
+    listCaseComicLocal =
+        await _comicRepo.getListCaseComicFromLocal(sharedPreferences);
+    if (listCaseComicLocal.isNotEmpty) {
       emit(CaseLoaded(listCaseComicLocal.reversed.toList()));
+    } else {
+      emit(CaseLoadError());
     }
   }
 }
