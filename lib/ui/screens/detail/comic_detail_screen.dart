@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../blocs/ads/ads_bloc.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
@@ -157,9 +158,19 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
             ),
           ),
           Container(
-              padding: EdgeInsets.only(
-                  top: SizeConfig.height10, left: SizeConfig.width20),
-              child: const BannerAD()),
+            padding: EdgeInsets.only(
+                top: SizeConfig.height10, left: SizeConfig.width20),
+            child: BlocBuilder<AdsBloc, AdsState>(
+              builder: (context, state) {
+                if (state is AdsShow) {
+                  if (state.hasError != true) {
+                    return const BannerAD();
+                  }
+                }
+                return Container();
+              },
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(top: SizeConfig.height35),
             child: NavigatorButtonScreen(

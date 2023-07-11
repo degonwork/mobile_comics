@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../blocs/ads/ads_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
@@ -28,8 +29,18 @@ class ReadScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-              child: const BannerAD()),
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+            child: BlocBuilder<AdsBloc, AdsState>(
+              builder: (context, state) {
+                if (state is AdsShow) {
+                  if (state.hasError != true) {
+                    return const BannerAD();
+                  }
+                }
+                return Container();
+              },
+            ),
+          ),
           Expanded(
             child: Stack(
               children: [
@@ -40,7 +51,7 @@ class ReadScreen extends StatelessWidget {
                       if (state is LoadingChapter) {
                         return const Center(
                           child: CircularProgressIndicator(
-                              color: AppColor.disable),
+                              color: AppColor.circular),
                         );
                       } else if (state is LoadedChapter) {
                         final listImage = state.listImageContent;

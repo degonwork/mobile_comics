@@ -5,6 +5,7 @@ import '../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../blocs/search_comic/search_comic_bloc.dart';
 import '../../../blocs/search_comic/search_comic_event.dart';
 import '../../../blocs/search_comic/search_comic_state.dart';
+import '../../../config/app_color.dart';
 import '../../../config/size_config.dart';
 import '../../widgets/back_ground_app.dart';
 import '../../widgets/text_ui.dart';
@@ -55,7 +56,9 @@ class SearchComicScreen extends StatelessWidget {
             child: BlocBuilder<SearchComicBloc, SearchComicState>(
               builder: (context, state) {
                 if (state is SearchLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator(color: AppColor.circular),
+                  );
                 } else if (state is SearchLoadded) {
                   final listComics = state.listComics;
                   if (listComics.isNotEmpty) {
@@ -189,4 +192,3 @@ class SearchComicScreen extends StatelessWidget {
     );
   }
 }
-

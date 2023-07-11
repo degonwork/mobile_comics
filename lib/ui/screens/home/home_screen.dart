@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/repository/ads_repository.dart';
+import '../../../blocs/ads/ads_bloc.dart';
 import '../view_more/new_comics_view_more/new_comics_view_more_screen.dart';
 import '../../screens/home/widgets/banner_listview.dart';
 import '../../../blocs/view_more/view_more_bloc.dart';
@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ADSRepo.loadADS();
     return Scaffold(
       body: Stack(
         children: [
@@ -25,7 +24,16 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: SizeConfig.height45),
             child: Column(
               children: [
-                const BannerAD(),
+                BlocBuilder<AdsBloc, AdsState>(
+                  builder: (context, state) {
+                    if (state is AdsShow) {
+                      if (state.hasError != true) {
+                        return const BannerAD();
+                      }
+                    }
+                    return Container();
+                  },
+                ),
                 SizedBox(height: SizeConfig.height15),
                 Expanded(
                   child: SingleChildScrollView(
