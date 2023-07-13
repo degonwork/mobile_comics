@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/ads/ads_bloc.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
@@ -75,13 +74,6 @@ class ReadScreen extends StatelessWidget {
                                       itemCount: listImage.length,
                                       itemBuilder: (context, index) {
                                         final imageUrl = listImage[index].path;
-                                        void deleteCacheNetworkImage() async {
-                                          CachedNetworkImage.evictFromCache(
-                                              imageUrl);
-                                          // var file = await DefaultCacheManager().getFileFromCache(listImage[index].path);
-                                          // var files = await DefaultCacheManager().getSingleFile(listImage[index].path);
-                                        }
-
                                         return listImage[index].height !=
                                                     null &&
                                                 listImage[index].width != null
@@ -91,12 +83,14 @@ class ReadScreen extends StatelessWidget {
                                                       SizeConfig.width10,
                                                 ),
                                                 child: CachedNetworkImage(
-                                                  cacheManager:
-                                                      CacheManager(Config(
-                                                    'customCacheKey',
-                                                    stalePeriod: const Duration(
-                                                        minutes: 10),
-                                                  )),
+                                                  cacheKey: "abc",
+                                                  // cacheManager:
+                                                  //     CacheManager(Config(
+                                                  //   'customCacheKey',
+                                                  //   stalePeriod: const Duration(
+                                                  //       minutes: 10
+                                                  // ),
+                                                  // )),
                                                   imageUrl: imageUrl,
                                                   imageBuilder:
                                                       (context, imageProvider) {
@@ -188,6 +182,7 @@ class ReadScreen extends StatelessWidget {
                 BlocBuilder<ReadChapterBloc, ReadChapterState>(
                   builder: (context, state) {
                     if (state is LoadedChapter) {
+                      final listPath = state.listImageContent;
                       if (state.currentNumeric < comic.chapters!.length) {
                         return Container(
                           margin: EdgeInsets.only(
@@ -198,13 +193,18 @@ class ReadScreen extends StatelessWidget {
                             duration: const Duration(milliseconds: 400),
                             child: NavigatorButtonScreen(
                                 icon: Icons.arrow_right_alt_outlined,
-                                onTap: () {
+                                onTap: () async {
                                   context.read<ReadChapterBloc>().add(
                                         LoadNextChapter(
                                           comic.id,
                                           state.currentNumeric,
                                         ),
                                       );
+                                  // for (var i = 0; i < listPath.length; i++) {
+                                  //   await CachedNetworkImage.evictFromCache(
+                                  //       listPath[i].path,
+                                  //       cacheKey: "abc");
+                                  // }
                                 }),
                           ),
                         );
