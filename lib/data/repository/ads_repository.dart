@@ -14,7 +14,9 @@ class ADSRepo {
             onAdFailedToLoad: (error) {}));
   }
 
-  static void showADS() {
+  static void showADS() async {
     rewardedAd!.show(onUserEarnedReward: (ad, reward) {});
+    await rewardedAd!.dispose();
+    loadADS();
   }
 }

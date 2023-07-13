@@ -31,8 +31,8 @@ class LocalNotificationService {
           ),
         ),
       );
-    } on Exception catch (e) {
-      print(e);
+    } on Exception catch (_) {
+      // Exception
     }
   }
 }

@@ -34,13 +34,11 @@ class AdsBloc extends Bloc<AdsEvent, AdsState> {
       adsTimesIn = adsTimes;
     }
     if (state is AdsShow) {
-      // print('${(state as ADsShow).adsTimes} bnxjhnxhzxhxxdhsdhdsd');
+      (state as AdsShow).adsTimes += 1;
       if ((state as AdsShow).adsTimes >= adsTimesIn &&
           (state as AdsShow).hasError != true) {
         ADSRepo.showADS();
         add(Reset());
-      } else {
-        (state as AdsShow).adsTimes += 1;
       }
     }
   }

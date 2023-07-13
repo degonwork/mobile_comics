@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../blocs/ads/ads_bloc.dart';
+import 'package:full_comics_frontend/blocs/ads/ads_bloc.dart';
 import '../../../blocs/read_chapter/read_chapter_event.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
@@ -29,18 +29,8 @@ class ReadScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-            child: BlocBuilder<AdsBloc, AdsState>(
-              builder: (context, state) {
-                if (state is AdsShow) {
-                  if (state.hasError != true) {
-                    return const BannerAD();
-                  }
-                }
-                return Container();
-              },
-            ),
-          ),
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+              child: const BannerAD()),
           Expanded(
             child: Stack(
               children: [
@@ -51,7 +41,7 @@ class ReadScreen extends StatelessWidget {
                       if (state is LoadingChapter) {
                         return const Center(
                           child: CircularProgressIndicator(
-                              color: AppColor.circular),
+                              color: AppColor.disable),
                         );
                       } else if (state is LoadedChapter) {
                         final listImage = state.listImageContent;
@@ -83,14 +73,6 @@ class ReadScreen extends StatelessWidget {
                                                       SizeConfig.width10,
                                                 ),
                                                 child: CachedNetworkImage(
-                                                  cacheKey: "abc",
-                                                  // cacheManager:
-                                                  //     CacheManager(Config(
-                                                  //   'customCacheKey',
-                                                  //   stalePeriod: const Duration(
-                                                  //       minutes: 10
-                                                  // ),
-                                                  // )),
                                                   imageUrl: imageUrl,
                                                   imageBuilder:
                                                       (context, imageProvider) {
@@ -192,20 +174,22 @@ class ReadScreen extends StatelessWidget {
                             opacity: state.visialbe ? 1.0 : 0.0,
                             duration: const Duration(milliseconds: 400),
                             child: NavigatorButtonScreen(
-                                icon: Icons.arrow_right_alt_outlined,
-                                onTap: () async {
-                                  context.read<ReadChapterBloc>().add(
-                                        LoadNextChapter(
-                                          comic.id,
-                                          state.currentNumeric,
-                                        ),
-                                      );
-                                  // for (var i = 0; i < listPath.length; i++) {
-                                  //   await CachedNetworkImage.evictFromCache(
-                                  //       listPath[i].path,
-                                  //       cacheKey: "abc");
-                                  // }
-                                }),
+                              icon: Icons.arrow_right_alt_outlined,
+                              onTap: () async {
+                                context.read<AdsBloc>().add(Increment());
+                                context.read<ReadChapterBloc>().add(
+                                      LoadNextChapter(
+                                        comic.id,
+                                        state.currentNumeric,
+                                      ),
+                                    );
+                                for (var i = 0; i < listPath.length; i++) {
+                                  await CachedNetworkImage.evictFromCache(
+                                    listPath[i].path,
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         );
                       } else {

@@ -26,7 +26,6 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     Comic comic = await _comicRepo.readComicDetailFromDB(id: event.id);
     CaseComic caseComic = await _comicRepo.getCaseComicFromLocal(comic.id);
     if (comic.isFull == 0) {
-      print("Comic not full ----------------------------");
       try {
         await _comicRepo.fetchDetailComics(id: event.id, isUpdate: true);
         comic = await _comicRepo.readComicDetailFromDB(id: event.id);
@@ -35,7 +34,6 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
         emit(ComicDetailLoadError());
       }
     } else {
-      print("Comic is full--------------------------------");
       emit(ComicDetailLoaded(comic, caseComic));
       await _comicRepo
           .fetchDetailComics(id: event.id, isUpdate: true)

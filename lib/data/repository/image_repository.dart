@@ -119,8 +119,6 @@ class ImageRepo {
     }
     if (listImageObject.isNotEmpty) {
       await HandleDatabase.createImageToDB(images: listImageObject);
-    } else {
-      print("Chapter has not content");
     }
   }
 
@@ -175,11 +173,9 @@ class ImageRepo {
           type: typeImage,
         ),
       );
-      print("$typeImage is updated");
       return imageID;
     } else if (imageID == null && imagePath != null) {
       await createImageComicToDB(listComics: [parent]);
-      print("$typeImage is created");
       return await readIDImageFromDB(
           parentId: parentDB.id, typeImage: typeImage);
     }

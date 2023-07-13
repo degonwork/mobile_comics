@@ -24,7 +24,6 @@ class GetAllCategoryBloc
     listCategories = await _categoryRepo.getAllCategoryFromDB();
     emitter(GetAllCategoryLoading());
     if (listCategories.isEmpty) {
-      print("Categories is empty --------------------");
       try {
         await _categoryRepo.getAllCategory();
         listCategories = await _categoryRepo.getAllCategoryFromDB();
@@ -32,11 +31,10 @@ class GetAllCategoryBloc
           listCategoryString.add(category.name);
         }
         emitter(GetAllCategoryLoaded(listCategoryString, 0));
-      } catch(e) {
+      } catch (e) {
         emitter(GetAllCategoryLoadError());
       }
     } else {
-      print("Categories is not empty --------------------");
       for (var category in listCategories) {
         listCategoryString.add(category.name);
       }

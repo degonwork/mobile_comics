@@ -170,7 +170,6 @@ class ComicRepo {
               Comic? comicDB = await HandleDatabase.readComicByIDFromDB(
                   id: listComicFilter[i].id);
               if (comicDB != null) {
-                print("required update ---------------------");
                 await updateHomeComic(
                   comic: listComicFilter[i],
                   comicDB: comicDB,
@@ -269,11 +268,7 @@ class ComicRepo {
   }) async {
     if (comic.reads != comicDB.reads ||
         comic.add_chapter_time != comicDB.add_chapter_time) {
-      print(
-          "${comic.id} reads or add chapter time change ----------------------------");
       if (isFullComic && comic.add_chapter_time != comicDB.add_chapter_time) {
-        print(
-            "${comic.id} comic is full add chapter time change ----------------------------");
         try {
           Comic? comicWithAddChapterTimeChange =
               await fetchDetailComics(id: comic.id, isUpdate: false);
@@ -301,8 +296,6 @@ class ComicRepo {
           //  Not found comic
         }
       } else {
-        print(
-            "${comic.id} comic is not full or full and add chapter time change or reads change");
         Comic updateComic = Comic(
           id: comic.id,
           image_detail_id: comicDB.image_detail_id,
@@ -320,11 +313,8 @@ class ComicRepo {
         );
         await HandleDatabase.updateComicToDB(comic: updateComic);
       }
-      print("Comic ${comic.id} updated reads or add_chapter_time");
     }
     if (comic.update_time != comicDB.update_time) {
-      print(
-          "Update time comic ${comic.id} is change -------------------------");
       await _categoriesComicsRepo.processCategoriesComicsToDB(
         comic: comic,
         isUpdateCategoriesComic: true,
@@ -367,10 +357,8 @@ class ComicRepo {
       );
 
       await HandleDatabase.updateComicToDB(comic: updateComic);
-      print("Comic ${comic.id} updated full");
     }
     if (isDetail) {
-      print("this is comic ${comic.id} detail");
       Comic? comicDBUpdated =
           await HandleDatabase.readComicByIDFromDB(id: comic.id);
       if (comicDBUpdated != null) {
@@ -425,7 +413,6 @@ class ComicRepo {
       isFull: 1,
     );
     await HandleDatabase.updateComicToDB(comic: updateComic);
-    print("Comic ${comic.id} detail updated with is not full");
     await _chapterRepo.createChapterToDB(comic: comic);
   }
 

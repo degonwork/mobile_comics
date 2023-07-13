@@ -12,13 +12,9 @@ class HandleDatabase {
       Comic? comic = await readComicByIDFromDB(id: listComics[i].id);
       if (comic == null) {
         await StorageDatabase.instance.createComicToDB(comic: listComics[i]);
-        print("${i + 1}: Comic created");
-      } else {
-        print("${i + 1}: Comic don't create");
       }
     }
   }
-  // print("--------------------------------"); }
 
   static Future<List<Comic>> readManyComicsFromDB() async {
     List<Comic> listComics =
@@ -50,9 +46,6 @@ class HandleDatabase {
       Chapter? chapter = await readChapterByIDFromDB(id: chapters[i].id);
       if (chapter == null) {
         await StorageDatabase.instance.createChapterToDB(chapter: chapters[i]);
-        print("${i + 1}: Chapter created");
-      } else {
-        print("${i + 1}: Chapter dont't create");
       }
     }
   }
@@ -62,10 +55,15 @@ class HandleDatabase {
         await StorageDatabase.instance.readChapterByIDFromDB(id: id);
     return chapter;
   }
-  static Future<Chapter?> readNextChapterByChapterIndex({required String comicId, required int chapterIndex})async{
-    Chapter? chapters = await StorageDatabase.instance.readChapterByChapterIndex(comicId: comicId, chapterIndex: chapterIndex + 1);
+
+  static Future<Chapter?> readNextChapterByChapterIndex(
+      {required String comicId, required int chapterIndex}) async {
+    Chapter? chapters = await StorageDatabase.instance
+        .readChapterByChapterIndex(
+            comicId: comicId, chapterIndex: chapterIndex + 1);
     return chapters;
   }
+
   static Future<void> updateChapterToDB({required Chapter chapter}) async {
     await StorageDatabase.instance.updateChapterToDB(chapter: chapter);
   }
@@ -87,9 +85,6 @@ class HandleDatabase {
       );
       if (imagesFromDB == null) {
         await StorageDatabase.instance.createImageToDB(image: images[i]);
-        print("${i + 1}: ${images[i].type} created");
-      } else {
-        print("${i + 1}: ${images[i].type} don't create");
       }
     }
   }
@@ -130,9 +125,6 @@ class HandleDatabase {
       if (createCategory == null) {
         await StorageDatabase.instance
             .createCategoryToDB(category: listCategories[i]);
-        print("Categories created");
-      } else {
-        print("Category dont create");
       }
     }
   }
@@ -166,9 +158,6 @@ class HandleDatabase {
       if (categoryComic == null) {
         await StorageDatabase.instance
             .createCategoriesComicsToDB(categoriesComics: categoriesComics[i]);
-        print("${i + 1}: CategoriesComics created");
-      } else {
-        print("${i + 1}: CategoriesComics don't create");
       }
     }
     //   print("--------------------------------");

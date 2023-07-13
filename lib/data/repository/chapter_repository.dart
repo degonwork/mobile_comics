@@ -20,8 +20,7 @@ class ChapterRepo {
         _apiClient = apiClient,
         _imageRepo = imageRepo;
   //  Fetch Api
-  Future<void> fetchDetailChapters(
-      {required String id}) async {
+  Future<void> fetchDetailChapters({required String id}) async {
     Chapter? chapterAPi;
     try {
       Response response = await _apiClient.getData('$_chapterUrl$id');
@@ -29,28 +28,27 @@ class ChapterRepo {
         dynamic jsonResponse = jsonDecode(response.body);
         if (jsonResponse != null) {
           chapterAPi = Chapter.fromJson(jsonResponse);
-            Chapter? chapterDB =
-                await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
-            if (chapterDB != null) {
-              if (chapterDB.isFull == 0) {
-                await updateChapterDetail(
+          Chapter? chapterDB =
+              await HandleDatabase.readChapterByIDFromDB(id: chapterAPi.id);
+          if (chapterDB != null) {
+            if (chapterDB.isFull == 0) {
+              await updateChapterDetail(
+                chapter: chapterAPi,
+                isFullChapter: false,
+                chapterDB: chapterDB,
+              );
+            } else {
+              await updateChapterDetail(
                   chapter: chapterAPi,
-                  isFullChapter: false,
-                  chapterDB: chapterDB,
-                );
-              } else {
-                await updateChapterDetail(
-                    chapter: chapterAPi,
-                    isFullChapter: true,
-                    chapterDB: chapterDB);
-              }
+                  isFullChapter: true,
+                  chapterDB: chapterDB);
             }
           }
         }
+      }
     } catch (e) {
-     throw Exception("Chapter not found");
+      throw Exception("Chapter not found");
     }
-
   }
 
   // process database
@@ -79,8 +77,6 @@ class ChapterRepo {
         );
       }
       await HandleDatabase.createChapterToDB(chapters: listChapters);
-    } else {
-      print("Comic has not Chapters");
     }
   }
 
@@ -100,8 +96,6 @@ class ChapterRepo {
   }) async {
     if (isFullComic &&
         comic.chapter_update_time != comicDB.chapter_update_time) {
-      print(
-          "Comic ${comic.id} chapter update time change ---------------------------");
       if (comic.chapters!.isNotEmpty) {
         for (Chapter chapter in comic.chapters!) {
           Chapter? chapterDB =
@@ -125,11 +119,7 @@ class ChapterRepo {
               isFull: chapterDB.isFull,
               publish_date: chapterDB.publish_date,
             );
-            print(
-                "chapter isFull ${updateChapter.isFull} ------------------------");
             await HandleDatabase.updateChapterToDB(chapter: updateChapter);
-            print(
-                "update chapter in comic detail ----------------------------------");
             Comic updateComic = Comic(
               id: comic.id,
               image_detail_id: comicDB.image_detail_id,
@@ -146,8 +136,6 @@ class ChapterRepo {
               isFull: isFullComic ? 1 : 0,
             );
             await HandleDatabase.updateComicToDB(comic: updateComic);
-            print(
-                "Comic update when chapter update time change -------------------------------");
           }
         }
       }
@@ -160,7 +148,6 @@ class ChapterRepo {
     required Chapter chapterDB,
   }) async {
     if (!isFullChapter) {
-      print("chapter is not full--------------------------------");
       await _imageRepo.createImageChapterContentToDB(chapter: chapter);
       String? imageThumnailId = await _imageRepo.createOrUpdateImage(
         imageID: chapterDB.image_thumnail_id,
@@ -182,10 +169,7 @@ class ChapterRepo {
       );
       await HandleDatabase.updateChapterToDB(chapter: updateChapter);
     } else {
-      print(
-          "Chapter is full in chapter repo----------------------------------------");
       if (chapter.content_update_time != chapterDB.content_update_time) {
-        print("Chapter content is change -----------------------------");
         await updateChapterContent(chapter: chapter);
         Chapter updateChapter = Chapter(
           id: chapter.id,
@@ -199,11 +183,8 @@ class ChapterRepo {
           isFull: 1,
         );
         await HandleDatabase.updateChapterToDB(chapter: updateChapter);
-        print(
-            "update content and update chapter ------------------------------------");
       }
       if (chapter.update_time != chapterDB.update_time) {
-        print("Chapter update time is change -----------------------------");
         String? imageThumnailId = await _imageRepo.createOrUpdateImage(
           imageID: chapterDB.image_thumnail_id,
           imagePath: chapter.image_thumnail_path,
@@ -223,8 +204,6 @@ class ChapterRepo {
           isFull: 1,
         );
         await HandleDatabase.updateChapterToDB(chapter: updateChapter);
-        print(
-            "update chapter with update time change---------------------------");
       }
     }
   }
@@ -234,10 +213,8 @@ class ChapterRepo {
         await _imageRepo.readImageChapterContent(chapterId: chapter.id);
     if (imageChapterContents.isNotEmpty) {
       await _imageRepo.deleteImageChapterContent(chapter: chapter);
-      print("deleted content");
     }
     await _imageRepo.createImageChapterContentToDB(chapter: chapter);
-    print("Repaired content");
   }
 
   Future<List<Image>> readChapterContentFromDB(

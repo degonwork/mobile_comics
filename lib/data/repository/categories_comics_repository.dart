@@ -21,12 +21,10 @@ class CategoriesComicsRepo {
         await HandleDatabase.deleteAllCategoriesComicsByComicIDFromDB(
           comicID: comic.id,
         );
-        print("deleted CategoriesComics with comicId: ${comic.id}");
       }
     }
     List<CategoriesComics> listCategoriesComics = [];
     if (comic.categories!.isNotEmpty) {
-      print("abc------------------------------------------");
       for (var i = 0; i < comic.categories!.length; i++) {
         Category? category = await _categoryRepo.readCategoryByNameFromDB(
             name: comic.categories![i]);
