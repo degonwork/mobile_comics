@@ -116,15 +116,16 @@ class ListChapter extends StatelessWidget {
   }
 
   int _checkPositionScroll(int position, List<Chapter> chapters) {
-    if (chapters.length <= 6) {
+    if (chapters.length <= 5) {
       position = 0;
     } else {
-      if (position < 6 ||
-          position == 6 && 6 <= chapters.length - 5 ||
-          position > 6 && position < chapters.length - 5) {
+      if (position <= 2 ||
+          position < chapters.length - 3 && position > 2 ||
+          position == 5 && 5 <= chapters.length - 5 ||
+          position > 5 && position < chapters.length - 5) {
         position = position - 1;
       } else {
-        position = chapters.length - 6;
+        position = chapters.length - 5;
       }
     }
     return position;

@@ -40,7 +40,7 @@ class GridviewComics extends StatelessWidget {
                 onTap: () {
                   context
                       .read<ComicDetailBloc>()
-                      .add(LoadDetailComic(listComics[index].id));
+                      .add(LoadDetailComic(listComics[index].id, false));
                   Navigator.pushNamed(context, ComicDetailScreen.routeName);
                 },
                 child: Column(

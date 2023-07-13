@@ -36,7 +36,8 @@ class BannerListview extends StatelessWidget {
                           return GestureDetector(
                             onTap: () {
                               context.read<ComicDetailBloc>().add(
-                                  LoadDetailComic(listHotComics[index].id));
+                                  LoadDetailComic(
+                                      listHotComics[index].id, false));
                               Navigator.pushNamed(
                                   context, ComicDetailScreen.routeName);
                             },

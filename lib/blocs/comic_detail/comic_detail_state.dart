@@ -14,11 +14,10 @@ class ComicDetailLoading extends ComicDetailState {}
 class ComicDetailLoaded extends ComicDetailState {
   final Comic comic;
   final CaseComic caseComic;
-  const ComicDetailLoaded(this.comic, this.caseComic);
+  final int index;
+  const ComicDetailLoaded(this.comic, this.caseComic, this.index);
   @override
-  List<Object> get props => [comic, caseComic];
+  List<Object> get props => [comic, caseComic, index];
 }
 
 class ComicDetailLoadError extends ComicDetailState {}
-
-

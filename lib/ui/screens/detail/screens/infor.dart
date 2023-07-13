@@ -17,102 +17,99 @@ class Infor extends StatelessWidget {
   final CaseComic caseComic;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: SizeConfig.height5),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: ItemInfor(
-                        icon: Icons.remove_red_eye,
-                        titleItem: AppLocalizations.of(context)!.numberReads,
-                        contentItem: comic.reads.toString(),
-                      ),
-                    ),
-                    SizedBox(width: SizeConfig.width10),
-                    Expanded(
-                      flex: 1,
-                      child: ItemInfor(
-                        icon: Icons.star,
-                        titleItem: AppLocalizations.of(context)!.evaluate,
-                        contentItem: AppConstant.evaluate,
-                      ),
-                    ),
-                    SizedBox(width: SizeConfig.width10),
-                    Expanded(
-                      flex: 1,
-                      child: ItemInfor(
-                        icon: Icons.library_books,
-                        titleItem: AppLocalizations.of(context)!.totalChapters,
-                        contentItem: comic.chapters!.isNotEmpty
-                            ? comic.chapters!.length.toString()
-                            : "",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Divider(thickness: 1),
-            SizedBox(
-              height: SizeConfig.screenHeight / 10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: SizeConfig.height5),
+              child: Row(
                 children: [
-                  TextUi(
-                    text: AppLocalizations.of(context)!.genreComics,
-                    color: AppColor.titleContentColor,
-                    fontSize: SizeConfig.font20,
-                  ),
-                  SizedBox(height: SizeConfig.height10),
                   Expanded(
-                    child: comic.categories!.isNotEmpty
-                        ? ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => GenreComic(
-                              listCategories: comic.categories!,
-                              index: index,
-                              color: AppColor.backGroundGenreComicColor,
-                            ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(width: 0),
-                            itemCount: comic.categories!.length,
-                          )
-                        : Container(),
+                    flex: 1,
+                    child: ItemInfor(
+                      icon: Icons.remove_red_eye,
+                      titleItem: AppLocalizations.of(context)!.numberReads,
+                      contentItem: comic.reads.toString(),
+                    ),
+                  ),
+                  SizedBox(width: SizeConfig.width10),
+                  Expanded(
+                    flex: 1,
+                    child: ItemInfor(
+                      icon: Icons.star,
+                      titleItem: AppLocalizations.of(context)!.evaluate,
+                      contentItem: AppConstant.evaluate,
+                    ),
+                  ),
+                  SizedBox(width: SizeConfig.width10),
+                  Expanded(
+                    flex: 1,
+                    child: ItemInfor(
+                      icon: Icons.library_books,
+                      titleItem: AppLocalizations.of(context)!.totalChapters,
+                      contentItem: comic.chapters!.isNotEmpty
+                          ? comic.chapters!.length.toString()
+                          : "",
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: SizeConfig.height10),
-            const Divider(thickness: 1),
-            TextUi(
-              text: AppLocalizations.of(context)!.describe,
-              color: AppColor.titleContentColor,
-              fontSize: SizeConfig.font20,
-            ),
-            SizedBox(height: SizeConfig.height10),
-            SizedBox(
-              height: SizeConfig.height120,
-              child: SingleChildScrollView(
-                child: Descreption(
-                  maxLines: 2,
-                  text: comic.description,
+          ),
+          const Divider(thickness: 1),
+          SizedBox(
+            height: SizeConfig.screenHeight / 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextUi(
+                  text: AppLocalizations.of(context)!.genreComics,
+                  color: AppColor.titleContentColor,
+                  fontSize: SizeConfig.font20,
                 ),
+                SizedBox(height: SizeConfig.height10),
+                Expanded(
+                  child: comic.categories!.isNotEmpty
+                      ? ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => GenreComic(
+                            listCategories: comic.categories!,
+                            index: index,
+                            color: AppColor.backGroundGenreComicColor,
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 0),
+                          itemCount: comic.categories!.length,
+                        )
+                      : Container(),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: SizeConfig.height10),
+          const Divider(thickness: 1),
+          TextUi(
+            text: AppLocalizations.of(context)!.describe,
+            color: AppColor.titleContentColor,
+            fontSize: SizeConfig.font20,
+          ),
+          SizedBox(height: SizeConfig.height10),
+          SizedBox(
+            height: SizeConfig.height120,
+            child: SingleChildScrollView(
+              child: Descreption(
+                maxLines: 2,
+                text: comic.description,
               ),
             ),
-            SizedBox(
-              height: SizeConfig.height20,
-            ),
-            _loadReadButton(context, caseComic),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: SizeConfig.height20,
+          ),
+          _loadReadButton(context, caseComic),
+        ],
       ),
     );
   }

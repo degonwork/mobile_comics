@@ -18,49 +18,48 @@ class Reading extends StatelessWidget {
       builder: (context, state) {
         if (state is CaseLoading) {
           return const Center(
-              child:
-              CircularProgressIndicator(color: AppColor.circular));
+              child: CircularProgressIndicator(color: AppColor.circular));
         }
         if (state is CaseLoaded) {
           final listCaseComic = state.listCaseComic;
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width15),
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: listCaseComic.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: index == listCaseComic.length - 1
-                            ? EdgeInsets.only(
-                                bottom: SizeConfig.height20,
-                              )
-                            : const EdgeInsets.only(bottom: 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<ComicDetailBloc>().add(
-                                LoadDetailComic(listCaseComic[index].comicId));
-                            Navigator.pushNamed(
-                                context, ComicDetailScreen.routeName);
-                          },
-                          child: CaseInfor(
-                            imageSquare: listCaseComic[index]
-                                .imageThumnailSquareComicPath,
-                            title: listCaseComic[index].titleComic,
-                            reads: listCaseComic[index].reads,
-                            numericChapter: listCaseComic[index].numericChapter,
-                          ),
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width15),
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: listCaseComic.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: index == listCaseComic.length - 1
+                          ? EdgeInsets.only(
+                              bottom: SizeConfig.height20,
+                            )
+                          : const EdgeInsets.only(bottom: 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          context.read<ComicDetailBloc>().add(LoadDetailComic(
+                              listCaseComic[index].comicId, false));
+                          Navigator.pushNamed(
+                              context, ComicDetailScreen.routeName);
+                        },
+                        child: CaseInfor(
+                          imageSquare:
+                              listCaseComic[index].imageThumnailSquareComicPath,
+                          title: listCaseComic[index].titleComic,
+                          reads: listCaseComic[index].reads,
+                          numericChapter: listCaseComic[index].numericChapter,
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: SizeConfig.height20,
-                        )),
-              ),
-            );
-          }
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => SizedBox(
+                        height: SizeConfig.height20,
+                      )),
+            ),
+          );
+        }
         return Center(
           child: TextUi(
             text: AppLocalizations.of(context)!.empty,

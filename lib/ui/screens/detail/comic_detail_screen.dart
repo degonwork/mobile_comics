@@ -15,33 +15,13 @@ import '../router/router_screen.dart';
 import 'screens/chapter.dart';
 import 'screens/infor.dart';
 
-class ComicDetailScreen extends StatefulWidget {
+class ComicDetailScreen extends StatelessWidget {
   const ComicDetailScreen({super.key});
 
   static const String routeName = '/comic-detail';
 
   @override
-  State<ComicDetailScreen> createState() => _ComicDetailScreenState();
-}
-
-class _ComicDetailScreenState extends State<ComicDetailScreen>
-    with TickerProviderStateMixin {
-  late List<Tab> tabs = [];
-  late TabController _tabController;
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    List<Tab> tabs = <Tab>[
-      Tab(text: AppLocalizations.of(context)!.inforComics),
-      Tab(text: AppLocalizations.of(context)!.chapters),
-    ];
-    _tabController = TabController(length: tabs.length, vsync: this);
     return Scaffold(
       body: Stack(
         children: [
@@ -79,7 +59,7 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                           ),
                           backgroundColor: Colors.transparent,
                           pinned: true,
-                          expandedHeight: SizeConfig.height180,
+                          expandedHeight: SizeConfig.height160,
                           flexibleSpace: FlexibleSpaceBar(
                             background: comic.image_detail_path != null
                                 ? CachedNetworkImage(
@@ -104,40 +84,85 @@ class _ComicDetailScreenState extends State<ComicDetailScreen>
                         SliverList(
                           delegate: SliverChildListDelegate(
                             [
-                              SizedBox(
-                                height: SizeConfig.height45,
-                                child: TabBar(
-                                  indicatorColor:
-                                      AppColor.brownColor.withOpacity(0.2),
-                                  indicatorWeight: SizeConfig.width1,
-                                  controller: _tabController,
-                                  tabs: tabs,
-                                  unselectedLabelColor:
-                                      AppColor.unSelectTitleColor,
-                                  labelColor: AppColor.selectTitleColor,
-                                ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      context.read<ComicDetailBloc>().add(
+                                          const SetStateComicDetailIndex(0));
+                                    },
+                                    child: SizedBox(
+                                      width: SizeConfig.screenWidth / 2,
+                                      height: SizeConfig.height55,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: SizeConfig.height10),
+                                          TextUi(
+                                            text: AppLocalizations.of(context)!
+                                                .inforComics,
+                                            fontSize: SizeConfig.font16,
+                                            color: state.index == 0
+                                                ? AppColor.buttonTextSelectColor
+                                                : AppColor.unSelectTitleColor,
+                                          ),
+                                          SizedBox(height: SizeConfig.height5),
+                                          Divider(
+                                            color: state.index == 0
+                                                ? AppColor.brownColor
+                                                    .withOpacity(0.5)
+                                                : Colors.transparent,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      context.read<ComicDetailBloc>().add(
+                                          const SetStateComicDetailIndex(1));
+                                    },
+                                    child: SizedBox(
+                                      width: SizeConfig.screenWidth / 2,
+                                      height: SizeConfig.height55,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: SizeConfig.height10),
+                                          TextUi(
+                                            text: AppLocalizations.of(context)!
+                                                .chapters,
+                                            fontSize: SizeConfig.font16,
+                                            color: state.index == 1
+                                                ? AppColor.buttonTextSelectColor
+                                                : AppColor.unSelectTitleColor,
+                                          ),
+                                          SizedBox(height: SizeConfig.height5),
+                                          Divider(
+                                            color: state.index == 1
+                                                ? AppColor.brownColor
+                                                    .withOpacity(0.5)
+                                                : Colors.transparent,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                               SizedBox(
-                                height: SizeConfig.height435,
+                                height: SizeConfig.height420,
                                 child: Container(
-                                  margin:
-                                      EdgeInsets.only(top: SizeConfig.height5),
                                   padding: EdgeInsets.symmetric(
                                     horizontal: SizeConfig.width15,
                                   ),
-                                  child: TabBarView(
-                                    controller: _tabController,
-                                    children: [
-                                      Infor(
-                                        comic: comic,
-                                        caseComic: caseComic,
-                                      ),
-                                      ListChapter(
-                                        comic: comic,
-                                        caseComic: caseComic,
-                                      ),
-                                    ],
-                                  ),
+                                  child: state.index == 0
+                                      ? Infor(
+                                          comic: comic,
+                                          caseComic: caseComic,
+                                        )
+                                      : ListChapter(
+                                          comic: comic,
+                                          caseComic: caseComic,
+                                        ),
                                 ),
                               )
                             ],

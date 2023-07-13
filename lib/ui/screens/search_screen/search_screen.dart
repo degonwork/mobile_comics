@@ -80,7 +80,7 @@ class SearchComicScreen extends StatelessWidget {
                                     onTap: () {
                                       context.read<ComicDetailBloc>().add(
                                           LoadDetailComic(
-                                              listComics[index].id));
+                                              listComics[index].id, false));
                                       Navigator.pushNamed(
                                           context, ComicDetailScreen.routeName);
                                     },
