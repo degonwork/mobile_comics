@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/ui/screens/router/router_screen.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';
-import '../ui/screens/splash/splash_screen.dart';
 import '../data/providers/api/api_client.dart';
 import '../config/app_constant.dart';
 import '../data/repository/comic_repository.dart';
@@ -28,13 +28,13 @@ import 'config/size_config.dart';
 import 'l10n/l10n.dart';
 
 Future<void> main() async {
+  await Future.delayed(const Duration(milliseconds: 1000));
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ),
   );
-  await Future.delayed(const Duration(milliseconds: 1000));
   runApp(const MyApp());
 }
 
@@ -138,7 +138,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => AdsBloc(),
+            create: (context) => AdsBloc()..add(LoadAds()),
           ),
         ],
         child: MaterialApp(
@@ -153,8 +153,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: "Raleway",
           ),
-          title: 'Flutter Demo',
-          initialRoute: SplashScreen.routeName,
+          title: 'Làng Truyện',
+          initialRoute: RouterScreen.routeName,
           routes: AppRouter.routes,
         ),
       ),

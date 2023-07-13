@@ -22,10 +22,11 @@ class NewComicViewMoreScreen extends StatelessWidget {
           const BackGroundApp(),
           Padding(
             padding: EdgeInsets.only(
-                top: SizeConfig.height45,
-                left: SizeConfig.width15,
-                right: SizeConfig.width15,
-                bottom: SizeConfig.height10),
+              top: SizeConfig.height45,
+              left: SizeConfig.width15,
+              right: SizeConfig.width15,
+              bottom: SizeConfig.height10,
+            ),
             child: Column(
               children: [
                 CustomAppbar(
@@ -46,8 +47,10 @@ class NewComicViewMoreScreen extends StatelessWidget {
                   builder: (context, state) {
                     if (state is ViewMoreLoading) {
                       return const Center(
-                          child: CircularProgressIndicator(
-                              color: AppColor.circular));
+                        child: CircularProgressIndicator(
+                          color: AppColor.circular,
+                        ),
+                      );
                     }
                     if (state is ViewMoreLoaded) {
                       final listNewComicsViewMore = state.listNewComicsViewMore;

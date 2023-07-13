@@ -6,6 +6,9 @@ abstract class AdsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-class Increment extends AdsEvent{
-}
-class Reset extends AdsEvent{}
+
+class LoadAds extends AdsEvent {}
+
+class Increment extends AdsEvent {}
+
+class Reset extends AdsEvent {}
