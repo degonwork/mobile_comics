@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import '../../../widgets/text_ui.dart';
 
 class Descreption extends StatefulWidget {
   const Descreption({super.key, required this.maxLines, required this.text});

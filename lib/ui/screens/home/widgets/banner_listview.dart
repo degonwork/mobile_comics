@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/ui/widgets/text_ui.dart';
+import '../../../../ui/widgets/text_ui.dart';
 import '../../../../blocs/home/home_bloc.dart';
 import '../../../../config/app_color.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';

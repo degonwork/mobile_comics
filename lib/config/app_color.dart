@@ -24,7 +24,6 @@ class AppColor {
   );
 
   // title
-  static const titleSplashColor = whiteColor;
   static const titleSelectColor = blackColor;
   static const titleComicColor = whiteColor;
   static const titleContentColor = whiteColor;
@@ -32,7 +31,6 @@ class AppColor {
 
   // content
   static const contentInforColor = brownColor;
-  static const contentDecripberColor = blackColor;
   static const contentButtonColor = whiteColor;
   static const caseReadsColor = yellowColor;
   static const genreComicColor = blackColor;
@@ -51,13 +49,9 @@ class AppColor {
 
   // background widget
   static const navbarColor = blueAccentColor;
-  static const backGroundIconBackColor = whiteColor;
   static const backGroundIconInforColor = violetColor;
   static const backGroundGenreComicColor = yellowColor;
-  static const backGroundButtonColor = redColor;
 
   // circular
   static const circular = yellowColor;
-  // disable
-  static const disable = Colors.grey;
 }

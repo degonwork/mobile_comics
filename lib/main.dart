@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/ui/screens/router/router_screen.dart';
+import '../ui/screens/router/router_screen.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
 import '../data/repository/image_repository.dart';

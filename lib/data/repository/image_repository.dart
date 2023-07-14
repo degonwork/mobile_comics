@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'package:full_comics_frontend/config/size_config.dart';
-import 'package:full_comics_frontend/data/providers/api/api_client.dart';
+import '../../config/size_config.dart';
+import '../../data/providers/api/api_client.dart';
 import '.././models/comic_model.dart';
 import '.././providers/database/handle_database.dart';
 import '../../config/app_constant.dart';
