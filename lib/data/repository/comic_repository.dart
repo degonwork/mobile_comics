@@ -526,8 +526,6 @@ class ComicRepo {
       comic,
       imageThumnailSquare: imageThumnailSquare,
       imageThumnailRectangle: imageThumnailRectangle,
-      id: comic.id,
-      isFull: comic.isFull,
     );
   }
 
@@ -565,8 +563,6 @@ class ComicRepo {
       imageThumnailSquare: imageThumnailSquare,
       listChapters: listChaptersFilter,
       listCategories: listCategories,
-      id: comic.id,
-      isFull: comic.isFull,
     );
   }
 

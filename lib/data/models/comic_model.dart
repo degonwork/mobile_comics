@@ -140,8 +140,6 @@ class Comic {
     Image? imageDetail,
     Image? imageThumnailSquare,
     Image? imageThumnailRectangle,
-    required String id,
-    required int isFull,
   }) {
     return Comic(
       id: comic.id,
