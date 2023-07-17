@@ -129,6 +129,7 @@ class ReadScreen extends StatelessWidget {
                 BlocBuilder<ReadChapterBloc, ReadChapterState>(
                   builder: (context, state) {
                     if (state is LoadedChapter) {
+                      final listPath = state.listImageContent;
                       return Container(
                         margin: EdgeInsets.only(top: SizeConfig.height5),
                         child: AnimatedOpacity(
@@ -136,7 +137,7 @@ class ReadScreen extends StatelessWidget {
                           duration: const Duration(milliseconds: 400),
                           child: NavigatorButtonScreen(
                             icon: Icons.arrow_back_ios_outlined,
-                            onTap: () {
+                            onTap: () async{
                               context.read<CaseBloc>().add(
                                     AddCaseComic(
                                       chapterId: state.chapterId,
@@ -153,6 +154,9 @@ class ReadScreen extends StatelessWidget {
                                   .add(LoadDetailComic(comic.id, true));
                               Navigator.pushNamed(
                                   context, ComicDetailScreen.routeName);
+                              for (var i = 0; i < listPath.length; i++) {
+                                await CachedNetworkImage.evictFromCache(listPath[i].path);
+                              }    
                             },
                           ),
                         ),
