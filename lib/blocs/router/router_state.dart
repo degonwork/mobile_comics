@@ -6,8 +6,6 @@ class RouterState extends Equatable {
   List<Object> get props => [];
 }
 
-class RouterLoading extends RouterState {}
-
 class RouterLoaded extends RouterState {
   final Widget currentScreen;
   final int navigatorValue;

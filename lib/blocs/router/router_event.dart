@@ -13,7 +13,7 @@ class ResetBottomNavBar extends RouterEvent {
   const ResetBottomNavBar(this.currentScreen, this.navigatiorValue);
 
   @override
-  List<Object> get props => [currentScreen];
+  List<Object> get props => [currentScreen, navigatiorValue];
 }
 
 class ChangeBottomNavBar extends RouterEvent {
@@ -23,7 +23,7 @@ class ChangeBottomNavBar extends RouterEvent {
   const ChangeBottomNavBar(this.currentScreen, this.navigatiorValue);
 
   @override
-  List<Object> get props => [currentScreen];
+  List<Object> get props => [currentScreen, navigatiorValue];
 }
 
 class SetRouterScreen extends RouterEvent {
