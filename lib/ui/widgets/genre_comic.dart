@@ -21,7 +21,7 @@ class GenreComic extends StatelessWidget {
       width: SizeConfig.width100,
       margin: index != listCategories.length - 1
           ? EdgeInsets.only(
-              right: SizeConfig.width10,
+              right: SizeConfig.width15,
             )
           : const EdgeInsets.only(right: 0),
       decoration: BoxDecoration(

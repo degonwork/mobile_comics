@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../../ui/widgets/text_ui.dart';
 import '../../../../blocs/get_all_category/get_all_category_event.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
@@ -20,38 +21,35 @@ class AllCategory extends StatelessWidget {
       builder: (context, state) {
         if (state is GetAllCategoryLoading) {
           return const Center(
-              child:
-              CircularProgressIndicator(color: AppColor.circular));
+              child: CircularProgressIndicator(color: AppColor.circular));
         }
         if (state is GetAllCategoryLoaded) {
           final listCategories = state.listCategories;
+          final index = state.index;
           if (listCategories.isNotEmpty) {
             return SizedBox(
               height: SizeConfig.height40,
-              child: ListView(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
+              child: ScrollablePositionedList.builder(
+                initialScrollIndex: _checkPositionScroll(index, listCategories),
                 scrollDirection: Axis.horizontal,
-                children: List.generate(
-                    listCategories.length,
-                    (index) => InkWell(
-                          onTap: () {
-                            context
-                                .read<GetAllCategoryBloc>()
-                                .add(SetStateCategoryIndex(index));
-                            context.read<FilterComicBloc>().add(
-                                  FilterByIDCategory(listCategories[index]),
-                                );
-                          },
-                          child: GenreComic(
-                            listCategories: listCategories,
-                            index: index,
-                            color: state.index == index
-                                ? AppColor.selectItemGenreComicColor
-                                : AppColor.unSelectItemGenreComicolor
-                                    .withOpacity(0.9),
-                          ),
-                        )),
+                itemCount: listCategories.length,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    context
+                        .read<GetAllCategoryBloc>()
+                        .add(SetStateCategoryIndex(index));
+                    context.read<FilterComicBloc>().add(
+                          FilterByIDCategory(listCategories[index]),
+                        );
+                  },
+                  child: GenreComic(
+                    listCategories: listCategories,
+                    index: index,
+                    color: state.index == index
+                        ? AppColor.selectItemGenreComicColor
+                        : AppColor.unSelectItemGenreComicolor.withOpacity(0.9),
+                  ),
+                ),
               ),
             );
           }
@@ -65,5 +63,15 @@ class AllCategory extends StatelessWidget {
         );
       },
     );
+  }
+
+  int _checkPositionScroll(int position, List<String> listCategoires) {
+    if (position == 0) {
+      return position;
+    } else if (position > listCategoires.length - 2) {
+      return position - 2;
+    } else {
+      return position - 1;
+    }
   }
 }
