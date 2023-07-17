@@ -12,9 +12,11 @@ class GridviewComics extends StatelessWidget {
   const GridviewComics({
     super.key,
     required this.listComics,
+    required this.routerNameTap,
   });
 
   final List<Comic> listComics;
+  final Function routerNameTap;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class GridviewComics extends StatelessWidget {
                       .read<ComicDetailBloc>()
                       .add(LoadDetailComic(listComics[index].id, false));
                   Navigator.pushNamed(context, ComicDetailScreen.routeName);
+                  routerNameTap();
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../ui/screens/router/router_screen.dart';
+import '../../../../blocs/router/router_bloc.dart';
 import '../../../../ui/widgets/text_ui.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_bloc.dart';
 import '../../../../blocs/filter_comic_by_category/filter_comic_state.dart';
@@ -27,7 +29,13 @@ class ComicByCategory extends StatelessWidget {
           if (state is ComicByCategoryLoaded) {
             final listComicsFilter = state.listComics;
             if (listComicsFilter.isNotEmpty) {
-              return GridviewComics(listComics: listComicsFilter);
+              return GridviewComics(
+                  listComics: listComicsFilter,
+                  routerNameTap: () {
+                    context.read<RouterBloc>().add(
+                          const SetRouterScreen(RouterScreen.routeName),
+                        );
+                  });
             }
           }
           return TextUi(

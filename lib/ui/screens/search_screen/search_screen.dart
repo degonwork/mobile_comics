@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:full_comics_frontend/ui/screens/router/router_screen.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../blocs/router/router_bloc.dart';
 import '../../../blocs/search_comic/search_comic_bloc.dart';
 import '../../../blocs/search_comic/search_comic_event.dart';
 import '../../../blocs/search_comic/search_comic_state.dart';
@@ -20,6 +22,12 @@ class SearchComicScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(
+            onTap: () => Navigator.pushNamed(context, RouterScreen.routeName),
+            child: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              size: SizeConfig.icon20,
+            )),
         backgroundColor: Colors.blue.withOpacity(0.7),
         title: Container(
           width: double.infinity,
@@ -83,6 +91,10 @@ class SearchComicScreen extends StatelessWidget {
                                               listComics[index].id, false));
                                       Navigator.pushNamed(
                                           context, ComicDetailScreen.routeName);
+                                      context.read<RouterBloc>().add(
+                                            const SetRouterScreen(
+                                                SearchComicScreen.routeName),
+                                          );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

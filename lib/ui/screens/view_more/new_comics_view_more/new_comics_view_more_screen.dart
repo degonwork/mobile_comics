@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../blocs/router/router_bloc.dart';
 import '../../../../ui/widgets/text_ui.dart';
 import '../../../../blocs/view_more/view_more_bloc.dart';
 import '../../../../config/app_color.dart';
@@ -8,6 +9,7 @@ import '../../../../config/size_config.dart';
 import '../../../widgets/custom_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../widgets/gridview_comics.dart';
+import '../../router/router_screen.dart';
 
 class NewComicViewMoreScreen extends StatelessWidget {
   const NewComicViewMoreScreen({super.key});
@@ -33,7 +35,7 @@ class NewComicViewMoreScreen extends StatelessWidget {
                   text: AppLocalizations.of(context)!.newComics,
                   iconleftWidget: InkWell(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, RouterScreen.routeName);
                     },
                     child: Icon(
                       Icons.arrow_back_ios_new_outlined,
@@ -55,8 +57,16 @@ class NewComicViewMoreScreen extends StatelessWidget {
                     if (state is ViewMoreLoaded) {
                       final listNewComicsViewMore = state.listNewComicsViewMore;
                       return Expanded(
-                        child:
-                            GridviewComics(listComics: listNewComicsViewMore),
+                        child: GridviewComics(
+                          listComics: listNewComicsViewMore,
+                          routerNameTap: () {
+                            context.read<RouterBloc>().add(
+                                  const SetRouterScreen(
+                                    NewComicViewMoreScreen.routeName,
+                                  ),
+                                );
+                          },
+                        ),
                       );
                     }
                     return Center(

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../ui/screens/router/router_screen.dart';
 import '../../../blocs/ads/ads_bloc.dart';
+import '../../../blocs/router/router_bloc.dart';
 import '../../../config/app_color.dart';
 import '../../../ui/widgets/build_ads_banner.dart';
 import '../../../blocs/comic_detail/comic_detail_bloc.dart';
@@ -11,7 +13,6 @@ import '../../widgets/back_ground_app.dart';
 import '../../../config/size_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/text_ui.dart';
-import '../router/router_screen.dart';
 import 'screens/chapter.dart';
 import 'screens/infor.dart';
 
@@ -198,11 +199,24 @@ class ComicDetailScreen extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: SizeConfig.height35),
-            child: NavigatorButtonScreen(
-                icon: Icons.arrow_back_ios_outlined,
-                onTap: () {
-                  Navigator.pushNamed(context, RouterScreen.routeName);
-                }),
+            child: BlocBuilder<RouterBloc, RouterState>(
+              builder: (context, state) {
+                if (state is RouterLoaded) {
+                  return NavigatorButtonScreen(
+                    icon: Icons.arrow_back_ios_outlined,
+                    onTap: () {
+                      Navigator.pushNamed(context, state.routerScreen);
+                    },
+                  );
+                }
+                return NavigatorButtonScreen(
+                  icon: Icons.arrow_back_ios_outlined,
+                  onTap: () {
+                    Navigator.pushNamed(context, RouterScreen.routeName);
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),

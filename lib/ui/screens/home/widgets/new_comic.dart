@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../ui/screens/router/router_screen.dart';
+import '../../../../blocs/router/router_bloc.dart';
 import '../../../../ui/widgets/text_ui.dart';
 import '../../../../config/app_color.dart';
 import '../../../../blocs/home/home_bloc.dart';
@@ -23,7 +25,14 @@ class NewComic extends StatelessWidget {
           if (listNewComics.isNotEmpty) {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: SizeConfig.width15),
-              child: GridviewComics(listComics: listNewComics),
+              child: GridviewComics(
+                listComics: listNewComics,
+                routerNameTap: () {
+                  context.read<RouterBloc>().add(
+                        const SetRouterScreen(RouterScreen.routeName),
+                      );
+                },
+              ),
             );
           }
         }

@@ -4,9 +4,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../../blocs/bottom_navbar/bottom_navbar_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../config/app_color.dart';
+import '../../../config/size_config.dart';
+import '../../../ui/widgets/text_ui.dart';
 import '../../../blocs/case/case_bloc.dart';
+import '../../../blocs/get_all_category/get_all_category_bloc.dart';
+import '../../../blocs/get_all_category/get_all_category_state.dart';
 import '../../../blocs/home/home_bloc.dart';
+import '../../../blocs/router/router_bloc.dart';
 import '../../../data/providers/firebase/notification/firebase_messaging_service.dart';
 import '../../../data/providers/firebase/notification/local_notification_service.dart';
 import '../case/case_screen.dart';
@@ -73,21 +79,54 @@ class _RouterScreenState extends State<RouterScreen> {
 
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return BlocBuilder<BottomNavbarBloc, BottomNavbarState>(
+        return BlocBuilder<GetAllCategoryBloc, GetAllCategoryState>(
           builder: (context, state) {
-            return Scaffold(
-              body: state.currentScreen,
-              bottomNavigationBar: BottomNavbar(
-                currentIndex: state.navigatorValue,
-                onTap: (int value) {
-                  context.read<BottomNavbarBloc>().add(
-                        ChangeBottomNavbarEvent(
-                          listScreen[value],
-                          value,
-                        ),
-                      );
-                },
-              ),
+            return BlocBuilder<RouterBloc, RouterState>(
+              builder: (context, state) {
+                if (state is RouterLoaded) {
+                  return Scaffold(
+                    body: state.currentScreen,
+                    bottomNavigationBar: BottomNavbar(
+                      currentIndex: state.navigatorValue,
+                      onTap: (int value) {
+                        context.read<RouterBloc>().add(
+                              ChangeBottomNavBar(
+                                listScreen[value],
+                                value,
+                              ),
+                            );
+                      },
+                    ),
+                  );
+                }
+                return Scaffold(
+                  body: Padding(
+                    padding: EdgeInsets.only(top: SizeConfig.screenHeight / 2),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          TextUi(
+                            text: AppLocalizations.of(context)!.navBarError,
+                            fontSize: SizeConfig.font20,
+                          ),
+                          TextButton(
+                            child: TextUi(
+                              text: AppLocalizations.of(context)!.reset,
+                              color: AppColor.blueColor,
+                            ),
+                            onPressed: () {
+                              context.read<RouterBloc>().add(
+                                  const ResetBottomNavBar(HomeScreen(), 0));
+                              Navigator.pushNamed(
+                                  context, RouterScreen.routeName);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             );
           },
         );

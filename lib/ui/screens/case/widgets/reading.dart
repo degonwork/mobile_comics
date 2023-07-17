@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../ui/screens/router/router_screen.dart';
 import '../../../../blocs/case/case_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
+import '../../../../blocs/router/router_bloc.dart';
 import '../../../../config/app_color.dart';
 import '../../../../config/size_config.dart';
 import '../../../widgets/case_infor.dart';
@@ -43,6 +45,11 @@ class Reading extends StatelessWidget {
                               listCaseComic[index].comicId, false));
                           Navigator.pushNamed(
                               context, ComicDetailScreen.routeName);
+                          context.read<RouterBloc>().add(
+                                const SetRouterScreen(
+                                  RouterScreen.routeName,
+                                ),
+                              );
                         },
                         child: CaseInfor(
                           imageSquare:

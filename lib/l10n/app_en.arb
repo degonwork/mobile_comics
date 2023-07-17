@@ -33,6 +33,7 @@
   "evaluate": "Evaluate",
   "notFoundComics": "Comics not found",
   "notFoundCategory": "Category not found",
-  "notFoundCategory": "Category not found",
-  "contentNotFound" : "Content not found"
+  "contentNotFound" : "Content not found",
+  "navBarError": "The navigation bar is broken",
+  "reset" : "Reset"
 }

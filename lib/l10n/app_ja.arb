@@ -33,5 +33,7 @@
     "evaluate": "評価",
     "notFoundComics": "コミックが見つかりません",
     "notFoundCategory": "カテゴリが見つかりません",
-    "contentNotFound" : "コンテンツが見つかりません"
+    "contentNotFound" : "コンテンツが見つかりません",
+    "navBarError": "ナビゲーションバーが壊れている",
+    "reset" : "リセット"
 }

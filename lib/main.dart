@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:full_comics_frontend/blocs/get_all_category/get_all_category_event.dart';
+import '.././blocs/get_all_category/get_all_category_event.dart';
 import '../ui/screens/router/router_screen.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
@@ -16,7 +16,6 @@ import '../data/repository/category_repository.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'blocs/ads/ads_bloc.dart';
-import 'blocs/bottom_navbar/bottom_navbar_bloc.dart';
 import 'blocs/case/case_bloc.dart';
 import 'blocs/comic_detail/comic_detail_bloc.dart';
 import 'blocs/filter_comic_by_category/filter_comic_bloc.dart';
@@ -24,6 +23,7 @@ import 'blocs/filter_comic_by_category/filter_comic_event.dart';
 import 'blocs/get_all_category/get_all_category_bloc.dart';
 import 'blocs/home/home_bloc.dart';
 import 'blocs/read_chapter/read_chapter_bloc.dart';
+import 'blocs/router/router_bloc.dart';
 import 'blocs/search_comic/search_comic_bloc.dart';
 import 'config/size_config.dart';
 import 'l10n/l10n.dart';
@@ -96,8 +96,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<BottomNavbarBloc>(
-            create: (context) => BottomNavbarBloc(),
+          BlocProvider<RouterBloc>(
+            create: (context) => RouterBloc(),
           ),
           BlocProvider<HomeBloc>(
             create: (context) => HomeBloc(comicRepo: context.read<ComicRepo>())

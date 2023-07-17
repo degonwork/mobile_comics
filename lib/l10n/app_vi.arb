@@ -33,5 +33,7 @@
     "evaluate": "Đánh giá",
     "notFoundComics": "Không tìm thấy truyện",
     "notFoundCategory": "Không tìm thấy thể loại truyện",
-    "contentNotFound" : "Không tìm thấy nội dung chương này"
+    "contentNotFound" : "Không tìm thấy nội dung chương này",
+    "navBarError": "Thanh điều hướng đang lỗi",
+    "reset" : "Cài lại"
 }
