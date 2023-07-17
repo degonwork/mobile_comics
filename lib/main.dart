@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:full_comics_frontend/blocs/get_all_category/get_all_category_event.dart';
 import '../ui/screens/router/router_screen.dart';
 import '../data/repository/device_repository.dart';
 import '../data/repository/chapter_repository.dart';
@@ -124,7 +125,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<GetAllCategoryBloc>(
             create: (context) => GetAllCategoryBloc(
               context.read<CategoryRepo>(),
-            ),
+            )..add(const GetAllCategory()),
           ),
           BlocProvider<FilterComicBloc>(
             create: (context) => FilterComicBloc(

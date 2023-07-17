@@ -6,8 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../../blocs/bottom_navbar/bottom_navbar_bloc.dart';
 import '../../../blocs/case/case_bloc.dart';
-import '../../../blocs/get_all_category/get_all_category_bloc.dart';
-import '../../../blocs/get_all_category/get_all_category_event.dart';
 import '../../../blocs/home/home_bloc.dart';
 import '../../../data/providers/firebase/notification/firebase_messaging_service.dart';
 import '../../../data/providers/firebase/notification/local_notification_service.dart';
@@ -47,8 +45,6 @@ class _RouterScreenState extends State<RouterScreen> {
     Timer(
       const Duration(seconds: 2),
       () async {
-        BlocProvider.of<GetAllCategoryBloc>(context)
-            .add(const GetAllCategory());
         BlocProvider.of<CaseBloc>(context).add(const LoadCaseComic());
         await Firebase.initializeApp();
         FirebaseMessaging.onBackgroundMessage(
