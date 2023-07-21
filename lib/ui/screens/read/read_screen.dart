@@ -30,8 +30,18 @@ class ReadScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
-              child: const BannerAD()),
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.width20),
+            child: BlocBuilder<AdsBloc, AdsState>(
+              builder: (context, state) {
+                if (state is AdsShow) {
+                  if (state.hasError != true) {
+                    return const BannerAD();
+                  }
+                }
+                return Container();
+              },
+            ),
+          ),
           Expanded(
             child: Stack(
               children: [
@@ -137,7 +147,7 @@ class ReadScreen extends StatelessWidget {
                           duration: const Duration(milliseconds: 400),
                           child: NavigatorButtonScreen(
                             icon: Icons.arrow_back_ios_outlined,
-                            onTap: () async{
+                            onTap: () async {
                               context.read<CaseBloc>().add(
                                     AddCaseComic(
                                       chapterId: state.chapterId,
@@ -155,8 +165,9 @@ class ReadScreen extends StatelessWidget {
                               Navigator.pushNamed(
                                   context, ComicDetailScreen.routeName);
                               for (var i = 0; i < listPath.length; i++) {
-                                await CachedNetworkImage.evictFromCache(listPath[i].path);
-                              }    
+                                await CachedNetworkImage.evictFromCache(
+                                    listPath[i].path);
+                              }
                             },
                           ),
                         ),

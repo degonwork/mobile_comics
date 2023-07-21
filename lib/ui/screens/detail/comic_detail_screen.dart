@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../ui/screens/router/router_screen.dart';
@@ -63,21 +62,17 @@ class ComicDetailScreen extends StatelessWidget {
                           expandedHeight: SizeConfig.height160,
                           flexibleSpace: FlexibleSpaceBar(
                             background: comic.image_detail_path != null
-                                ? CachedNetworkImage(
-                                    imageUrl: comic.image_detail_path!,
-                                    imageBuilder: (context, imageProvider) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
-                                          ),
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          SizeConfig.radius10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          comic.image_detail_path!,
                                         ),
-                                      );
-                                    },
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                            "assets/images/anh splash.jpg"),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   )
                                 : Image.asset("assets/images/anh splash.jpg"),
                           ),

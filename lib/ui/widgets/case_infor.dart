@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../config/app_color.dart';
@@ -24,23 +23,16 @@ class CaseInfor extends StatelessWidget {
     return Row(
       children: [
         imageSquare != null
-            ? CachedNetworkImage(
-                imageUrl: imageSquare!,
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    width: SizeConfig.width100,
-                    height: SizeConfig.height100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(SizeConfig.radius10),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  );
-                },
-                errorWidget: (context, url, error) =>
-                    Image.asset("assets/images/anh splash.jpg"),
+            ? Container(
+                width: SizeConfig.width100,
+                height: SizeConfig.height100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(SizeConfig.radius10),
+                  image: DecorationImage(
+                    image: NetworkImage(imageSquare!),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               )
             : Image.asset("assets/images/anh splash.jpg"),
         SizedBox(width: SizeConfig.width20),

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +9,6 @@ import '../../../../blocs/comic_detail/comic_detail_bloc.dart';
 import '../../../../config/size_config.dart';
 import '../../detail/comic_detail_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../router/router_screen.dart';
 
 class BannerListview extends StatelessWidget {
@@ -32,37 +30,29 @@ class BannerListview extends StatelessWidget {
               itemBuilder: (context, index, index1) {
                 return listHotComics[index].image_thumnail_rectangle_path !=
                         null
-                    ? CachedNetworkImage(
-                        imageUrl:
-                            listHotComics[index].image_thumnail_rectangle_path!,
-                        imageBuilder: (context, imageProvider) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.read<ComicDetailBloc>().add(
-                                  LoadDetailComic(
-                                      listHotComics[index].id, false));
-                              Navigator.pushNamed(
-                                  context, ComicDetailScreen.routeName);
-                              context.read<RouterBloc>().add(
-                                    const SetRouterScreen(
-                                      RouterScreen.routeName,
-                                    ),
-                                  );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(SizeConfig.radius10),
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
+                    ? InkWell(
+                        onTap: () {
+                          context.read<ComicDetailBloc>().add(
+                              LoadDetailComic(listHotComics[index].id, false));
+                          Navigator.pushNamed(
+                              context, ComicDetailScreen.routeName);
+                          context.read<RouterBloc>().add(
+                                const SetRouterScreen(
+                                  RouterScreen.routeName,
                                 ),
-                              ),
-                            ),
-                          );
+                              );
                         },
-                        errorWidget: (context, url, error) =>
-                            Image.asset("assets/images/anh splash.jpg"),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(SizeConfig.radius10),
+                            image: DecorationImage(
+                              image: NetworkImage(listHotComics[index]
+                                  .image_thumnail_rectangle_path!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       )
                     : Image.asset("assets/images/anh splash.jpg");
               },

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/app_color.dart';
@@ -51,27 +50,20 @@ class GridviewComics extends StatelessWidget {
                   children: [
                     listComics[index].image_thumnail_square_path != null
                         ? Expanded(
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  listComics[index].image_thumnail_square_path!,
-                              imageBuilder: (context, imageProvider) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      SizeConfig.radius10,
-                                    ),
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              },
-                              errorWidget: (context, url, error) =>
-                                  Image.asset("assets/images/anh splash.jpg"),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(SizeConfig.radius10),
+                                image: DecorationImage(
+                                  image: NetworkImage(listComics[index]
+                                      .image_thumnail_square_path!),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           )
                         : Image.asset("assets/images/anh splash.jpg"),
+                    // ,
                     SizedBox(
                       height: SizeConfig.height10,
                     ),
