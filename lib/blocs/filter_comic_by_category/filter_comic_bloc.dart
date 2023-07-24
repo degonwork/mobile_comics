@@ -43,15 +43,12 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
             .fetchAPIAndCreateFilterComicByCategories(
                 categoryName: listCategories[0].name, isUpdate: true)
             .whenComplete(() async {
-          await Future.delayed(
-            const Duration(milliseconds: 500),
-            () async {
+          
               comicIndexFirst = await _comicRepo.readComicByCategoryName(
                   categoryName: listCategories[0].name);
               emitter(ComicByCategoryLoaded(comicIndexFirst));
             },
-          );
-        });
+        );
       }
     } else {
       emitter(ComicByCategoryLoadError());
@@ -80,12 +77,12 @@ class FilterComicBloc extends Bloc<FilterComicEvent, FilterComicState> {
           .fetchAPIAndCreateFilterComicByCategories(
               categoryName: event.categoryName, isUpdate: true)
           .whenComplete(() async {
-        await Future.delayed(const Duration(milliseconds: 500), () async {
+        
           listComicsFilter = await _comicRepo.readComicByCategoryName(
               categoryName: event.categoryName);
           emitter(ComicByCategoryLoaded(listComicsFilter));
-        });
-      });
+        }
+      );
     }
   }
 }

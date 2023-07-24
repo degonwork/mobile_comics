@@ -42,7 +42,6 @@ class GetAllCategoryBloc
       await _categoryRepo.getAllCategory().whenComplete(
         () async {
           listCategoryString = [];
-          await Future.delayed(const Duration(seconds: 1), () async {
             listCategories = await _categoryRepo.getAllCategoryFromDB();
             for (var category in listCategories) {
               listCategoryString.add(category.name);
@@ -50,7 +49,6 @@ class GetAllCategoryBloc
             emitter(
               GetAllCategoryLoaded(listCategoryString, 0),
             );
-          });
         },
       );
     }

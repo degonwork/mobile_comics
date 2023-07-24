@@ -47,7 +47,7 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
       await _comicRepo
           .fetchDetailComics(id: event.id, isUpdate: true)
           .whenComplete(() async {
-        await Future.delayed(const Duration(seconds: 1), () async {
+       
           comic = await _comicRepo.readComicDetailFromDB(id: event.id);
           if (state is ComicDetailLoaded) {
             emit(
@@ -58,7 +58,6 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
               ),
             );
           }
-        });
       });
     }
   }

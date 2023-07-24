@@ -41,14 +41,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           limit: AppConstant.limitHomeComic);
       emit(HomeLoaded(listHotComics, listNewComics));
       await _comicRepo.fetchApiHomeComic(isUpdate: true).whenComplete(() async {
-        await Future.delayed(const Duration(seconds: 1), () async {
+        
           listHotComics = await _comicRepo.readHotComicsFromDB(
               limit: AppConstant.limitHomeComic);
           listNewComics = await _comicRepo.readNewComicsFromDB(
               limit: AppConstant.limitHomeComic);
           emit(HomeLoaded(listHotComics, listNewComics));
-        });
-      });
+      }
+      );
     }
   }
 }

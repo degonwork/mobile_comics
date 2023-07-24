@@ -40,11 +40,9 @@ class ViewMoreBloc extends Bloc<ViewMoreEvent, ViewMoreState> {
       await _comicRepo
           .fetchAPINewComics(limit: AppConstant.limitSeeMoreComic)
           .whenComplete(() async {
-        await Future.delayed(const Duration(seconds: 1), () async {
           listNewComicsViewMore = await _comicRepo.readNewComicsFromDB(
               limit: AppConstant.limitSeeMoreComic);
           emit(ViewMoreLoaded(listNewComicsViewMore));
-        });
       });
     }
   }

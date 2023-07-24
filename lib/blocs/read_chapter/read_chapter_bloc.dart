@@ -43,12 +43,10 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
             listImageNextChapter, true, chapter.chapter_index!, chapter.id));
         await _chapterRepo.fetchDetailChapters(id: chapter.id).whenComplete(
           () async {
-            await Future.delayed(const Duration(seconds: 1), () async {
               listImageNextChapter = await _chapterRepo
                   .readChapterContentFromDB(chapterId: chapter.id);
               emit(LoadedChapter(listImageNextChapter, true,
                   chapter.chapter_index!, chapter.id));
-            });
           },
         );
       }
@@ -82,12 +80,11 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
             listImageContent, true, chapter.chapter_index!, chapter.id));
         await _chapterRepo.fetchDetailChapters(id: chapter.id).whenComplete(
           () async {
-            await Future.delayed(const Duration(seconds: 1), () async {
               listImageContent = await _chapterRepo.readChapterContentFromDB(
                   chapterId: chapter.id);
               emit(LoadedChapter(
                   listImageContent, true, chapter.chapter_index!, chapter.id));
-            });
+          
           },
         );
       }
@@ -121,12 +118,12 @@ class ReadChapterBloc extends Bloc<ReadChapterEvent, ReadChapterState> {
         await _chapterRepo
             .fetchDetailChapters(id: chapter.id)
             .whenComplete(() async {
-          await Future.delayed(const Duration(seconds: 1), () async {
+          
             listImageChapterContinue = await _chapterRepo
                 .readChapterContentFromDB(chapterId: chapter.id);
             emit(LoadedChapter(listImageChapterContinue, true,
                 chapter.chapter_index!, chapter.id));
-          });
+          
         });
       }
     } else {
